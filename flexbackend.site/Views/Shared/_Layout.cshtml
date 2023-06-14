@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Flex Sports後台管理系統</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/bootstrap-icons-1.10.5/font/bootstrap-icons.css")
+    @Styles.Render("~/Content/variables.css")
+    @Styles.Render("~/Content/IndexPageStyle.css")
+</head>
+<body>
+    <div id="bg"></div>
+    <!-- 菜單背景 -->
+    <div id="sidebar-bg" class=""></div>
+    <!-- 菜單 -->
+    <aside id="sidebar" class="left-hidden">
+        <div class="sidebar-top position-relative">
+            <div class="close-btn d-flex d-md-none ">
+                <i class="bi bi-x "></i>
+            </div>
+            <!-- 標題 -->
+            <a href="javascript:;" class="d-block mt-title">
+                <h2 class="d-none d-md-block">Flex Sports</h2>
+                <h2 class="hello d-block d-md-none">
+                    <span class="name">Jason</span><span>, 您好</span>
+                </h2>
+            </a>
+        </div>
+
+        <!-- 列表 -->
+        <ul class="p-0 gray-sm-scroll sidebar-main">
+            <li>
+                <a href="@Url.Action("Index", "Home", new { area = "" })">
+                    <div><i class="bi bi-house-door-fill"></i><span>首頁</span></div>
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("About", "Home", new { area = "" })">
+                    <div><i class="bi bi-chat-dots-fill"></i><span>訊息中心</span></div>
+                </a>
+            </li>
+
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="product-btn" data-id="#product-item">
+                    <div><i class="bi bi-bag-fill"></i><span>商品及分類管理</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="product-item">
+                    <li><a href="javascript:;">商品</a></li>
+                    <li><a href="javascript:;">商品評價</a></li>
+                    <li><a href="javascript:;">組合商品</a></li>
+                    <li><a href="javascript:;">加購品</a></li>
+                    <li><a href="javascript:;">贈品</a></li>
+                    <li><a href="javascript:;">商品分類</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="order-btn" data-id="#order-item">
+                    <div><i class="bi bi-clipboard-data-fill"></i><span>訂單管理</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="order-item">
+                    <li><a href="javascript:;">訂單</a></li>
+                    <li><a href="javascript:;">團購訂單</a></li>
+                    <li><a href="javascript:;">退貨單</a></li>
+                    <li><a href="javascript:;">訂單總覽</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="stock-btn" data-id="#stock-item">
+                    <div><i class="bi bi-boxes"></i><span>庫存管理</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="stock-item">
+                    <li><a href="javascript:;">總庫存</a></li>
+                    <li><a href="javascript:;">進貨</a></li>
+                    <li><a href="javascript:;">調貨</a></li>
+                    <li><a href="javascript:;">盤點單</a></li>
+                    <li><a href="javascript:;">供應商</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="members-btn" data-id="#members-item">
+                    <div><i class="bi bi-people-fill"></i><span>會員及顧客</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="members-item">
+                    <li><a href="javascript:;">會員</a></li>
+                    <li><a href="javascript:;">會員購物金</a></li>
+                    <li><a href="javascript:;">廣播中心</a></li>
+                    <li><a href="javascript:;">會員分級</a></li>
+                    <li><a href="javascript:;">會員點數</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="discount-btn" data-id="#discount-item">
+                    <div><i class="bi bi-wallet-fill"></i><span>促銷及優惠</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="discount-item">
+                    <li><a href="javascript:;">滿額優惠</a></li>
+                    <li><a href="javascript:;">免運費</a></li>
+                    <li><a href="javascript:;">限時促銷</a></li>
+                    <li><a href="javascript:;">優惠折扣券</a></li>
+                    <li><a href="javascript:;">購物車加價購</a></li>
+                    <li><a href="javascript:;">會員點數兌換</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="financial-btn" data-id="#financial-item">
+                    <div><i class="bi bi-coin"></i><span>金流報表與分析</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="financial-item">
+                    <li><a href="javascript:;">銀行帳戶連動</a></li>
+                    <li><a href="javascript:;">每月數據分析</a></li>
+                    <li><a href="javascript:;">廣告成效分析</a></li>
+                    <li><a href="javascript:;">報表匯出</a></li>
+                    <li><a href="javascript:;">大量作業進度</a></li>
+                    <li><a href="javascript:;">報表總覽</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="employee-btn" data-id="#employee-item">
+                    <div><i class="bi bi-shop"></i><span>實體店鋪管理</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="employee-item">
+                    <li><a href="javascript:;">員工管理</a></li>
+                    <li><a href="javascript:;">密碼設定</a></li>
+                    <li><a href="javascript:;">員工權限管理</a></li>
+                    <li><a href="javascript:;">發票報稅</a></li>
+                    <li><a href="javascript:;">發票及收據設定</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="sidebar-bottom">
+            <li>
+                <a href="javascript:;">
+                    <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <div class="container-right">
+        <header id="header">
+            <div class="header-left-wrapper">
+                <div id="sidebar-toggle" class="d-block d-md-none">
+                    <label class="fs-3">
+                        <i class="bi bi-list"></i>
+                        <input type="checkbox" class="d-none">
+                    </label>
+                </div>
+                <div class="hello d-none d-md-block">
+                    <span class="name">Jason</span><span>, 您好</span>
+                </div>
+                <a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>
+            </div>
+
+            <!-- 標題 -->
+            <a href="javascript:;" class="d-md-none ms-5">
+                <h2 class="d-block">Flex Sports</h2>
+            </a>
+            <div class="header-right-wrapper">
+                <div id="notification-wrapper">
+
+                    <a href="javascript:;" class="bell">
+
+                        <!-- 未讀數字 -->
+                        <span id="unread-count">1</span>
+
+                        <i class="bi bi-bell"></i>
+                    </a>
+                    <div id="notification-box" class="d-none">
+                        <div>
+                            <!-- 看做內部訊息的功能的人想不想做已讀跟未讀 -->
+                            <a href="javascript:;" id="unread-button">未讀</a>
+                            <a href="javascript:;" id="read-button">已讀</a>
+                        </div>
+                        <div id="notification-area" class="gray-sm-scroll">
+                            <ul class="info-list">
+                                通知顯示在這裡
+
+                                <!-- 通知區每條樣板格式 請依照此格式製作 -->
+                                <li>
+                                    <div class="sender-name-area">
+                                        <div>
+                                            <span class="sender-name">Jason</span><span>:</span>
+                                        </div>
+                                        <span class="message-update-time">21分鐘前</span>
+                                    </div>
+                                    <div class="message-content">
+                                        庫存已更新
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="javascript:;"><i class="bi bi-shop"></i><span class="ms-2 d-none d-md-inline">進入商店</span></a>
+            </div>
+        </header>
+        <!-- 此區放入主要內容區域 -->
+        
+        <main id="main-area" class="gray-scroll">
+            <div class="container">
+            @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/flexBE_main.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
