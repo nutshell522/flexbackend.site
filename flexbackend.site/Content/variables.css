@@ -1,4 +1,4 @@
-/* 存放table樣式的變數 */
+/* 存放後台整體樣式的變數 */
 :root {
     /* 側邊欄寬度 */
     --sidebar-width: 250px;
@@ -45,4 +45,94 @@
     --notification-box-hover-bg-color: #f8f6f0;
     /* 分隔線顏色 */
     --divider-color: #b9b9b9;
+}
+
+/* 存放table整體樣式的變數 */
+:root {
+    /* table的圓角 */
+    --table-border-radius: 10px;
+    /* table字體大小 */
+    --table-font-size: 14px;
+    /* table標題高度 */
+    --table-thead-height: 40px;
+    /* table背景色 */
+    --table-bg-color: #fff;
+    /* table文字色 */
+    --table-color: #333;
+    /* table標題背景色 */
+    --table-thead-bg-color: #fff;
+    /* table標題文字色 */
+    --table-thead-color: #818181;
+    /* table 排序按鈕hover背景色 */
+    --table-sortbtn-hover-bg-color: #f1f1f1;
+    /* table 內容hover背景色*/
+    --table-hover-bg-color: #f1f1f1;
+    /* 狀態群顏色 */
+    /* status-succes 背景 文字 hover 色 */
+    --status-success-bg-color: #D1E7DD;
+    --status-success-text-color: #189d5f;
+    --status-success-hover-bg-color: #bedbcf;
+    /* status-primary 背景 文字 hover 色 */
+    --status-primary-bg-color: #CFE2FF;
+    --status-primary-text-color: #206ee3;
+    --status-primary-hover-bg-color: #bfd7f8;
+    /* status-danger 背景 文字 hover 色 */
+    --status-danger-bg-color: #F8D7DA;
+    --status-danger-text-color: #d75862;
+    --status-danger-hover-bg-color: #fcbfc4;
+    /* status-dark 背景 文字 hover 色 */
+    --status-dark-bg-color: #D3D3D4;
+    --status-dark-text-color: rgb(101, 101, 101);
+    --status-dark-hover-bg-color: #bfbfc1;
+    /* 分隔線顏色 */
+    --divider-color: #b9b9b9;
+    /* 管理按鈕群 */
+    /* 管理按鈕圓角 */
+    --btn-border-radius: 5px;
+    /* 管理按鈕框線粗細 */
+    --btn-border: 1.2px;
+    /* 管理按鈕寬 */
+    --btn-width: 25px;
+    /* 管理按鈕高 */
+    --btn-height: 30px;
+    /* 商店按鈕文字顏色 */
+    --btn-shop-color: orange;
+    /* 商店按鈕背景顏色 */
+    --btn-shop-bg-color: none;
+    /* 商店按鈕hover文字顏色 */
+    --btn-shop-hover-color: #eee;
+    /* 商店按鈕hover背景顏色 */
+    --btn-shop-hover-bg-color: orange;
+    /* 商店按鈕框線顏色 */
+    --btn-shop-border-color: orange;
+    /* 檢視按鈕文字顏色 */
+    --btn-view-color: #206ee3;
+    /* 檢視按鈕背景顏色 */
+    --btn-view-bg-color: none;
+    /* 檢視按鈕hover文字顏色 */
+    --btn-view-hover-color: #eee;
+    /* 檢視按鈕hover背景顏色 */
+    --btn-view-hover-bg-color: #206ee3;
+    /* 檢視按鈕框線顏色 */
+    --btn-view-border-color: #206ee3;
+    /* 編輯按鈕文字顏色 */
+    --btn-edit-color: #189d5f;
+    /* 編輯按鈕背景顏色 */
+    --btn-edit-bg-color: none;
+    /* 編輯按鈕hover文字顏色 */
+    --btn-edit-hover-color: #eee;
+    /* 編輯按鈕hover背景顏色 */
+    --btn-edit-hover-bg-color: #189d5f;
+    /* 編輯按鈕框線顏色 */
+    --btn-edit-border-color: #189d5f;
+    /* 刪除按鈕文字顏色 */
+    --btn-del-color: #d75862;
+    /* 刪除按鈕背景顏色 */
+    --btn-del-bg-color: none;
+    /* 刪除按鈕hover文字背景顏色 */
+    --btn-del-hover-color: #eee;
+    /* 刪除按鈕hover顏色 */
+    --btn-del-hover-bg-color: #d75862;
+    /* 刪除按鈕框線顏色 */
+    --btn-del-border-color: #d75862;
 }

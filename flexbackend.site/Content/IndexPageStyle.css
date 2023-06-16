@@ -1,15 +1,29 @@
+@font-face {
+    font-family: 'Noto Sans TC';
+    src: url('../Fonts/NotoSansTC-Regular.otf') format('opentype ');
+    src: url('../Fonts/NotoSansTC-Medium.otf') format('opentype ');
+    src: url('../Fonts/NotoSansTC-Bold.otf') format('opentype');
+    src: url('../Fonts/NotoSansTC-Thin.otf') format('opentype');
+    src: url('../Fonts/NotoSansTC-Black.otf') format('opentype');
+    src: url('../Fonts/NotoSansTC-Light.otf') format('opentype');
+    /* 添加其他字體樣式（如字重）的 src 屬性 */
+}
+
 /* 清除預設樣式 */
 * {
+    font-family: 'Noto Sans TC', sans-serif;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 a:link {
+    font-family: 'Noto Sans TC', sans-serif;
     text-decoration: none;
 }
 a:active,
 a:visited {
+    font-family: 'Noto Sans TC', sans-serif;
     color: inherit; /* 或者設置為其他你想要的顏色 */
 }
 

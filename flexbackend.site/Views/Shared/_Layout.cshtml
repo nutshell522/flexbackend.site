@@ -10,6 +10,7 @@
     @Styles.Render("~/Content/bootstrap-icons-1.10.5/font/bootstrap-icons.css")
     @Styles.Render("~/Content/variables.css")
     @Styles.Render("~/Content/IndexPageStyle.css")
+    @Styles.Render("~/Content/table.css")
 </head>
 <body>
     <div id="bg"></div>
@@ -49,12 +50,11 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="product-item">
-                    <li><a href="javascript:;">商品</a></li>
-                    <li><a href="javascript:;">商品評價</a></li>
-                    <li><a href="javascript:;">組合商品</a></li>
-                    <li><a href="javascript:;">加購品</a></li>
-                    <li><a href="javascript:;">贈品</a></li>
-                    <li><a href="javascript:;">商品分類</a></li>
+                    <li><a href="javascript:;">分類管理</a></li>
+                    <li><a href="javascript:;">商品管理</a></li>
+                    <li><a href="javascript:;">商品批量新增</a></li>
+                    <li><a href="javascript:;">庫存管理</a></li>
+                    <li><a href="javascript:;">商品標籤管理</a></li>
                 </ul>
             </li>
 
@@ -64,23 +64,12 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="order-item">
-                    <li><a href="javascript:;">訂單</a></li>
-                    <li><a href="javascript:;">團購訂單</a></li>
-                    <li><a href="javascript:;">退貨單</a></li>
-                    <li><a href="javascript:;">訂單總覽</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;" class="collapse-btn" id="stock-btn" data-id="#stock-item">
-                    <div><i class="bi bi-boxes"></i><span>庫存管理</span></div>
-                    <i class="bi bi-chevron-down"></i>
-                </a>
-                <ul class="collapse-item hide" id="stock-item">
-                    <li><a href="javascript:;">總庫存</a></li>
-                    <li><a href="javascript:;">進貨</a></li>
-                    <li><a href="javascript:;">調貨</a></li>
-                    <li><a href="javascript:;">盤點單</a></li>
-                    <li><a href="javascript:;">供應商</a></li>
+                    <li><a href="javascript:;">訂單管理</a></li>
+                    <li><a href="javascript:;">物流公司</a></li>
+                    <li><a href="javascript:;">活動訂單管理</a></li>
+                    <li><a href="javascript:;">出貨管理</a></li>
+                    <li><a href="javascript:;">金流管理</a></li>
+                    <li><a href="javascript:;">報表管理</a></li>
                 </ul>
             </li>
             <li>
@@ -89,11 +78,9 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="members-item">
-                    <li><a href="javascript:;">會員</a></li>
-                    <li><a href="javascript:;">會員購物金</a></li>
-                    <li><a href="javascript:;">廣播中心</a></li>
-                    <li><a href="javascript:;">會員分級</a></li>
-                    <li><a href="javascript:;">會員點數</a></li>
+                    <li><a href="javascript:;">會員名單</a></li>
+                    <li><a href="javascript:;">會員等級</a></li>
+                    <li><a href="javascript:;">會員積分</a></li>
                 </ul>
             </li>
             <li>
@@ -102,39 +89,45 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="discount-item">
-                    <li><a href="javascript:;">滿額優惠</a></li>
+                    <li><a href="javascript:;">折扣活動</a></li>
+                    <li><a href="javascript:;">優惠券</a></li>
                     <li><a href="javascript:;">免運費</a></li>
-                    <li><a href="javascript:;">限時促銷</a></li>
-                    <li><a href="javascript:;">優惠折扣券</a></li>
-                    <li><a href="javascript:;">購物車加價購</a></li>
-                    <li><a href="javascript:;">會員點數兌換</a></li>
+                    <li><a href="javascript:;">滿額優惠</a></li>
+                    <li><a href="javascript:;">優惠券報表</a></li>
                 </ul>
             </li>
             <li>
-                <a href="javascript:;" class="collapse-btn" id="financial-btn" data-id="#financial-item">
-                    <div><i class="bi bi-coin"></i><span>金流報表與分析</span></div>
+                <a href="javascript:;" class="collapse-btn" id="activity-btn" data-id="#activity-item">
+                    <div><i class="bi bi-award-fill"></i><span>活動管理</span></div>
                     <i class="bi bi-chevron-down"></i>
                 </a>
-                <ul class="collapse-item hide" id="financial-item">
-                    <li><a href="javascript:;">銀行帳戶連動</a></li>
-                    <li><a href="javascript:;">每月數據分析</a></li>
-                    <li><a href="javascript:;">廣告成效分析</a></li>
-                    <li><a href="javascript:;">報表匯出</a></li>
-                    <li><a href="javascript:;">大量作業進度</a></li>
-                    <li><a href="javascript:;">報表總覽</a></li>
+                <ul class="collapse-item hide" id="activity-item">
+                    <li><a href="javascript:;">活動管理</a></li>
+                    <li><a href="javascript:;">講師管理</a></li>
+                    <li><a href="javascript:;">一對一預約管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="collapse-btn" id="customized-btn" data-id="#customized-item">
+                    <div><i class="bi bi-boxes"></i><span>客製化管理</span></div>
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+                <ul class="collapse-item hide" id="customized-item">
+                    <li><a href="javascript:;">基底鞋款管理</a></li>
+                    <li><a href="javascript:;">客製化選項管理</a></li>
+                    <li><a href="javascript:;">材料管理</a></li>
+                    <li><a href="javascript:;">客製化訂單管理</a></li>
+                    <li><a href="javascript:;">材料供應商管理</a></li>
                 </ul>
             </li>
             <li>
                 <a href="javascript:;" class="collapse-btn" id="employee-btn" data-id="#employee-item">
-                    <div><i class="bi bi-shop"></i><span>實體店鋪管理</span></div>
+                    <div><i class="bi bi-shop"></i><span>員工管理</span></div>
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="employee-item">
                     <li><a href="javascript:;">員工管理</a></li>
-                    <li><a href="javascript:;">密碼設定</a></li>
                     <li><a href="javascript:;">員工權限管理</a></li>
-                    <li><a href="javascript:;">發票報稅</a></li>
-                    <li><a href="javascript:;">發票及收據設定</a></li>
                 </ul>
             </li>
         </ul>
@@ -212,10 +205,10 @@
             </div>
         </header>
         <!-- 此區放入主要內容區域 -->
-        
+
         <main id="main-area" class="gray-scroll">
             <div class="container">
-            @RenderBody()
+                @RenderBody()
             </div>
         </main>
     </div>
@@ -223,6 +216,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/flexBE_main.js")
+    @Scripts.Render("~/Scripts/flexBE_main.js")
+    <script src="~/Scripts/table.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
