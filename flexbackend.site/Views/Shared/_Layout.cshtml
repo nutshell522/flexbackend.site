@@ -5,12 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Flex Sports後台管理系統</title>
+    <link rel="icon" type="image/x-icon" href="~/Content/flex.ico" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/bootstrap-icons-1.10.5/font/bootstrap-icons.css")
     @Styles.Render("~/Content/variables.css")
     @Styles.Render("~/Content/IndexPageStyle.css")
     @Styles.Render("~/Content/table.css")
+    
 </head>
 <body>
     <div id="bg"></div>
@@ -23,12 +25,13 @@
                 <i class="bi bi-x "></i>
             </div>
             <!-- 標題 -->
-            <a href="javascript:;" class="d-block mt-title">
-                <h2 class="d-none d-md-block">Flex Sports</h2>
+
+            <div href="javascript:;" class="d-block mt-title">
+                <div class="d-none d-md-flex logo-countainer align-items-end justify-content-center"><span id="logo-container1"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span><span class="fs-5">後台管理系統</span></div>
                 <h2 class="hello d-block d-md-none">
                     <span class="name">Jason</span><span>, 您好</span>
                 </h2>
-            </a>
+            </div>
         </div>
 
         <!-- 列表 -->
@@ -161,9 +164,7 @@
             </div>
 
             <!-- 標題 -->
-            <a href="javascript:;" class="d-md-none ms-5">
-                <h2 class="d-block">Flex Sports</h2>
-            </a>
+            <span id="logo-container2" class="d-md-none"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span>
             <div class="header-right-wrapper">
                 <div id="notification-wrapper">
 

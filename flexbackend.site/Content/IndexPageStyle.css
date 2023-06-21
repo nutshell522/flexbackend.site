@@ -81,6 +81,17 @@ body {
 #sidebar h2 {
     text-align: center;
 }
+#logo-container2,
+#logo-container1 {
+    display: block;
+    width: 80px;
+    height: 50px;
+    display: flex;
+    object-fit: cover;
+    justify-content: center;
+    align-items: start;
+    overflow: hidden;
+}
 
 #sidebar .sidebar-main {
     height: calc(100vh - var(--sidebar-top-hight) - var(--sidebar-bottom-hight) - var(--sidebar-padding));
