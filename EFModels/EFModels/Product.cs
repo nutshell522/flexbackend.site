@@ -46,7 +46,7 @@ namespace EFModels.EFModels
         [StringLength(100)]
         public string Tag { get; set; }
 
-        public int fk_ProductSubCategoryID { get; set; }
+        public int fk_ProductSubCategoryId { get; set; }
 
         public DateTime CreateTime { get; set; }
 

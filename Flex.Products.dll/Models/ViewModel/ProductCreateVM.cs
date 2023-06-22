@@ -55,13 +55,13 @@ namespace Flex.Products.dll.Models.ViewModel
 		[Required(ErrorMessage = "{0}必填")]
 		public DateTime StartTime { get; set; }
 
-		[Display(Name = "下價時間")]
+		[Display(Name = "下架時間")]
 		public DateTime? EndTime { get; set; }
 
 		[Display(Name = "商品分類")]
 		[Required(ErrorMessage = "{0}必填")]
 		[Range(1, 999, ErrorMessage = "{0}必填")]
-		public int fk_ProductSubCategoryID { get; set; }
+		public int fk_ProductSubCategoryId { get; set; }
 
 		[Display(Name = "照片")]
 		[Required(ErrorMessage = "{0}必填")]

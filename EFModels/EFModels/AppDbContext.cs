@@ -371,7 +371,7 @@ namespace EFModels.EFModels
             modelBuilder.Entity<ProductSubCategory>()
                 .HasMany(e => e.Products)
                 .WithRequired(e => e.ProductSubCategory)
-                .HasForeignKey(e => e.fk_ProductSubCategoryID)
+                .HasForeignKey(e => e.fk_ProductSubCategoryId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ProjectTagItem>()

@@ -53,8 +53,11 @@
   <ItemGroup>
     <Compile Include="Models\Dtos\ProductDto.cs" />
     <Compile Include="Models\Infra\EFRepository\ProductEFRepository.cs" />
+    <Compile Include="Models\Infra\EFRepository\ProductSubCategoryRepository.cs" />
     <Compile Include="Models\Infra\Exts\ProductGroupClass.cs" />
+    <Compile Include="Models\Infra\Exts\Result.cs" />
     <Compile Include="Models\Interface\IProductRepository.cs" />
+    <Compile Include="Models\Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Infra\DapperRepository\" />
-    <Folder Include="Models\Service\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

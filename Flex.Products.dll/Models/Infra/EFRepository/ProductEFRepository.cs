@@ -37,7 +37,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 				EndTime = dto.EndTime,
 				LogOut = dto.LogOut,
 				Tag = dto.Tag,
-				fk_ProductSubCategoryID = dto.fk_ProductSubCategoryID,
+				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
 				CreateTime = dto.CreateTime,
 				EditTime = dto.EditTime
 			};

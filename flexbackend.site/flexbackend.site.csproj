@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2242,6 +2243,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2280,6 +2283,10 @@
     <ProjectReference Include="..\EFModels\EFModels.csproj">
       <Project>{4a45e52a-d1b4-450b-a455-d01ff085e499}</Project>
       <Name>EFModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Flex.Products.dll\Flex.Products.dll.csproj">
+      <Project>{f79111b2-41fc-4bd2-925f-8dd74f015028}</Project>
+      <Name>Flex.Products.dll</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

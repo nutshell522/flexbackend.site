@@ -32,7 +32,7 @@ namespace Flex.Products.dll.Models.Dtos
 
 		public string Tag { get; set; }
 
-		public int fk_ProductSubCategoryID { get; set; }
+		public int fk_ProductSubCategoryId { get; set; }
 
 		public DateTime CreateTime { get; set; }
 
@@ -58,7 +58,7 @@ namespace Flex.Products.dll.Models.Dtos
 				StartTime = vm.StartTime,
 				EndTime = vm.EndTime,
 				Tag = vm.Tag,
-				fk_ProductSubCategoryID = vm.fk_ProductSubCategoryID,
+				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
 				ImgPaths = vm.ImgPaths,
 				productGroups = vm.productGroups,
 			};
