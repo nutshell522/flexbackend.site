@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFModels", "EFModels\EFMode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.dll", "Discount.dll\Discount.dll.csproj", "{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Activity.dll", "Activity.dll\Activity.dll.csproj", "{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
