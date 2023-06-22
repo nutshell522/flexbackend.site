@@ -12,9 +12,7 @@ namespace EFModels.EFModels
 
         public int fk_CardId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Type { get; set; }
+        public int fk_Type { get; set; }
 
         public int ProductId { get; set; }
 
@@ -25,5 +23,7 @@ namespace EFModels.EFModels
         public int Qty { get; set; }
 
         public virtual ShoppingCart ShoppingCart { get; set; }
+
+        public virtual Type Type { get; set; }
     }
 }

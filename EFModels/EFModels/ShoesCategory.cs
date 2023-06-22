@@ -6,24 +6,25 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ReservationStatuses")]
-    public partial class ReservationStatus
+    public partial class ShoesCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReservationStatus()
+        public ShoesCategory()
         {
-            OneToOneReservations = new HashSet<OneToOneReservation>();
+            Customized_Shoes = new HashSet<Customized_Shoes>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ReservationId { get; set; }
+        public int ShoesCategoryId { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string ReservationStatusDescription { get; set; }
+        [StringLength(254)]
+        public string ShoesCategoryName { get; set; }
+
+        public DateTime? CategoryCreateTime { get; set; }
+
+        public DateTime? CategoryEditTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+        public virtual ICollection<Customized_Shoes> Customized_Shoes { get; set; }
     }
 }

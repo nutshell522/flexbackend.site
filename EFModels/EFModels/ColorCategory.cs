@@ -6,24 +6,22 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ReservationStatuses")]
-    public partial class ReservationStatus
+    public partial class ColorCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReservationStatus()
+        public ColorCategory()
         {
-            OneToOneReservations = new HashSet<OneToOneReservation>();
+            ProductGroups = new HashSet<ProductGroup>();
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ReservationId { get; set; }
+        public int ColorId { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string ReservationStatusDescription { get; set; }
+        [StringLength(50)]
+        public string ColorName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+        public virtual ICollection<ProductGroup> ProductGroups { get; set; }
     }
 }

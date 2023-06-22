@@ -6,33 +6,35 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ProjectTag
+    public partial class MembershipLevel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectTag()
+        public MembershipLevel()
         {
-            Coupons = new HashSet<Coupon>();
-            Discounts = new HashSet<Discount>();
+            Members = new HashSet<Member>();
+            Privileges = new HashSet<Privilege>();
         }
 
-        public int ProjectTagId { get; set; }
+        [Key]
+        public int LevelId { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string LevelName { get; set; }
 
         [Required]
         [StringLength(30)]
-        public string ProjectTagName { get; set; }
+        public string MinSpending { get; set; }
 
-        public DateTime CreateAt { get; set; }
+        public int? Discount { get; set; }
 
-        public DateTime ModifiedAt { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Coupon> Coupons { get; set; }
+        [StringLength(300)]
+        public string Description { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Discount> Discounts { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
 
-        public virtual ProjectTag ProjectTags1 { get; set; }
-
-        public virtual ProjectTag ProjectTag1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Privilege> Privileges { get; set; }
     }
 }

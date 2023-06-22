@@ -6,24 +6,20 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ReservationStatuses")]
-    public partial class ReservationStatus
+    public partial class pay_methods
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReservationStatus()
+        public pay_methods()
         {
-            OneToOneReservations = new HashSet<OneToOneReservation>();
+            orders = new HashSet<order>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ReservationId { get; set; }
+        public int Id { get; set; }
 
-        [Required]
-        [StringLength(10)]
-        public string ReservationStatusDescription { get; set; }
+        [StringLength(50)]
+        public string pay_method { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+        public virtual ICollection<order> orders { get; set; }
     }
 }

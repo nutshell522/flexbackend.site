@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFModels", "EFModels\EFModels.csproj", "{4A45E52A-D1B4-450B-A455-D01FF085E499}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.dll", "Discount.dll\Discount.dll.csproj", "{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{4A45E52A-D1B4-450B-A455-D01FF085E499}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A45E52A-D1B4-450B-A455-D01FF085E499}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A45E52A-D1B4-450B-A455-D01FF085E499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

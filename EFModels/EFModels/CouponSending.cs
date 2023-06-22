@@ -22,5 +22,7 @@ namespace EFModels.EFModels
         public DateTime? RedeemedDate { get; set; }
 
         public virtual Coupon Coupon { get; set; }
+
+        public virtual Member Member { get; set; }
     }
 }

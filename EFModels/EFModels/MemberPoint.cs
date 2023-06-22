@@ -6,15 +6,19 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ShoppingCart
+    public partial class MemberPoint
     {
         [Key]
-        public int CartId { get; set; }
+        public int MemberPointsId { get; set; }
 
-        public int fk_MemberID { get; set; }
+        public int PointSubtotal { get; set; }
 
-        public virtual CartItem CartItem { get; set; }
+        public int fk_PointHistoryId { get; set; }
+
+        public int fk_MemberId { get; set; }
 
         public virtual Member Member { get; set; }
+
+        public virtual PointHistory PointHistory { get; set; }
     }
 }

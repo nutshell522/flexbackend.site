@@ -1,6 +1,6 @@
-USE [Flex]
+USE [FlexEShop]
 GO
-/****** Object:  Table [dbo].[Activities]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[Activities]    Script Date: 2023/6/22 上午 09:49:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -26,7 +26,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ActivityCategories]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[ActivityCategories]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -40,21 +40,21 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ActivityStatuses]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[ActivityStatuses]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ActivityStatuses](
 	[ActivityStatusId] [int] IDENTITY(1,1) NOT NULL,
-	[ActivityStatus] [nvarchar](50) NULL,
+	[ActivityStatusDescription] [nvarchar](50) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ActivityStatusId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Branches]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[Branches]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -69,7 +69,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OneToOneReservations]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[OneToOneReservations]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,21 +89,21 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ReservationStatuses]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[ReservationStatuses]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ReservationStatuses](
 	[ReservationId] [int] NOT NULL,
-	[ReservationStatus] [nvarchar](10) NOT NULL,
+	[ReservationStatusDescription] [nvarchar](10) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ReservationId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SpeakerFields]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[SpeakerFields]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +117,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Speakers]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Table [dbo].[Speakers]    Script Date: 2023/6/22 上午 09:49:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -168,11 +168,11 @@ SET IDENTITY_INSERT [dbo].[ActivityCategories] OFF
 GO
 SET IDENTITY_INSERT [dbo].[ActivityStatuses] ON 
 GO
-INSERT [dbo].[ActivityStatuses] ([ActivityStatusId], [ActivityStatus]) VALUES (3, N'已下架')
+INSERT [dbo].[ActivityStatuses] ([ActivityStatusId], [ActivityStatusDescription]) VALUES (3, N'已下架')
 GO
-INSERT [dbo].[ActivityStatuses] ([ActivityStatusId], [ActivityStatus]) VALUES (2, N'已上架')
+INSERT [dbo].[ActivityStatuses] ([ActivityStatusId], [ActivityStatusDescription]) VALUES (2, N'已上架')
 GO
-INSERT [dbo].[ActivityStatuses] ([ActivityStatusId], [ActivityStatus]) VALUES (1, N'待上架')
+INSERT [dbo].[ActivityStatuses] ([ActivityStatusId], [ActivityStatusDescription]) VALUES (1, N'待上架')
 GO
 SET IDENTITY_INSERT [dbo].[ActivityStatuses] OFF
 GO
@@ -218,9 +218,9 @@ INSERT [dbo].[OneToOneReservations] ([ReservationId], [fk_BookerId], [Reservatio
 GO
 SET IDENTITY_INSERT [dbo].[OneToOneReservations] OFF
 GO
-INSERT [dbo].[ReservationStatuses] ([ReservationId], [ReservationStatus]) VALUES (1, N'已完成')
+INSERT [dbo].[ReservationStatuses] ([ReservationId], [ReservationStatusDescription]) VALUES (1, N'已完成')
 GO
-INSERT [dbo].[ReservationStatuses] ([ReservationId], [ReservationStatus]) VALUES (0, N'未完成')
+INSERT [dbo].[ReservationStatuses] ([ReservationId], [ReservationStatusDescription]) VALUES (0, N'未完成')
 GO
 SET IDENTITY_INSERT [dbo].[SpeakerFields] ON 
 GO
@@ -260,15 +260,15 @@ SET IDENTITY_INSERT [dbo].[Speakers] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Activity__121B440BAECCF83D]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Index [UQ__Activity__121B440BD4DEB4B4]    Script Date: 2023/6/22 上午 09:49:21 ******/
 ALTER TABLE [dbo].[ActivityStatuses] ADD UNIQUE NONCLUSTERED 
 (
-	[ActivityStatus] ASC
+	[ActivityStatusDescription] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Branches__3903DB03A361AF34]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Index [UQ__Branches__3903DB031FF96DF0]    Script Date: 2023/6/22 上午 09:49:21 ******/
 ALTER TABLE [dbo].[Branches] ADD UNIQUE NONCLUSTERED 
 (
 	[BranchName] ASC
@@ -276,7 +276,7 @@ ALTER TABLE [dbo].[Branches] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Branches__F50DE17A459014A5]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Index [UQ__Branches__F50DE17A653B9398]    Script Date: 2023/6/22 上午 09:49:21 ******/
 ALTER TABLE [dbo].[Branches] ADD UNIQUE NONCLUSTERED 
 (
 	[BranchAddress] ASC
@@ -284,10 +284,10 @@ ALTER TABLE [dbo].[Branches] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Reservat__31AFC63EF9DA4AB4]    Script Date: 2023/6/21 下午 04:47:29 ******/
+/****** Object:  Index [UQ__Reservat__31AFC63E4C652668]    Script Date: 2023/6/22 上午 09:49:21 ******/
 ALTER TABLE [dbo].[ReservationStatuses] ADD UNIQUE NONCLUSTERED 
 (
-	[ReservationStatus] ASC
+	[ReservationStatusDescription] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[OneToOneReservations] ADD  DEFAULT (getdate()) FOR [ReservationCreatedDate]

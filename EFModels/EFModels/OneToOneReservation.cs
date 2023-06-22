@@ -27,6 +27,8 @@ namespace EFModels.EFModels
 
         public virtual Branch Branch { get; set; }
 
+        public virtual Member Member { get; set; }
+
         public virtual Speaker Speaker { get; set; }
 
         public virtual ReservationStatus ReservationStatus { get; set; }

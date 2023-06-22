@@ -17,9 +17,8 @@ namespace EFModels.EFModels
 
         public int ActivityStatusId { get; set; }
 
-        [Column("ActivityStatus")]
         [StringLength(50)]
-        public string ActivityStatus1 { get; set; }
+        public string ActivityStatusDescription { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Activity> Activities { get; set; }

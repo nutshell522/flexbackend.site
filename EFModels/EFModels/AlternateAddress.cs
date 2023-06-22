@@ -6,14 +6,18 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ShoppingCart
+    public partial class AlternateAddress
     {
         [Key]
-        public int CartId { get; set; }
+        public int AddressId { get; set; }
 
-        public int fk_MemberID { get; set; }
+        [StringLength(300)]
+        public string AlternateAddress1 { get; set; }
 
-        public virtual CartItem CartItem { get; set; }
+        [StringLength(300)]
+        public string AlternateAddress2 { get; set; }
+
+        public int? fk_MemberId { get; set; }
 
         public virtual Member Member { get; set; }
     }

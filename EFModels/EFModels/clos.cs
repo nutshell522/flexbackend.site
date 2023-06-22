@@ -6,24 +6,22 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ReservationStatuses")]
-    public partial class ReservationStatus
+    [Table("closes")]
+    public partial class clos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReservationStatus()
+        public clos()
         {
-            OneToOneReservations = new HashSet<OneToOneReservation>();
+            orders = new HashSet<order>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ReservationId { get; set; }
+        public int Id { get; set; }
 
-        [Required]
-        [StringLength(10)]
-        public string ReservationStatusDescription { get; set; }
+        public bool? close { get; set; }
+
+        public DateTime? close_date { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+        public virtual ICollection<order> orders { get; set; }
     }
 }

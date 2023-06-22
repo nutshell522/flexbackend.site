@@ -6,24 +6,24 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ReservationStatuses")]
-    public partial class ReservationStatus
+    public partial class Privilege
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ReservationStatus()
+        public Privilege()
         {
-            OneToOneReservations = new HashSet<OneToOneReservation>();
+            MembershipLevels = new HashSet<MembershipLevel>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ReservationId { get; set; }
+        public int PrivilegeId { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string ReservationStatusDescription { get; set; }
+        [StringLength(30)]
+        public string PrivilegeName { get; set; }
+
+        [StringLength(300)]
+        public string Description { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+        public virtual ICollection<MembershipLevel> MembershipLevels { get; set; }
     }
 }

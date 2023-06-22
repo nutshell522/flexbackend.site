@@ -15,9 +15,13 @@ namespace EFModels.EFModels
 
         [Key]
         [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int fk_ProductId { get; set; }
+        [StringLength(254)]
+        public string fk_ProductId { get; set; }
 
-        public virtual ProjectTag ProjectTag { get; set; }
+        public virtual Product Product { get; set; }
+
+        public virtual ProjectTagItem ProjectTagItems1 { get; set; }
+
+        public virtual ProjectTagItem ProjectTagItem1 { get; set; }
     }
 }

@@ -6,33 +6,29 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ProjectTag
+    public partial class ShoesColorCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectTag()
+        public ShoesColorCategory()
         {
-            Coupons = new HashSet<Coupon>();
-            Discounts = new HashSet<Discount>();
+            Customized_materials = new HashSet<Customized_materials>();
+            Customized_Shoes = new HashSet<Customized_Shoes>();
         }
 
-        public int ProjectTagId { get; set; }
+        [Key]
+        public int ShoesColorId { get; set; }
 
         [Required]
-        [StringLength(30)]
-        public string ProjectTagName { get; set; }
+        [StringLength(50)]
+        public string ColorName { get; set; }
 
-        public DateTime CreateAt { get; set; }
-
-        public DateTime ModifiedAt { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Coupon> Coupons { get; set; }
+        [StringLength(100)]
+        public string ColorCode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Discount> Discounts { get; set; }
+        public virtual ICollection<Customized_materials> Customized_materials { get; set; }
 
-        public virtual ProjectTag ProjectTags1 { get; set; }
-
-        public virtual ProjectTag ProjectTag1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customized_Shoes> Customized_Shoes { get; set; }
     }
 }

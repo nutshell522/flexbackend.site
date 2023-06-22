@@ -53,26 +53,64 @@
     <Compile Include="EFModels\Activity.cs" />
     <Compile Include="EFModels\ActivityCategory.cs" />
     <Compile Include="EFModels\ActivityStatus.cs" />
+    <Compile Include="EFModels\AlternateAddress.cs" />
     <Compile Include="EFModels\AppDbContext.cs" />
+    <Compile Include="EFModels\BlackList.cs" />
     <Compile Include="EFModels\Branch.cs" />
     <Compile Include="EFModels\CartItem.cs" />
+    <Compile Include="EFModels\clos.cs" />
+    <Compile Include="EFModels\ColorCategory.cs" />
     <Compile Include="EFModels\Coupon.cs" />
     <Compile Include="EFModels\CouponCategory.cs" />
     <Compile Include="EFModels\CouponSending.cs" />
+    <Compile Include="EFModels\CustomizedOrder.cs" />
+    <Compile Include="EFModels\Customized_materials.cs" />
+    <Compile Include="EFModels\Customized_Shoes.cs" />
+    <Compile Include="EFModels\Department.cs" />
     <Compile Include="EFModels\Discount.cs" />
+    <Compile Include="EFModels\JobTitle.cs" />
+    <Compile Include="EFModels\logistics_companies.cs" />
+    <Compile Include="EFModels\Member.cs" />
+    <Compile Include="EFModels\MemberPoint.cs" />
+    <Compile Include="EFModels\MembershipLevel.cs" />
     <Compile Include="EFModels\OneToOneReservation.cs" />
+    <Compile Include="EFModels\order.cs" />
+    <Compile Include="EFModels\orderItem.cs" />
+    <Compile Include="EFModels\order_statuses.cs" />
+    <Compile Include="EFModels\pay_methods.cs" />
+    <Compile Include="EFModels\pay_statuses.cs" />
+    <Compile Include="EFModels\PointCategory.cs" />
+    <Compile Include="EFModels\PointHistory.cs" />
+    <Compile Include="EFModels\PointManage.cs" />
+    <Compile Include="EFModels\PointTradeIn.cs" />
+    <Compile Include="EFModels\Privilege.cs" />
+    <Compile Include="EFModels\Product.cs" />
+    <Compile Include="EFModels\ProductCategory.cs" />
+    <Compile Include="EFModels\ProductGroup.cs" />
+    <Compile Include="EFModels\ProductImg.cs" />
+    <Compile Include="EFModels\ProductSubCategory.cs" />
     <Compile Include="EFModels\ProjectTag.cs" />
     <Compile Include="EFModels\ProjectTagItem.cs" />
     <Compile Include="EFModels\ReservationStatus.cs" />
+    <Compile Include="EFModels\SalesCategory.cs" />
+    <Compile Include="EFModels\ShoesCategory.cs" />
+    <Compile Include="EFModels\ShoesColorCategory.cs" />
+    <Compile Include="EFModels\ShoesPicture.cs" />
     <Compile Include="EFModels\ShoppingCart.cs" />
+    <Compile Include="EFModels\SizeCategory.cs" />
     <Compile Include="EFModels\Speaker.cs" />
     <Compile Include="EFModels\SpeakerField.cs" />
+    <Compile Include="EFModels\Staff.cs" />
+    <Compile Include="EFModels\StaffPermission.cs" />
+    <Compile Include="EFModels\Supplier.cs" />
     <Compile Include="EFModels\sysdiagram.cs" />
+    <Compile Include="EFModels\Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
