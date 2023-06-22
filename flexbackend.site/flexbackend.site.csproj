@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2115,10 +2116,11 @@
     <Content Include="Content\IndexPageStyle.css" />
     <Content Include="Content\table.css" />
     <Content Include="Content\variables.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Public\Img\flex.ico" />
     <Content Include="Fonts\OFL.txt" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Public\Img\FlexLogo.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2245,7 +2247,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\FileContentIndex\merges\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\v17\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\DIscount\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -2273,6 +2275,12 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EFModels\EFModels.csproj">
+      <Project>{4a45e52a-d1b4-450b-a455-d01ff085e499}</Project>
+      <Name>EFModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
