@@ -59,6 +59,9 @@
     <Compile Include="Models\Interface\IProductRepository.cs" />
     <Compile Include="Models\Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
+    <Compile Include="Models\ViewModel\ProductEditImgVM.cs" />
+    <Compile Include="Models\ViewModel\ProductEditVM.cs" />
+    <Compile Include="Models\ViewModel\ProductIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

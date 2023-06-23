@@ -10,37 +10,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace flexbackend.site.Controllers
 {
     public class ProductController : Controller
     {
+		private AppDbContext _db=new AppDbContext();
         // GET: Product
         public ActionResult Index()
         {
+			var products = _db.Products.Include(p => p.ProductSubCategory);
             return View();
         }
 
-		public ActionResult CreateProduct()
+		public ActionResult Create()
 		{
+			//PrepareProductSubCategoty(null);
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult ProductCreate(ProductCreateVM vm)
+		public ActionResult Create(ProductCreateVM vm)
 		{
 			if(ModelState.IsValid==false)return View(vm);
 			Result result = CreateProduct(vm);
 
 			if (result.IsSucces)
 			{
-				return View(vm);
+				return RedirectToAction("Index");
 			}
 			else
 			{
 				ModelState.AddModelError(string.Empty, result.ErroeMessage);
-				return View("Index");
+				return View(vm);
 			}
 		}
 
@@ -51,9 +55,10 @@ namespace flexbackend.site.Controllers
 			return service.CreateProduct(vm.ToDto());
 		}
 
-		private void PrepareProductSubCategoty(int? ProductSubCategoryId)
-		{
-			
-		}
+		//private void PrepareProductSubCategoty(int? productSubCategoryId)
+		//{
+		//	var productSubCategories = _db.ProductSubCategories.ToList().Prepend(new ProductSubCategory());
+		//	ViewBag.ProductSubCategories = new SelectList(productSubCategories, "ProductSubCategoryId", "SubCategoryPath", productSubCategoryId);
+		//}
 	}
 }
