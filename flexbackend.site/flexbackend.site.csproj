@@ -47,6 +47,12 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.138\lib\net461\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -54,6 +60,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,6 +133,61 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EFModels\Activity.cs" />
+    <Compile Include="Models\EFModels\ActivityCategory.cs" />
+    <Compile Include="Models\EFModels\ActivityStatus.cs" />
+    <Compile Include="Models\EFModels\AlternateAddress.cs" />
+    <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\BlackList.cs" />
+    <Compile Include="Models\EFModels\Branch.cs" />
+    <Compile Include="Models\EFModels\CartItem.cs" />
+    <Compile Include="Models\EFModels\clos.cs" />
+    <Compile Include="Models\EFModels\ColorCategory.cs" />
+    <Compile Include="Models\EFModels\Coupon.cs" />
+    <Compile Include="Models\EFModels\CouponCategory.cs" />
+    <Compile Include="Models\EFModels\CouponSending.cs" />
+    <Compile Include="Models\EFModels\CustomizedOrder.cs" />
+    <Compile Include="Models\EFModels\Customized_materials.cs" />
+    <Compile Include="Models\EFModels\Customized_Shoes.cs" />
+    <Compile Include="Models\EFModels\Department.cs" />
+    <Compile Include="Models\EFModels\Discount.cs" />
+    <Compile Include="Models\EFModels\JobTitle.cs" />
+    <Compile Include="Models\EFModels\logistics_companies.cs" />
+    <Compile Include="Models\EFModels\Member.cs" />
+    <Compile Include="Models\EFModels\MemberPoint.cs" />
+    <Compile Include="Models\EFModels\MembershipLevel.cs" />
+    <Compile Include="Models\EFModels\MembershipLevelPrivilege.cs" />
+    <Compile Include="Models\EFModels\OneToOneReservation.cs" />
+    <Compile Include="Models\EFModels\order.cs" />
+    <Compile Include="Models\EFModels\orderItem.cs" />
+    <Compile Include="Models\EFModels\order_statuses.cs" />
+    <Compile Include="Models\EFModels\pay_methods.cs" />
+    <Compile Include="Models\EFModels\pay_statuses.cs" />
+    <Compile Include="Models\EFModels\PointCategory.cs" />
+    <Compile Include="Models\EFModels\PointHistory.cs" />
+    <Compile Include="Models\EFModels\PointManage.cs" />
+    <Compile Include="Models\EFModels\PointTradeIn.cs" />
+    <Compile Include="Models\EFModels\Privilege.cs" />
+    <Compile Include="Models\EFModels\Product.cs" />
+    <Compile Include="Models\EFModels\ProductCategory.cs" />
+    <Compile Include="Models\EFModels\ProductGroup.cs" />
+    <Compile Include="Models\EFModels\ProductImg.cs" />
+    <Compile Include="Models\EFModels\ProductSubCategory.cs" />
+    <Compile Include="Models\EFModels\ProjectTag.cs" />
+    <Compile Include="Models\EFModels\ProjectTagItem.cs" />
+    <Compile Include="Models\EFModels\ReservationStatus.cs" />
+    <Compile Include="Models\EFModels\SalesCategory.cs" />
+    <Compile Include="Models\EFModels\ShoesCategory.cs" />
+    <Compile Include="Models\EFModels\ShoesColorCategory.cs" />
+    <Compile Include="Models\EFModels\ShoesPicture.cs" />
+    <Compile Include="Models\EFModels\ShoppingCart.cs" />
+    <Compile Include="Models\EFModels\SizeCategory.cs" />
+    <Compile Include="Models\EFModels\Speaker.cs" />
+    <Compile Include="Models\EFModels\SpeakerField.cs" />
+    <Compile Include="Models\EFModels\Staff.cs" />
+    <Compile Include="Models\EFModels\StaffPermission.cs" />
+    <Compile Include="Models\EFModels\Supplier.cs" />
+    <Compile Include="Models\EFModels\Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2280,6 +2343,10 @@
     <ProjectReference Include="..\EFModels\EFModels.csproj">
       <Project>{4a45e52a-d1b4-450b-a455-d01ff085e499}</Project>
       <Name>EFModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Members.dll\Members.dll.csproj">
+      <Project>{64ee0a94-1592-45ad-a02e-24e58a3e6cf8}</Project>
+      <Name>Members.dll</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
