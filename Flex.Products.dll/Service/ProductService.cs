@@ -1,13 +1,15 @@
-﻿using Flex.Products.dll.Models.Dtos;
+﻿using EFModels.EFModels;
+using Flex.Products.dll.Interface;
+using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.Exts;
-using Flex.Products.dll.Models.Interface;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flex.Products.dll.Models.Service
+namespace Flex.Products.dll.Service
 {
 	public class ProductService
 	{

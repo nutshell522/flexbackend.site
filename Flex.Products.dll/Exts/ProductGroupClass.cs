@@ -13,11 +13,5 @@ namespace Flex.Products.dll.Models.Infra.Exts
 		public int Qty { get; set; }
 		public string ColorName { get; set; }
 		public string SizeName { get; set; }
-		public ProductGroupClass(int colorId, int sizeId, int qty)
-		{
-			this.ColorId = colorId;
-			this.SizeId = sizeId;
-			this.Qty = qty;
-		}
 	}
 }

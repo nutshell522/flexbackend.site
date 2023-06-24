@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flex.Products.dll.Models.Interface
+namespace Flex.Products.dll.Interface
 {
 	public interface IProductRepository
 	{

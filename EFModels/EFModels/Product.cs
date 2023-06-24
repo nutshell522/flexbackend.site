@@ -17,6 +17,7 @@ namespace EFModels.EFModels
         }
 
         [StringLength(254)]
+        [Display(Name ="²£«~ID")]
         public string ProductId { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
-﻿using Flex.Products.dll.Models.Infra.Exts;
+﻿using EFModels.EFModels;
+using Flex.Products.dll.Models.Infra.Exts;
 using Flex.Products.dll.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace Flex.Products.dll.Models.Dtos
 		public string Tag { get; set; }
 
 		public int fk_ProductSubCategoryId { get; set; }
+		public ProductSubCategory ProductSubCategory { get; set; }
 
 		public DateTime CreateTime { get; set; }
 
@@ -40,28 +42,6 @@ namespace Flex.Products.dll.Models.Dtos
 
 		public List<string> ImgPaths { get; set; }
 
-		public IEnumerable<ProductGroupClass> productGroups { get; set; }
-	}
-	public static class ProductExts
-	{
-		public static ProductDto ToDto(this ProductCreateVM vm)
-		{
-			return new ProductDto
-			{
-				ProductId = vm.ProductId,
-				ProductName = vm.ProductName,
-				ProductDescription = vm.ProductDescription,
-				ProductMaterial = vm.ProductMaterial,
-				ProductOrigin = vm.ProductOrigin,
-				UnitPrice = vm.UnitPrice,
-				SalesPrice = vm.SalesPrice,
-				StartTime = vm.StartTime,
-				EndTime = vm.EndTime,
-				Tag = vm.Tag,
-				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
-				ImgPaths = vm.ImgPaths,
-				productGroups = vm.productGroups,
-			};
-		}
+		public List<ProductGroupClass> ProductGroups { get; set; }
 	}
 }

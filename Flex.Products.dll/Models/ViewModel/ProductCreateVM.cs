@@ -68,6 +68,6 @@ namespace Flex.Products.dll.Models.ViewModel
 		public List<string> ImgPaths { get; set; }
 
 		[Display(Name = "規格")]
-		public IEnumerable<ProductGroupClass> productGroups { get; set; }
+		public IEnumerable<ProductGroupClass> ProductGroups { get; set; }
 	}
 }

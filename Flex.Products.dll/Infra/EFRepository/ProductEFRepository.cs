@@ -1,12 +1,13 @@
 ﻿using EFModels.EFModels;
 using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.Exts;
-using Flex.Products.dll.Models.Interface;
+using Flex.Products.dll.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Flex.Products.dll.Models.Infra.EFRepository
 {
@@ -24,24 +25,8 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 		public void CreateProduct(ProductDto dto)
 		{
 			//將ProductDto依序轉換成Products,group,img存入database
-			var product = new Product
-			{
-				ProductId = dto.ProductId,
-				ProductName = dto.ProductName,
-				ProductDescription = dto.ProductDescription,
-				ProductMaterial = dto.ProductMaterial,
-				ProductOrigin = dto.ProductOrigin,
-				UnitPrice = dto.UnitPrice,
-				SalesPrice = dto.SalesPrice,
-				StartTime = dto.StartTime,
-				EndTime = dto.EndTime,
-				LogOut = dto.LogOut,
-				Tag = dto.Tag,
-				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
-				CreateTime = dto.CreateTime,
-				EditTime = dto.EditTime
-			};
-			_db.Products.Add(product);
+			var product = dto.DtoToEntity();
+			 _db.Products.Add(product);
 			
 			foreach(var img in dto.ImgPaths)
 			{
@@ -53,7 +38,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 				_db.ProductImgs.Add(productimg);
 			}
 
-			foreach(var group in dto.productGroups)
+			foreach(var group in dto.ProductGroups)
 			{
 				var productGroup = new ProductGroup
 				{
@@ -65,7 +50,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 				_db.ProductGroups.Add(productGroup);
 			}
 
-			_db.SaveChanges();
+			 _db.SaveChanges();
 		}
 
 		public bool ValidationStartAndEndTime(DateTime start, DateTime? end)
@@ -73,5 +58,14 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			if(end!=null && start > end) { return true; }
 			return false;
         }
+
+		public List<ProductDto> Search()
+		{
+			var query = _db.Products.Include(p => p.ProductSubCategory).Include(p => p.ProductGroups);
+
+
+			var products = query.OrderBy(p => p.CreateTime);//.ToList().Select(p => p.ToIndexVM());
+			return products.ToList().Select(p => p.ToDto()).ToList();
+		}
 	}
 }
