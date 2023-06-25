@@ -13,6 +13,5 @@ namespace Members.dll.Models.Interfaces
 		void Register(RegisterDto dto); //將會員寫到資料庫裡
 
 		bool ExistAccount(string account); //判斷帳號是否存在
-
 	}
 }

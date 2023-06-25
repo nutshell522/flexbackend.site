@@ -34,7 +34,8 @@ namespace Members.dll.Models.Dtos
 		public string ConfirmCode { get; set; }
 	}
 
-	public static class RegisterExts
+	//擴充方法，將RegisterVM 轉為 RegisterDto，寫入資料庫
+	public static class RegisterExts 
 	{
 		public static  RegisterDto ToDto(this RegisterVM vm)
 		{

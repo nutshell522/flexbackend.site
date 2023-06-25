@@ -49,12 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\Dtos\MembersDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
     <Compile Include="Models\Interfaces\IMemberRepository.cs" />
     <Compile Include="Models\lnfra\EFRepositories\MemberEFRepository.cs" />
     <Compile Include="Models\lnfra\HashUtility.cs" />
     <Compile Include="Models\lnfra\Result.cs" />
     <Compile Include="Models\Services\MemberService.cs" />
+    <Compile Include="Models\ViewsModels\MembersEditVM.cs" />
+    <Compile Include="Models\ViewsModels\MembersIndexVM.cs" />
     <Compile Include="Models\ViewsModels\RegisterVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

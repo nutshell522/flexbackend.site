@@ -15,6 +15,18 @@ namespace flexbackend.site.Controllers
 {
 	public class MembersController : Controller
 	{
+		private AppDbContext db =new AppDbContext();//初始化EF的DbContext物件
+		
+		//會員名單總覽
+		public ActionResult MembersList()
+		{
+			var members = db.Members
+			.ToList()
+			.Select(m =>m.ToIndexVM());
+			return View(members);
+		}
+
+		//會員註冊
 		public ActionResult Register()
 		{
 			return View();
@@ -40,6 +52,17 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
+		//public ActionResult ActionRegister(int memberId,string confirmCode)
+		//{ 
+		//	Result result = ActiveMember( memberId, confirmCode);
+
+		//	return View();
+		//}
+
+		//public ActionResult Login()
+		//{
+		//	return View();
+		//}
 
 		private Result RegisterMember(RegisterVM vm)
 		{

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Members.dll.Models.ViewsModels
 {
+	//會員註冊頁面，驗證欄位格式
 	public class RegisterVM
 	{
 		[Required]

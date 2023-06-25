@@ -2,7 +2,7 @@
 [v]建立Members.dll，並讓flexbackend參考它
 [v]在Members.dll建立三層式架構資料夾
 
-[working on]會員註冊功能
+[-]會員註冊功能
 	-Controllers
 	  -MembersController.cs
 
@@ -36,3 +36,22 @@
 	-Views
 	  -Members
 	   ComfirmRegister.cshtml 會員註冊成功頁面
+
+[working on]會員名單總覽 MembersList
+	-Controllers
+	  -MembersController.cs 
+
+	-Models
+	  -ViewsModels 寫驗證規則
+		add MembersIndexVM.cs , view model
+		add MembersEditVM.cs , view model
+		Search function
+		Create Edit form 要加 Dropdown,Checkbox
+
+
+	  -Dtos 用來傳遞資料，內具有擴充方法(Dto->VM)
+	    MembersDto.cs
+
+	-Views
+	  -Members
+	   MembersList.cshtml 頁面
