@@ -12,11 +12,11 @@ $(function () {
     });
 
     $(".check-all").on('change', function () {
-        $(this).closest('.table-container').find('input[type="checkbox"]:not(.check-all)').prop('checked', $(this).is(':checked'));
+        $(this).closest('.table-container').find('input[type="checkbox"].check-item').prop('checked', $(this).is(':checked'));
     })
-    $(".table-container").on('change', 'input[type="checkbox"]:not(.check-all)', function () {
+    $(".table-container").on('change', 'input[type="checkbox"].check-item', function () {
         var tableContainer = $(this).closest('.table-container');
-        var checkboxes = tableContainer.find('input[type="checkbox"]:not(.check-all)');
+        var checkboxes = tableContainer.find('input[type="checkbox"].check-item');
         var checkAll = tableContainer.find('.check-all');
 
         if (checkboxes.length === checkboxes.filter(':checked').length) {
