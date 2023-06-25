@@ -61,7 +61,7 @@ namespace EFModels.EFModels
         public bool? IsConfirmed { get; set; }
 
         [StringLength(50)]
-        public string Confirmed { get; set; }
+        public string ConfirmCode { get; set; }
 
         public int fk_LevelId { get; set; }
 

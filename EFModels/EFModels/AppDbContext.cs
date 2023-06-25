@@ -198,7 +198,7 @@ namespace EFModels.EFModels
                 .IsUnicode(false);
 
             modelBuilder.Entity<Member>()
-                .Property(e => e.Confirmed)
+                .Property(e => e.ConfirmCode)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Member>()
