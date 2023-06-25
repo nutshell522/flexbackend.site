@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Flex.Products.dll.Exts;
 using Flex.Products.dll.Service;
 using static Flex.Products.dll.Service.ProductService;
+using Flex.Products.dll.Models.ViewModel;
 
 namespace Flex.Products.dll.Models.Infra.EFRepository
 {
@@ -25,32 +26,32 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 		public void CreateProduct(ProductDto dto)
 		{
 			//將ProductDto依序轉換成Products,group,img存入database
-			var product = dto.DtoToEntity();
+			var product = dto.ToCreateEntity();
 			 _db.Products.Add(product);
-			
-			foreach(var img in dto.ImgPaths)
-			{
-				var productimg = new ProductImg
-				{
-					fk_ProductId = dto.ProductId,
-					ImgPath = img
-				};
-				_db.ProductImgs.Add(productimg);
-			}
 
-			foreach(var group in dto.ProductGroups)
-			{
-				var productGroup = new ProductGroup
-				{
-					fk_ProductId = dto.ProductId,
-					fk_ColorId = group.ColorId,
-					fk_SizeID = group.SizeId,
-					Qty = group.Qty,
-				};
-				_db.ProductGroups.Add(productGroup);
-			}
+			//foreach (var img in product.ProductImgs)
+			//{
+			//	var productimg = new ProductImg
+			//	{
+			//		fk_ProductId = img.fk_ProductId,
+			//		ImgPath = img.ImgPath
+			//	};
+			//	_db.ProductImgs.Add(productimg);
+			//}
 
-			 _db.SaveChanges();
+			//foreach(var group in product.ProductGroups)
+			//{
+			//	var productGroup = new ProductGroup
+			//	{
+			//		fk_ProductId = group.fk_ProductId,
+			//		fk_ColorId = group.fk_ColorId,
+			//		fk_SizeID = group.fk_SizeID,
+			//		Qty = group.Qty,
+			//	};
+			//	_db.ProductGroups.Add(productGroup);
+			//}
+
+			_db.SaveChanges();
 		}
 		public List<ProductDto> Search(IndexSearchCriteria criteria)
 		{
@@ -88,22 +89,11 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			}
 			#endregion
 
-			var products = query.OrderBy(p => p.CreateTime).ToList().Select(p => p.ToDto()).ToList();
+			var products = query.OrderBy(p => p.CreateTime).ToList().Select(p => p.ToIndexDto()).ToList();
 
 			//排除LogOut
 			products=products.Where(p=>p.LogOut==false).ToList();
 			return products;
-		}
-
-		public bool ValidationStartAndEndTime(DateTime start, DateTime? end)
-		{
-			if(end!=null && start > end) { return true; }
-			return false;
-        }
-		public bool ExisProductID(string ProductId)
-		{
-			return _db.Products.Any(p => p.ProductId == ProductId);
-		}
-		
+		}		
 	}
 }

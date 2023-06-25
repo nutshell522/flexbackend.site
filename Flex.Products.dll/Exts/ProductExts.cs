@@ -28,7 +28,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 			};
 		}
 
-		public static ProductDto ToDto(this Product entity)
+		public static ProductDto ToIndexDto(this Product entity)
 		{
 			return new ProductDto
 			{
@@ -56,7 +56,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 			};
 		}
 
-		public static ProductDto ToDto(this ProductCreateVM vm)
+		public static ProductDto ToCreateDto(this ProductCreateVM vm)
 		{
 			return new ProductDto
 			{
@@ -72,13 +72,15 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				Tag = vm.Tag,
 				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
 				ImgPaths = vm.ImgPaths,
-				//ProductGroups = vm.ProductGroups,
+				ProductGroups = vm.ProductGroups,
+				CreateTime=DateTime.Now,
+				EditTime=DateTime.Now,
 			};
 		}
 
-		public static Product DtoToEntity(this ProductDto dto)
-		{ 
-			return  new Product
+		public static Product ToCreateEntity(this ProductDto dto)
+		{
+			return new Product
 			{
 				ProductId = dto.ProductId,
 				ProductName = dto.ProductName,
@@ -93,7 +95,19 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				Tag = dto.Tag,
 				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
 				CreateTime = dto.CreateTime,
-				EditTime = dto.EditTime
+				EditTime = dto.EditTime,
+				ProductImgs = dto.ImgPaths.Select(p => new ProductImg
+				{
+					fk_ProductId = dto.ProductId,
+					ImgPath = p
+				}).ToList(),
+				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
+				{
+					fk_ProductId = dto.ProductId,
+					fk_ColorId = p.ColorId,
+					fk_SizeID = p.SizeId,
+					Qty = p.Qty
+				}).ToList()
 			};
 		}
 	}

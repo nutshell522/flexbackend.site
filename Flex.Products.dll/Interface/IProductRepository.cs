@@ -1,5 +1,6 @@
 ﻿using Flex.Products.dll.Exts;
 using Flex.Products.dll.Models.Dtos;
+using Flex.Products.dll.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,7 @@ namespace Flex.Products.dll.Interface
 {
 	public interface IProductRepository
 	{
-		void CreateProduct(ProductDto dto);
-
-		//判斷產品識別碼是否已存在
-		bool ExisProductID(string ProductId);
-
-		//檢查上下架時間，上架時間不得>下架時間
-		bool ValidationStartAndEndTime(DateTime start, DateTime? end);
+		void CreateProduct(ProductDto vm);
 
 		List<ProductDto> Search(IndexSearchCriteria criteria);
 	}

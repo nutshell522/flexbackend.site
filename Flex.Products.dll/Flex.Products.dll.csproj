@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Exts\CategoryExts.cs" />
     <Compile Include="Exts\IndexSearchCriteria.cs" />
+    <Compile Include="Infra\EFRepository\ColorRepository.cs" />
+    <Compile Include="Models\Dtos\ColorDto.cs" />
     <Compile Include="Models\Dtos\ProductDto.cs" />
     <Compile Include="Infra\EFRepository\ProductEFRepository.cs" />
     <Compile Include="Infra\EFRepository\ProductSubCategoryRepository.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Exts\Result.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
     <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
+    <Compile Include="Models\Dtos\SizeDto.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductEditImgVM.cs" />

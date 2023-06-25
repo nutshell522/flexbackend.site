@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,9 +54,11 @@ namespace Flex.Products.dll.Models.ViewModel
 
 		[Display(Name = "上架時間")]
 		[Required(ErrorMessage = "{0}必填")]
+		[Column(TypeName = "datetime")]
 		public DateTime StartTime { get; set; }
 
 		[Display(Name = "下架時間")]
+		[Column(TypeName = "datetime")]
 		public DateTime? EndTime { get; set; }
 
 		[Display(Name = "商品分類")]
@@ -64,10 +67,9 @@ namespace Flex.Products.dll.Models.ViewModel
 		public int fk_ProductSubCategoryId { get; set; }
 
 		[Display(Name = "照片")]
-		[Required(ErrorMessage = "{0}必填")]
 		public List<string> ImgPaths { get; set; }
 
 		[Display(Name = "規格")]
-		public IEnumerable<ProductGroupClass> ProductGroups { get; set; }
+		public List<ProductGroupClass> ProductGroups { get; set; }
 	}
 }

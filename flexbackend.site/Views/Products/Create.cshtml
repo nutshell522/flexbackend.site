@@ -1,151 +1,188 @@
-﻿@model EFModels.EFModels.Product
+﻿@model Flex.Products.dll.Models.ViewModel.ProductCreateVM
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增商品";
 }
 
-<h2>Create</h2>
+<h2>新增商品</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+
     <div class="row">
-        <h4>Product</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="mb-3">
-            @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "form-label" })
+        <div class="mb-3 col-12 d-flex">
+            <div class="col-3">
+                @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
-        </div>
+            </div>
 
-        <div class="mb-3">
-            @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "form-label" })
+            <div class="col-3 ms-3">
+                @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+            </div>
         </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-12">
+            <div class="mb-3">
+                @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new { @class = "form-label" })
+                @Html.TextAreaFor(model => model.ProductDescription, new { @class = "form-control", rows = "5" })
                 @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.ProductMaterial, htmlAttributes: new { @class = "form-label" })
+            @Html.LabelFor(model => model.fk_ProductSubCategoryId, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.fk_ProductSubCategoryId, ViewBag.ProductSubCategoryId as SelectList, new { @class = "form-select" })
+            @Html.ValidationMessageFor(model => model.fk_ProductSubCategoryId, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3 col-12 d-flex">
+            <div class="col-3">
+                @Html.LabelFor(model => model.ProductMaterial, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.ProductMaterial, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProductMaterial, "", new { @class = "text-danger" })
-        </div>
+            </div>
 
-        <div class="mb-3">
-            @Html.LabelFor(model => model.ProductOrigin, htmlAttributes: new { @class = "form-label" })
+            <div class="col-3 ms-3">
+                @Html.LabelFor(model => model.ProductOrigin, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.ProductOrigin, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ProductOrigin, "", new { @class = "text-danger" })
+            </div>
         </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "form-label" })
+        <div class="mb-3 col-12 d-flex">
+            <div class="col-3">
+                @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
-        </div>
+            </div>
 
-        <div class="mb-3">
-            @Html.LabelFor(model => model.SalesPrice, htmlAttributes: new { @class = "form-label" })
+            <div class="col-3 ms-3">
+                @Html.LabelFor(model => model.SalesPrice, htmlAttributes: new { @class = "form-label" })
                 @Html.EditorFor(model => model.SalesPrice, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SalesPrice, "", new { @class = "text-danger" })
+            </div>
         </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="mb-3 col-12 d-flex">
+            <div class="col-3">
+                @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
                 @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
-        </div>
+            </div>
 
-        <div class="mb-3">
-            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-3 ms-3">
+                @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
                 @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.LogOut, htmlAttributes: new { @class = "form-label" })
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.LogOut)
-                    @Html.ValidationMessageFor(model => model.LogOut, "", new { @class = "text-danger" })
-                </div>
+            </div>
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+        </div>
+
+        <div id="createImg">
+            <div id="previewImages"></div>
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.fk_ProductSubCategoryId, "fk_ProductSubCategoryId", htmlAttributes: new { @class = "form-label" })
-                @Html.DropDownList("fk_ProductSubCategoryId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.fk_ProductSubCategoryId, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.ImgPaths, htmlAttributes: new { @class = "form-label" })
+            <input type="file" name="CreateFile" id="createFile" class="form-control" multiple />
+            @Html.ValidationMessageFor(model => model.ImgPaths, "", new { @class = "text-danger" })
         </div>
+        <div class="p-3 mb-3 border border-4 rounded-2" >
+            <span>規格</span>
+            <button class="btn btn-primary ms-3"  type="button" id="addSpecBtn">新增</button>
+            <div id="specContainer">
+                @*@for (int i = 0; i < Model.ProductGroups.Count; i++)
+                    {
+                        <div class="product-group">
+                            @Html.DropDownListFor(model => model.ProductGroups[i].ColorId, ViewBag.Colors as SelectList, new { @class = "form-select", required = "required" })
+                            @Html.ValidationMessageFor(model => model.ProductGroups[i].ColorId, "", new { @class = "text-danger" })
 
+                            @Html.DropDownListFor(model => model.ProductGroups[i].SizeId, ViewBag.Sizes as SelectList, new { @class = "form-select", required = "required" })
+                            @Html.ValidationMessageFor(model => model.ProductGroups[i].SizeId, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.ProductGroups[i].Qty, new { htmlAttributes = new { @class = "form-control", type = "number", required = "required" } })
+                            @Html.ValidationMessageFor(model => model.ProductGroups[i].Qty, "", new { @class = "text-danger" })
+
+                            <button type="button" class="deleteSpecBtn">刪除</button>
+                        </div>
+                    }*@
+            </div>
+        </div>
         <div class="mb-3">
-            @Html.LabelFor(model => model.CreateTime, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.CreateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreateTime, "", new { @class = "text-danger" })
+            <input type="submit" value="新增" class="btn btn-primary" />
+            <button class="btn btn-primary ms-3" onclick='location.href="@Url.Action("Index")"'>取消</button>
         </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.EditTime, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.EditTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EditTime, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <button id="add" type="button">新增</button>
-        </div>
-
-        <div id="123">
-
-        </div>
-
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     <script>
-        var dymnicCount = 0;
-        const deleteHtml = (id) => {
-            dymnicCount = dymnicCount - 1;
-            const div = document.getElementById(id);
-            div.remove();
-        }
-        const addHtml = () => {
-            dymnicCount = dymnicCount + 1;
-            return creteHtml();
-        }
-        const creteHtml = () => {
-            let result = '';
-            for (let i = 0; i < dymnicCount; i++) {
-                result += `
-                <div class="mb-3" id="button_${i}">
-            <label class="form-label" for="EditTime">CORL</label>
-                <input class="form-control text-box single-line" data-val="true" data-val-date="The field EditTime must be a date." data-val-required="EditTime 欄位是必要項。" id="EditTime" name="EditTime" type="datetime" value="">
-                <span class="field-validation-valid text-danger" data-valmsg-for="EditTime" data-valmsg-replace="true"></span>
-                <button type="button" onclick="deleteHtml('button_${i}')">刪除</button>
-        </div>`
-            }
-            return result;
-        }
-        const addButton = document.getElementById("add");
-        addButton.addEventListener("click", () => {
-            const div = document.getElementById('123');
-            div.innerHTML = addHtml()
-        })
+        $(document).ready(function () {
+            $('input[type="file"]').change(function (e) {
+                var files = e.target.files;
+                if (files && files.length > 0) {
+                    $('#previewImages').empty(); // 清空預覽區域
+
+                    for (var i = 0; i < files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var image = $('<img>');
+                            image.attr('src', e.target.result);
+                            image.attr('alt', 'Preview');
+                            image.css('width', '150px');
+                            image.css('height', '150px');
+                            $('#previewImages').append(image);
+                        };
+                        reader.readAsDataURL(files[i]);
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var specContainer = $("#specContainer");
+            var addSpecBtn = $("#addSpecBtn");
+
+            // 新增規格組
+            addSpecBtn.click(function () {
+                var newSpecGroup = $("<div class='product-group'></div>");
+
+                var colorSelect = $("<select class='form-select' name='ProductGroups[" + specContainer.children().length + "].ColorId' required='required'></select>");
+                colorSelect.html($("#colorOptions").html());
+                newSpecGroup.append(colorSelect);
+
+                var sizeSelect = $("<select class='form-select' name='ProductGroups[" + specContainer.children().length + "].SizeId' required='required'></select>");
+                sizeSelect.html($("#sizeOptions").html());
+                newSpecGroup.append(sizeSelect);
+
+                var qtyInput = $("<input class='form-control' type='number' name='ProductGroups[" + specContainer.children().length + "].Qty' required='required' />");
+                newSpecGroup.append(qtyInput);
+
+                var deleteBtn = $("<button type='button' class='deleteSpecBtn'>刪除</button>");
+                deleteBtn.click(function () {
+                    $(this).parent().remove();
+                });
+                newSpecGroup.append(deleteBtn);
+
+                specContainer.append(newSpecGroup);
+            });
+
+            // 刪除規格組
+            specContainer.on("click", ".deleteSpecBtn", function () {
+                $(this).parent().remove();
+            });
+        });
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
