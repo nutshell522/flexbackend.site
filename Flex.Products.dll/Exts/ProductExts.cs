@@ -24,7 +24,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				StartTime = dto.StartTime,
 				EndTime = dto.EndTime,
 				Tag = dto.Tag,
-				ProductGroupList = dto.ProductGroups//.Select(x=> new ProductGroupClass { ColorName = x.ColorCategory.ColorName,SizeName=x.SizeCategory.SizeName,Qty=x.Qty }).ToList()
+				ProductGroupList = dto.ProductGroups
 			};
 		}
 

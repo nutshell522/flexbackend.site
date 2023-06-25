@@ -19,6 +19,7 @@ namespace Flex.Products.dll.Service
             this._repo = repo;
         }
 
+
         public Result CreateProduct(ProductDto dto)
         {
             //檢查ProductId是否存在
@@ -41,4 +42,5 @@ namespace Flex.Products.dll.Service
         }
 
 	}
+	
 }

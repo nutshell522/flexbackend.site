@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exts\CategoryExts.cs" />
+    <Compile Include="Exts\IndexSearchCriteria.cs" />
     <Compile Include="Models\Dtos\ProductDto.cs" />
     <Compile Include="Infra\EFRepository\ProductEFRepository.cs" />
     <Compile Include="Infra\EFRepository\ProductSubCategoryRepository.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Exts\ProductGroupClass.cs" />
     <Compile Include="Exts\Result.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
+    <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductEditImgVM.cs" />

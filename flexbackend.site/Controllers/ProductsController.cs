@@ -8,9 +8,12 @@ using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
 using EFModels.EFModels;
+using Flex.Products.dll.Exts;
 using Flex.Products.dll.Interface;
+using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.EFRepository;
 using Flex.Products.dll.Models.Infra.Exts;
+using Flex.Products.dll.Service;
 
 namespace flexbackend.site.Controllers
 {
@@ -19,12 +22,17 @@ namespace flexbackend.site.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(IndexSearchCriteria criteria)
         {
+            criteria = criteria ?? new IndexSearchCriteria();
+            PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
 
-            //var query = db.Products.Include(p => p.ProductSubCategory).Include(p=>p.ProductGroups);
-            //var products = query.OrderBy(p => p.CreateTime).ToList().Select(p => p.ToIndexVM());
-            var products = new ProductEFRepository().Search().Select(p=>p.ToIndexVM());
+			ViewBag.Criteria = criteria;
+            ViewBag.StatusOption = new SelectList(criteria.StatusOption);
+
+			var products = new ProductEFRepository()
+                .Search(criteria)
+                .Select(p=>p.ToIndexVM());
 			return View(products);
         }
 
@@ -135,5 +143,14 @@ namespace flexbackend.site.Controllers
             }
             base.Dispose(disposing);
         }
-    }
+
+        private void PrepareProductSubCategoryDataSource(int? ProductSubCategoryId)
+        {
+            ViewBag.ProductSubCategoryId = new SelectList(
+                new ProductSubCategoryRepository()
+                .GetProductSubCategory()
+                .Prepend(new ProductSubCategoryDto { ProductSubCategoryId=0,SubCategoryPath="請選擇分類"}), "ProductSubCategoryId", "SubCategoryPath", ProductSubCategoryId);
+        }
+
+	}
 }

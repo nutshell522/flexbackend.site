@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Flex.Products.dll.Exts;
+using Flex.Products.dll.Service;
+using static Flex.Products.dll.Service.ProductService;
 
 namespace Flex.Products.dll.Models.Infra.EFRepository
 {
@@ -18,10 +21,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
         {
 			_db = new AppDbContext();
         }
-		public bool ExisProductID(string ProductId)
-		{
-			return _db.Products.Any(p => p.ProductId == ProductId);
-		}
+
 		public void CreateProduct(ProductDto dto)
 		{
 			//將ProductDto依序轉換成Products,group,img存入database
@@ -52,20 +52,58 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 			 _db.SaveChanges();
 		}
+		public List<ProductDto> Search(IndexSearchCriteria criteria)
+		{
+			criteria=criteria ?? new IndexSearchCriteria();
+
+			var query = _db.Products.Include(p => p.ProductSubCategory).Include(p => p.ProductGroups);
+
+			#region 搜尋條件
+			if (criteria.Name != null)
+			{
+				query = query.Where(p => p.ProductId.Contains(criteria.Name) ||
+										p.ProductName.Contains(criteria.Name) ||
+										p.Tag.Contains(criteria.Name) ||
+										p.ProductSubCategory.SubCategoryPath.Contains(criteria.Name));
+			}
+			if (criteria.ProductSubCategoryId != null && criteria.ProductSubCategoryId.Value > 0)
+			{
+				query = query.Where(p => p.fk_ProductSubCategoryId == criteria.ProductSubCategoryId);
+			}
+			if (criteria.Status != null && criteria.Status != "請選擇狀態")
+			{
+				if (criteria.Status == "上架中")
+				{
+					query = query.Where(p => DateTime.Now >= p.StartTime && (p.EndTime == null || DateTime.Now <= p.EndTime));
+				}
+				else if (criteria.Status == "待上架")
+				{
+					query = query.Where(p => DateTime.Now < p.StartTime && (p.EndTime == null || DateTime.Now <= p.EndTime));
+				}
+				else if (criteria.Status == "已下架")
+				{
+					query = query.Where(p => p.EndTime != null && DateTime.Now > p.EndTime && DateTime.Now > p.StartTime);
+				}
+
+			}
+			#endregion
+
+			var products = query.OrderBy(p => p.CreateTime).ToList().Select(p => p.ToDto()).ToList();
+
+			//排除LogOut
+			products=products.Where(p=>p.LogOut==false).ToList();
+			return products;
+		}
 
 		public bool ValidationStartAndEndTime(DateTime start, DateTime? end)
 		{
 			if(end!=null && start > end) { return true; }
 			return false;
         }
-
-		public List<ProductDto> Search()
+		public bool ExisProductID(string ProductId)
 		{
-			var query = _db.Products.Include(p => p.ProductSubCategory).Include(p => p.ProductGroups);
-
-
-			var products = query.OrderBy(p => p.CreateTime);//.ToList().Select(p => p.ToIndexVM());
-			return products.ToList().Select(p => p.ToDto()).ToList();
+			return _db.Products.Any(p => p.ProductId == ProductId);
 		}
+		
 	}
 }

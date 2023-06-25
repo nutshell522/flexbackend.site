@@ -50,11 +50,11 @@ namespace Flex.Products.dll.Models.ViewModel
 		{
 			get
 			{
-				if(DateTime.Now > StartTime && (EndTime == null || DateTime.Now <= EndTime))
+				if(DateTime.Now >= StartTime && (EndTime == null || DateTime.Now <= EndTime))
 				{
 					return "上架中";
 				}
-				else if(DateTime.Now < StartTime)
+				else if(DateTime.Now < StartTime && (EndTime == null || DateTime.Now <= EndTime))
 				{
 					return "待上架";
 				}
