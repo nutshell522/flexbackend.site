@@ -11,6 +11,7 @@ using Discount.dll.Models.Dtos;
 using Discount.dll.Models.Interfaces;
 using System.Security.Cryptography;
 using System.Data;
+using System.Security.Principal;
 
 namespace Discount.dll.Models.Infra.DapperRepositories
 {
@@ -104,18 +105,46 @@ FROM ProjectTags AS pt
             }
         }
 
-		public ProjectTagEditNameDto GetProjectTagById(int Id)
-		{
-			string sql = $@"SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName, pt.Status AS Status
-FROM ProjectTag AS pt
-WHERE pt.ProjectTagId = {Id} 
-";
-			using (IDbConnection connection = new SqlConnection(_connStr))
-			{
-				connection.Open();
-				return connection.QueryFirstOrDefault<ProjectTagEditNameDto>(sql, new { Id });
-			}
-		}
-       
-	}
+        public ProjectTagEditNameDto GetProjectTag(int? Id)
+        {
+            string sql = $@"
+        SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName, pt.Status AS Status
+        FROM ProjectTags AS pt
+        WHERE pt.ProjectTagId = ISNULL(@Id, (SELECT TOP 1 ProjectTagId FROM ProjectTags WHERE Status = 1 ORDER BY ProjectTagId DESC))
+        ORDER BY pt.ProjectTagId DESC
+    ";
+
+            using (IDbConnection connection = new SqlConnection(_connStr))
+            {
+                connection.Open();
+                return connection.QueryFirstOrDefault<ProjectTagEditNameDto>(sql, new { Id });
+            }
+        }
+
+        public bool ExistsTagName(string tagName)
+        {
+            using (var connection = new SqlConnection(_connStr))
+            {
+                connection.Open();
+
+                string sql = "SELECT COUNT(*) FROM ProjectTags WHERE ProjectTagName = @TagName";
+                int count = connection.ExecuteScalar<int>(sql, new { TagName = tagName });
+
+                return count > 0;
+            }
+        }
+
+        public bool ExistsTagName(string tagName, int excludeId)
+        {
+            using (var connection = new SqlConnection(_connStr))
+            {
+                connection.Open();
+
+                string sql = "SELECT COUNT(*) FROM ProjectTags WHERE ProjectTagName = @TagName AND ProjectTagId != @ExcludeId";
+                int count = connection.ExecuteScalar<int>(sql, new { TagName = tagName, ExcludeId = excludeId });
+
+                return count > 0;
+            }
+        }
+    }
 }

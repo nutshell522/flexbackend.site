@@ -6,6 +6,7 @@ using Discount.dll.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -44,20 +45,48 @@ namespace flexbackend.site.Controllers
             return Json(new { success = result.IsSuccess , error = result.ErrorMessage });
         }
         [HttpPost]
-        public ActionResult GetData(string input, bool getCompleteResult)
+        public ActionResult GetDatas(string input, bool getCompleteResult)
         {
             // 返回JSON格式的響應
             return Json(GetProjectTags(input, getCompleteResult));
+        }
+        [HttpPost]
+        public ActionResult GetEditData(int id)
+        {
+            // 返回JSON格式的響應
+            return Json(GetProjectTag(id));
         }
 
         private IEnumerable<ProjectTagIndexVM> GetProjectTags(string projectTagName = null , bool getCompleteResult = false)
         {
             return _service.Search(projectTagName, getCompleteResult).Select(x=>x.ToViewModel()).ToList();
         }
-
+        private ProjectTagEditNameVM GetProjectTag(int id = 0)
+        {
+            return _service.GetProjectTag(id).ToEditNameVM();
+        }
         private Result UpdateProjectTag(List<ProjectTagStatusChangeVM> vms)
         {
             return _service.Update(vms.Select(x=>x.ToStatusChangeDto()).ToList());
+        }
+
+        public ActionResult CreateOrEdit(int? id)
+        {
+            if (id != null)
+            {
+                // 如果有id為 edit
+                var vm = _service.GetProjectTag(id.Value).ToEditNameVM();
+                return View(vm);
+            }
+            else
+            {
+                // 如果id為null 為create
+                var vm = new ProjectTagEditNameVM
+                {
+                    ProjectTagId = 0
+                };
+                return View(vm);
+            }
         }
     }
 }

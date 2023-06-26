@@ -158,15 +158,15 @@
 
             function bindClickEvent() {
                 $("#get-complete-checkbox").click(function () {
-                    getData();
+                    getDatas();
                 });
             }
             $("#clear-input").click(function () {
                 searchBar.val("");
-                getData();
+                getDatas();
             });
             searchBar.change(function () {
-                getData();
+                getDatas();
             });
 
             $("#completeAll").on("click", function () {
@@ -197,9 +197,6 @@
 
             function updateStatus(isConfirmed, dataIds, isChecked) {
                 if (isConfirmed) {
-                    $(document).ajaxStop(function () {
-                        getData();
-                    });
                     $.ajax({
                         url: "/ProjectTag/UpdateStatus",
                         type: "POST",
@@ -208,21 +205,23 @@
                             isComplete: isChecked
                         }
                     }).done(data => {
+                        getDatas();
                     }).fail(err => {
                         console.log(err.statusText);
+                        getDatas();
                     });
                 }
                 else {
-                    getData();
+                    getDatas();
                 }
             }
 
-            function getData() {
+            function getDatas() {
                 let inputValue = searchBar.val();
                 let getComplete = $("input.get-complete").prop("checked");
                 // 發送AJAX請求
                 $.ajax({
-                    url: "/ProjectTag/GetData",
+                    url: "/ProjectTag/GetDatas",
                     type: "POST",
                     data: {
                         input: inputValue,
@@ -230,8 +229,8 @@
                     }
                 }).done(data => {
                     infoArea.empty();
-                    for (let i = 0; i < result.length; i++) {
-                        infoArea.append(toDOM(toHTMLString(result[i])));
+                    for (let i = 0; i < data.length; i++) {
+                        infoArea.append(toDOM(toHTMLString(data[i])));
                     }
                     $(".check-all").prop("checked", false);
                 }).fail(err => {

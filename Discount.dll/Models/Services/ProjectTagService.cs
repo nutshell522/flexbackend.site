@@ -42,18 +42,21 @@ namespace Discount.dll.Models.Services
 		/// <returns></returns>
 		public Result Update(ProjectTagEditNameDto dto)
 		{
-			// 檢查是否有重複名稱
-            if(_repo.SearchProjectTags)
+            // 檢查是否有重複名稱
+            if (_repo.ExistsTagName(dto.ProjectTagName, dto.ProjectTagId))
+            {
+                return Result.Fail($"標籤名稱 {dto.ProjectTagName} 已存在， 請更換後再重試一次");
+            }
 
-			_repo.UpdateProjectTag(dto);
+            _repo.UpdateProjectTag(dto);
 			
 			return Result.Success();
 		}
 
-		public ProjectTagEditNameDto GetProjectTagById(int id)
+		public ProjectTagEditNameDto GetProjectTag(int? id)
         {
-            return _repo.GetProjectTagById(id);
+            id = id == 0 ? null : id;
+            return _repo.GetProjectTag(id);
         }
-
 	}
 }

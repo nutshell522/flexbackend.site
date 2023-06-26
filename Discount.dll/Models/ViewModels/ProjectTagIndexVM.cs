@@ -68,7 +68,7 @@ namespace Discount.dll.Models.ViewModels
     public class ProjectTagEditNameVM
     {
         public int ProjectTagId { get; set; }
-        [Display(Name = "專案標籤名稱")]
+        [Display(Name = "標籤名稱")]
         [Required]
         public string ProjectTagName { get; set; }
         public bool Status { get; set; }
@@ -76,7 +76,7 @@ namespace Discount.dll.Models.ViewModels
 
     public static class ProjectTagEditNameVMExts
     {
-        public static ProjectTagEditNameVM ToEditNameDto(this ProjectTagEditNameDto dto)
+        public static ProjectTagEditNameVM ToEditNameVM(this ProjectTagEditNameDto dto)
         {
             return new ProjectTagEditNameVM
             {
