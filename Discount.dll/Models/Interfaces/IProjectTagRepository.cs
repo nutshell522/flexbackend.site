@@ -9,8 +9,9 @@ namespace Discount.dll.Models.Interfaces
 {
     public interface IProjectTagRepository
     {
-        IEnumerable<ProjectTagIndexDto> GetProjectTags(string projectTagName = null,bool getCompleteResult = false);
+        IEnumerable<ProjectTagIndexDto> SearchProjectTags(string projectTagName = null,bool getCompleteResult = false);
         void UpdateProjectTag(ProjectTagStatusChangeDto dto);
         void UpdateProjectTag(ProjectTagEditNameDto dto);
-    }
+		ProjectTagEditNameDto GetProjectTagById(int id);
+	}
 }

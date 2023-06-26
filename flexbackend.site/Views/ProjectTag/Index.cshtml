@@ -197,16 +197,19 @@
 
             function updateStatus(isConfirmed, dataIds, isChecked) {
                 if (isConfirmed) {
+                    $(document).ajaxStop(function () {
+                        getData();
+                    });
                     $.ajax({
                         url: "/ProjectTag/UpdateStatus",
                         type: "POST",
-                        data: { ids: dataIds, isComplete: isChecked },
-                        success: function (result) {
-                            getData();
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(error);
+                        data: {
+                            ids: dataIds,
+                            isComplete: isChecked
                         }
+                    }).done(data => {
+                    }).fail(err => {
+                        console.log(err.statusText);
                     });
                 }
                 else {
@@ -221,17 +224,18 @@
                 $.ajax({
                     url: "/ProjectTag/GetData",
                     type: "POST",
-                    data: { input: inputValue, getCompleteResult: getComplete },
-                    success: function (result) {
-                        infoArea.empty();
-                        for (let i = 0; i < result.length; i++) {
-                            infoArea.append(toDOM(toHTMLString(result[i])));
-                        }
-                        $(".check-all").prop("checked", false);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(error);
+                    data: {
+                        input: inputValue,
+                        getCompleteResult: getComplete
                     }
+                }).done(data => {
+                    infoArea.empty();
+                    for (let i = 0; i < result.length; i++) {
+                        infoArea.append(toDOM(toHTMLString(result[i])));
+                    }
+                    $(".check-all").prop("checked", false);
+                }).fail(err => {
+                    console.log(err.statusText);
                 });
             }
 

@@ -10,6 +10,7 @@ using Discount.dll.Models.ViewModels;
 using Discount.dll.Models.Dtos;
 using Discount.dll.Models.Interfaces;
 using System.Security.Cryptography;
+using System.Data;
 
 namespace Discount.dll.Models.Infra.DapperRepositories
 {
@@ -22,7 +23,7 @@ namespace Discount.dll.Models.Infra.DapperRepositories
             _connStr = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
         }
 
-        public IEnumerable<ProjectTagIndexDto> GetProjectTags(string projectTagName=null, bool getCompleteResult = false)
+        public IEnumerable<ProjectTagIndexDto> SearchProjectTags(string projectTagName=null, bool getCompleteResult = false)
         {
             #region 組合sql語法
             string sql = @"SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName,
@@ -102,5 +103,19 @@ FROM ProjectTags AS pt
                 });
             }
         }
-    }
+
+		public ProjectTagEditNameDto GetProjectTagById(int Id)
+		{
+			string sql = $@"SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName, pt.Status AS Status
+FROM ProjectTag AS pt
+WHERE pt.ProjectTagId = {Id} 
+";
+			using (IDbConnection connection = new SqlConnection(_connStr))
+			{
+				connection.Open();
+				return connection.QueryFirstOrDefault<ProjectTagEditNameDto>(sql, new { Id });
+			}
+		}
+       
+	}
 }
