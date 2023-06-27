@@ -12,7 +12,9 @@ namespace Discount.dll.Models.Interfaces
         IEnumerable<ProjectTagIndexDto> SearchProjectTags(string projectTagName = null,bool getCompleteResult = false);
         void UpdateProjectTag(ProjectTagStatusChangeDto dto);
         void UpdateProjectTag(ProjectTagEditNameDto dto);
-		ProjectTagEditNameDto GetProjectTag(int? id);
+        int CreateProjectTag(ProjectTagEditNameDto dto);
+
+        ProjectTagEditNameDto GetProjectTag(int? id);
         bool ExistsTagName(string tagName);
         bool ExistsTagName(string tagName,int excludeId);
     }

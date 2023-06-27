@@ -86,6 +86,27 @@ FROM ProjectTags AS pt
             }
         }
 
+        public int CreateProjectTag(ProjectTagEditNameDto dto)
+        {
+            int projectId = 0;
+
+            using (SqlConnection connection = new SqlConnection(_connStr))
+            {
+                connection.Open();
+
+                string sql = @"INSERT INTO ProjectTags (ProjectTagName, CreateAt,ModifiedAt,Status)
+                       VALUES (@ProjectTagName, GETDATE(),GETDATE(),1);
+                       SELECT SCOPE_IDENTITY();";
+
+                projectId = connection.ExecuteScalar<int>(sql, new
+                {
+                    ProjectTagName = dto.ProjectTagName
+                });
+            }
+
+            return projectId;
+        }
+
         public void UpdateProjectTag(ProjectTagEditNameDto dto)
         {
             using (SqlConnection connection = new SqlConnection(_connStr))
@@ -94,7 +115,7 @@ FROM ProjectTags AS pt
 
                 string sql = @"UPDATE ProjectTags
                        SET ProjectTagName = @ProjectTagName,
-                           ModifiedAt = GETDATE(),
+                           ModifiedAt = GETDATE()
                        WHERE ProjectTagId = @ProjectTagId";
 
                 connection.Execute(sql, new

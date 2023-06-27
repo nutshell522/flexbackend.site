@@ -53,7 +53,20 @@ namespace Discount.dll.Models.Services
 			return Result.Success();
 		}
 
-		public ProjectTagEditNameDto GetProjectTag(int? id)
+        public (Result result,int id) Create(ProjectTagEditNameDto dto)
+        {
+            // 檢查是否有重複名稱
+            if (_repo.ExistsTagName(dto.ProjectTagName))
+            {
+                return (Result.Fail($"標籤名稱 {dto.ProjectTagName} 已存在， 請更換後再重試一次"),0);
+            }
+
+            int id = _repo.CreateProjectTag(dto);
+
+            return (Result.Success(), id);
+        }
+
+        public ProjectTagEditNameDto GetProjectTag(int? id)
         {
             id = id == 0 ? null : id;
             return _repo.GetProjectTag(id);
