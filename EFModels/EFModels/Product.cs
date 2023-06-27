@@ -17,7 +17,6 @@ namespace EFModels.EFModels
         }
 
         [StringLength(254)]
-        [Display(Name ="²£«~ID")]
         public string ProductId { get; set; }
 
         [Required]
@@ -38,9 +37,11 @@ namespace EFModels.EFModels
 
         public int SalesPrice { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         public DateTime? EndTime { get; set; }
+
+        public bool Status { get; set; }
 
         public bool LogOut { get; set; }
 

@@ -20,5 +20,23 @@ namespace Flex.Products.dll.Exts
 				SubCategoryPath = entity.SubCategoryPath
 			};
 		}
+
+		public static ColorDto ToDto(this ColorCategory entity)
+		{
+			return new ColorDto
+			{
+				ColorId = entity.ColorId,
+				ColorName = entity.ColorName,
+			};
+		}
+
+		public static SizeDto ToDto(this SizeCategory entity)
+		{
+			return new SizeDto
+			{
+				SizeId = entity.SizeId,
+				SizeName = entity.SizeName,
+			};
+		}
 	}
 }

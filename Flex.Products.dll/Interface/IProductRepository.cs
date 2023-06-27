@@ -12,7 +12,7 @@ namespace Flex.Products.dll.Interface
 {
 	public interface IProductRepository
 	{
-		void CreateProduct(ProductDto vm);
+		void CreateProduct(ProductDto dto);
 
 		List<ProductDto> Search(IndexSearchCriteria criteria);
 	}

@@ -10,12 +10,14 @@ using System.Web.ModelBinding;
 using System.Web.Mvc;
 using EFModels.EFModels;
 using Flex.Products.dll.Exts;
+using Flex.Products.dll.Infra.EFRepository;
 using Flex.Products.dll.Interface;
 using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.EFRepository;
 using Flex.Products.dll.Models.Infra.Exts;
 using Flex.Products.dll.Models.ViewModel;
 using Flex.Products.dll.Service;
+
 
 namespace flexbackend.site.Controllers
 {
@@ -33,10 +35,14 @@ namespace flexbackend.site.Controllers
 			ViewBag.Criteria = criteria;
             ViewBag.StatusOption = new SelectList(criteria.StatusOption);
 
-			var products = new ProductEFRepository()
-                .Search(criteria)
-                .Select(p=>p.ToIndexVM());
+            //var products = new ProductEFRepository()
+            //             .Search(criteria)
+            //             .Select(p => p.ToIndexVM());
+
+			var service = new ProductService(_repo);
+			var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
 			return View(products);
+
         }
 
 		// GET: Products/Details/5
@@ -58,7 +64,10 @@ namespace flexbackend.site.Controllers
         public ActionResult Create()
         {
 			PrepareProductSubCategoryDataSource(null);
-            return View();
+            PrepareColorDataSource(null);
+            PrepareSizeDataSource(null);
+			var vm = new ProductCreateVM();
+			return View(vm);
         }
 
         // POST: Products/Create  
@@ -66,34 +75,39 @@ namespace flexbackend.site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductCreateVM vm, HttpPostedFileBase[] CreateFile)
-        {
+        public ActionResult Create(ProductCreateVM vm)
+		{
 			PrepareProductSubCategoryDataSource(vm.fk_ProductSubCategoryId);
-			if (ModelState.IsValid == false) return View(vm);
+            PrepareColorDataSource(null);
+            PrepareSizeDataSource(null);
+            if (ModelState.IsValid == false) return View(vm);
 
-            if (CreateFile[0]==null || CreateFile.Length < 1)
+			#region 照片上傳
+			var files = Request.Files;
+            if (files == null || files.Count == 0)
             {
-				ModelState.AddModelError("ImgPaths", "請選擇檔案");
-				return View(vm);
-			}
+                ModelState.AddModelError("ImgPaths", "請選擇檔案");
+                return View(vm);
+            }
 
-			// 將CreateFile存檔，並取得最後存檔的名
-			string path = Server.MapPath("/Public/Img");
-			List<string> saveFileName = SaveFileName(path, CreateFile);
-			if (saveFileName == null || saveFileName.Count == 0)
-			{
-				ModelState.AddModelError("ImgPaths", "請選擇檔案");
-				return View(vm);
-			}
+            // 設定照片路徑不存在就新增一個
+            string path = Server.MapPath("~/Public/Img");
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-			// 清空原有的 ImgPaths
-			vm.ImgPaths = new List<string>();
+            // 將CreateFile存檔，並取得最後存檔的名稱，副檔名可能不合規格，所以在做一次偵錯
+            List<string> saveFileName = SaveFileName(path,files);
+            if (saveFileName == null || saveFileName.Count == 0)
+            {
+                ModelState.AddModelError("ImgPaths", "請選擇檔案");
+                return View(vm);
+            }
 
-			// 將檔案名稱加入 ImgPaths
-			foreach (var fileName in saveFileName)
-			{
-				vm.ImgPaths.Add(fileName);
-			}
+            // 將雜湊後的檔名newFileName加到VM的ImgPaths
+            foreach (var fileName in saveFileName)
+            {
+                vm.ImgPaths.Add(fileName);
+            }
+			#endregion
 
 			var service = new ProductService(_repo);
             var result = service.CreateProduct(vm.ToCreateDto());
@@ -108,40 +122,6 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
-		private List<string> SaveFileName(string path, IEnumerable<HttpPostedFileBase> createFile)
-		{
-			//沒上傳或是空值，就不處理;
-			if (createFile == null || !createFile.Any()) return new List<string>();
-
-			List<string> result = new List<string>();
-
-			//允許的副檔名
-			var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
-
-			foreach (var file in createFile)
-			{
-				if (file == null || file.ContentLength == 0) continue;
-
-				//取得副檔名
-				string ext = Path.GetExtension(file.FileName);
-
-				//檢查副檔名是否在允許範圍，不允許就不處理
-				if (!allowExts.Contains(ext.ToLower())) continue;
-
-				//生成一個新的檔名
-				string newFileName = Guid.NewGuid().ToString("N") + ext;
-
-				//儲存檔案到硬碟
-				file.SaveAs(Path.Combine(path, newFileName));
-
-				//將檔案名稱加入結果清單
-				result.Add(newFileName);
-			}
-			return result;
-		}
-
-
-		// GET: Products/Edit/5
 		public ActionResult Edit(string id)
         {
             if (id == null)
@@ -217,5 +197,60 @@ namespace flexbackend.site.Controllers
                 .Prepend(new ProductSubCategoryDto { ProductSubCategoryId=0,SubCategoryPath="請選擇分類"}), "ProductSubCategoryId", "SubCategoryPath", ProductSubCategoryId);
         }
 
-	}
+        private void PrepareColorDataSource(int? ColorId)
+        {
+            ViewBag.Color = new SelectList(
+                new ColorRepository()
+                .GetColorCategory()
+                .Prepend(new ColorDto { ColorId = 0, ColorName = "顏色" }), "ColorId", "ColorName", ColorId);
+        }
+
+        private void PrepareSizeDataSource(int? SizeId)
+        {
+            ViewBag.Size = new SelectList(
+                new SizeRepository()
+                .GetSizeCategory()
+                .Prepend(new SizeDto { SizeId = 0, SizeName = "尺寸" }), "SizeId", "SizeName", SizeId);
+        }
+        /// <summary>
+        /// 上傳多張照片
+        /// </summary>
+        /// <param name="path">照片存放路徑</param>
+        /// <param name="files">照片</param>
+        /// <returns></returns>
+        private List<string> SaveFileName(string path, HttpFileCollectionBase files)
+        {
+            //沒上傳或是空值，就不處理;
+            if (files == null || files.Count == 0) return new List<string>();
+
+            List<string> result = new List<string>();
+
+            //允許的副檔名
+            var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
+            for (int i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+
+                if (file == null || file.ContentLength == 0) continue;
+
+                //取得副檔名
+                string ext = System.IO.Path.GetExtension(file.FileName);
+
+                //檢查副檔名是否在允許範圍，不允許就不處理
+                if (!allowExts.Contains(ext.ToLower())) continue;
+
+                //生成一個新的檔名
+                string newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
+
+                //儲存檔案
+                file.SaveAs(System.IO.Path.Combine(path, newFileName));
+
+                //將檔案名稱加入結果清單
+                result.Add(newFileName);
+            }
+            return result;
+        }
+
+
+    }
 }

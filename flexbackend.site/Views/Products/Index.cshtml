@@ -7,7 +7,7 @@
 
     var criteria = ViewBag.Criteria as IndexSearchCriteria;
     var productSubCategory = ViewBag.ProductSubCategoryId as SelectList;
-    string _productSubCategoryId = criteria.ProductSubCategoryId.HasValue ? criteria.ProductSubCategoryId.Value.ToString() : "";
+    //string _productSubCategoryId = criteria.ProductSubCategoryId.HasValue ? criteria.ProductSubCategoryId.Value.ToString() : "";
 }
 
 <h2>商品管理</h2>
@@ -25,16 +25,16 @@
                     <input id="index_Search" class="form-control " name="criteria.Name" type="text" value="@criteria.Name" placeholder="搜尋...">
                 </div>
                 <div class="col col-3 ms-1">
-                    @*@Html.DropDownListFor(model=>criteria.ProductSubCategoryId, productSubCategory, new { @class = "form-select" })*@
-                    <select id="productSubCategoryId" name="criteria.ProductSubCategoryId" class="form-select">
+                    @Html.DropDownListFor(model=>criteria.ProductSubCategoryId, productSubCategory, new { @class = "form-select" })
+                    @*<select id="productSubCategoryId" name="criteria.ProductSubCategoryId" class="form-select">
                         @foreach (var item in productSubCategory)
                         {
                             <option value="@item.Value" @(_productSubCategoryId == item.Value ? "selected" : "") )>@item.Text</option>
                         }
-                    </select>
+                    </select>*@
                 </div>
                 <div class="col col-3 ms-1">
-                    @Html.DropDownListFor(model => criteria.Status, ViewBag.StatusOption as SelectList, "請選擇狀態", new { @class = "form-select"})
+                    @Html.DropDownListFor(model => criteria.Status, ViewBag.StatusOption as SelectList, new { @class = "form-select"})
                 </div>
                 <div class="col col-3">
                     <button class="btn btn-primary">搜尋</button>
@@ -58,9 +58,8 @@
                         如有細緻設定需求，可自己寫css設定寬度
                         *@
                         <th class="th-col-0 sticky">
-                            <label class="form-check-label">
-                                <input class="form-check-input check-all" type="checkbox">
-                            </label>
+                            <input id="check-all-status" class="form-check-input check-all me-2" type="checkbox">
+                            <label class="form-check-label" for="check-all-status">下架</label>
                         </th>
                         <th class="th-col-2 text-center">
                             @Html.DisplayNameFor(model => model.ProductName)
@@ -75,7 +74,7 @@
                             @Html.DisplayNameFor(model => model.SalesPrice)
                         </th>
                         <th class="th-col-2 text-center">
-                            @Html.DisplayNameFor(model => model.status)
+                            @Html.DisplayNameFor(model => model.StatusText)
                         </th>
                         <th class="th-col-2 text-center">
                             @Html.DisplayNameFor(model => model.Tag)
@@ -105,7 +104,7 @@
                         <tr>
                             @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
                             <td class="sticky text-center align-middle">
-                                <input class="form-check-input check-item" type="checkbox" onclick="selectProduct('@item.ProductId')" />
+                                <input class="form-check-input check-item" type="checkbox" onclick="selectProduct('@item.ProductId')" @(@item.Status?"checked":"")/>
                             </td>
                             <td class="text-center align-middle">
                                 @Html.DisplayFor(modelItem => item.ProductName)
@@ -129,7 +128,7 @@
                                 @Html.DisplayFor(modelItem => item.SalesPrice)
                             </td>
                             <td class="text-center align-middle">
-                                @Html.DisplayFor(modelItem => item.status)
+                                @Html.DisplayFor(modelItem => item.StatusText)
                             </td>
                             <td class="text-center align-middle">
                                 @Html.DisplayFor(modelItem => item.Tag)

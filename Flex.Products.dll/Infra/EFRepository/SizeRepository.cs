@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Flex.Products.dll.Infra.EFRepository
 {
-	public class ColorRepository
+	public class SizeRepository
 	{
-		public List<ColorDto> GetColorCategory()
+		public List<SizeDto> GetSizeCategory()
 		{
 			return new AppDbContext()
-				.ColorCategories
-				.OrderBy(c=>c.ColorId)
+				.SizeCategories
+				.OrderBy(s => s.SizeId)
 				.ToList()
-				.Select(c=>c.ToDto())
+				.Select(s=>s.ToDto())
 				.ToList();
 		}
 	}

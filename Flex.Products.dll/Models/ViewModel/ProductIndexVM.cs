@@ -41,24 +41,22 @@ namespace Flex.Products.dll.Models.ViewModel
 		[DisplayFormat(DataFormatString = "{0:#,#}", ApplyFormatInEditMode = false)]
 		public int SalesPrice { get; set; }
 
-		public DateTime StartTime { get; set; }
+		//public DateTime StartTime { get; set; }
 
-		public DateTime? EndTime { get; set; }
+		//public DateTime? EndTime { get; set; }
+
+		public bool Status { get ; set; }
 
 		[Display(Name = "狀態")]
-		public string status 
+		public string StatusText 
 		{
 			get
 			{
-				if(DateTime.Now >= StartTime && (EndTime == null || DateTime.Now <= EndTime))
+				if(Status)
 				{
-					return "上架中";
+					return "已下架";
 				}
-				else if(DateTime.Now < StartTime && (EndTime == null || DateTime.Now <= EndTime))
-				{
-					return "待上架";
-				}
-				else { return "已下架"; }
+				else { return "上架中"; }
 			}
 		}
 

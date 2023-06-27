@@ -8,12 +8,9 @@ namespace EFModels.EFModels
 
     public partial class Staff
     {
-        [Key]
-        [Column(Order = 0)]
         public int staffId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [StringLength(30)]
         public string Name { get; set; }
 
@@ -21,45 +18,32 @@ namespace EFModels.EFModels
 
         public bool? Gender { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
+        [Required]
         [StringLength(10)]
         public string Mobile { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
+        [Required]
         [StringLength(300)]
         public string Email { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? Birthday { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
+        [Required]
         [StringLength(30)]
         public string Account { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
+        [Required]
         [StringLength(70)]
         public string Password { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? dueDate { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int fk_PermissionsId { get; set; }
 
-        [Key]
-        [Column(Order = 7)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int fk_TitleId { get; set; }
 
-        [Key]
-        [Column(Order = 8)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int fk_DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }

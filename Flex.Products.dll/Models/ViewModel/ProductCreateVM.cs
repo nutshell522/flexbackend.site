@@ -52,14 +52,17 @@ namespace Flex.Products.dll.Models.ViewModel
 		[Range(0, 99999, ErrorMessage = "價格須介於{1}至{2}之間")]
 		public int SalesPrice { get; set; }
 
-		[Display(Name = "上架時間")]
-		[Required(ErrorMessage = "{0}必填")]
-		[Column(TypeName = "datetime")]
-		public DateTime StartTime { get; set; }
+		//[Display(Name = "上架時間")]
+		//[Required(ErrorMessage = "{0}必填")]
+		//[Column(TypeName = "datetime")]
+		//public DateTime StartTime { get; set; }
 
-		[Display(Name = "下架時間")]
-		[Column(TypeName = "datetime")]
-		public DateTime? EndTime { get; set; }
+		//[Display(Name = "下架時間")]
+		//[Column(TypeName = "datetime")]
+		//public DateTime? EndTime { get; set; }
+
+		[Display(Name = "下架")]
+		public bool Status { get; set; }	
 
 		[Display(Name = "商品分類")]
 		[Required(ErrorMessage = "{0}必填")]
@@ -71,5 +74,11 @@ namespace Flex.Products.dll.Models.ViewModel
 
 		[Display(Name = "規格")]
 		public List<ProductGroupClass> ProductGroups { get; set; }
-	}
+
+        public ProductCreateVM()
+        {
+			ImgPaths = new List<string>();
+			ProductGroups=new List<ProductGroupClass>();
+		}
+    }
 }

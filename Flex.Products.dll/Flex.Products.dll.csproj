@@ -54,6 +54,7 @@
     <Compile Include="Exts\CategoryExts.cs" />
     <Compile Include="Exts\IndexSearchCriteria.cs" />
     <Compile Include="Infra\EFRepository\ColorRepository.cs" />
+    <Compile Include="Infra\EFRepository\SizeRepository.cs" />
     <Compile Include="Models\Dtos\ColorDto.cs" />
     <Compile Include="Models\Dtos\ProductDto.cs" />
     <Compile Include="Infra\EFRepository\ProductEFRepository.cs" />

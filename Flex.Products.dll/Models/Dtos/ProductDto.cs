@@ -25,9 +25,10 @@ namespace Flex.Products.dll.Models.Dtos
 
 		public int SalesPrice { get; set; }
 
-		public DateTime StartTime { get; set; }
+		//public DateTime StartTime { get; set; }
 
-		public DateTime? EndTime { get; set; }
+		//public DateTime? EndTime { get; set; }
+		public bool Status { get; set; }
 
 		public bool LogOut { get; set; }
 

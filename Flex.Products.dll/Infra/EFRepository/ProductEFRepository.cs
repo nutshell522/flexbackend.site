@@ -75,21 +75,16 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			{
 				if (criteria.Status == "上架中")
 				{
-					query = query.Where(p => DateTime.Now >= p.StartTime && (p.EndTime == null || DateTime.Now <= p.EndTime));
+					query = query.Where(p => p.Status == false);
 				}
-				else if (criteria.Status == "待上架")
+				if (criteria.Status == "已下架")
 				{
-					query = query.Where(p => DateTime.Now < p.StartTime && (p.EndTime == null || DateTime.Now <= p.EndTime));
+					query = query.Where(p => p.Status == true);
 				}
-				else if (criteria.Status == "已下架")
-				{
-					query = query.Where(p => p.EndTime != null && DateTime.Now > p.EndTime && DateTime.Now > p.StartTime);
-				}
-
 			}
 			#endregion
 
-			var products = query.OrderBy(p => p.CreateTime).ToList().Select(p => p.ToIndexDto()).ToList();
+			var products = query.OrderByDescending(p => p.CreateTime).ToList().Select(p => p.ToIndexDto()).ToList();
 
 			//排除LogOut
 			products=products.Where(p=>p.LogOut==false).ToList();

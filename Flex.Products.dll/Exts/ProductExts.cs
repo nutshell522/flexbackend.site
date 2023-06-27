@@ -21,8 +21,9 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ProductName = dto.ProductName,
 				SubCategoryPath = dto.ProductSubCategory.SubCategoryPath,
 				SalesPrice = dto.SalesPrice,
-				StartTime = dto.StartTime,
-				EndTime = dto.EndTime,
+				//StartTime = dto.StartTime,
+				//EndTime = dto.EndTime,
+				Status = dto.Status,
 				Tag = dto.Tag,
 				ProductGroupList = dto.ProductGroups
 			};
@@ -39,11 +40,12 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ProductOrigin = entity.ProductOrigin,
 				UnitPrice = entity.UnitPrice,
 				SalesPrice = entity.SalesPrice,
-				StartTime = entity.StartTime,
-				EndTime = entity.EndTime,
+				//StartTime = entity.StartTime,
+				//EndTime = entity.EndTime,
+				Status=entity.Status,
 				LogOut = entity.LogOut,
 				Tag = entity.Tag,
-				fk_ProductSubCategoryId = entity.fk_ProductSubCategoryId,
+				//fk_ProductSubCategoryId = entity.fk_ProductSubCategoryId,
 				ProductSubCategory = entity.ProductSubCategory,
 				ProductGroups = entity.ProductGroups.Select(x => new ProductGroupClass
 				{
@@ -67,8 +69,9 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ProductOrigin = vm.ProductOrigin,
 				UnitPrice = vm.UnitPrice,
 				SalesPrice = vm.SalesPrice,
-				StartTime = vm.StartTime,
-				EndTime = vm.EndTime,
+				//StartTime = vm.StartTime,
+				//EndTime = vm.EndTime,
+				Status=vm.Status,
 				Tag = vm.Tag,
 				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
 				ImgPaths = vm.ImgPaths,
@@ -89,8 +92,9 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ProductOrigin = dto.ProductOrigin,
 				UnitPrice = dto.UnitPrice,
 				SalesPrice = dto.SalesPrice,
-				StartTime = dto.StartTime,
-				EndTime = dto.EndTime,
+				//StartTime = dto.StartTime,
+				//EndTime = dto.EndTime,
+				Status= dto.Status,
 				LogOut = dto.LogOut,
 				Tag = dto.Tag,
 				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
@@ -101,13 +105,13 @@ namespace Flex.Products.dll.Models.Infra.Exts
 					fk_ProductId = dto.ProductId,
 					ImgPath = p
 				}).ToList(),
-				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
-				{
-					fk_ProductId = dto.ProductId,
-					fk_ColorId = p.ColorId,
-					fk_SizeID = p.SizeId,
-					Qty = p.Qty
-				}).ToList()
+				//ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
+				//{
+				//	fk_ProductId = dto.ProductId,
+				//	fk_ColorId = p.ColorId,
+				//	fk_SizeID = p.SizeId,
+				//	Qty = p.Qty
+				//}).ToList()
 			};
 		}
 	}

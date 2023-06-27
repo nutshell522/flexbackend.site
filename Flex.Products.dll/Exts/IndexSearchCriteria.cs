@@ -16,8 +16,8 @@ namespace Flex.Products.dll.Exts
 		{
 			StatusOption = new List<string>
 			{
+				"請選擇狀態",
 				"上架中",
-				"待上架",
 				"已下架"
 			};
 		}

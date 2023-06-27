@@ -11,14 +11,6 @@ namespace EFModels.EFModels
     {
         public int PointManageId { get; set; }
 
-        [Required]
-        [StringLength(30)]
-        public string PointManageName { get; set; }
-
-        [Required]
-        [StringLength(10)]
-        public string PointClassify { get; set; }
-
         public bool GetOrDeduct { get; set; }
 
         public int Amount { get; set; }
@@ -28,6 +20,10 @@ namespace EFModels.EFModels
         public int? TypeProductId { get; set; }
 
         public DateTime? PointExpirationDate { get; set; }
+
+        public virtual PointManage PointManage1 { get; set; }
+
+        public virtual PointManage PointManage2 { get; set; }
 
         public virtual Type Type { get; set; }
     }

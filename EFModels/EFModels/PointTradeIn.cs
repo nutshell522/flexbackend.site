@@ -9,12 +9,11 @@ namespace EFModels.EFModels
     [Table("PointTradeIn")]
     public partial class PointTradeIn
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PointTradeInId { get; set; }
 
         public int fk_MemberId { get; set; }
 
-        public int fk_OrderId { get; set; }
+        public int? fk_OrderId { get; set; }
 
         [Required]
         [StringLength(30)]
