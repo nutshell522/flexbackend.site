@@ -44,11 +44,13 @@
         $(function () {
             const TagNameInput = $("#ProjectTagName");
             const TagName = $("#tag-name");
+            let editmode = TagName.data("id") == 0
             createModeToggle();
 
             $("#create").on("click", function () {
                 TagName.data("id", 0);
                 TagNameInput.val("");
+                editmode = true;
                 createModeToggle();
             });
 
@@ -63,14 +65,23 @@
                     TagName.data("id", data.ProjectTagId);
                     TagNameInput.val(data.ProjectTagName);
                     TagName.text(data.ProjectTagName);
+                    editmode = false;
                     createModeToggle();
                 }).fail(err => {
                     console.log(err.statusText);
                 });
             });
 
+            $("#edit").on("click", function () {
+                editmode = true;
+                createModeToggle();
+            })
+            $("#save").on("click", function () {
+
+            })
+
             function createModeToggle() {
-                if (TagName.data("id") == 0) {
+                if (editmode) {
                     $(".d-detail").each(function () {
                         $(this).addClass("d-none");
                     });

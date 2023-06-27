@@ -59,7 +59,7 @@ namespace flexbackend.site.Controllers
 
         private IEnumerable<ProjectTagIndexVM> GetProjectTags(string projectTagName = null , bool getCompleteResult = false)
         {
-            return _service.Search(projectTagName, getCompleteResult).Select(x=>x.ToViewModel()).ToList();
+            return _service.Search(projectTagName, getCompleteResult).Select(x=>x.ToViewModel());
         }
         private ProjectTagEditNameVM GetProjectTag(int id = 0)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Discount.dll.Models.Services
 {
-    public class ProjectTagService
+    public class ProjectTagService  
     {
         private IProjectTagRepository _repo;
         public ProjectTagService(IProjectTagRepository repo)
