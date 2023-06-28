@@ -4,7 +4,7 @@
     ViewBag.Title = "MembersList";
 }
 
-<h2>MembersList</h2>
+<h2>會員名單總覽</h2>
 
 <p>
 
@@ -40,28 +40,29 @@
                     </label>
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.MemberId)
+                    編號
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Name)
+                    姓名
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Gender)
+                    性別
+                </th>
+
+                <th class="th-col-1">
+                    信箱
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Email)
+                    等級
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.fk_LevelId)
+                    累計積分
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.PointSubtotal)
+                    註冊時間
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Registration)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.fk_BlackListId)
+                    是否為黑名單
                 </th>
                 <th>管理</th>
             </tr>
@@ -101,7 +102,7 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.fk_LevelId)
+                        
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.PointSubtotal)

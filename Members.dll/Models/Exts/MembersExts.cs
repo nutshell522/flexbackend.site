@@ -11,7 +11,7 @@ namespace Members.dll.Models.Exts
 {
 	public static class MembersExts
 	{
-		//擴充方法，將MembersDto 轉為 MembersVM，將資料取出
+		//擴充方法，將MembersIndexDto 轉為 MembersIndexVM，將資料取出
 		public static MembersIndexVM ToIndexVM(this MembersIndexDto dto)
 		{
 
@@ -21,13 +21,13 @@ namespace Members.dll.Models.Exts
 				Name = dto.Name,
 				Gender = dto.Gender,
 				Email = dto.Email,
-				fk_LevelId = dto.fk_LevelId,
-				//PointSubtotal = entity.MemberPoints,//需要經過join才有的欄位該如何傳入
+				//LevelName = dto.LevelName,
+				//PointSubtotal = dto.MemberPoints,//需要經過join才有的欄位該如何傳入
 				Registration = dto.Registration,
 				fk_BlackListId = dto.fk_BlackListId
 			};
 		}
-		//擴充方法，將MembersVM 轉為 MembersDto，將資料取出
+		//擴充方法，將EF entity 轉為 MembersIndexDto，將資料取出
 		public static MembersIndexDto ToIndexDto(this Member entity)
 
 		{
@@ -37,7 +37,8 @@ namespace Members.dll.Models.Exts
 				Name = entity.Name,
 				Gender = entity.Gender,
 				Email = entity.Email,
-				fk_LevelId = entity.fk_LevelId,
+				//LevelName = entity.LevelName,
+				//PointSubtotal = entity.MemberPoints,//需要經過join才有的欄位該如何傳入
 				Registration = entity.Registration,
 				fk_BlackListId = entity.fk_BlackListId,
 			};

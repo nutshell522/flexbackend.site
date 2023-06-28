@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EFModels.EFModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -8,28 +9,32 @@ using System.Threading.Tasks;
 
 namespace Members.dll.Models.ViewsModels
 {
-	public class MembersIndexVM
+	public class StaffsIndexVM
 	{
-		public int MemberId { get; set; }
+		public int StaffId { get; set; }
 
 		[Required]
 		[StringLength(30)]
 		public string Name { get; set; }
 
+		public byte? Age { get; set; }
+
 		public bool? Gender { get; set; }
+
+		[Required]
+		[StringLength(10)]
+		public string Mobile { get; set; }
 
 		[Required]
 		[StringLength(300)]
 		public string Email { get; set; }
 
-		//public int fk_LevelId { get; set; }
+		public DateTime? dueDate { get; set; }
 
-		public string LevelName { get; set; }
+		public string Department { get; set; }
 
-		public int PointSubtotal { get; set; } //這個拿掉畫面上就沒有了
+		public string JobTitle { get; set; }
 
-		public DateTime? Registration { get; set; }
-
-		public int? fk_BlackListId { get; set; }
+		public string StaffPermission { get; set; }
 	}
 }

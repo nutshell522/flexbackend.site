@@ -2,9 +2,10 @@
 [v]在flexbackend建立EFModels
 [v]建立Members.dll，並讓flexbackend參考它
 [v]在Members.dll建立三層式架構資料夾
-[v]擴充方法membersExts VM->Dto
+
 
 [-]會員註冊功能
+	[v]擴充方法RegisterExts VM->Dto
 	-Controllers
 	  -MembersController.cs
 
@@ -40,6 +41,7 @@
 	   ComfirmRegister.cshtml 會員註冊成功頁面
 
 [working on]會員名單總覽 MembersList
+	[v]擴充方法membersExts Dto->VM、entity->Dto
 	-Controllers
 	  -MembersController.cs 
 
