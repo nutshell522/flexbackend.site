@@ -42,6 +42,11 @@
             @Html.DropDownListFor(model => model.fk_ProductSubCategoryId, ViewBag.ProductSubCategoryId as SelectList, new { @class = "form-select" })
             @Html.ValidationMessageFor(model => model.fk_ProductSubCategoryId, "", new { @class = "text-danger" })
         </div>
+        <div class="mb-3">
+            @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-check-input" } })
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "form-check-label" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
         <div class="mb-3 col-12 d-flex">
             <div class="col-3">
                 @Html.LabelFor(model => model.ProductMaterial, htmlAttributes: new { @class = "form-label" })
@@ -69,18 +74,18 @@
             </div>
         </div>
         @*<div class="mb-3 col-12 d-flex">
-            <div class="col-3">
-                @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
-            </div>
+                <div class="col-3">
+                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "form-label" })
+                    @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                </div>
 
-            <div class="col-3 ms-3">
-                @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
-                @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                <div class="col-3 ms-3">
+                    @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "form-label" })
+                    @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                    @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "form-label" })
@@ -97,12 +102,40 @@
             <input type="file" name="CreateFile" id="createFile" class="form-control" multiple />
             @Html.ValidationMessageFor(model => model.ImgPaths, "", new { @class = "text-danger" })
         </div>
-        <div class="p-3 mb-3 border border-4 rounded-2">
-            <span class="mb-3">規格</span>
-            <button class="btn btn-secondary ms-3 mb-3" type="button" id="addSpecBtn">新增</button>
+        <div class="p-3 ms-1 mb-3 border border-4 rounded-2 form-control w-75">
+            <div class="mb-3">
+                <span>規格</span>
+                <button class="btn btn-secondary ms-3 " type="button" id="addSpecBtn">新增規格</button>
+            </div>
             <div id="specContainer">
-                <div class="product-group d-flex">
-                    @Html.DropDownListFor(model => model.ProductGroups[0].ColorId, ViewBag.Color as SelectList, new { @class = "form-select" })
+                @*<div class="product-group d-flex">*@
+                @*@if (Model.ProductGroups != null)
+                    {
+                        int index = 0;
+                        foreach (var group in Model.ProductGroups)
+                        {
+                            <div class="product-group d-flex">
+                                <select class="form-select" name="ProductGroups[@index].ColorId" required="required">
+                                    @foreach (var colorOption in colorCategory)
+                                    {
+                                        <option value="@colorOption.Value" @(group.ColorId == colorOption.Value ? "selected" : "")>@colorOption.Text</option>
+                                    }
+                                </select>
+                                <select class="form-select" name="ProductGroups[@index].SizeId" required="required">
+                                    @foreach (var sizeOption in sizeCategory)
+                                    {
+                                        <option value="@sizeOption.Value" @(group.SizeId == sizeOption.Value ? "selected" : "")>@sizeOption.Text</option>
+                                    }
+                                </select>
+                                <input class="form-control" type="number" name="ProductGroups[@index].Qty" required="required" min="0" value="@group.Qty" />
+                                <button type="button" class="deleteSpecBtn">刪除</button>
+                            </div>
+                            index++;
+                        }
+                    }*@
+
+
+                @*@Html.DropDownListFor(model => model.ProductGroups[0].ColorId, ViewBag.Color as SelectList, new { @class = "form-select" })
                     @Html.ValidationMessageFor(model => model.ProductGroups[0].ColorId, "", new { @class = "text-danger" })
 
                     @Html.DropDownListFor(model => model.ProductGroups[0].SizeId, ViewBag.Size as SelectList, new { @class = "form-select" })
@@ -111,12 +144,14 @@
                     <input class="form-control" type="number" name="ProductGroups[0].Qty" required="required" min="0" />
                     @Html.ValidationMessageFor(model => model.ProductGroups[0].Qty, "", new { @class = "text-danger" })
 
-                    <button type="button" class="deleteSpecBtn">刪除</button>
-                </div>
+                    <button type="button" class="btn btn-danger deleteSpecBtn ms-2">刪除</button>*@
+
+
+                @*</div>*@
             </div>
         </div>
         <div class="mb-3">
-            <input type="submit" value="新增" class="btn btn-primary" />
+            <input type="submit" value="儲存" class="btn btn-primary" />
             <button class="btn btn-primary ms-3" onclick='location.href="@Url.Action("Index")"'>取消</button>
         </div>
     </div>
@@ -147,42 +182,46 @@
         });
     </script>
 
-
     <script>
-        $(document).ready(function () {
-            var specContainer = $("#specContainer");
-            var addSpecBtn = $("#addSpecBtn");
-            // 新增規格組
-            addSpecBtn.click(function () {
-                var newSpecGroup = $("<div class='product-group d-flex'></div>");
+    $(document).ready(function () {
+        var specContainer = $("#specContainer");
+        var addSpecBtn = $("#addSpecBtn");
+        var index = specContainer.children(".product-group").length;
 
-                var colorSelect = $(`<select class='form-select' name='ProductGroups[].ColorId' required='required'></select>`);
-                colorSelect.html(`@Html.Raw(Html.DropDownListFor(model => model.ProductGroups[0].ColorId, colorCategory, new { @class = "form-select" }).ToHtmlString())`);
-                newSpecGroup.append(colorSelect);
+        function addSpecGroup() {
+            var newSpecGroup = $("<div class='product-group d-flex mb-3'></div>");
 
-                var sizeSelect = $(`<select class='form-select' name='ProductGroups[].SizeId' required='required'></select>`);
-                sizeSelect.html(`@Html.Raw(Html.DropDownListFor(model => model.ProductGroups[0].SizeId, sizeCategory, new { @class = "form-select" }).ToHtmlString())`);
-                newSpecGroup.append(sizeSelect);
+            var colorSelect = $(`<select class='form-select' name='ProductGroups[${index}].ColorId' required='required'></select>`);
+            colorSelect.html(`@Html.Raw(Html.DropDownListFor(model => model.ProductGroups[0].ColorId, colorCategory, new { @class = "form-select" }).ToHtmlString())`);
+            newSpecGroup.append(colorSelect);
 
-                var qtyInput = $("<input class='form-control' type='number' name='ProductGroups[].Qty' required='required' min='0' />");
-                newSpecGroup.append(qtyInput);
+            var sizeSelect = $(`<select class='form-select' name='ProductGroups[].SizeId' required='required'></select>`);
+            sizeSelect.html(`@Html.Raw(Html.DropDownListFor(model => model.ProductGroups[0].SizeId, sizeCategory, new { @class = "form-select" }).ToHtmlString())`);
+            newSpecGroup.append(sizeSelect);
 
-                var deleteBtn = $("<button type='button' class='deleteSpecBtn'>刪除</button>");
-                deleteBtn.click(function () {
-                    $(this).parent().remove();
-                });
-                newSpecGroup.append(deleteBtn);
+            var qtyInput = $("<input class='form-control' type='number' name='ProductGroups[].Qty' required='required' min='0' />");
+            newSpecGroup.append(qtyInput);
 
-                specContainer.append(newSpecGroup);
-            });
-
-            // 刪除規格組
-            specContainer.on("click", ".deleteSpecBtn", function () {
+            var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
+            deleteBtn.click(function () {
                 if (specContainer.children(".product-group").length > 1) {
                     $(this).parent().remove();
+                } else {
+                    alert("至少要有一組規格");
                 }
             });
+            newSpecGroup.append(deleteBtn);
+
+            specContainer.append(newSpecGroup);
+        }
+
+        addSpecGroup(); // 呼叫一次以產生初始的規格組
+
+        // 新增規格
+        addSpecBtn.click(function () {
+            addSpecGroup();
         });
+    });
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

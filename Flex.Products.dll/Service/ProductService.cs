@@ -29,6 +29,14 @@ namespace Flex.Products.dll.Service
 			return products;
 		}
 
+		public Result EditProductsStatus(List<ProductDto> dto)
+		{
+			_repo.EditProductsStatus(dto);
+
+			return Result.Success();
+
+		}
+
 		public Result CreateProduct(ProductDto dto)
         {
             //檢查ProductId是否存在

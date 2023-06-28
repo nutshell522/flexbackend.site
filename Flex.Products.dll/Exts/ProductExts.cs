@@ -58,6 +58,17 @@ namespace Flex.Products.dll.Models.Infra.Exts
 			};
 		}
 
+
+		public static ProductDto ToDto(this ProductIndexVM vm)
+		{
+			return new ProductDto
+			{
+				ProductId = vm.ProductId,
+				Status = vm.Status,
+			};
+		}
+
+
 		public static ProductDto ToCreateDto(this ProductCreateVM vm)
 		{
 			return new ProductDto

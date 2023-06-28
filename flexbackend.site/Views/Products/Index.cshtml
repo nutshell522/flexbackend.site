@@ -13,205 +13,326 @@
 <h2>商品管理</h2>
 
 <p>
-    
+
 </p>
 <div class="search-bar-container mb-4 d-flex">
     <form method="get" class="me-auto">
         <div class="row">
             <div class="left d-flex">
-            @* 輸入框區域 寬度可移除下方class w-50 自行調整 *@
+                @* 輸入框區域 寬度可移除下方class w-50 自行調整 *@
                 <div class="col col-3 ">
                     @*@Html.TextBoxFor(model => criteria.Name, new { @class = "form-control", placeholder = "搜尋..." })*@
                     <input id="index_Search" class="form-control " name="criteria.Name" type="text" value="@criteria.Name" placeholder="搜尋...">
                 </div>
                 <div class="col col-3 ms-1">
-                    @Html.DropDownListFor(model=>criteria.ProductSubCategoryId, productSubCategory, new { @class = "form-select" })
+                    @Html.DropDownListFor(model => criteria.ProductSubCategoryId, productSubCategory, new { @class = "form-select" })
                     @*<select id="productSubCategoryId" name="criteria.ProductSubCategoryId" class="form-select">
-                        @foreach (var item in productSubCategory)
-                        {
-                            <option value="@item.Value" @(_productSubCategoryId == item.Value ? "selected" : "") )>@item.Text</option>
-                        }
-                    </select>*@
+                            @foreach (var item in productSubCategory)
+                            {
+                                <option value="@item.Value" @(_productSubCategoryId == item.Value ? "selected" : "") )>@item.Text</option>
+                            }
+                        </select>*@
                 </div>
                 <div class="col col-3 ms-1">
-                    @Html.DropDownListFor(model => criteria.Status, ViewBag.StatusOption as SelectList, new { @class = "form-select"})
+                    @Html.DropDownListFor(model => criteria.Status, ViewBag.StatusOption as SelectList, new { @class = "form-select" })
                 </div>
                 <div class="col col-3">
                     <button class="btn btn-primary">搜尋</button>
+                    @Html.ActionLink("新增商品", "Create", null, new { @class = "btn btn-primary" })
+                    @*<button class="btn btn-primary" onclick="editStatus()">儲存</button>*@
                 </div>
                 <div class="col col-3">
-                    @Html.ActionLink("新增商品", "Create", null, new { @class = "btn btn-primary" })
+
+                </div>
+                <div class="col col-3">
+
                 </div>
             </div>
         </div>
     </form>
-
 </div>
-        <div class="table-container">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
-                        @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                        th-col-0 至 th-col-20
-                        超過100%資料不會溢出 也不會換行
-                        如有細緻設定需求，可自己寫css設定寬度
-                        *@
-                        <th class="th-col-0 sticky">
-                            <input id="check-all-status" class="form-check-input check-all me-2" type="checkbox">
-                            <label class="form-check-label" for="check-all-status">下架</label>
-                        </th>
-                        <th class="th-col-2 text-center">
-                            @Html.DisplayNameFor(model => model.ProductName)
-                        </th>
-                        <th class="th-col-2 text-center">
-                            庫存
-                        </th>
-                        <th class="th-col-2 text-center">
-                            @Html.DisplayNameFor(model => model.SubCategoryPath)
-                        </th>
-                        <th class="th-col-2 text-center">
-                            @Html.DisplayNameFor(model => model.SalesPrice)
-                        </th>
-                        <th class="th-col-2 text-center">
-                            @Html.DisplayNameFor(model => model.StatusText)
-                        </th>
-                        <th class="th-col-2 text-center">
-                            @Html.DisplayNameFor(model => model.Tag)
-                        </th>
-                        <th class="th-col-2 text-center">管理</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @* 如有照片要放
-                    格式:
-                    <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
-                    *@
-                    @*  顯示資料內有定義了狀態框，
-                    如有需展示狀態顏色，請在td內增加一個span，且定義class
-                    有提供四種顏色:
-                        綠色 : status-success
-                        灰色 : status-dark
-                        紅色 : status-danger
-                        藍色 : status-primary
-                    可依自己需求使用
 
-                    格式: <td class="text-center"><span class="status-success}">進行中</span></td>
-                    *@
+<button class="btn btn-primary" onclick="editStatus()">儲存</button>
+<div class="table-container">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
+                @* 同時也有提供 th-col- 作為粗略每列寬度設定
+                    th-col-0 至 th-col-20
+                    超過100%資料不會溢出 也不會換行
+                    如有細緻設定需求，可自己寫css設定寬度
+                *@
+                <th class="th-col-0 sticky">
+                    <input id="check-all-status" class="form-check-input check-all me-2" type="checkbox" onclick="">
+                    <label class="form-check-label" for="check-all-status">下架</label>
+                </th>
+                <th class="th-col-2 text-center">
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                <th class="th-col-2 text-center">
+                    庫存
+                </th>
+                <th class="th-col-2 text-center">
+                    @Html.DisplayNameFor(model => model.SubCategoryPath)
+                </th>
+                <th class="th-col-2 text-center">
+                    @Html.DisplayNameFor(model => model.SalesPrice)
+                </th>
+                <th class="th-col-2 text-center">
+                    @Html.DisplayNameFor(model => model.StatusText)
+                </th>
+                <th class="th-col-2 text-center">
+                    @Html.DisplayNameFor(model => model.Tag)
+                </th>
+                <th class="th-col-2 text-center">管理</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* 如有照片要放
+                格式:
+                <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
+            *@
+            @*  顯示資料內有定義了狀態框，
+                如有需展示狀態顏色，請在td內增加一個span，且定義class
+                有提供四種顏色:
+                    綠色 : status-success
+                    灰色 : status-dark
+                    紅色 : status-danger
+                    藍色 : status-primary
+                可依自己需求使用
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-                            <td class="sticky text-center align-middle">
-                                <input class="form-check-input check-item" type="checkbox" onclick="selectProduct('@item.ProductId')" @(@item.Status?"checked":"")/>
-                            </td>
-                            <td class="text-center align-middle">
-                                @Html.DisplayFor(modelItem => item.ProductName)
-                            </td>
-                            <td>
-                                @if (item.ProductGroupList.Count > 0)
-                                {
-                                    for (int i = 0; i < item.ProductGroupList.Count; i++)
-                                    {
+                格式: <td class="text-center"><span class="status-success}">進行中</span></td>
+            *@
 
-                                        <span class="d-flex text-start align-items-center mb-1">
-                                            @Html.TextBoxFor(modelItem => item.ProductGroupList[i].Qty, new { @class = "form-control d-inline", @readonly = "readonly", style = "width: 70px; text-align: right;" })  @item.ProductGroupList[i].ColorName / @item.ProductGroupList[i].SizeName
-                                        </span>
-                                    }
-                                }
-                            </td>
-                            <td class="text-center align-middle">
-                                @Html.DisplayFor(modelItem => item.SubCategoryPath)
-                            </td>
-                            <td class="text-center align-middle">
-                                @Html.DisplayFor(modelItem => item.SalesPrice)
-                            </td>
-                            <td class="text-center align-middle">
-                                @Html.DisplayFor(modelItem => item.StatusText)
-                            </td>
-                            <td class="text-center align-middle">
-                                @Html.DisplayFor(modelItem => item.Tag)
-                            </td>
-                            <td class="text-center align-middle">
-                                <div class="manage-btn-container">
-                                    <a href="@Url.Action("Edit", new {id=item.ProductId })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="@Url.Action("EditImg", new {id=item.ProductId })" class="btn-edit"><i class="bi bi-image"></i></a>
-                                    <a href="@Url.Action("Details", new {id=item.ProductId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                    <a href="@Url.Action("Delete", new {id=item.ProductId})" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
+                    <td class="sticky text-center align-middle">
+                        <input class="form-check-input check-item" type="checkbox" data-id="@item.ProductId" onclick="saveStatus(this)" @(item.Status ? "checked" : "") />
+                    </td>
+                    <td class="text-center align-middle">
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @if (item.ProductGroupList.Count > 0)
+                        {
+                            for (int i = 0; i < item.ProductGroupList.Count; i++)
+                            {
 
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        @section Scripts{
-            <script>
-                //var selests = [];
-                //const selectProduct = (id) => {
-                //    if (selests.includes(id)) {
-                //        selests.splice(selests.indexOf(id), 1);
-                //    } else {
-                //        selests.push(id);
-                //    }
-                //    console.log(selests);
-                //};
-
-                window.onload = function () {
-                    // 替排序按鈕寫入排序箭頭出現事件
-                    document.querySelectorAll(".sort-btn").forEach(item => {
-                        item.addEventListener("click", function () {
-                            // sortClickHandler 可寫入第二個參數，是委派
-                            sortClickHandler(this);
-                        });
-                    });
-
-                    function sortClickHandler(targetBtn, callback = null) {
-                        truncateSortAttr(targetBtn);
-                        resetSortBtns();
-
-                        var sortValue = targetBtn.getAttribute('sort');
-                        var newSortValue = (sortValue && sortValue == 'asc') ? 'desc' : 'asc';
-                        setSort(targetBtn, newSortValue);
-
-                        callback && callback();
-                    }
-
-                    // 給按鈕加上排序箭頭
-                    function setSort(sortBtn, setSort) {
-                        sortBtn.setAttribute('sort', setSort);
-                        if (setSort == 'asc') {
-                            sortBtn.innerHTML += '<i class="bi bi-arrow-up-short"></i>';
-                        } else if (setSort == 'desc') {
-                            sortBtn.innerHTML += '<i class="bi bi-arrow-down-short"></i>';
+                                <span class="d-flex text-start align-items-center mb-1">
+                                    @Html.TextBoxFor(modelItem => item.ProductGroupList[i].Qty, new { @class = "form-control d-inline", @readonly = "readonly", style = "width: 70px; text-align: right;" })  @item.ProductGroupList[i].ColorName / @item.ProductGroupList[i].SizeName
+                                </span>
+                            }
                         }
+                    </td>
+                    <td class="text-center align-middle">
+                        @Html.DisplayFor(modelItem => item.SubCategoryPath)
+                    </td>
+                    <td class="text-center align-middle">
+                        @Html.DisplayFor(modelItem => item.SalesPrice)
+                    </td>
+                    <td class="text-center align-middle">
+                        @Html.DisplayFor(modelItem => item.StatusText)
+                    </td>
+                    <td class="text-center align-middle">
+                        @Html.DisplayFor(modelItem => item.Tag)
+                    </td>
+                    <td class="text-center align-middle">
+                        <div class="manage-btn-container">
+                            <a href="@Url.Action("Edit", new {id=item.ProductId })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("EditImg", new {id=item.ProductId })" class="btn-edit"><i class="bi bi-image"></i></a>
+                            <a href="@Url.Action("Details", new {id=item.ProductId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                            <a href="@Url.Action("Delete", new {id=item.ProductId})" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+    @section Scripts{
+
+        <script>
+            var productData = [];
+
+            function saveStatus(element) {
+                let productId = element.getAttribute("data-id");
+                if (productData.includes(productId)) {
+                    productData.splice(productData.indexOf(productId), 1);
+                } else {
+                    productData.push(productId);
+                }
+                console.log(productData);
+            }
+
+            //function editStatus() {
+            //    var productIdAndStatus = [];
+            //    productData.forEach(productId => {
+            //        var status = $('.check-item[data-id="' + productId + '"]').prop('checked');
+            //        productIdAndStatus.push({ ProductId: productId, Status: status });
+            //    });
+            //    console.log(productIdAndStatus);
+            //    // 將 productId加入Status後傳回後台進行處理，productIdAndStatus
+            //    $.ajax({
+            //        url: '/Products/Index',
+            //        type: 'POST',
+            //        data: productIdAndStatus,
+            //        success: function (response) {
+            //            // 儲存成功後的處理
+            //            console.log(response);
+            //            if (response.success) {
+            //                // 重新導向到 Index 頁面
+            //                alert("變更成功");
+            //            } else {
+            //                // 儲存失敗，顯示錯誤訊息或其他處理
+            //                console.log('儲存失敗');
+            //            }
+            //        },
+            //        error: function (xhr, status, error) {
+            //            // 處理錯誤情況
+            //            console.log('錯誤：' + error);
+            //        }
+            //    });
+            //}
+        </script>
+
+        <script>
+            //var selests = [];
+            //const selectProduct = (id) => {
+            //    if (selests.includes(id)) {
+            //        selests.splice(selests.indexOf(id), 1);
+            //    } else {
+            //        selests.push(id);
+            //    }
+            //    console.log(selests);
+            //};
+
+            window.onload = function () {
+                // 替排序按鈕寫入排序箭頭出現事件
+                document.querySelectorAll(".sort-btn").forEach(item => {
+                    item.addEventListener("click", function () {
+                        // sortClickHandler 可寫入第二個參數，是委派
+                        sortClickHandler(this);
+                    });
+                });
+
+                function sortClickHandler(targetBtn, callback = null) {
+                    truncateSortAttr(targetBtn);
+                    resetSortBtns();
+
+                    var sortValue = targetBtn.getAttribute('sort');
+                    var newSortValue = (sortValue && sortValue == 'asc') ? 'desc' : 'asc';
+                    setSort(targetBtn, newSortValue);
+
+                    callback && callback();
+                }
+
+                // 給按鈕加上排序箭頭
+                function setSort(sortBtn, setSort) {
+                    sortBtn.setAttribute('sort', setSort);
+                    if (setSort == 'asc') {
+                        sortBtn.innerHTML += '<i class="bi bi-arrow-up-short"></i>';
+                    } else if (setSort == 'desc') {
+                        sortBtn.innerHTML += '<i class="bi bi-arrow-down-short"></i>';
                     }
+                }
 
-                    // 清空所有排序按鈕的箭頭
-                    function resetSortBtns() {
-                        var sortBtns = document.querySelectorAll(".sort-btn");
-                        sortBtns.forEach(function (btn) {
-                            if (btn.innerHTML.includes("</i>")) {
-                                btn.innerHTML = btn.innerHTML.substring(0, btn.innerHTML.indexOf("<"));
-                            }
-                        });
-                    }
-
-
-
-                    // 清空被點擊外的其他按鈕的排序attr
-                    function truncateSortAttr(thisBtn = null) {
-                        var sortBtns = document.querySelectorAll(".sort-btn");
-                        sortBtns.forEach(function (btn) {
-                            if (btn !== thisBtn) {
-                                btn.removeAttribute('sort');
-                            }
-                        });
-                    }
-                };
+                // 清空所有排序按鈕的箭頭
+                function resetSortBtns() {
+                    var sortBtns = document.querySelectorAll(".sort-btn");
+                    sortBtns.forEach(function (btn) {
+                        if (btn.innerHTML.includes("</i>")) {
+                            btn.innerHTML = btn.innerHTML.substring(0, btn.innerHTML.indexOf("<"));
+                        }
+                    });
+                }
 
 
-            </script>
-        }
+
+                // 清空被點擊外的其他按鈕的排序attr
+                function truncateSortAttr(thisBtn = null) {
+                    var sortBtns = document.querySelectorAll(".sort-btn");
+                    sortBtns.forEach(function (btn) {
+                        if (btn !== thisBtn) {
+                            btn.removeAttribute('sort');
+                        }
+                    });
+                }
+            };
+
+
+        </script>
+
+
+
+
+        @*<script>
+            $(document).ready(function () {
+
+                //重新載入畫面
+                function loadProducts() {
+                    var criteria = {
+                        Name: $('#index_Search').val(),
+                        ProductSubCategoryId: $('#criteria_ProductSubCategoryId').val(),
+                        Status: $('#criteria_Status').val()
+                    };
+
+                    $.ajax({
+                        url: '@Url.Action("Index", "Products")',
+                        type: 'POST',
+                        data: criteria,
+                        dataType: 'json',
+                        success: function (response) {
+                            // 請求成功後的處理邏輯
+                            console.log(response);
+
+                            var table = $('.table tbody');
+                            table.empty();
+
+                            $.each(response, function (index, product) {
+                                var row = $('<tr>');
+                                row.append($('<td class="sticky text-center align-middle">')
+                                    .append($('<input>').addClass('form-check-input check-item').attr('type', 'checkbox').attr('onclick', 'selectProduct(' + product.ProductId + ')').prop('checked', product.Status)));
+
+                                row.append($('<td>').addClass('text-center align-middle').text(product.ProductName));
+                                row.append($('<td>').addClass('text-center align-middle').text(product.SubCategoryPath));
+                                row.append($('<td>').addClass('text-center align-middle').text(product.SalesPrice));
+                                row.append($('<td>').addClass('text-center align-middle').text(product.StatusText));
+                                row.append($('<td>').addClass('text-center align-middle').text(product.Tag));
+                                row.append($('<td>').addClass('text-center align-middle')
+                                    .append($('<div>').addClass('manage-btn-container')
+                                        .append($('<a>').attr('href', '@Url.Action("Edit", "Products")/' + product.ProductId).addClass('btn-edit').html('<i class="bi bi-pencil-square"></i>'))
+                                        .append($('<a>').attr('href', '@Url.Action("EditImg", "Products")/' + product.ProductId).addClass('btn-edit').html('<i class="bi bi-image"></i>'))
+                                        .append($('<a>').attr('href', '@Url.Action("Details", "Products")/' + product.ProductId).addClass('btn-view').html('<i class="bi bi-clipboard-check"></i>'))
+                                        .append($('<a>').attr('href', '@Url.Action("Delete", "Products")/' + product.ProductId).addClass('btn-del').html('<i class="bi bi-trash-fill"></i>'))
+                                    )
+                                );
+
+                                table.append(row);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            // 請求失敗時的處理邏輯
+                            console.log(error);
+                        }
+                    });
+                }
+
+                // 在頁面載入完成時觸發請求
+                loadProducts();
+
+                // 監聽搜尋按鈕的點擊事件
+                $('.search-bar-container button').click(function (e) {
+                    e.preventDefault();
+                    loadProducts();
+                });
+            });
+            </script>*@
+
+    }

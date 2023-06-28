@@ -65,6 +65,7 @@
     <Compile Include="Interface\IProductRepository.cs" />
     <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
     <Compile Include="Models\Dtos\SizeDto.cs" />
+    <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductEditImgVM.cs" />

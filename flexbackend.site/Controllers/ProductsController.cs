@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
+using Antlr.Runtime.Tree;
 using EFModels.EFModels;
 using Flex.Products.dll.Exts;
 using Flex.Products.dll.Infra.EFRepository;
@@ -35,15 +36,53 @@ namespace flexbackend.site.Controllers
 			ViewBag.Criteria = criteria;
             ViewBag.StatusOption = new SelectList(criteria.StatusOption);
 
-            //var products = new ProductEFRepository()
-            //             .Search(criteria)
-            //             .Select(p => p.ToIndexVM());
-
 			var service = new ProductService(_repo);
 			var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
+
 			return View(products);
 
-        }
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Index(List<ProductIndexVM> vm)
+		{
+			var dtos = new List<ProductDto>();
+			foreach (var product in vm)
+			{
+				dtos.Add(product.ToDto());
+			}
+			var service = new ProductService(_repo);
+			var products = service.EditProductsStatus(dtos);
+			if (products.IsSucces)
+			{
+				return RedirectToAction("Index");
+			}
+			return View(products);
+
+		}
+
+		//      [HttpPost]
+		//      [ValidateAntiForgeryToken]
+		//      public JsonResult Index(List<ProductIdAndStatusVM> productIdAndStatus)
+		//      {
+		//          var dtos = new List<ProductDto>();
+		//          foreach (var product in productIdAndStatus)
+		//          {
+		//              dtos.Add(product.ToDto());
+		//          }
+		//          var service = new ProductService(_repo);
+		//          var products = service.EditProductsStatus(dtos);
+		//	if (products.IsSucces)
+		//	{
+		//		return Json(new { success = true, message = "產品狀態更新成功" });
+		//	}
+		//	else
+		//	{
+		//		return Json(new { success = false, message = "產品狀態更新失敗" });
+		//	}
+
+		//}
 
 		// GET: Products/Details/5
 		public ActionResult Details(string id)

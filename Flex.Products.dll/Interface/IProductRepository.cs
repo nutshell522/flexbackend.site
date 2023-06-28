@@ -15,5 +15,7 @@ namespace Flex.Products.dll.Interface
 		void CreateProduct(ProductDto dto);
 
 		List<ProductDto> Search(IndexSearchCriteria criteria);
+
+		void EditProductsStatus(List<ProductDto> dto);
 	}
 }

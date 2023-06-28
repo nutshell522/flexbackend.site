@@ -53,6 +53,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 			_db.SaveChanges();
 		}
+
 		public List<ProductDto> Search(IndexSearchCriteria criteria)
 		{
 			criteria=criteria ?? new IndexSearchCriteria();
@@ -90,5 +91,19 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			products=products.Where(p=>p.LogOut==false).ToList();
 			return products;
 		}		
+
+		public void EditProductsStatus(List<ProductDto> dto)
+		{
+			foreach (var item in dto)
+			{
+				var product=_db.Products.FirstOrDefault(p => p.ProductId == item.ProductId);
+				if (product == null) return;
+
+				product.Status = item.Status;
+				product.EditTime = DateTime.Now;
+
+				_db.SaveChanges();
+			}
+		}
 	}
 }
