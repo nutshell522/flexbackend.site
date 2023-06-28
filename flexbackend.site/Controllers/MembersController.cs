@@ -22,37 +22,12 @@ namespace flexbackend.site.Controllers
 		private AppDbContext db =new AppDbContext();//初始化EF的DbContext物件
 		
 		//會員名單總覽
-		//public ActionResult MembersList()
-		//{
-		//	var members = db.Members.Include(m=>m.MemberPoints)
-		//	.ToList()
-		//	.Select(m =>m.ToIndexVM());
-		//	return View(members);
-		//}
-		//private MemberService _memberservice;
-		//public MembersController(MemberService memberservice)
-		//{
-		//	_memberservice=memberservice;
-		//}
-
-		public ActionResult MembersList(MembersIndexVM vm)
+		public ActionResult MembersList()
 		{
 			IMemberRepository repo = new MemberEFRepository();
 			MemberService service = new MemberService(repo);
-
-			//vm=>dto
-			//service function(dto)
-
-			service.MemberList(vm).Select(x => x.ToIndexVM());
-
-			return View(service.MemberList(vm).Select(x => x.ToIndexVM()));
+			return View(service.MemberList());
 		}
-
-
-
-
-
-
 
 		//會員註冊
 		public ActionResult Register()

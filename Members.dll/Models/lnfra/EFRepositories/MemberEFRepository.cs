@@ -22,11 +22,8 @@ namespace Members.dll.Models.lnfra.EFRepositories
 
 		public List<Member> GetMembers() //取得員工資料
 		{
-
 			return _db.Members.ToList();
-		
 		} 
-
 
 		public bool ExistAccount(string account) //判斷帳號是否存在
 		{

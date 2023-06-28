@@ -10,14 +10,13 @@ using System.Data.Entity;
 
 namespace Members.dll.Models.Dtos
 {
-	public class MemberDto
+	public class MembersIndexDto
 	{
 		public int MemberId { get; set; }
 		public string Name { get; set; }
 		public bool? Gender { get; set; }
 		public string Email { get; set; }
 		public int fk_LevelId { get; set; }
-		public int PointSubtotal { get; set; }
 		public DateTime? Registration { get; set; }
 		public int? fk_BlackListId { get; set; }
 	}

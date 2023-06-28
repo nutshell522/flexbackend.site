@@ -24,7 +24,7 @@ namespace Members.dll.Models.ViewsModels
 
 		public int fk_LevelId { get; set; }
 
-		public int PointSubtotal { get; set; }
+		public int PointSubtotal { get; set; } //這個拿掉畫面上就沒有了
 
 		public DateTime? Registration { get; set; }
 
