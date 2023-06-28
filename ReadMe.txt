@@ -1,13 +1,15 @@
+[v]資料庫版本2
 [v]在flexbackend建立EFModels
 [v]建立Members.dll，並讓flexbackend參考它
 [v]在Members.dll建立三層式架構資料夾
+[v]擴充方法membersExts VM->Dto
 
 [-]會員註冊功能
 	-Controllers
 	  -MembersController.cs
 
 	-Models
-	  -Dtos 用來傳遞資料，內具有擴充方法(VM->Dto)
+	  -Dtos 用來傳遞資料
 	    RegisterDto.cs
 	  
 	  -Interfaces 類似轉接器，若需要存取資料庫都來實作這個介面

@@ -79,7 +79,6 @@
     <Compile Include="EFModels\order_statuses.cs" />
     <Compile Include="EFModels\pay_methods.cs" />
     <Compile Include="EFModels\pay_statuses.cs" />
-    <Compile Include="EFModels\PointCategory.cs" />
     <Compile Include="EFModels\PointHistory.cs" />
     <Compile Include="EFModels\PointManage.cs" />
     <Compile Include="EFModels\PointTradeIn.cs" />
@@ -103,7 +102,6 @@
     <Compile Include="EFModels\Staff.cs" />
     <Compile Include="EFModels\StaffPermission.cs" />
     <Compile Include="EFModels\Supplier.cs" />
-    <Compile Include="EFModels\sysdiagram.cs" />
     <Compile Include="EFModels\Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -51,6 +51,8 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Models\Dtos\MembersDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
+    <Compile Include="Models\Exts\MembersExts.cs" />
+    <Compile Include="Models\Exts\RegisterExts.cs" />
     <Compile Include="Models\Interfaces\IMemberRepository.cs" />
     <Compile Include="Models\lnfra\EFRepositories\MemberEFRepository.cs" />
     <Compile Include="Models\lnfra\HashUtility.cs" />

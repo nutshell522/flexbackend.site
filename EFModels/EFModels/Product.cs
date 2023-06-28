@@ -37,16 +37,18 @@ namespace EFModels.EFModels
 
         public int SalesPrice { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         public DateTime? EndTime { get; set; }
+
+        public bool? Status { get; set; }
 
         public bool LogOut { get; set; }
 
         [StringLength(100)]
         public string Tag { get; set; }
 
-        public int fk_ProductSubCategoryID { get; set; }
+        public int fk_ProductSubCategoryId { get; set; }
 
         public DateTime CreateTime { get; set; }
 

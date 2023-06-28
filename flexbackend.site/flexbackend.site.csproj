@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,10 +49,10 @@
       <HintPath>..\packages\Dapper.2.0.138\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -134,61 +135,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EFModels\Activity.cs" />
-    <Compile Include="Models\EFModels\ActivityCategory.cs" />
-    <Compile Include="Models\EFModels\ActivityStatus.cs" />
-    <Compile Include="Models\EFModels\AlternateAddress.cs" />
-    <Compile Include="Models\EFModels\AppDbContext.cs" />
-    <Compile Include="Models\EFModels\BlackList.cs" />
-    <Compile Include="Models\EFModels\Branch.cs" />
-    <Compile Include="Models\EFModels\CartItem.cs" />
-    <Compile Include="Models\EFModels\clos.cs" />
-    <Compile Include="Models\EFModels\ColorCategory.cs" />
-    <Compile Include="Models\EFModels\Coupon.cs" />
-    <Compile Include="Models\EFModels\CouponCategory.cs" />
-    <Compile Include="Models\EFModels\CouponSending.cs" />
-    <Compile Include="Models\EFModels\CustomizedOrder.cs" />
-    <Compile Include="Models\EFModels\Customized_materials.cs" />
-    <Compile Include="Models\EFModels\Customized_Shoes.cs" />
-    <Compile Include="Models\EFModels\Department.cs" />
-    <Compile Include="Models\EFModels\Discount.cs" />
-    <Compile Include="Models\EFModels\JobTitle.cs" />
-    <Compile Include="Models\EFModels\logistics_companies.cs" />
-    <Compile Include="Models\EFModels\Member.cs" />
-    <Compile Include="Models\EFModels\MemberPoint.cs" />
-    <Compile Include="Models\EFModels\MembershipLevel.cs" />
-    <Compile Include="Models\EFModels\MembershipLevelPrivilege.cs" />
-    <Compile Include="Models\EFModels\OneToOneReservation.cs" />
-    <Compile Include="Models\EFModels\order.cs" />
-    <Compile Include="Models\EFModels\orderItem.cs" />
-    <Compile Include="Models\EFModels\order_statuses.cs" />
-    <Compile Include="Models\EFModels\pay_methods.cs" />
-    <Compile Include="Models\EFModels\pay_statuses.cs" />
-    <Compile Include="Models\EFModels\PointCategory.cs" />
-    <Compile Include="Models\EFModels\PointHistory.cs" />
-    <Compile Include="Models\EFModels\PointManage.cs" />
-    <Compile Include="Models\EFModels\PointTradeIn.cs" />
-    <Compile Include="Models\EFModels\Privilege.cs" />
-    <Compile Include="Models\EFModels\Product.cs" />
-    <Compile Include="Models\EFModels\ProductCategory.cs" />
-    <Compile Include="Models\EFModels\ProductGroup.cs" />
-    <Compile Include="Models\EFModels\ProductImg.cs" />
-    <Compile Include="Models\EFModels\ProductSubCategory.cs" />
-    <Compile Include="Models\EFModels\ProjectTag.cs" />
-    <Compile Include="Models\EFModels\ProjectTagItem.cs" />
-    <Compile Include="Models\EFModels\ReservationStatus.cs" />
-    <Compile Include="Models\EFModels\SalesCategory.cs" />
-    <Compile Include="Models\EFModels\ShoesCategory.cs" />
-    <Compile Include="Models\EFModels\ShoesColorCategory.cs" />
-    <Compile Include="Models\EFModels\ShoesPicture.cs" />
-    <Compile Include="Models\EFModels\ShoppingCart.cs" />
-    <Compile Include="Models\EFModels\SizeCategory.cs" />
-    <Compile Include="Models\EFModels\Speaker.cs" />
-    <Compile Include="Models\EFModels\SpeakerField.cs" />
-    <Compile Include="Models\EFModels\Staff.cs" />
-    <Compile Include="Models\EFModels\StaffPermission.cs" />
-    <Compile Include="Models\EFModels\Supplier.cs" />
-    <Compile Include="Models\EFModels\Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2313,6 +2259,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\FileContentIndex\merges\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\v17\" />
+    <Folder Include="Models\" />
     <Folder Include="Views\DIscount\" />
   </ItemGroup>
   <ItemGroup>
@@ -2386,7 +2333,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

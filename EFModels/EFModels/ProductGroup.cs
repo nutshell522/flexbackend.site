@@ -16,7 +16,7 @@ namespace EFModels.EFModels
 
         public int fk_ColorId { get; set; }
 
-        public int fk_SizeID { get; set; }
+        public int fk_SizeId { get; set; }
 
         public int Qty { get; set; }
 
