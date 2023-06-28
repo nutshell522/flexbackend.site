@@ -20,7 +20,7 @@ namespace EFModels.EFModels
 
         public DateTime ordertime { get; set; }
 
-        public int fk_member_Id { get; set; }
+        public int member_Id { get; set; }
 
         public int total_quantity { get; set; }
 

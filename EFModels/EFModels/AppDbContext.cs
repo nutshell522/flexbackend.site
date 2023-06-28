@@ -225,7 +225,7 @@ namespace EFModels.EFModels
             modelBuilder.Entity<Member>()
                 .HasMany(e => e.orders)
                 .WithRequired(e => e.Member)
-                .HasForeignKey(e => e.fk_member_Id)
+                .HasForeignKey(e => e.member_Id)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
@@ -242,7 +242,7 @@ namespace EFModels.EFModels
             modelBuilder.Entity<Member>()
                 .HasMany(e => e.orders1)
                 .WithRequired(e => e.Member1)
-                .HasForeignKey(e => e.fk_member_Id)
+                .HasForeignKey(e => e.member_Id)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Member>()
@@ -495,5 +495,8 @@ namespace EFModels.EFModels
                 .Property(e => e.Password)
                 .IsUnicode(false);
         }
+
+        object placeHolderVariable;
+        public System.Data.Entity.DbSet<Orders.ViewModels.OrdersIndexVM> OrdersIndexVMs { get; set; }
     }
 }
