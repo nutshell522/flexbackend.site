@@ -17,12 +17,22 @@
             overflow-y: scroll;
         }
 
-        #drop-menu.active {
-            max-height: 150px;
-        }
+            #drop-menu.active {
+                max-height: 150px;
+            }
 
-        #drop-menu.active > li > a:hover {
-            background-color: #ddd;
+                #drop-menu.active > li > a:hover {
+                    background-color: #ddd;
+                }
+        .pj-tag {
+            font-size: 12px;
+            padding: 1px 5px 2px 4px;
+            background-color: #5C83E2;
+            color: #deefff;
+        }
+        .pj-tag.this-tag {
+            background-color: #589a69;
+            color: #bfffde;
         }
     </style>
 }
@@ -110,7 +120,7 @@
                 }
             });
             $(document).on("click", function (event) {
-                
+
                 const $target = $(event.target);
 
                 if (!$target.is($dropMenu) && !$target.closest($dropMenu).length) {
@@ -189,10 +199,10 @@
             }
             function tagsNameToHtmlListString(item) {
                 const htmlString = `
-                        <li class="w-100">
-                            <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?id=${item.ProjectTagId}">${item.ProjectTagName}</a>
-                        </li>
-                    `;
+                                <li class="w-100">
+                                    <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?id=${item.ProjectTagId}">${item.ProjectTagName}</a>
+                                </li>
+                            `;
                 return htmlString;
             }
 
