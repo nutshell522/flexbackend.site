@@ -24,16 +24,18 @@
                 #drop-menu.active > li > a:hover {
                     background-color: #ddd;
                 }
+
         .pj-tag {
             font-size: 12px;
             padding: 1px 5px 2px 4px;
             background-color: #5C83E2;
             color: #deefff;
         }
-        .pj-tag.this-tag {
-            background-color: #589a69;
-            color: #bfffde;
-        }
+
+            .pj-tag.this-tag {
+                background-color: #589a69;
+                color: #bfffde;
+            }
     </style>
 }
 
@@ -63,7 +65,7 @@
         <div class="col d-flex align-items-center">
             <button type="button" id="edit" class="btn btn-sm btn-success me-2 d-detail d-none">編輯</button>
             <button type="button" id="create" class="btn btn-sm btn-primary me-2 d-detail d-none">新增</button>
-            <button type="button" id="save" class="btn btn-sm btn-success me-2 d-create d-none">保存</button>
+            <button type="button" id="save" class="btn btn-sm btn-success me-auto d-create d-none">保存</button>
             <button type="button" id="cancel" class="btn btn-sm btn-danger me-2 d-create d-none">取消</button>
         </div>
         @Html.ValidationMessageFor(model => model.ProjectTagName, "", new { @class = "text-danger" })
@@ -199,10 +201,10 @@
             }
             function tagsNameToHtmlListString(item) {
                 const htmlString = `
-                                <li class="w-100">
-                                    <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?id=${item.ProjectTagId}">${item.ProjectTagName}</a>
-                                </li>
-                            `;
+                                    <li class="w-100">
+                                        <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?id=${item.ProjectTagId}">${item.ProjectTagName}</a>
+                                    </li>
+                                `;
                 return htmlString;
             }
 
