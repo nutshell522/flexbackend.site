@@ -41,7 +41,7 @@
 	  -Members
 	   ComfirmRegister.cshtml 會員註冊成功頁面
 
-[working on]會員名單總覽 MembersList
+[v]會員名單總覽 MembersList
 	[v]擴充方法membersExts Dto->VM、entity->Dto
 	-Controllers
 	  -MembersController.cs 
@@ -60,3 +60,7 @@
 	-Views
 	  -Members
 	   MembersList.cshtml 頁面
+
+[working on]會員資料管理
+		add MembersEditDto
+	    * MembersExts add  entity->Dto

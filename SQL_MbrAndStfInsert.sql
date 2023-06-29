@@ -201,7 +201,7 @@ JOIN Departments ON Staffs.fk_DepartmentId=Departments.DepartmentId
 JOIN JobTitles ON Staffs.fk_TitleId=JobTitles.TitleId
 JOIN StaffPermissions ON Staffs.fk_PermissionsId=StaffPermissions.PermissionsId;
 
-SELECT StaffId,DepartmentName,TitleName,[Name],Age,Gender,Email,LevelName,dueDate
+SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Email,LevelName,dueDate
 FROM Staffs as S
 JOIN Departments as D ON S.fk_DepartmentId=D.DepartmentId
 JOIN JobTitles as J ON S.fk_TitleId=J.TitleId

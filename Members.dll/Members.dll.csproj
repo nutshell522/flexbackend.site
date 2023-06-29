@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Models\Dtos\MembersEditDto.cs" />
     <Compile Include="Models\Dtos\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
     <Compile Include="Models\Dtos\StaffsIndexDto.cs" />

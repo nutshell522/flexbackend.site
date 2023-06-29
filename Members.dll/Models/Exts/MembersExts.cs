@@ -33,7 +33,7 @@ namespace Members.dll.Models.Exts
 			//在這邊判斷轉換的顯示文字?
 			//string gender = entity.Gender ? "男" : "女";
 			//string blacklisted = entity.fk_BlackListId.HasValue ? "是" : "否";
-			
+
 			return new MembersIndexDto
 			{
 				MemberId = entity.MemberId,
@@ -44,6 +44,22 @@ namespace Members.dll.Models.Exts
 				PointSubtotal = entity.MemberPoints.Sum(p => p.PointSubtotal),
 				Registration = entity.Registration,
 				fk_BlackListId = entity.fk_BlackListId
+			};
+		}
+
+		/********************************************************************/
+		public static MembersEditDto ToMembersEditDto(this Member entity)
+		{
+			return new MembersEditDto
+			{
+				MemberId = entity.MemberId,
+				Name = entity.Name,
+				Gender = entity.Gender,
+				Email = entity.Email,
+				Birthday = entity.Birthday,
+				Registration =entity.Registration,
+				fk_LevelId = entity.fk_LevelId,
+				fk_BlackListId=entity.fk_BlackListId
 			};
 		}
 	}
