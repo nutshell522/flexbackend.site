@@ -20,16 +20,13 @@ namespace EFModels.EFModels
 
         public int UsageAmount { get; set; }
 
-        public DateTime? EffectiveDate { get; set; }
+        public DateTime EffectiveDate { get; set; }
 
         public int? fk_MemberId { get; set; }
 
         public int? fk_OrderId { get; set; }
 
-        [StringLength(50)]
-        public string OrderName { get; set; }
-
-        public int fk_PointCategoryId { get; set; }
+        public int? fk_TypeId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberPoint> MemberPoints { get; set; }
@@ -38,6 +35,6 @@ namespace EFModels.EFModels
 
         public virtual order order { get; set; }
 
-        public virtual PointCategory PointCategory { get; set; }
+        public virtual Type Type { get; set; }
     }
 }

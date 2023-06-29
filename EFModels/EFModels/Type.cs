@@ -14,6 +14,7 @@ namespace EFModels.EFModels
         {
             CartItems = new HashSet<CartItem>();
             orderItems = new HashSet<orderItem>();
+            PointHistories = new HashSet<PointHistory>();
             PointManages = new HashSet<PointManage>();
         }
 
@@ -28,6 +29,9 @@ namespace EFModels.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<orderItem> orderItems { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PointHistory> PointHistories { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PointManage> PointManages { get; set; }

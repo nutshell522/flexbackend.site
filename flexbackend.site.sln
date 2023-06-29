@@ -7,14 +7,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flexbackend.site", "flexbac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{E7F54768-72C1-4232-BB40-6CEA9266185A}"
 	ProjectSection(SolutionItems) = preProject
-		ReadMe.txt = ReadMe.txt
+		MemberReadMe.txt = MemberReadMe.txt
+		StaffReadMe.txt = StaffReadMe.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFModels", "EFModels\EFModels.csproj", "{4A45E52A-D1B4-450B-A455-D01FF085E499}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.dll", "Discount.dll\Discount.dll.csproj", "{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}"
 EndProject
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Activity.dll", "Activity.dll\Activity.dll.csproj", "{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Members.dll", "Members.dll\Members.dll.csproj", "{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}"
+>>>>>>> Ying04
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +39,17 @@ Global
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Ying04
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
