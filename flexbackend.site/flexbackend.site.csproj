@@ -49,10 +49,6 @@
       <HintPath>..\packages\Dapper.2.0.138\lib\net461\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-<<<<<<< HEAD
-
-=======
->>>>>>> Lance01
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -65,14 +61,11 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-<<<<<<< HEAD
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-=======
     <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
->>>>>>> Lance01
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -142,10 +135,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProjectTagController.cs" />
+    <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2313,13 +2309,24 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Members\ComfirmRegister.cshtml" />
+    <Content Include="Views\Members\MembersList.cshtml" />
+    <Content Include="Views\Orders\OrdersIndex.cshtml" />
+    <Content Include="Views\ProjectTag\CreateOrEdit.cshtml" />
+    <Content Include="Views\ProjectTag\Index.cshtml" />
+    <Content Include="Views\Suppliers\Create.cshtml" />
+    <Content Include="Views\Suppliers\Delete.cshtml" />
+    <Content Include="Views\Suppliers\Details.cshtml" />
+    <Content Include="Views\Suppliers\Edit.cshtml" />
+    <Content Include="Views\Suppliers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\FileContentIndex\merges\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\v17\" />
-    <Folder Include="Views\Activity\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Activity\" />
+    <Folder Include="Views\Default\" />
     <Folder Include="Views\DIscount\" />
   </ItemGroup>
   <ItemGroup>
@@ -2350,17 +2357,29 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Customized_Shoes.dll\Customized_Shoes.dll.csproj">
+      <Project>{19b8d90e-de50-4e3a-9993-f26cded5d789}</Project>
+      <Name>Customized_Shoes.dll</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Discount.dll\Discount.dll.csproj">
       <Project>{fd9386a5-fa01-42db-bc8e-7c3ec66e1554}</Project>
       <Name>Discount.dll</Name>
     </ProjectReference>
     <ProjectReference Include="..\EFModels\EFModels.csproj">
-      <Project>{4a45e52a-d1b4-450b-a455-d01ff085e499}</Project>
+      <Project>{00b42812-2141-4ba6-a813-ec3ebc4dc304}</Project>
       <Name>EFModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Flex.Products.dll\Flex.Products.dll.csproj">
       <Project>{f79111b2-41fc-4bd2-925f-8dd74f015028}</Project>
       <Name>Flex.Products.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Members.dll\Members.dll.csproj">
+      <Project>{64ee0a94-1592-45ad-a02e-24e58a3e6cf8}</Project>
+      <Name>Members.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orders\Orders.csproj">
+      <Project>{03b7a10f-5a32-448f-94d4-4245a01076b7}</Project>
+      <Name>Orders</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

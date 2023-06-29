@@ -55,10 +55,10 @@
                 </a>
                 <ul class="collapse-item hide" id="product-item">
                     <li><a href="javascript:;">分類管理</a></li>
-                     <li>
+                    <li>
                         @*<a href="javascript:;">商品管理</a>*@
-                    @Html.ActionLink("商品管理", "Index", "Products", new { area = "" }, new { @class = "nav-link" })
-                </li>
+                        @Html.ActionLink("商品管理", "Index", "Products", new { area = "" }, new { @class = "nav-link" })
+                    </li>
                     <li><a href="javascript:;">商品批量新增</a></li>
                     <li><a href="javascript:;">庫存管理</a></li>
                     <li><a href="@Url.Action("Index", "ProjectTag", new { area = "" })">專案標籤管理</a></li>
@@ -124,7 +124,7 @@
                     <li><a href="javascript:;">客製化選項管理</a></li>
                     <li><a href="javascript:;">材料管理</a></li>
                     <li><a href="javascript:;">客製化訂單管理</a></li>
-                    <li><a href="javascript:;">材料供應商管理</a></li>
+                    <li><a href="@Url.Action("Index", "Suppliers", new { area = "" })">材料供應商管理</a></li>
                 </ul>
             </li>
             <li>
@@ -139,77 +139,77 @@
             </li>
         </ul>
 
-    <ul class="sidebar-bottom">
-        <li>
-            <a href="javascript:;">
-                <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:;">
-                <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
-            </a>
-        </li>
-    </ul>
-</aside>
-<div class="container-right">
-    <header id="header">
-        <div class="header-left-wrapper">
-            <div id="sidebar-toggle" class="d-block d-md-none">
-                <label class="fs-3">
-                    <i class="bi bi-list"></i>
-                    <input type="checkbox" class="d-none">
-                </label>
-            </div>
-            <div class="hello d-none d-md-block">
-                <span class="name">Jason</span><span>, 您好</span>
-            </div>
-            <a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>
-        </div>
-
-        <!-- 標題 -->
-        <span id="logo-container2" class="d-md-none"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span>
-        <div class="header-right-wrapper">
-            <div id="notification-wrapper">
-
-                <a href="javascript:;" class="bell">
-
-                    <!-- 未讀數字 -->
-                    <span id="unread-count">1</span>
-
-                    <i class="bi bi-bell"></i>
+        <ul class="sidebar-bottom">
+            <li>
+                <a href="javascript:;">
+                    <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
                 </a>
-                <div id="notification-box" class="d-none">
-                    <div>
-                        <!-- 看做內部訊息的功能的人想不想做已讀跟未讀 -->
-                        <a href="javascript:;" id="unread-button">未讀</a>
-                        <a href="javascript:;" id="read-button">已讀</a>
-                    </div>
-                    <div id="notification-area" class="gray-sm-scroll">
-                        <ul class="info-list">
-                            通知顯示在這裡
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <div class="container-right">
+        <header id="header">
+            <div class="header-left-wrapper">
+                <div id="sidebar-toggle" class="d-block d-md-none">
+                    <label class="fs-3">
+                        <i class="bi bi-list"></i>
+                        <input type="checkbox" class="d-none">
+                    </label>
+                </div>
+                <div class="hello d-none d-md-block">
+                    <span class="name">Jason</span><span>, 您好</span>
+                </div>
+                <a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>
+            </div>
 
-                            <!-- 通知區每條樣板格式 請依照此格式製作 -->
-                            <li>
-                                <div class="sender-name-area">
-                                    <div>
-                                        <span class="sender-name">Jason</span><span>:</span>
+            <!-- 標題 -->
+            <span id="logo-container2" class="d-md-none"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span>
+            <div class="header-right-wrapper">
+                <div id="notification-wrapper">
+
+                    <a href="javascript:;" class="bell">
+
+                        <!-- 未讀數字 -->
+                        <span id="unread-count">1</span>
+
+                        <i class="bi bi-bell"></i>
+                    </a>
+                    <div id="notification-box" class="d-none">
+                        <div>
+                            <!-- 看做內部訊息的功能的人想不想做已讀跟未讀 -->
+                            <a href="javascript:;" id="unread-button">未讀</a>
+                            <a href="javascript:;" id="read-button">已讀</a>
+                        </div>
+                        <div id="notification-area" class="gray-sm-scroll">
+                            <ul class="info-list">
+                                通知顯示在這裡
+
+                                <!-- 通知區每條樣板格式 請依照此格式製作 -->
+                                <li>
+                                    <div class="sender-name-area">
+                                        <div>
+                                            <span class="sender-name">Jason</span><span>:</span>
+                                        </div>
+                                        <span class="message-update-time">21分鐘前</span>
                                     </div>
-                                    <span class="message-update-time">21分鐘前</span>
-                                </div>
-                                <div class="message-content">
-                                    庫存已更新
-                                </div>
-                            </li>
+                                    <div class="message-content">
+                                        庫存已更新
+                                    </div>
+                                </li>
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <a href="javascript:;"><i class="bi bi-shop"></i><span class="ms-2 d-none d-md-inline">進入商店</span></a>
             </div>
-            <a href="javascript:;"><i class="bi bi-shop"></i><span class="ms-2 d-none d-md-inline">進入商店</span></a>
-        </div>
-    </header>
-    <!-- 此區放入主要內容區域 -->
+        </header>
+        <!-- 此區放入主要內容區域 -->
 
         <main id="main-area" class="gray-scroll">
             <div class="container">
@@ -220,9 +220,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/flexBE_main.js")
-    @Scripts.Render("~/Scripts/flexBE_main.js")
     <script src="~/Scripts/table.js"></script>
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/Scripts/flexBE_main.js")
 </body>
 </html>

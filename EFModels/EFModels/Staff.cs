@@ -8,7 +8,7 @@ namespace EFModels.EFModels
 
     public partial class Staff
     {
-        public int staffId { get; set; }
+        public int StaffId { get; set; }
 
         [Required]
         [StringLength(30)]
