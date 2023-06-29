@@ -135,6 +135,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
@@ -2319,13 +2320,12 @@
     <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\FileContentIndex\merges\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\v17\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Activity\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\DIscount\" />
   </ItemGroup>
@@ -2372,6 +2372,10 @@
     <ProjectReference Include="..\Flex.Products.dll\Flex.Products.dll.csproj">
       <Project>{f79111b2-41fc-4bd2-925f-8dd74f015028}</Project>
       <Name>Flex.Products.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Flex_Activity.dll\Flex_Activity.dll.csproj">
+      <Project>{11e435a6-a7ae-4491-932b-60d88350a7f7}</Project>
+      <Name>Flex_Activity.dll</Name>
     </ProjectReference>
     <ProjectReference Include="..\Members.dll\Members.dll.csproj">
       <Project>{64ee0a94-1592-45ad-a02e-24e58a3e6cf8}</Project>

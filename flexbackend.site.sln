@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flexbackend.site", "flexbac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{E7F54768-72C1-4232-BB40-6CEA9266185A}"
 	ProjectSection(SolutionItems) = preProject
+		ActivityReadMe.txt = ActivityReadMe.txt
 		MemberReadMe.txt = MemberReadMe.txt
 		StaffReadMe.txt = StaffReadMe.txt
 	EndProjectSection
@@ -22,6 +23,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customized_Shoes.dll", "Customized_Shoes.dll\Customized_Shoes.dll.csproj", "{19B8D90E-DE50-4E3A-9993-F26CDED5D789}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFModels", "EFModels\EFModels.csproj", "{00B42812-2141-4BA6-A813-EC3EBC4DC304}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flex_Activity.dll", "Flex_Activity.dll\Flex_Activity.dll.csproj", "{11E435A6-A7AE-4491-932B-60D88350A7F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +60,10 @@ Global
 		{00B42812-2141-4BA6-A813-EC3EBC4DC304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00B42812-2141-4BA6-A813-EC3EBC4DC304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00B42812-2141-4BA6-A813-EC3EBC4DC304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E435A6-A7AE-4491-932B-60D88350A7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E435A6-A7AE-4491-932B-60D88350A7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E435A6-A7AE-4491-932B-60D88350A7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E435A6-A7AE-4491-932B-60D88350A7F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
