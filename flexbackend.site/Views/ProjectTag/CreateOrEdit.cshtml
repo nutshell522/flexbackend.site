@@ -1,0 +1,137 @@
+﻿@model Discount.dll.Models.ViewModels.ProjectTagEditNameVM
+
+@{
+    ViewBag.Title = "CreateOrEdit";
+}
+
+<div class="d-flex justify-content-between align-items-end">
+    <h2>專案標籤管理</h2>
+    @Html.ActionLink("回標籤首頁", "Index")
+</div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="mt-4 mb-3 row">
+        @Html.LabelFor(model => model.ProjectTagName, htmlAttributes: new { @class = "form-label text-secondary small " })
+        <div class="col-6 col-sm-5 col-lg-3 d-flex align-items-center position-relative">
+            <input type="text" class="form-control d-create" id="ProjectTagName" name="ProjectTagName" value="@Model.ProjectTagName" />
+            <button type="button" class="d-detail  bg-opacity-10 border-0 w-100 d-flex justify-content-between align-items-center">
+                <span id="tag-name" class="fs-5 me-auto " data-id="@Model.ProjectTagId">@Model.ProjectTagName</span>
+                <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <ul id="drop-menu" class="bg-white position-absolute top-100 w-100 fs-5"></ul>
+        </div>
+        <div class="col d-flex align-items-center">
+            <button type="button" id="edit" class="btn btn-sm btn-success me-2 d-detail">編輯</button>
+            <button type="button" id="create" class="btn btn-sm btn-primary me-2 d-detail">新增</button>
+            <button type="button" id="save" class="btn btn-sm btn-success me-2 d-create">保存</button>
+            <button type="button" id="cancel" class="btn btn-sm btn-danger me-2 d-create">取消</button>
+            <ul id="drop-menu" class="bg-white position-absolute top-100 w-100 fs-5"></ul>
+        </div>
+        @Html.ValidationMessageFor(model => model.ProjectTagName, "", new { @class = "text-danger" })
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            const TagNameInput = $("#ProjectTagName");
+            const TagName = $("#tag-name");
+            let editmode = TagName.data("id") == 0
+            createModeToggle();
+
+            $("#create").on("click", function () {
+                TagName.data("id", 0);
+                TagNameInput.val("");
+                editmode = true;
+                createModeToggle();
+            });
+
+            $("#cancel").on("click", function () {
+                $.ajax({
+                    url: "/ProjectTag/GetEditData",
+                    type: "POST",
+                    data: {
+                        id: TagName.data("id")
+                    }
+                }).done(data => {
+                    TagName.data("id", data.ProjectTagId);
+                    TagNameInput.val(data.ProjectTagName);
+                    TagName.text(data.ProjectTagName);
+                    editmode = false;
+                    createModeToggle();
+                }).fail(err => {
+                    console.log(err.statusText);
+                });
+            });
+
+            $("#edit").on("click", function () {
+                editmode = true;
+                createModeToggle();
+            })
+            $("#save").on("click", saveEvent);
+
+            TagNameInput.on("keydown", function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    saveEvent();
+                }
+            });
+
+            function saveEvent() {
+                if (TagNameInput.val() == "") {
+                    alert("標籤名稱不可為空白");
+                    return;
+                }
+                $.ajax({
+                    url: "/ProjectTag/CreateOrEdit",
+                    type: "POST",
+                    data: {
+                        id: TagName.data("id"),
+                        projectName: TagNameInput.val()
+                    }
+                }).done(data => {
+                    if (data.IsFail) {
+                        alert(data.ErrorMessage);
+                        return;
+                    }
+                    TagName.data("id", data.newVM.ProjectTagId);
+                    projectName: TagNameInput.val(data.newVM.ProjectTagName);
+                    TagName.text(data.newVM.ProjectTagName);
+                    editmode = false;
+                    createModeToggle();
+
+                }).fail(err => {
+                    console.log(err.statusText);
+                });
+            }
+            function createModeToggle() {
+                if (editmode) {
+                    $(".d-detail").each(function () {
+                        $(this).addClass("d-none");
+                    });
+                    $(".d-create").each(function () {
+                        $(this).removeClass("d-none");
+                    });
+                }
+                else {
+                    $(".d-detail").each(function () {
+                        $(this).removeClass("d-none");
+                    });
+                    $(".d-create").each(function () {
+                        $(this).addClass("d-none");
+                    });
+                }
+            }
+        })
+    </script>
+}

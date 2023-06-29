@@ -193,17 +193,26 @@ input[type="checkbox"],
 
     .table-container table thead > tr {
         height: var(--table-thead-height);
-        padding: 0 15px;
+    }
+    .table-container > table > thead > tr,
+    .table-container > table > tbody > tr {
+        height: 50px;
+    }
+    .table-container > table > thead > tr > th,
+    .table-container > table > tbody > tr > td{
+       height:100%;
     }
 
     .table-container table th,
     .table-container table td {
-        padding: 15px 10px;
+        padding: 5px 5px;
     }
-
+    .table-container table.tbh-1 tr {
+        height: 40px;
+    }
     .table-container table.tbh-1 th,
     .table-container table.tbh-1 td {
-        padding: 5px 5px;
+        /*padding: 0px 10px;*/
     }
 
     .table-container table.tbh-2 th,
@@ -223,7 +232,7 @@ input[type="checkbox"],
 
     .table-container table th:last-child,
     .table-container table td:last-child {
-        padding-right: 20px;
+        padding-right: 10px;
     }
 
     .table-container table thead > tr > th {
@@ -257,9 +266,9 @@ input[type="checkbox"],
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     }
 
-    .table-container td {
+    /*.table-container td {
         height: 100%;
-    }
+    }*/
 
     .table-container .table-img-container {
         width: 100%;
@@ -315,7 +324,6 @@ input[type="checkbox"],
     border-radius: 5px;
     transition: .15s;
     float: left;
-    margin-right: 5px;
 }
 
 .btn-shop {

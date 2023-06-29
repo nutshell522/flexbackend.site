@@ -57,7 +57,7 @@
                     <li><a href="javascript:;">商品管理</a></li>
                     <li><a href="javascript:;">商品批量新增</a></li>
                     <li><a href="javascript:;">庫存管理</a></li>
-                    <li><a href="javascript:;">商品標籤管理</a></li>
+                    <li><a href="@Url.Action("Index", "ProjectTag", new { area = "" })">專案標籤管理</a></li>
                 </ul>
             </li>
 
@@ -67,7 +67,7 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="order-item">
-                    <li><a href="javascript:;">訂單管理</a></li>
+                    <li>@Html.ActionLink("訂單管理", "OrdersIndex", "Orders" , new { area="" }, new { @class="nav-link" })</li>
                     <li><a href="javascript:;">物流公司</a></li>
                     <li><a href="javascript:;">活動訂單管理</a></li>
                     <li><a href="javascript:;">出貨管理</a></li>
@@ -209,7 +209,7 @@
         <!-- 此區放入主要內容區域 -->
 
         <main id="main-area" class="gray-scroll">
-            <div class="container">
+            <div class="container px-5 py-4">
                 @RenderBody()
             </div>
         </main>
@@ -217,9 +217,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/flexBE_main.js")
-    @Scripts.Render("~/Scripts/flexBE_main.js")
     <script src="~/Scripts/table.js"></script>
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/Scripts/flexBE_main.js")
 </body>
 </html>

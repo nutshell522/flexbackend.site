@@ -21,7 +21,6 @@ window.onload = function () {
         sidebarToggle.checked = false;
         sidebarSwitch();
     }
-    console.log(document.querySelectorAll(".bi-chevron-down:not(.rotate-180)"));
 
     // 小畫面時左側Menu切換展開/收縮功能
     function sidebarSwitch() {

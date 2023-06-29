@@ -16,10 +16,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.dll", "Discount.dll\Discount.dll.csproj", "{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}"
 EndProject
 <<<<<<< HEAD
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Activity.dll", "Activity.dll\Activity.dll.csproj", "{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}"
 =======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Members.dll", "Members.dll\Members.dll.csproj", "{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}"
 >>>>>>> Ying04
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders", "Orders\Orders.csproj", "{03B7A10F-5A32-448F-94D4-4245A01076B7}"
+>>>>>>> Patrick01
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +44,7 @@ Global
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.Build.0 = Release|Any CPU
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,6 +55,12 @@ Global
 		{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}.Release|Any CPU.Build.0 = Release|Any CPU
 >>>>>>> Ying04
+=======
+		{03B7A10F-5A32-448F-94D4-4245A01076B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B7A10F-5A32-448F-94D4-4245A01076B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B7A10F-5A32-448F-94D4-4245A01076B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B7A10F-5A32-448F-94D4-4245A01076B7}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Patrick01
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

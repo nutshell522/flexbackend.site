@@ -59,7 +59,9 @@ if (!String.IsNullOrEmpty(LayoutPageFile)) {
 
             
             <div class="right">
-                @Html.ActionLink("Create New", "Create", null , new { @class = "btn btn-primary" })
+                <a href="@Url.Action("Create")" class="btn btn-primary">
+                    <i class="bi bi-plus-lg"></i> 新增
+                </a>
             </div>
         </div>
 <div class="table-container">
