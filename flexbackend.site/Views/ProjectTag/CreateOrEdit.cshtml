@@ -1,7 +1,40 @@
 ﻿@model Discount.dll.Models.ViewModels.ProjectTagEditNameVM
 
 @{
-    ViewBag.Title = "CreateOrEdit";
+    ViewBag.Title = "專案標籤管理";
+}
+@section Styles{
+    <style>
+        #drop-btn:hover {
+            background-color: rgba(150, 150, 150,.3);
+        }
+
+        #drop-menu {
+            display: block;
+            background-color: #fff;
+            max-height: 0px;
+            transition: .2s;
+            overflow-y: scroll;
+        }
+
+            #drop-menu.active {
+                max-height: 150px;
+            }
+
+                #drop-menu.active > li > a:hover {
+                    background-color: #ddd;
+                }
+        .pj-tag {
+            font-size: 12px;
+            padding: 1px 5px 2px 4px;
+            background-color: #5C83E2;
+            color: #deefff;
+        }
+        .pj-tag.this-tag {
+            background-color: #589a69;
+            color: #bfffde;
+        }
+    </style>
 }
 
 <div class="d-flex justify-content-between align-items-end">
@@ -20,19 +53,18 @@
     <div class="mt-4 mb-3 row">
         @Html.LabelFor(model => model.ProjectTagName, htmlAttributes: new { @class = "form-label text-secondary small " })
         <div class="col-6 col-sm-5 col-lg-3 d-flex align-items-center position-relative">
-            <input type="text" class="form-control d-create" id="ProjectTagName" name="ProjectTagName" value="@Model.ProjectTagName" />
-            <button type="button" class="d-detail  bg-opacity-10 border-0 w-100 d-flex justify-content-between align-items-center">
+            <input type="text" class="form-control d-create d-none" id="ProjectTagName" name="ProjectTagName" value="@Model.ProjectTagName" />
+            <button id="drop-btn" type="button" class="d-detail  bg-opacity-10 border-0 w-100 d-flex justify-content-between align-items-center py-1">
                 <span id="tag-name" class="fs-5 me-auto " data-id="@Model.ProjectTagId">@Model.ProjectTagName</span>
                 <i class="bi bi-caret-down-fill"></i>
             </button>
-            <ul id="drop-menu" class="bg-white position-absolute top-100 w-100 fs-5"></ul>
+            <ul id="drop-menu" class="bg-white position-absolute top-100 w-100 fs-5 p-0 gray-sm-scroll"></ul>
         </div>
         <div class="col d-flex align-items-center">
-            <button type="button" id="edit" class="btn btn-sm btn-success me-2 d-detail">編輯</button>
-            <button type="button" id="create" class="btn btn-sm btn-primary me-2 d-detail">新增</button>
-            <button type="button" id="save" class="btn btn-sm btn-success me-2 d-create">保存</button>
-            <button type="button" id="cancel" class="btn btn-sm btn-danger me-2 d-create">取消</button>
-            <ul id="drop-menu" class="bg-white position-absolute top-100 w-100 fs-5"></ul>
+            <button type="button" id="edit" class="btn btn-sm btn-success me-2 d-detail d-none">編輯</button>
+            <button type="button" id="create" class="btn btn-sm btn-primary me-2 d-detail d-none">新增</button>
+            <button type="button" id="save" class="btn btn-sm btn-success me-2 d-create d-none">保存</button>
+            <button type="button" id="cancel" class="btn btn-sm btn-danger me-2 d-create d-none">取消</button>
         </div>
         @Html.ValidationMessageFor(model => model.ProjectTagName, "", new { @class = "text-danger" })
     </div>
@@ -46,6 +78,7 @@
         $(function () {
             const TagNameInput = $("#ProjectTagName");
             const TagName = $("#tag-name");
+            const $dropMenu = $("#drop-menu");
             let editmode = TagName.data("id") == 0
             createModeToggle();
 
@@ -86,6 +119,38 @@
                     saveEvent();
                 }
             });
+            $(document).on("click", function (event) {
+
+                const $target = $(event.target);
+
+                if (!$target.is($dropMenu) && !$target.closest($dropMenu).length) {
+                    $dropMenu.removeClass("active");
+                }
+            });
+            $("#drop-btn").on("click", function () {
+                // 發送AJAX請求
+                if ($dropMenu.hasClass("active")) {
+                    $dropMenu.removeClass("active");
+                } else {
+                    // 发送AJAX请求
+                    $.ajax({
+                        url: "/ProjectTag/GetDatas",
+                        type: "POST",
+                        data: {
+                            input: "",
+                            getCompleteResult: false
+                        }
+                    }).done(data => {
+                        $dropMenu.empty();
+                        for (let i = 0; i < data.length; i++) {
+                            $dropMenu.append(toListDOM(tagsNameToHtmlListString(data[i])));
+                        }
+                        $dropMenu.addClass("active");
+                    }).fail(err => {
+                        console.log(err.statusText);
+                    });
+                }
+            })
 
             function saveEvent() {
                 if (TagNameInput.val() == "") {
@@ -131,6 +196,20 @@
                         $(this).addClass("d-none");
                     });
                 }
+            }
+            function tagsNameToHtmlListString(item) {
+                const htmlString = `
+                                <li class="w-100">
+                                    <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?id=${item.ProjectTagId}">${item.ProjectTagName}</a>
+                                </li>
+                            `;
+                return htmlString;
+            }
+
+            function toListDOM(htmlString) {
+                const dom = document.createElement('ul');
+                dom.innerHTML = htmlString;
+                return dom.children[0];
             }
         })
     </script>
