@@ -10,47 +10,60 @@ namespace Flex_Activity.dll.Models.ViewModels
 {
 	public class ActivityCreateVM
 	{
+		[Display(Name = "活動編號")]
 		public int ActivityId { get; set; }
 
+		[Display(Name = "活動名稱")]
 		[Required]
 		[StringLength(50)]
 		public string ActivityName { get; set; }
 
-		public string ActivityCategoryName { get; set; }
+		[Display(Name = "活動類別")]
+		public int fk_ActivityCategoryId { get; set; }
 
+
+
+		[Display(Name = "活動日期")]
 		public DateTime ActivityDate { get; set; }
 
-		public string SpeakerName { get; set; }
+		[Display(Name = "活動講者")]
+		public int fk_SpeakerId { get; set; }
 
+
+		[Display(Name = "活動地點")]
 		[Required]
 		[StringLength(100)]
 		public string ActivityPlace { get; set; }
 
-
+		[Display(Name = "報名時間(起)")]
 		public DateTime ActivityBookStartTime { get; set; }
 
+		[Display(Name = "報名時間(迄)")]
 		public DateTime ActivityBookEndTime { get; set; }
 
-		public string ActivityStatusDescription { get; set; }
 
-	
-
+		[Display(Name = "課程圖片")]
 		[Required]
 		[StringLength(300)]
 		public string ActivityImage { get; set; }
 
 
-
+		[Display(Name = "參加年齡")]
 		//public byte ActivityAge { get; set; }
 		public int ActivityAge { get; set; }
 
+		[Display(Name = "活動特價")]
 		public int ActivitySalePrice { get; set; }
 
+		[Display(Name = "活動原價")]
 		public int ActivityOriginalPrice { get; set; }
 
+		[Display(Name = "活動描述")]
 		[StringLength(300)]
 		public string ActivityDescription { get; set; }
 
+
 		
+
 	}
 }
