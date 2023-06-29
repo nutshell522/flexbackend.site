@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Flex.Products.dll.Interface;
+using Flex.Products.dll.Models.Infra.EFRepository;
+using Flex.Products.dll.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +11,10 @@ namespace flexbackend.site.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+
+		public ActionResult Index()
         {
-            return View();
+			return View();
         }
 
         public ActionResult About()

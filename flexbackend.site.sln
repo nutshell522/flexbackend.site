@@ -17,6 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.dll", "Discount.dl
 EndProject
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Activity.dll", "Activity.dll\Activity.dll.csproj", "{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}"
 =======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Members.dll", "Members.dll\Members.dll.csproj", "{64EE0A94-1592-45AD-A02E-24E58A3E6CF8}"
@@ -24,6 +25,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Members.dll", "Members.dll\
 =======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders", "Orders\Orders.csproj", "{03B7A10F-5A32-448F-94D4-4245A01076B7}"
 >>>>>>> Patrick01
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flex.Products.dll", "Flex.Products.dll\Flex.Products.dll.csproj", "{F79111B2-41FC-4BD2-925F-8DD74F015028}"
+>>>>>>> Lance01
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,7 @@ Global
 		{FD9386A5-FA01-42DB-BC8E-7C3EC66E1554}.Release|Any CPU.Build.0 = Release|Any CPU
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03C9FBD-9D46-41FD-99E5-95D7369A6F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +66,12 @@ Global
 		{03B7A10F-5A32-448F-94D4-4245A01076B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03B7A10F-5A32-448F-94D4-4245A01076B7}.Release|Any CPU.Build.0 = Release|Any CPU
 >>>>>>> Patrick01
+=======
+		{F79111B2-41FC-4BD2-925F-8DD74F015028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F79111B2-41FC-4BD2-925F-8DD74F015028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F79111B2-41FC-4BD2-925F-8DD74F015028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F79111B2-41FC-4BD2-925F-8DD74F015028}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Lance01
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
