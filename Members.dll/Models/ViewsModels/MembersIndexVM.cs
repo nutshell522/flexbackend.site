@@ -12,24 +12,29 @@ namespace Members.dll.Models.ViewsModels
 	{
 		public int MemberId { get; set; }
 
+		[Display(Name = "姓名")]
 		[Required]
 		[StringLength(30)]
 		public string Name { get; set; }
 
+		[Display(Name = "性別")]
 		public bool? Gender { get; set; }
 
+		[Display(Name = "信箱")]
 		[Required]
 		[StringLength(300)]
 		public string Email { get; set; }
 
-		//public int fk_LevelId { get; set; }
-
+		[Display(Name = "等級")]
 		public string LevelName { get; set; }
 
-		public int PointSubtotal { get; set; } //這個拿掉畫面上就沒有了
+		[Display(Name = "累計積分")]
+		public int PointSubtotal { get; set; }
 
+		[Display(Name = "註冊時間")]
 		public DateTime? Registration { get; set; }
 
+		[Display(Name = "是否為黑名單")]
 		public int? fk_BlackListId { get; set; }
 	}
 }

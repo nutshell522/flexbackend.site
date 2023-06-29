@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Members.dll.Models.Dtos
 {
-	public class StaffsDto
+	public class StaffsIndexDto
 	{
 		public int StaffId { get; set; }
 
@@ -19,24 +19,14 @@ namespace Members.dll.Models.Dtos
 
 		public bool? Gender { get; set; }
 
-		public string Mobile { get; set; }
-
 		public string Email { get; set; }
 
-		public DateTime? Birthday { get; set; }
-
-		public DateTime? dueDate { get; set; }
-
-		public int fk_PermissionsId { get; set; }
-
-		public int fk_TitleId { get; set; }
-
-		public int fk_DepartmentId { get; set; }
+		public DateTime? DueDate { get; set; }
 
 		public string Department { get; set; }
 
-		public string JobTitle  { get; set; }
+		public string TitleName { get; set; }
 
-		public string  StaffPermission { get; set; }
+		public string LevelName { get; set; }
 	}
 }

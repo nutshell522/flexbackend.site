@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using static Dapper.SqlMapper;
 
 namespace Members.dll.Models.lnfra.EFRepositories
 {
@@ -20,9 +22,11 @@ namespace Members.dll.Models.lnfra.EFRepositories
 			_db = new AppDbContext();
 		}
 
-		public List<Member> GetMembers() //取得員工資料
+		public List<MembersIndexDto> GetMembers() //取得員工資料
 		{
-			return _db.Members.ToList();
+			var members = _db.Members.Include(m => m.MemberPoints).Include(m=>m.BlackList).Include(m=>m.MembershipLevel);	
+			var memberList= members.ToList().Select(m => m.ToIndexDto()).ToList();
+			return memberList;
 		} 
 
 		public bool ExistAccount(string account) //判斷帳號是否存在

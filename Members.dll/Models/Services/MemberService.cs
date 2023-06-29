@@ -24,8 +24,8 @@ namespace Members.dll.Models.Services
 		//會員總覽，接收取回的資料，返回vm
 		public List<MembersIndexVM> MemberList()
 		{
-			List<Member> members = _repo.GetMembers();
-			List<MembersIndexVM> membersIndexVM = members.Select(m => m.ToIndexDto().ToIndexVM()).ToList();
+			List<MembersIndexDto> members = _repo.GetMembers();
+			List<MembersIndexVM> membersIndexVM = members.Select(m => m.ToIndexVM()).ToList();
 			return membersIndexVM;
 		}
 

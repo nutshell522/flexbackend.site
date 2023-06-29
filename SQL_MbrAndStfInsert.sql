@@ -61,10 +61,11 @@ VALUES
 SELECT * FROM Members;
 
 
---[會員名單總覽],還要加上累計積分
-SELECT MemberId,[Name],Gender,Email,LevelName,Registration,Behavior 
+--[會員名單總覽]
+SELECT MemberId,[Name],Gender,Email,LevelName,PointSubtotal,Registration,Behavior 
 FROM Members
 JOIN MembershipLevels ON fk_LevelId=MembershipLevels.LevelId
+JOIN MemberPoints ON fk_MemberId=Members.MemberId
 LEFT JOIN BlackLists ON fk_BlackListId=BlackLists.BlackListId;
 
 --JOIN Members & MembershipLevel & BlackList 
@@ -193,6 +194,15 @@ VALUES
 
 SELECT * FROM Staffs;
 
-SELECT * FROM Staffs
-JOIN Departments
-ON Staffs.fk_DepartmentId=Departments.DepartmentId;
+--員工名單總覽
+SELECT *
+FROM Staffs
+JOIN Departments ON Staffs.fk_DepartmentId=Departments.DepartmentId
+JOIN JobTitles ON Staffs.fk_TitleId=JobTitles.TitleId
+JOIN StaffPermissions ON Staffs.fk_PermissionsId=StaffPermissions.PermissionsId;
+
+SELECT StaffId,DepartmentName,TitleName,[Name],Age,Gender,Email,LevelName,dueDate
+FROM Staffs as S
+JOIN Departments as D ON S.fk_DepartmentId=D.DepartmentId
+JOIN JobTitles as J ON S.fk_TitleId=J.TitleId
+JOIN StaffPermissions as SP ON S.fk_PermissionsId=SP.PermissionsId;

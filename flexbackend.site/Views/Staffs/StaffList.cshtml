@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Members.dll.Models.ViewsModels.MembersIndexVM>
+﻿@model IEnumerable<Members.dll.Models.ViewsModels.StaffsIndexVM>
 
 @{
-    ViewBag.Title = "MembersList";
+    ViewBag.Title = "StaffList";
 }
 
-<h2>會員名單總覽</h2>
+<h2>員工名單總覽</h2>
 
 <p>
     
@@ -42,10 +42,19 @@
                 </label>
             </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.MemberId)
+                    @Html.DisplayNameFor(model => model.StaffId)
+                </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.JobTitle)
                 </th>
                                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Name)
+                </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.Age)
                 </th>
                                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Gender)
@@ -54,16 +63,10 @@
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.LevelName)
+                    @Html.DisplayNameFor(model => model.StaffPermission)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.PointSubtotal)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Registration)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.fk_BlackListId)
+                    @Html.DisplayNameFor(model => model.DueDate)
                 </th>
                         <th>管理</th>
             </tr>
@@ -90,10 +93,19 @@
         @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
         <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
                     <td>
-                @Html.DisplayFor(modelItem => item.MemberId)
+                @Html.DisplayFor(modelItem => item.StaffId)
+            </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
             </td>
                     <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.Age)
             </td>
                     <td>
                 @Html.DisplayFor(modelItem => item.Gender)
@@ -102,16 +114,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.LevelName)
+                @Html.DisplayFor(modelItem => item.StaffPermission)
             </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.PointSubtotal)
-            </td>
-                    <td>
-                @Html.DisplayFor(modelItem => item.Registration)
-            </td>
-                    <td>
-                @Html.DisplayFor(modelItem => item.fk_BlackListId)
+                @Html.DisplayFor(modelItem => item.DueDate)
             </td>
                 <td>
                 <div class="manage-btn-container">
