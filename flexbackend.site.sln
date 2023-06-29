@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flexbackend.site", "flexbac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{E7F54768-72C1-4232-BB40-6CEA9266185A}"
 	ProjectSection(SolutionItems) = preProject
+		123.txt = 123.txt
 		MemberReadMe.txt = MemberReadMe.txt
 		StaffReadMe.txt = StaffReadMe.txt
 	EndProjectSection
