@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Flex_Activity.dll.Models.Exts;
 using Flex_Activity.dll.Models.ViewModels;
+using System.Net;
 
 namespace flexbackend.site.Controllers
 {
@@ -93,6 +94,45 @@ namespace flexbackend.site.Controllers
 
 		}
 
-		
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Find(id);
+			
+			if (activity == null)
+			{
+				return HttpNotFound();
+			}
+
+			ActivityEditVM vm = activity.ToEditVM();
+			//取得活動類別需要下拉清單的內容
+			ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+
+			////取得活動講者需要下拉清單的內容
+			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
+
+			return View(vm);
+		}
+
+		[HttpPost]
+		public ActionResult Edit([Bind(Include = "ActivityId, ActivityName, fk_ActivityCategoryId, ActivityDate, ActivityPlace, ActivityBookStartTime, ActivityBookEndTime, fk_SpeakerId, ActivityImage, ActivityAge, ActivitySalePrice, ActivityOriginalPrice, ActivityDescription")] ActivityEditVM vm)
+		{
+			if (ModelState.IsValid)
+			{
+				Activity activity = vm.ToEntity();
+				db.Entry(activity).State = EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
+			return View(vm);
+
+		}
+
+
 	}
 }

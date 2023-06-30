@@ -11,7 +11,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 	public class ActivityEditVM
 	{
 		[Display(Name = "活動編號")]
-		public int ActivityId { get;  }
+		public int ActivityId { get; set; }
 
 		[Display(Name = "活動名稱")]
 		[Required]
@@ -20,7 +20,6 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 		[Display(Name = "活動類別")]
 		public int fk_ActivityCategoryId { get; set; }
-
 
 
 		[Display(Name = "活動日期")]
@@ -42,7 +41,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 		[Display(Name = "課程圖片")]
 		[Required]
-		[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
+		//[fileextensions(extensions = ".jpg,.jpeg,.png,.tif", errormessage = "只接受圖片檔案")]
 		[StringLength(300)]
 		public string ActivityImage { get; set; }
 
@@ -62,10 +61,10 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityDescription { get; set; }
 
 
-		//public int fk_ActivityStatusId { get; set; }
-		//public ActivityEditVM()
-		//{
-		//	fk_ActivityStatusId = 1;
-		//}
+		public int fk_ActivityStatusId { get; set; }
+		public ActivityEditVM()
+		{
+			fk_ActivityStatusId = 1;
+		}
 	}
 }

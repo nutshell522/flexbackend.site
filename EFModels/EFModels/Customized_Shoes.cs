@@ -34,6 +34,8 @@ namespace EFModels.EFModels
 
         public DateTime? EndTime { get; set; }
 
+        public bool Status { get; set; }
+
         public int? fk_ShoesCategoryId { get; set; }
 
         public int? fk_ShoesColorId { get; set; }
