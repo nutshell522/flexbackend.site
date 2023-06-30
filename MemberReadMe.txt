@@ -63,4 +63,7 @@
 
 [working on]會員資料管理
 		add MembersEditDto
-	    * MembersExts add  entity->Dto
+	    * MembersExts add entity->Dto
+		add Controller EditMember()
+		--卡住ㄌ--
+

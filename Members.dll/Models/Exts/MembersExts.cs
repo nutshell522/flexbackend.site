@@ -48,6 +48,21 @@ namespace Members.dll.Models.Exts
 		}
 
 		/********************************************************************/
+		public static MembersEditVM ToMembersEditVM(this MembersEditDto dto)
+		{
+			return new MembersEditVM
+			{
+				MemberId = dto.MemberId,
+				Name = dto.Name,
+				Gender = dto.Gender,
+				Mobile = dto.Mobile,
+				Email = dto.Email,
+				Birthday = dto.Birthday,
+				Registration = dto.Registration,
+				fk_LevelId = dto.fk_LevelId,
+				fk_BlackListId = dto.fk_BlackListId
+			};
+		}
 		public static MembersEditDto ToMembersEditDto(this Member entity)
 		{
 			return new MembersEditDto
@@ -55,6 +70,7 @@ namespace Members.dll.Models.Exts
 				MemberId = entity.MemberId,
 				Name = entity.Name,
 				Gender = entity.Gender,
+				Mobile = entity.Mobile,
 				Email = entity.Email,
 				Birthday = entity.Birthday,
 				Registration =entity.Registration,

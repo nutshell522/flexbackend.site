@@ -85,7 +85,7 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="members-item">
-                    <li><a href="javascript:;">會員名單</a></li>
+                    <li><a href="@Url.Action("MembersList", "Members", new { area = "" })">會員名單</a></li>
                     <li><a href="javascript:;">會員等級</a></li>
                     <li><a href="javascript:;">會員積分</a></li>
                 </ul>
@@ -133,6 +133,7 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="employee-item">
+                    <li><a href="@Url.Action("StaffList", "Staffs", new { area = "" })">員工名單總覽</a></li>
                     <li><a href="javascript:;">員工管理</a></li>
                     <li><a href="javascript:;">員工權限管理</a></li>
                 </ul>

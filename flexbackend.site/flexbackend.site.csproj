@@ -2321,6 +2321,7 @@
     <Content Include="Views\Suppliers\Index.cshtml" />
     <Content Include="Views\Staffs\StaffList.cshtml" />
     <Content Include="Views\Members\MembersList.cshtml" />
+    <Content Include="Views\Staffs\CreateStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

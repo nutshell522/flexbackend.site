@@ -11,7 +11,7 @@ namespace Members.dll.Models.ViewsModels
 {
 	public class StaffsIndexVM
 	{
-		[Display(Name ="編號")]
+		[Display(Name = "編號")]
 		public int StaffId { get; set; }
 
 		[Display(Name = "部門")]
@@ -40,6 +40,7 @@ namespace Members.dll.Models.ViewsModels
 		public string StaffPermission { get; set; }
 
 		[Display(Name = "入職時間")]
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
 		public DateTime? DueDate { get; set; }
 	}
 }

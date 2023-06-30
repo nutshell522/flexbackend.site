@@ -21,7 +21,25 @@ namespace Members.dll.Models.Services
 			_repo = repo;
 		}
 
-		//會員總覽，接收取回的資料，返回vm
+		//會員資料管理
+		public Result EditMember(MembersEditDto dto)
+		{
+			//判斷是否符合等級
+			//if () 
+			//{
+			
+			//} else
+			//{
+
+			//}
+
+			//判斷是否為黑名單
+
+			return Result.Success();
+		}
+
+
+		//會員名單總覽
 		public List<MembersIndexVM> MemberList()
 		{
 			List<MembersIndexDto> members = _repo.GetMemberList();

@@ -58,6 +58,7 @@
     <Compile Include="Models\Dtos\MembersEditDto.cs" />
     <Compile Include="Models\Dtos\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
+    <Compile Include="Models\Dtos\StaffsCreateDto.cs" />
     <Compile Include="Models\Dtos\StaffsIndexDto.cs" />
     <Compile Include="Models\Exts\MembersExts.cs" />
     <Compile Include="Models\Exts\RegisterExts.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Models\ViewsModels\MembersEditVM.cs" />
     <Compile Include="Models\ViewsModels\MembersIndexVM.cs" />
     <Compile Include="Models\ViewsModels\RegisterVM.cs" />
+    <Compile Include="Models\ViewsModels\StaffsCreateVM.cs" />
     <Compile Include="Models\ViewsModels\StaffsIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

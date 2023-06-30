@@ -24,7 +24,6 @@ namespace Members.dll.Models.Services
 			var staffs = _repo.GetStaffs();
 			List<StaffsIndexVM> staffsIndexVM = staffs.Select(s=>s.ToStaffsIndexVM()).ToList();
 			return staffsIndexVM;
-			//傳入表格....
 		}
 	}
 }
