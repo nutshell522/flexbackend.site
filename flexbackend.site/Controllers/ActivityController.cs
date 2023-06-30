@@ -37,7 +37,9 @@ namespace flexbackend.site.Controllers
 			{
 				//將file存檔，並取得最後存檔的檔案名稱
 				//path = 路徑
-				string path = Server.MapPath("~/Public/Img"); //檔案要存放的資料夾位置
+				string path = Server.MapPath("~/Public/Img"); 
+				
+				//檔案要存放的資料夾位置
 				string fileName = SaveUploadedFile(path, file1);
 
 				//將【路徑+檔名】存入vm裡
@@ -61,7 +63,7 @@ namespace flexbackend.site.Controllers
 
 
 
-			//取得活動講者需要下拉清單的內容
+			////取得活動講者需要下拉清單的內容
 			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
 			//顯示網頁
 			return View(vm);
@@ -89,7 +91,8 @@ namespace flexbackend.site.Controllers
 			//傳回存放的檔名
 			return newFileName;
 
-			
 		}
+
+		
 	}
 }

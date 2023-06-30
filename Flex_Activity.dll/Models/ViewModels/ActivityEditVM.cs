@@ -1,18 +1,17 @@
-﻿using EFModels.EFModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml.Linq;
 
 namespace Flex_Activity.dll.Models.ViewModels
 {
-	public class ActivityCreateVM
+	public class ActivityEditVM
 	{
 		[Display(Name = "活動編號")]
-		public int ActivityId { get; set; }
+		public int ActivityId { get;  }
 
 		[Display(Name = "活動名稱")]
 		[Required]
@@ -27,10 +26,6 @@ namespace Flex_Activity.dll.Models.ViewModels
 		[Display(Name = "活動日期")]
 		public DateTime ActivityDate { get; set; }
 
-		[Display(Name = "活動講者")]
-		public int fk_SpeakerId { get; set; }
-
-
 		[Display(Name = "活動地點")]
 		[Required]
 		[StringLength(100)]
@@ -42,6 +37,8 @@ namespace Flex_Activity.dll.Models.ViewModels
 		[Display(Name = "報名時間(迄)")]
 		public DateTime ActivityBookEndTime { get; set; }
 
+		[Display(Name = "活動講者")]
+		public int fk_SpeakerId { get; set; }
 
 		[Display(Name = "課程圖片")]
 		[Required]
@@ -65,12 +62,10 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityDescription { get; set; }
 
 
-		public int fk_ActivityStatusId { get; set; }
-		public ActivityCreateVM()
-		{
-			fk_ActivityStatusId = 1;
-		}
-
-
+		//public int fk_ActivityStatusId { get; set; }
+		//public ActivityEditVM()
+		//{
+		//	fk_ActivityStatusId = 1;
+		//}
 	}
 }

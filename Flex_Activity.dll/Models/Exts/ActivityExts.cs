@@ -24,7 +24,6 @@ namespace Flex_Activity.dll.Models.Exts
 				ActivityBookStartTime = entity.ActivityBookStartTime,
 				ActivityBookEndTime = entity.ActivityBookEndTime,
 				ActivityStatusDescription = entity.ActivityStatus.ActivityStatusDescription
-				
 
 			};
 		}
@@ -35,7 +34,9 @@ namespace Flex_Activity.dll.Models.Exts
 			{
 				ActivityId = vm.ActivityId,
 				ActivityName = vm.ActivityName,
+				fk_ActivityCategoryId = vm.fk_ActivityCategoryId,
 				ActivityDate = vm.ActivityDate,
+				fk_SpeakerId = vm.fk_SpeakerId,
 				ActivityPlace = vm.ActivityPlace,
 				ActivityBookStartTime = vm.ActivityBookStartTime,
 				ActivityBookEndTime = vm.ActivityBookEndTime,
@@ -44,8 +45,10 @@ namespace Flex_Activity.dll.Models.Exts
 				ActivitySalePrice = vm.ActivitySalePrice,
 				ActivityOriginalPrice = vm.ActivityOriginalPrice,
 				ActivityDescription = vm.ActivityDescription,
-				fk_ActivityCategoryId = vm.fk_ActivityCategoryId,
-				fk_SpeakerId = vm.fk_SpeakerId
+
+
+
+				fk_ActivityStatusId = vm.fk_ActivityStatusId
 
 			};
 		}
@@ -56,7 +59,9 @@ namespace Flex_Activity.dll.Models.Exts
 			{
 				ActivityId = vm.ActivityId,
 				ActivityName = vm.ActivityName,
+				fk_ActivityCategoryId = vm.fk_ActivityCategoryId,
 				ActivityDate = vm.ActivityDate,
+				fk_SpeakerId = vm.fk_SpeakerId,
 				ActivityPlace = vm.ActivityPlace,
 				ActivityBookStartTime = vm.ActivityBookStartTime,
 				ActivityBookEndTime = vm.ActivityBookEndTime,
@@ -64,7 +69,11 @@ namespace Flex_Activity.dll.Models.Exts
 				ActivityAge = (byte)vm.ActivityAge,
 				ActivitySalePrice = vm.ActivitySalePrice,
 				ActivityOriginalPrice = vm.ActivityOriginalPrice,
-				ActivityDescription = vm.ActivityDescription
+				ActivityDescription = vm.ActivityDescription,
+
+
+
+				fk_ActivityStatusId = vm.fk_ActivityStatusId
 			};
 		}
 
