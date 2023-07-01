@@ -56,11 +56,9 @@
                 <ul class="collapse-item hide" id="product-item">
                     <li><a href="javascript:;">分類管理</a></li>
                     <li>
-                        @*<a href="javascript:;">商品管理</a>*@
                         @Html.ActionLink("商品管理", "Index", "Products", new { area = "" }, new { @class = "nav-link" })
                     </li>
                     <li><a href="javascript:;">商品批量新增</a></li>
-                    <li><a href="javascript:;">庫存管理</a></li>
                     <li><a href="@Url.Action("Index", "ProjectTag", new { area = "" })">專案標籤管理</a></li>
                 </ul>
             </li>

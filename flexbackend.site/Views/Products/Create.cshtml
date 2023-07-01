@@ -108,58 +108,51 @@
                 <button class="btn btn-secondary ms-3 " type="button" id="addSpecBtn">新增規格</button>
             </div>
             <div id="specContainer">
-                @*<div class="product-group d-flex">*@
-                @*@if (Model.ProductGroups != null)
-                    {
-                        int index = 0;
-                        foreach (var group in Model.ProductGroups)
-                        {
-                            <div class="product-group d-flex">
-                                <select class="form-select" name="ProductGroups[@index].ColorId" required="required">
-                                    @foreach (var colorOption in colorCategory)
-                                    {
-                                        <option value="@colorOption.Value" @(group.ColorId == colorOption.Value ? "selected" : "")>@colorOption.Text</option>
-                                    }
-                                </select>
-                                <select class="form-select" name="ProductGroups[@index].SizeId" required="required">
-                                    @foreach (var sizeOption in sizeCategory)
-                                    {
-                                        <option value="@sizeOption.Value" @(group.SizeId == sizeOption.Value ? "selected" : "")>@sizeOption.Text</option>
-                                    }
-                                </select>
-                                <input class="form-control" type="number" name="ProductGroups[@index].Qty" required="required" min="0" value="@group.Qty" />
-                                <button type="button" class="deleteSpecBtn">刪除</button>
-                            </div>
-                            index++;
-                        }
-                    }*@
-
-
-                @*@Html.DropDownListFor(model => model.ProductGroups[0].ColorId, ViewBag.Color as SelectList, new { @class = "form-select" })
-                    @Html.ValidationMessageFor(model => model.ProductGroups[0].ColorId, "", new { @class = "text-danger" })
-
-                    @Html.DropDownListFor(model => model.ProductGroups[0].SizeId, ViewBag.Size as SelectList, new { @class = "form-select" })
-                    @Html.ValidationMessageFor(model => model.ProductGroups[0].SizeId, "", new { @class = "text-danger" })
-
-                    <input class="form-control" type="number" name="ProductGroups[0].Qty" required="required" min="0" />
-                    @Html.ValidationMessageFor(model => model.ProductGroups[0].Qty, "", new { @class = "text-danger" })
-
-                    <button type="button" class="btn btn-danger deleteSpecBtn ms-2">刪除</button>*@
-
-
-                @*</div>*@
+                @for (var i = 0; i < Model.ProductGroups.Count; i++)
+                {
+                    <div class="product-group d-flex mb-3">
+                        @Html.DropDownListFor(model => model.ProductGroups[i].ColorId, colorCategory, new { @class = "form-select", id = Model.ProductGroups[i].ColorId + "-ColorId" })
+                        @Html.DropDownListFor(model => model.ProductGroups[i].SizeId, sizeCategory, new { @class = "form-select", id = Model.ProductGroups[i].SizeId + "-SizeId" })
+                        <input class='form-control' type='number' name='ProductGroups[@i].Qty' value='@Model.ProductGroups[i].Qty' required='required' />
+                        <button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>
+                    </div>
+                }
             </div>
-        </div>
-        <div class="mb-3">
-            <input type="submit" value="儲存" class="btn btn-primary" />
-            <button class="btn btn-primary ms-3" onclick='location.href="@Url.Action("Index")"'>取消</button>
+            @Html.ValidationMessageFor(model => model.ProductGroups, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="mb-3">
+        <input type="submit" value="儲存" class="btn btn-primary" />
+        <input type="button" value="取消" class="btn btn-primary" onclick='location.href="@Url.Action("Index")"' />
+    </div>
+    <div class="d-none">
+        @*@Html.DropDownListFor(modelItem => modelItem.ProductGroups[999].ColorId, colorCategory, new { @class = "form-select", id = "colorSelectTemplate" })
+            @Html.DropDownListFor(modelItem => modelItem.ProductGroups[999].SizeId, sizeCategory, new { @class = "form-select", id = "sizeSelectTemplate" })*@
+        @Html.DropDownList("ColorIdTemplate", colorCategory, new { @class = "form-select", id = "colorSelectTemplate" })
+        @Html.DropDownList("SizeIdTemplate", sizeCategory, new { @class = "form-select", id = "sizeSelectTemplate" })
+    </div>
+
 }
 
 @section Scripts {
     <script>
+        var productGroups = @Html.Raw(Json.Encode(Model.ProductGroups));
         $(document).ready(function () {
+            checkImg();
+            // 呼叫一次產生初始的規格組
+            if (productGroups == null || productGroups.length === 0) {
+                addSpecGroup(0);
+            }
+            
+            var addSpecBtn = $("#addSpecBtn");
+
+            //新增規格
+            addSpecBtn.click(function () {
+                addSpecGroup();
+            });
+        });
+
+        function checkImg() {
             $('input[type="file"]').change(function (e) {
                 var files = e.target.files;
                 if (files && files.length > 0) {
@@ -179,49 +172,42 @@
                     }
                 }
             });
-        });
-    </script>
+        }
 
-    <script>
-    $(document).ready(function () {
-        var specContainer = $("#specContainer");
-        var addSpecBtn = $("#addSpecBtn");
-        var index = specContainer.children(".product-group").length;
+        function addSpecGroup(qty) {
 
-        function addSpecGroup() {
+            var specContainer = $("#specContainer");
+
+            var index = specContainer.children(".product-group").length;
+
             var newSpecGroup = $("<div class='product-group d-flex mb-3'></div>");
 
-            var colorSelect = $(`<select class='form-select' name='ProductGroups[${index}].ColorId' required='required'></select>`);
-            colorSelect.html(`@Html.Raw(Html.DropDownListFor(model => model.ProductGroups[0].ColorId, colorCategory, new { @class = "form-select" }).ToHtmlString())`);
+            var colorSelect = $("#colorSelectTemplate").clone();
+            colorSelect.attr("name", "ProductGroups[" + index + "].ColorId");
+            colorSelect.removeAttr("id");
             newSpecGroup.append(colorSelect);
 
-            var sizeSelect = $(`<select class='form-select' name='ProductGroups[].SizeId' required='required'></select>`);
-            sizeSelect.html(`@Html.Raw(Html.DropDownListFor(model => model.ProductGroups[0].SizeId, sizeCategory, new { @class = "form-select" }).ToHtmlString())`);
+            var sizeSelect = $("#sizeSelectTemplate").clone();
+            sizeSelect.attr("name", "ProductGroups[" + index + "].SizeId");
+            sizeSelect.removeAttr("id");
             newSpecGroup.append(sizeSelect);
 
-            var qtyInput = $("<input class='form-control' type='number' name='ProductGroups[].Qty' required='required' min='0' />");
+            var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${index}].Qty' value='${qty}' required='required' />`);
             newSpecGroup.append(qtyInput);
 
             var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
             deleteBtn.click(function () {
                 if (specContainer.children(".product-group").length > 1) {
                     $(this).parent().remove();
-                } else {
+                    } else {
                     alert("至少要有一組規格");
                 }
             });
-            newSpecGroup.append(deleteBtn);
+                newSpecGroup.append(deleteBtn);
 
-            specContainer.append(newSpecGroup);
+                specContainer.append(newSpecGroup);
         }
 
-        addSpecGroup(); // 呼叫一次以產生初始的規格組
-
-        // 新增規格
-        addSpecBtn.click(function () {
-            addSpecGroup();
-        });
-    });
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

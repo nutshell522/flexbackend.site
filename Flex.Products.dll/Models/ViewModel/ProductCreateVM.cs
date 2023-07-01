@@ -75,10 +75,10 @@ namespace Flex.Products.dll.Models.ViewModel
 		[Display(Name = "規格")]
 		public List<ProductGroupClass> ProductGroups { get; set; }
 
-        public ProductCreateVM()
-        {
+		public ProductCreateVM()
+		{
 			ImgPaths = new List<string>();
-			ProductGroups=new List<ProductGroupClass>();
+			ProductGroups = new List<ProductGroupClass>();
 		}
-    }
+	}
 }

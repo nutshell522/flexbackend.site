@@ -12,14 +12,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductSubCategory.ProductSubCategoryName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductSubCategory.ProductSubCategoryName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ProductName)
         </dt>
 
@@ -84,6 +76,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.LogOut)
         </dt>
 
@@ -97,6 +97,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Tag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fk_ProductSubCategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fk_ProductSubCategoryId)
         </dd>
 
         <dt>

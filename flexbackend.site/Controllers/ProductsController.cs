@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
@@ -22,7 +23,8 @@ using Flex.Products.dll.Service;
 
 namespace flexbackend.site.Controllers
 {
-    public class ProductsController : Controller
+
+	public class ProductsController : Controller
     {
         private AppDbContext db = new AppDbContext();
         private IProductRepository _repo=new ProductEFRepository();
@@ -38,51 +40,38 @@ namespace flexbackend.site.Controllers
 
 			var service = new ProductService(_repo);
 			var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
-
-			return View(products);
+            if (Request.IsAjaxRequest())
+            {
+                return Json(products);
+            }
+            return View(products);
 
 		}
+
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Index(List<ProductIndexVM> vm)
+		public ActionResult SaveChangeStatus(List<ProductIdAndStatusVM> vm)
 		{
-			var dtos = new List<ProductDto>();
-			foreach (var product in vm)
-			{
-				dtos.Add(product.ToDto());
+			
+            if (vm != null)
+            {
+				var dtos = new List<ProductDto>();
+				foreach (var product in vm)
+				{
+					dtos.Add(product.ToDto());
+				}
+				var service = new ProductService(_repo);
+				var products = service.EditProductsStatus(dtos);
+				if (products.IsSuccess)
+				{
+					var updatedProducts = service.IndexProduct(new IndexSearchCriteria()).Select(p => p.ToIndexVM());
+					//return PartialView("_ProductTable", updatedProducts);
+					return Json(new { success = true });
+				}
 			}
-			var service = new ProductService(_repo);
-			var products = service.EditProductsStatus(dtos);
-			if (products.IsSucces)
-			{
-				return RedirectToAction("Index");
-			}
-			return View(products);
-
+			return Json(new { success = false });
 		}
 
-		//      [HttpPost]
-		//      [ValidateAntiForgeryToken]
-		//      public JsonResult Index(List<ProductIdAndStatusVM> productIdAndStatus)
-		//      {
-		//          var dtos = new List<ProductDto>();
-		//          foreach (var product in productIdAndStatus)
-		//          {
-		//              dtos.Add(product.ToDto());
-		//          }
-		//          var service = new ProductService(_repo);
-		//          var products = service.EditProductsStatus(dtos);
-		//	if (products.IsSucces)
-		//	{
-		//		return Json(new { success = true, message = "產品狀態更新成功" });
-		//	}
-		//	else
-		//	{
-		//		return Json(new { success = false, message = "產品狀態更新失敗" });
-		//	}
-
-		//}
 
 		// GET: Products/Details/5
 		public ActionResult Details(string id)
@@ -117,9 +106,9 @@ namespace flexbackend.site.Controllers
         public ActionResult Create(ProductCreateVM vm)
 		{
 			PrepareProductSubCategoryDataSource(vm.fk_ProductSubCategoryId);
-            PrepareColorDataSource(null);
-            PrepareSizeDataSource(null);
-            if (ModelState.IsValid == false) return View(vm);
+			PrepareColorDataSource(null);
+			PrepareSizeDataSource(null);
+			if (ModelState.IsValid == false) return View(vm);
 
 			#region 照片上傳
 			var files = Request.Files;
@@ -146,11 +135,31 @@ namespace flexbackend.site.Controllers
             {
                 vm.ImgPaths.Add(fileName);
             }
-			#endregion
+            #endregion
 
-			var service = new ProductService(_repo);
+            bool isGroupsValid = true;
+            foreach (var group in vm.ProductGroups)
+            {
+
+				PrepareColorDataSource(group.ColorId);
+                PrepareSizeDataSource(group.SizeId);
+
+                if (group.ColorId <= 0 || group.SizeId <= 0 || group.Qty < 1)
+                {
+                    isGroupsValid = false;
+				};
+            }
+            if (!isGroupsValid)
+            {
+                ModelState.AddModelError("ProductGroups", "規格不得留空");
+                return View(vm);
+            }
+
+
+
+            var service = new ProductService(_repo);
             var result = service.CreateProduct(vm.ToCreateDto());
-            if (result.IsSucces)
+            if (result.IsSuccess)
             {
 				return RedirectToAction("Index");
 			}
@@ -161,13 +170,13 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
-		public ActionResult Edit(string id)
+		public ActionResult Edit(string ProductId)
         {
-            if (id == null)
+            if (ProductId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Find(ProductId);
             if (product == null)
             {
                 return HttpNotFound();
@@ -181,7 +190,7 @@ namespace flexbackend.site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,ProductDescription,ProductMaterial,ProductOrigin,UnitPrice,SalesPrice,StartTime,EndTime,LogOut,Tag,fk_ProductSubCategoryId,CreateTime,EditTime")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,ProductDescription,ProductMaterial,ProductOrigin,UnitPrice,SalesPrice,LogOut,Tag,fk_ProductSubCategoryId,CreateTime,EditTime")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -194,13 +203,13 @@ namespace flexbackend.site.Controllers
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string ProductId)
         {
-            if (id == null)
+            if (ProductId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Find(ProductId);
             if (product == null)
             {
                 return HttpNotFound();
@@ -211,9 +220,9 @@ namespace flexbackend.site.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string ProductId)
         {
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Find(ProductId);
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -251,13 +260,15 @@ namespace flexbackend.site.Controllers
                 .GetSizeCategory()
                 .Prepend(new SizeDto { SizeId = 0, SizeName = "尺寸" }), "SizeId", "SizeName", SizeId);
         }
-        /// <summary>
-        /// 上傳多張照片
-        /// </summary>
-        /// <param name="path">照片存放路徑</param>
-        /// <param name="files">照片</param>
-        /// <returns></returns>
-        private List<string> SaveFileName(string path, HttpFileCollectionBase files)
+
+
+		/// <summary>
+		/// 上傳多張照片
+		/// </summary>
+		/// <param name="path">照片存放路徑</param>
+		/// <param name="files">照片</param>
+		/// <returns></returns>
+		private List<string> SaveFileName(string path, HttpFileCollectionBase files)
         {
             //沒上傳或是空值，就不處理;
             if (files == null || files.Count == 0) return new List<string>();

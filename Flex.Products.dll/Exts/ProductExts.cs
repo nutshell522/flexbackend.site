@@ -59,7 +59,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 		}
 
 
-		public static ProductDto ToDto(this ProductIndexVM vm)
+		public static ProductDto ToDto(this ProductIdAndStatusVM vm)
 		{
 			return new ProductDto
 			{
@@ -116,13 +116,13 @@ namespace Flex.Products.dll.Models.Infra.Exts
 					fk_ProductId = dto.ProductId,
 					ImgPath = p
 				}).ToList(),
-				//ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
-				//{
-				//	fk_ProductId = dto.ProductId,
-				//	fk_ColorId = p.ColorId,
-				//	fk_SizeID = p.SizeId,
-				//	Qty = p.Qty
-				//}).ToList()
+				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
+				{
+					fk_ProductId = dto.ProductId,
+					fk_ColorId = p.ColorId,
+					fk_SizeId = p.SizeId,
+					Qty = p.Qty
+				}).ToList()
 			};
 		}
 	}

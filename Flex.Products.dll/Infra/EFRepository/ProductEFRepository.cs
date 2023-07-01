@@ -29,28 +29,6 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			var product = dto.ToCreateEntity();
 			 _db.Products.Add(product);
 
-			//foreach (var img in product.ProductImgs)
-			//{
-			//	var productimg = new ProductImg
-			//	{
-			//		fk_ProductId = img.fk_ProductId,
-			//		ImgPath = img.ImgPath
-			//	};
-			//	_db.ProductImgs.Add(productimg);
-			//}
-
-			//foreach(var group in product.ProductGroups)
-			//{
-			//	var productGroup = new ProductGroup
-			//	{
-			//		fk_ProductId = group.fk_ProductId,
-			//		fk_ColorId = group.fk_ColorId,
-			//		fk_SizeID = group.fk_SizeID,
-			//		Qty = group.Qty,
-			//	};
-			//	_db.ProductGroups.Add(productGroup);
-			//}
-
 			_db.SaveChanges();
 		}
 
