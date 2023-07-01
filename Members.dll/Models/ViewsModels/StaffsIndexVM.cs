@@ -19,20 +19,18 @@ namespace Members.dll.Models.ViewsModels
 
 		[Display(Name = "職稱")]
 		public string JobTitle { get; set; }
+
+		[Display(Name = "性別")]
+		public bool? Gender { get; set; }
 		
 		[Display(Name = "姓名")]
-		[Required]
 		[StringLength(30)]
 		public string Name { get; set; }
 
 		[Display(Name = "年齡")]
 		public byte? Age { get; set; }
 
-		[Display(Name = "性別")]
-		public bool? Gender { get; set; }
-
 		[Display(Name = "信箱")]
-		[Required]
 		[StringLength(300)]
 		public string Email { get; set; }
 

@@ -36,10 +36,25 @@ namespace Members.dll.Models.Exts
 				Age = entity.Age,
 				Gender = entity.Gender,
 				Email = entity.Email,
-				DueDate = entity.dueDate,
+				DueDate = entity.DueDate,
 				Department = entity.Department.DepartmentName,
 				TitleName = entity.JobTitle.TitleName,
 				LevelName = entity.StaffPermission.LevelName
+			};
+		}
+
+		public static StaffsCreateDto ToStaffsCreateDto(this StaffsCreateVM vm)
+		{
+			return new StaffsCreateDto()
+			{
+				Department = vm.Department,
+				JobTitle = vm.JobTitle,
+				Name = vm.Name,
+				Age = vm.Age,
+				Birthday = vm.Birthday,
+				Gender = vm.Gender,
+				Email = vm.Email,
+				StaffPermission = vm.StaffPermission
 			};
 		}
 	}

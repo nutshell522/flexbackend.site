@@ -29,6 +29,10 @@ namespace Members.dll.Models.ViewsModels
 		[Display(Name = "年齡")]
 		public byte? Age { get; set; }
 
+		[Display(Name = "生日")]
+		[Required]
+		public DateTime Birthday { get; set; }
+
 		[Display(Name = "性別")]
 		[Required]
 		public bool? Gender { get; set; }
@@ -36,6 +40,7 @@ namespace Members.dll.Models.ViewsModels
 		[Display(Name = "信箱")]
 		[Required]
 		[StringLength(300)]
+		[EmailAddress]
 		public string Email { get; set; }
 
 		[Display(Name = "權限")]

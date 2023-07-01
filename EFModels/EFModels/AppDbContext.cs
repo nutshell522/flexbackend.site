@@ -25,8 +25,8 @@ namespace EFModels.EFModels
 		public virtual DbSet<Coupon> Coupons { get; set; }
 		public virtual DbSet<CouponSending> CouponSendings { get; set; }
 		public virtual DbSet<Customized_materials> Customized_materials { get; set; }
-		public virtual DbSet<Customized_Shoes> Customized_Shoes { get; set; }
 		public virtual DbSet<CustomizedOrder> CustomizedOrders { get; set; }
+		public virtual DbSet<CustomizedShoesPo> CustomizedShoesPoes { get; set; }
 		public virtual DbSet<Department> Departments { get; set; }
 		public virtual DbSet<Discount> Discounts { get; set; }
 		public virtual DbSet<JobTitle> JobTitles { get; set; }
@@ -142,16 +142,6 @@ namespace EFModels.EFModels
 				.WithOptional(e => e.Customized_materials4)
 				.HasForeignKey(e => e.Customized_Toe);
 
-			modelBuilder.Entity<Customized_Shoes>()
-				.HasMany(e => e.CustomizedOrders)
-				.WithOptional(e => e.Customized_Shoes)
-				.HasForeignKey(e => e.Customized_Shoes_Id);
-
-			modelBuilder.Entity<Customized_Shoes>()
-				.HasMany(e => e.ShoesPictures)
-				.WithOptional(e => e.Customized_Shoes)
-				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
-
 			modelBuilder.Entity<CustomizedOrder>()
 				.Property(e => e.Customized_number)
 				.IsUnicode(false);
@@ -160,6 +150,16 @@ namespace EFModels.EFModels
 				.HasMany(e => e.ShoesPictures)
 				.WithOptional(e => e.CustomizedOrder)
 				.HasForeignKey(e => e.fk_ShoesProductOrder_Id);
+
+			modelBuilder.Entity<CustomizedShoesPo>()
+				.HasMany(e => e.CustomizedOrders)
+				.WithOptional(e => e.CustomizedShoesPo)
+				.HasForeignKey(e => e.Customized_Shoes_Id);
+
+			modelBuilder.Entity<CustomizedShoesPo>()
+				.HasMany(e => e.ShoesPictures)
+				.WithOptional(e => e.CustomizedShoesPo)
+				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
 
 			modelBuilder.Entity<Department>()
 				.HasMany(e => e.Staffs)
@@ -404,7 +404,7 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<ShoesCategory>()
-				.HasMany(e => e.Customized_Shoes)
+				.HasMany(e => e.CustomizedShoesPoes)
 				.WithOptional(e => e.ShoesCategory)
 				.HasForeignKey(e => e.fk_ShoesCategoryId);
 
@@ -414,7 +414,7 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.material_ColorId);
 
 			modelBuilder.Entity<ShoesColorCategory>()
-				.HasMany(e => e.Customized_Shoes)
+				.HasMany(e => e.CustomizedShoesPoes)
 				.WithOptional(e => e.ShoesColorCategory)
 				.HasForeignKey(e => e.fk_ShoesColorId);
 

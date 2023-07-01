@@ -38,7 +38,7 @@ namespace EFModels.EFModels
         public string Password { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? dueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public int fk_PermissionsId { get; set; }
 

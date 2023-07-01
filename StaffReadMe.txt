@@ -11,5 +11,7 @@
 	add StaffsIndexVM
 	add StaffList.cshtml
 
-[working in]新增員工
-	StaffsController add CreateStaff()*2 Get/Post ,傳入StaffsCreateVM
+[v]新增員工
+	StaffsController add CreateStaff()*2 Get/Post ,傳入StaffsCreateDto
+	..
+	..

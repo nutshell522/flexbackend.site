@@ -70,8 +70,8 @@
     <Compile Include="EFModels\CouponCategory.cs" />
     <Compile Include="EFModels\CouponSending.cs" />
     <Compile Include="EFModels\CustomizedOrder.cs" />
+    <Compile Include="EFModels\CustomizedShoesPo.cs" />
     <Compile Include="EFModels\Customized_materials.cs" />
-    <Compile Include="EFModels\Customized_Shoes.cs" />
     <Compile Include="EFModels\Department.cs" />
     <Compile Include="EFModels\Discount.cs" />
     <Compile Include="EFModels\JobTitle.cs" />

@@ -8,6 +8,7 @@ using Dapper;
 using Members.dll.Models.Interfaces;
 using Members.dll.Models.Dtos;
 using System.Configuration;
+using Members.dll.Models.ViewsModels;
 
 namespace Members.dll.Models.lnfra.DapperRepositories
 {
@@ -20,6 +21,21 @@ namespace Members.dll.Models.lnfra.DapperRepositories
 			_connStr = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;//不應該寫在這裡
 		}
 
+
+		public void CreateStaff(StaffsCreateDto dto)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				string sql = @"INSERT INTO Staffs ([Name],Birthday,Gender,Age,Email,Mobile,Account,Password,fk_PermissionsId,fk_TitleId,fk_DepartmentId)
+VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Mobile,@Account,@Password,@fk_PermissionsId,@fk_TitleId,@fk_DepartmentId);";
+				conn.Execute(sql, dto);
+			}
+
+		}
+
+		//Read
 		IEnumerable<StaffsIndexDto> IStaffRepository.GetStaffs()
 		{
 			string sql = @"SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Email,LevelName,dueDate

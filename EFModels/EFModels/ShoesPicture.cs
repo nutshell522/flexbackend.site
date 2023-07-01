@@ -18,8 +18,8 @@ namespace EFModels.EFModels
 
         public int? fk_ShoesProductOrder_Id { get; set; }
 
-        public virtual Customized_Shoes Customized_Shoes { get; set; }
-
         public virtual CustomizedOrder CustomizedOrder { get; set; }
+
+        public virtual CustomizedShoesPo CustomizedShoesPo { get; set; }
     }
 }
