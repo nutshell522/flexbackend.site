@@ -1,4 +1,5 @@
 ﻿using Discount.dll.Models.Dtos;
+using EFModels.EFModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,12 @@ namespace Discount.dll.Models.Interfaces
         void UpdateProjectTag(ProjectTagStatusChangeDto dto);
         void UpdateProjectTag(ProjectTagEditNameDto dto);
         int CreateProjectTag(ProjectTagEditNameDto dto);
-
         ProjectTagEditNameDto GetProjectTag(int? id);
         bool ExistsTagName(string tagName);
         bool ExistsTagName(string tagName,int excludeId);
+        List<ProductInTagDto> GetProducts(int projectTagId,bool excludeNonTaggedProducts = true,bool excludeOutOfStockProducts = false);
+        bool IsDuplicateProjectTagItem(ProjectTagItemDto dto);
+        void DeleteProjectTagItem(ProjectTagItemDto dto);
+        void InsertProjectTagItem(ProjectTagItemDto dto);
     }
 }

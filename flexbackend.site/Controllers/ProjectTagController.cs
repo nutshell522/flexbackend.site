@@ -1,4 +1,5 @@
-﻿using Discount.dll.Models.Infra;
+﻿using Discount.dll.Models.Dtos;
+using Discount.dll.Models.Infra;
 using Discount.dll.Models.Infra.DapperRepositories;
 using Discount.dll.Models.Interfaces;
 using Discount.dll.Models.Services;
@@ -48,14 +49,29 @@ namespace flexbackend.site.Controllers
         [HttpPost]
         public ActionResult GetDatas(string input, bool getCompleteResult)
         {
-            // 返回JSON格式的響應
             return Json(GetProjectTags(input, getCompleteResult));
+        }
+        [HttpPost]
+        public ActionResult GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false)
+        {
+            return Json(_service.GetProducts(projectTagId, excludeNonTaggedProducts, excludeOutOfStockProducts));
         }
         [HttpPost]
         public ActionResult GetEditData(int id)
         {
-            // 返回JSON格式的響應
             return Json(GetProjectTag(id));
+        }
+        public ActionResult DeleteTag(string pdId, int pjId)
+        {
+            var vms = new ProjectTagItemVM { ProductId = pdId, ProjectTagId = pjId };
+            _service.DeleteTagItems(new List<ProjectTagItemDto> { vms.ToDto() });
+            return new EmptyResult();
+        }
+        public ActionResult InsertTag(string pdId, int pjId)
+        {
+            var vms = new ProjectTagItemVM { ProductId = pdId, ProjectTagId = pjId };
+            _service.InsertTagItems(new List<ProjectTagItemDto> { vms.ToDto() });
+            return new EmptyResult();
         }
 
         private IEnumerable<ProjectTagIndexVM> GetProjectTags(string projectTagName = null, bool getCompleteResult = false)

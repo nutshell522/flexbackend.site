@@ -12,10 +12,11 @@ using Discount.dll.Models.Interfaces;
 using System.Security.Cryptography;
 using System.Data;
 using System.Security.Principal;
+using EFModels.EFModels;
 
 namespace Discount.dll.Models.Infra.DapperRepositories
 {
-    public class ProjectTagDapperRepository: IProjectTagRepository
+    public class ProjectTagDapperRepository : IProjectTagRepository
     {
         private readonly string _connStr;
 
@@ -24,10 +25,11 @@ namespace Discount.dll.Models.Infra.DapperRepositories
             _connStr = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
         }
 
-        public IEnumerable<ProjectTagIndexDto> SearchProjectTags(string projectTagName=null, bool getCompleteResult = false)
+        public IEnumerable<ProjectTagIndexDto> SearchProjectTags(string projectTagName = null, bool getCompleteResult = false)
         {
             #region 組合sql語法
-            string sql = @"SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName,
+            string sql = @"
+SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName,
 STUFF(
     (SELECT ', ' + p.ProductName
     FROM ProjectTagItems AS pti
@@ -44,7 +46,7 @@ FROM ProjectTags AS pt
 ";
 
             string where = string.Empty;
-            
+
             if (!string.IsNullOrEmpty(projectTagName))
             {
                 where += " And pt.ProjectTagName LIKE '%' + @ProjectTagName + '%'";
@@ -73,10 +75,11 @@ FROM ProjectTags AS pt
             {
                 connection.Open();
 
-                string sql = @"UPDATE ProjectTags
-                       SET ModifiedAt = GETDATE(),
-                           Status = @Status
-                       WHERE ProjectTagId = @ProjectTagId";
+                string sql = @"
+UPDATE ProjectTags
+SET ModifiedAt = GETDATE(),
+Status = @Status
+WHERE ProjectTagId = @ProjectTagId";
 
                 connection.Execute(sql, new
                 {
@@ -94,9 +97,11 @@ FROM ProjectTags AS pt
             {
                 connection.Open();
 
-                string sql = @"INSERT INTO ProjectTags (ProjectTagName, CreateAt,ModifiedAt,Status)
-                       VALUES (@ProjectTagName, GETDATE(),GETDATE(),1);
-                       SELECT SCOPE_IDENTITY();";
+                string sql = @"
+INSERT INTO ProjectTags (ProjectTagName, CreateAt,ModifiedAt,Status)
+VALUES (@ProjectTagName, GETDATE(),GETDATE(),1);
+SELECT SCOPE_IDENTITY();
+";
 
                 projectId = connection.ExecuteScalar<int>(sql, new
                 {
@@ -114,9 +119,9 @@ FROM ProjectTags AS pt
                 connection.Open();
 
                 string sql = @"UPDATE ProjectTags
-                       SET ProjectTagName = @ProjectTagName,
-                           ModifiedAt = GETDATE()
-                       WHERE ProjectTagId = @ProjectTagId";
+SET ProjectTagName = @ProjectTagName,
+ModifiedAt = GETDATE()
+WHERE ProjectTagId = @ProjectTagId";
 
                 connection.Execute(sql, new
                 {
@@ -129,11 +134,11 @@ FROM ProjectTags AS pt
         public ProjectTagEditNameDto GetProjectTag(int? Id)
         {
             string sql = $@"
-        SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName, pt.Status AS Status
-        FROM ProjectTags AS pt
-        WHERE pt.ProjectTagId = ISNULL(@Id, (SELECT TOP 1 ProjectTagId FROM ProjectTags WHERE Status = 1 ORDER BY ProjectTagId DESC))
-        ORDER BY pt.ProjectTagId DESC
-    ";
+SELECT pt.ProjectTagId AS ProjectTagId, pt.ProjectTagName AS ProjectTagName, pt.Status AS Status
+FROM ProjectTags AS pt
+WHERE pt.ProjectTagId = ISNULL(@Id, (SELECT TOP 1 ProjectTagId FROM ProjectTags WHERE Status = 1 ORDER BY ProjectTagId DESC))
+ORDER BY pt.ProjectTagId DESC
+";
 
             using (IDbConnection connection = new SqlConnection(_connStr))
             {
@@ -165,6 +170,103 @@ FROM ProjectTags AS pt
                 int count = connection.ExecuteScalar<int>(sql, new { TagName = tagName, ExcludeId = excludeId });
 
                 return count > 0;
+            }
+        }
+
+        public List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false)
+        {
+            using (var connection = new SqlConnection(_connStr))
+            {
+                connection.Open();
+
+                string sql = @"
+SELECT p.ProductId, ps.SubCategoryPath AS SubCategoryPath, p.ProductName, p.Status, pt.ProjectTagId, 
+pt.ProjectTagName
+FROM Products p
+INNER JOIN ProductSubCategories ps ON p.fk_ProductSubCategoryId = ps.ProductSubCategoryId
+LEFT JOIN ProjectTagItems pti ON p.ProductId = pti.fk_ProductId
+LEFT JOIN ProjectTags pt ON pti.fk_ProjectTagId = pt.ProjectTagId AND pt.Status = 1
+WHERE p.LogOut = 0";
+
+                if (excludeNonTaggedProducts)
+                {
+                    sql += $" AND (pt.ProjectTagId = @projectTagId OR pt.ProjectTagId IS NULL)";
+                }
+
+                if (!excludeOutOfStockProducts)
+                {
+                    sql += " AND p.Status = 0";
+                }
+
+                var lookup = new Dictionary<string, ProductInTagDto>();
+
+                connection.Query<ProductInTagDto, ProjectTagDto, ProductInTagDto>(sql,
+                    (product, projectTag) =>
+                    {
+                        if (!lookup.TryGetValue(product.ProductId, out var prod))
+                        {
+                            prod = product;
+                            prod.ProjectTags = new List<ProjectTagDto>();
+                            lookup.Add(prod.ProductId, prod);
+                        }
+
+                        if (projectTag != null)
+                        {
+                            prod.ProjectTags.Add(new ProjectTagDto
+                            {
+                                ProjectTagId = projectTag.ProjectTagId,
+                                ProjectTagName = projectTag.ProjectTagName
+                            });
+                        }
+
+                        return prod;
+                    },
+                    new { projectTagId },
+                    splitOn: "ProjectTagId");
+
+                return lookup.Values.ToList();
+            }
+        }
+    
+        public bool IsDuplicateProjectTagItem(ProjectTagItemDto dto)
+        {
+            using (IDbConnection connection = new SqlConnection(_connStr))
+            {
+                string sql = @"
+SELECT COUNT(*) 
+FROM ProjectTagItems 
+WHERE fk_ProjectTagId = @ProjectTagId 
+AND fk_ProductId = @ProductId
+";
+
+                int count = connection.ExecuteScalar<int>(sql, dto);
+                return count > 0;
+            }
+        }
+
+        public void DeleteProjectTagItem(ProjectTagItemDto dto)
+        {
+            using (IDbConnection connection = new SqlConnection(_connStr))
+            {
+                string sql = @"
+DELETE FROM ProjectTagItems 
+WHERE fk_ProjectTagId = @ProjectTagId 
+AND fk_ProductId = @ProductId
+";
+
+                connection.Execute(sql, dto);
+            }
+        }
+        public void InsertProjectTagItem(ProjectTagItemDto dto)
+        {
+            using (IDbConnection connection = new SqlConnection(_connStr))
+            {
+                string sql = @"
+INSERT INTO ProjectTagItems (fk_ProjectTagId, fk_ProductId) 
+VALUES (@ProjectTagId, @ProductId)
+";
+
+                connection.Execute(sql, dto);
             }
         }
     }
