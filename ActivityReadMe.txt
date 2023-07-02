@@ -53,5 +53,15 @@
 
 	Allen錄影檔看到20230609 整天結束
 
-[ ]Activity的刪除
-[ ]Activity的查看資訊
+[ v ]Activity的刪除
+[ v ]Activity的查看資訊
+
+[ v ]Speaker的Index
+	[ v ]SpeakerDto
+	[ v ]SpeakerVM
+	[ v ]建Interface資料夾，寫ISpeakerRepository
+	[ v ]建Infra資料夾，寫SpeakerEFRepository，去實作ISpeakerRepository
+	[ v ]建Service資料夾，寫SpeakerServices
+	[ v ]寫Speaker Index的controller
+	[ v ]新增Speaker Index檢視畫面
+[ v ]新增Speaker講師管理的超連結到layout

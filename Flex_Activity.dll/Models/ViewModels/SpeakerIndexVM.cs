@@ -9,12 +9,13 @@ namespace Flex_Activity.dll.Models.ViewModels
 {
 	public class SpeakerIndexVM
 	{
+		[Display(Name = "講師編號")]
 		public int SpeakerId { get; set; }
 
-		[Required]
-		[StringLength(50)]
-		public string SpeakerName { get; set; }
+        [Display(Name = "講師姓名")]
+        public string SpeakerName { get; set; }
 
-		public string FieldName { get; set; }
+        [Display(Name = "專長領域")]
+        public string FieldName { get; set; }
 	}
 }
