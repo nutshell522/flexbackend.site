@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EFModels.EFModels;
 
 namespace Orders.ViewModels
 {
@@ -12,17 +13,17 @@ namespace Orders.ViewModels
 
         public DateTime ordertime { get; set; }
 
-        //public int fk_member_Id { get; set; }
+        public int fk_member_Id { get; set; }
 
         public int total_quantity { get; set; }
 
-       // public int logistics_company_Id { get; set; }
+        public int logistics_company_Id { get; set; }
 
-       // public int order_status_Id { get; set; }
+        public int order_status_Id { get; set; }
 
-        //public int pay_method_Id { get; set; }
+        public int pay_method_Id { get; set; }
 
-        //public int pay_status_Id { get; set; }
+        public int pay_status_Id { get; set; }
 
         public string coupon_name { get; set; }
 
@@ -40,6 +41,6 @@ namespace Orders.ViewModels
 
         public string order_description { get; set; }
 
-        //public int? close_Id { get; set; }
+        public int? close_Id { get; set; }
     }
 }

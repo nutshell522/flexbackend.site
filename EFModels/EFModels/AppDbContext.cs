@@ -495,5 +495,6 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_TypeId)
 				.WillCascadeOnDelete(false);
 		}
-	}
+
+    }
 }
