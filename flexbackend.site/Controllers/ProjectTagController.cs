@@ -52,25 +52,51 @@ namespace flexbackend.site.Controllers
             return Json(GetProjectTags(input, getCompleteResult));
         }
         [HttpPost]
-        public ActionResult GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false)
+        public ActionResult GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false, string subCategoryPath = null, string productName = null)
         {
-            return Json(_service.GetProducts(projectTagId, excludeNonTaggedProducts, excludeOutOfStockProducts));
+            return Json(_service.GetProducts(projectTagId, excludeNonTaggedProducts, excludeOutOfStockProducts, subCategoryPath, productName));
         }
         [HttpPost]
         public ActionResult GetEditData(int id)
         {
             return Json(GetProjectTag(id));
         }
+        [HttpPost]
         public ActionResult DeleteTag(string pdId, int pjId)
         {
             var vms = new ProjectTagItemVM { ProductId = pdId, ProjectTagId = pjId };
             _service.DeleteTagItems(new List<ProjectTagItemDto> { vms.ToDto() });
             return new EmptyResult();
         }
+        [HttpPost]
         public ActionResult InsertTag(string pdId, int pjId)
         {
             var vms = new ProjectTagItemVM { ProductId = pdId, ProjectTagId = pjId };
             _service.InsertTagItems(new List<ProjectTagItemDto> { vms.ToDto() });
+            return new EmptyResult();
+        }
+        [HttpPost]
+        public ActionResult DeleteTags(string[] pdIds, int pjId)
+        {
+            List <ProjectTagItemVM> vms =  new List <ProjectTagItemVM> ();
+            for (int i = 0; i < pdIds.Length; i++)
+            {
+                vms.Add( new ProjectTagItemVM { ProductId = pdIds[i], ProjectTagId = pjId });
+
+            }
+            _service.DeleteTagItems(vms.Select(x=>x.ToDto()).ToList());
+            return new EmptyResult();
+        }
+        [HttpPost]
+        public ActionResult InsertTags(string[] pdIds, int pjId)
+        {
+            List<ProjectTagItemVM> vms = new List<ProjectTagItemVM>();
+            for (int i = 0; i < pdIds.Length; i++)
+            {
+                vms.Add(new ProjectTagItemVM { ProductId = pdIds[i], ProjectTagId = pjId });
+
+            }
+            _service.InsertTagItems(vms.Select(x => x.ToDto()).ToList());
             return new EmptyResult();
         }
 
@@ -87,12 +113,25 @@ namespace flexbackend.site.Controllers
             return _service.Update(vms.Select(x => x.ToStatusChangeDto()).ToList());
         }
 
-        public ActionResult CreateOrEdit(int? id)
+        public ActionResult CreateOrEdit(ProjectTagService.Criteria criteria)
         {
-            if (id != null)
+            bool result = int.TryParse(criteria.ProjectTagId,out int id);
+            if (Request.QueryString["excludeNonTaggedProducts"] != null)
+            {
+                criteria.excludeNonTaggedProducts = Request.QueryString["excludeNonTaggedProducts"] == "on";
+            }
+
+            if (Request.QueryString["excludeOutOfStockProducts"] != null)
+            {
+                criteria.excludeOutOfStockProducts = Request.QueryString["excludeOutOfStockProducts"] == "on";
+            }
+
+            // 其他邏輯
+            ViewBag.Criteria = criteria;
+            if (result && id != 0)
             {
                 // 如果有id為 edit
-                var vm = _service.GetProjectTag(id.Value).ToEditNameVM();
+                var vm = _service.GetProjectTag(id).ToEditNameVM();
                 return View(vm);
             }
             else

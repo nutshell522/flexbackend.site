@@ -71,9 +71,9 @@ namespace Discount.dll.Models.Services
             id = id == 0 ? null : id;
             return _repo.GetProjectTag(id);
         }
-        public List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false)
+        public List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false, string subCategoryPath = null, string productName = null)
         {
-            return _repo.GetProducts(projectTagId, excludeNonTaggedProducts, excludeOutOfStockProducts);
+            return _repo.GetProducts(projectTagId, excludeNonTaggedProducts, excludeOutOfStockProducts, subCategoryPath, productName);
         }
 
         public Result DeleteTagItems(List<ProjectTagItemDto> dtos)
@@ -94,6 +94,15 @@ namespace Discount.dll.Models.Services
             }
 
             return Result.Success();
+        }
+
+        public class Criteria
+        {
+            public string ProjectTagId { get; set; }
+            public string CategoryName { get; set; }
+            public string ProductName { get; set; }
+            public bool? excludeNonTaggedProducts { get; set; }
+            public bool? excludeOutOfStockProducts { get; set; }
         }
     }
 }

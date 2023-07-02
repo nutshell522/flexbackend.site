@@ -173,7 +173,7 @@ ORDER BY pt.ProjectTagId DESC
             }
         }
 
-        public List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false)
+        public List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false, string subCategoryPath = null, string productName = null)
         {
             using (var connection = new SqlConnection(_connStr))
             {
@@ -190,12 +190,22 @@ WHERE p.LogOut = 0";
 
                 if (excludeNonTaggedProducts)
                 {
-                    sql += $" AND (pt.ProjectTagId = @projectTagId OR pt.ProjectTagId IS NULL)";
+                    sql += " AND pt.ProjectTagId = @projectTagId";
                 }
 
                 if (!excludeOutOfStockProducts)
                 {
                     sql += " AND p.Status = 0";
+                }
+
+                if (!string.IsNullOrEmpty(subCategoryPath))
+                {
+                    sql += " AND ps.SubCategoryPath LIKE @subCategoryPath";
+                }
+
+                if (!string.IsNullOrEmpty(productName))
+                {
+                    sql += " AND p.ProductName LIKE @productName";
                 }
 
                 var lookup = new Dictionary<string, ProductInTagDto>();
@@ -221,13 +231,13 @@ WHERE p.LogOut = 0";
 
                         return prod;
                     },
-                    new { projectTagId },
+                    new { projectTagId, subCategoryPath = "%" + subCategoryPath + "%", productName = "%" + productName + "%" },
                     splitOn: "ProjectTagId");
 
                 return lookup.Values.ToList();
             }
         }
-    
+
         public bool IsDuplicateProjectTagItem(ProjectTagItemDto dto)
         {
             using (IDbConnection connection = new SqlConnection(_connStr))

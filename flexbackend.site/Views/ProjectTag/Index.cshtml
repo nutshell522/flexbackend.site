@@ -206,7 +206,7 @@
                             render: function (data) {
                                 return `${data.Status ?
                                     `<div class="manage-btn-container d-flex justify-content-center">
-                                                    <a href="/ProjectTag/CreateOrEdit?id=${data.ProjectTagId}" class="text-primary btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                                    <a href="/ProjectTag/CreateOrEdit?ProjectTagId=${data.ProjectTagId}" class="text-primary btn-view"><i class="bi bi-clipboard-check"></i></a>
                                                   </div>` : ""}`;
                             },
                             orderable: false

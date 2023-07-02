@@ -17,7 +17,7 @@ namespace Discount.dll.Models.Interfaces
         ProjectTagEditNameDto GetProjectTag(int? id);
         bool ExistsTagName(string tagName);
         bool ExistsTagName(string tagName,int excludeId);
-        List<ProductInTagDto> GetProducts(int projectTagId,bool excludeNonTaggedProducts = true,bool excludeOutOfStockProducts = false);
+        List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false, string subCategoryPath = null, string productName = null);
         bool IsDuplicateProjectTagItem(ProjectTagItemDto dto);
         void DeleteProjectTagItem(ProjectTagItemDto dto);
         void InsertProjectTagItem(ProjectTagItemDto dto);
