@@ -28,6 +28,14 @@ namespace flexbackend.site.Controllers
 			return new StaffService(repo);
 		}
 
+		//Logout
+		public ActionResult Logout()
+		{
+			Session.Abandon();
+			FormsAuthentication.SignOut();
+			return Redirect("/Staffs/Login");
+		}
+
 		//Login
 		public ActionResult Login()
 		{
@@ -97,11 +105,13 @@ namespace flexbackend.site.Controllers
 			if (staff == null) return Result.Fail("帳號或密碼有誤");
 
 			//找到帳號，將密碼密碼進行雜湊
-			var salt = HashUtility.GetSalt();
-			var hashPrassword = HashUtility.ToHA256(vm.Password, salt);
+			//var salt = HashUtility.GetSalt();
+			//var hashPrassword = HashUtility.ToHA256(vm.Password, salt);
+
+			string password = vm.Password;
 
 			//檢查密碼
-			return string.CompareOrdinal(staff.Password, hashPrassword) == 0
+			return string.CompareOrdinal(staff.Password, password) == 0
 				? Result.Success()
 				: Result.Fail("帳號或密碼有誤");
 		}

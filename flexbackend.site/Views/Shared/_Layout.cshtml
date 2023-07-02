@@ -141,16 +141,37 @@
         </ul>
 
         <ul class="sidebar-bottom">
-            <li>
-                <a href="javascript:;">
-                    <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
-                </a>
-            </li>
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="javascript:;">
+                            <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Logout", "Staffs", new { area = "" })">
+                            <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" class="nav-link">@(User.Identity.Name)</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("CreateStaff", "Staffs", new { area = "" })">
+                            <div><i class="bi bi-gear-fill"></i><span>註冊員工帳號</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Login", "Staffs", new { area = "" })">
+                            <div><i class="bi bi-door-open-fill"></i><span>登入</span></div>
+                        </a>
+                    </li>
+                }
+            }
         </ul>
     </aside>
     <div class="container-right">
