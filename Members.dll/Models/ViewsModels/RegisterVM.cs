@@ -19,6 +19,7 @@ namespace Members.dll.Models.ViewsModels
 		[Required]
 		[StringLength(70)]
 		[Display(Name = "密碼")]
+		[DataType(DataType.Password)]
 		public string Password { get; set; }
 
 		[Display(Name = "確認密碼")]

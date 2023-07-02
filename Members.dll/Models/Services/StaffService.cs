@@ -1,4 +1,5 @@
-﻿using Members.dll.Models.Dtos;
+﻿using EFModels.EFModels;
+using Members.dll.Models.Dtos;
 using Members.dll.Models.Exts;
 using Members.dll.Models.Interfaces;
 using Members.dll.Models.lnfra;
@@ -19,7 +20,15 @@ namespace Members.dll.Models.Services
 		{
 			_repo = repo;
 		}
+		//Login
+		public Result Login(LoginVM vm)
+		{
+			//判斷帳號、密碼是否存在
+			 //if(vm.Account==Staff.)
 
+
+			return Result.Success();
+		}
 		//Create		
 		public Result CreateStaff(StaffsCreateDto dto)
 		{
@@ -27,12 +36,6 @@ namespace Members.dll.Models.Services
 			//計算年齡，目前年分-出生年份
 			int age = DateTime.Today.Year - dto.Birthday.Value.Year;
 			dto.Age = (byte)age;
-
-			//權限未填給預設值
-			if (dto.StaffPermission == null)
-			{
-				dto.StaffPermission= "一般權限";
-			}
 
 			//存到db
 			_repo.CreateStaff(dto);

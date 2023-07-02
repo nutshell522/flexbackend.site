@@ -2322,6 +2322,7 @@
     <Content Include="Views\Members\MembersList.cshtml" />
     <Content Include="Views\Staffs\CreateStaff.cshtml" />
     <Content Include="Views\Staffs\StaffList.cshtml" />
+    <Content Include="Views\Staffs\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

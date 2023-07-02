@@ -71,11 +71,12 @@
     <Compile Include="Models\lnfra\Result.cs" />
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
-    <Compile Include="Models\ViewsModels\MembersEditVM.cs" />
-    <Compile Include="Models\ViewsModels\MembersIndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\LoginVM.cs" />
+    <Compile Include="Models\ViewsModels\Member\MembersEditVM.cs" />
+    <Compile Include="Models\ViewsModels\Member\MembersIndexVM.cs" />
     <Compile Include="Models\ViewsModels\RegisterVM.cs" />
-    <Compile Include="Models\ViewsModels\StaffsCreateVM.cs" />
-    <Compile Include="Models\ViewsModels\StaffsIndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\StaffsCreateVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\StaffsIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

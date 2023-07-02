@@ -11,6 +11,9 @@ using Members.dll.Models.Exts;
 using Members.dll.Models.Dtos;
 using Members.dll.Models.lnfra;
 using System.Web.ModelBinding;
+using System.Web.UI.WebControls;
+using EFModels.EFModels;
+using System.Web.Security;
 
 namespace flexbackend.site.Controllers
 {
@@ -18,11 +21,91 @@ namespace flexbackend.site.Controllers
 	{
 		// 控制器，路由和請求處理get、post ; 畫面呈現
 
+		//Create 也要使用這支method但還沒用
 		private StaffService GetStaffRepository()
 		{
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
 		}
+
+		//Login
+		public ActionResult Login()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Login(LoginVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+
+			//對帳號密碼進行驗證
+			Result result = ValidLogin(vm);
+
+			//驗證失敗
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+
+			//是否記住登入成功的會員
+			const bool remeberMe = false;
+
+			//驗證成功，處理後續登入作業，並將密碼編碼之後加到 Cookie裡面
+			(string returnUrl, HttpCookie cookie) processResult = ProcessLogin(vm.Account, remeberMe);
+			Response.Cookies.Add(processResult.cookie);
+
+			return Redirect(processResult.returnUrl);
+		}
+
+		private (string returnUrl, HttpCookie cookie) ProcessLogin(string account, bool rememberMe)
+		{
+			var roles = string.Empty; //如用到角色權限就填入
+
+			//建立一張認證票
+			var ticket =
+				new FormsAuthenticationTicket(
+					1,                          //版本別,沒有特別用處
+					account,
+					DateTime.Now,               //發行日
+					DateTime.Now.AddDays(2),    //到期日
+					rememberMe,                 //是否續存
+					roles,                      //userdata
+					"/"                         //cookie位置,通常都放在網站的根目錄
+					);
+
+			//將它加密,利用內建的表單認證類別呼叫編碼
+			var value = FormsAuthentication.Encrypt(ticket);
+
+			//存入cookie
+			var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, value);
+
+			//取得return url
+			var url = FormsAuthentication.GetRedirectUrl(account, true); //第二個引數沒有用處
+
+			return (url, cookie);
+		}
+
+		private Result ValidLogin(LoginVM vm)
+		{
+			var db = new AppDbContext();
+
+			//根據帳號去找，並檢查帳號
+			var staff = db.Staffs.FirstOrDefault(s => s.Account == vm.Account);
+			if (staff == null) return Result.Fail("帳號或密碼有誤");
+
+			//找到帳號，將密碼密碼進行雜湊
+			var salt = HashUtility.GetSalt();
+			var hashPrassword = HashUtility.ToHA256(vm.Password, salt);
+
+			//檢查密碼
+			return string.CompareOrdinal(staff.Password, hashPrassword) == 0
+				? Result.Success()
+				: Result.Fail("帳號或密碼有誤");
+		}
+
 
 		//Create
 		public ActionResult CreateStaff()
@@ -43,7 +126,7 @@ namespace flexbackend.site.Controllers
 			Result result = Create(vm);
 			if (result.IsSuccess)
 			{
-				return View();
+				return View();//回到員工總覽
 			}
 			else
 			{
@@ -55,19 +138,21 @@ namespace flexbackend.site.Controllers
 
 		private Result Create(StaffsCreateVM vm)
 		{
-			IStaffRepository repo = new StaffDapperRepository();
-			StaffService service = new StaffService(repo);
+			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			dto.Mobile = "0921787456";
-			dto.Account = Session["Account"].ToString();
-			dto.Password = Session["Password"].ToString();
-			dto.fk_PermissionsId = 1;
-			dto.fk_TitleId = 1;
-			dto.fk_DepartmentId = 1;
+			dto.Mobile = "0921111111";
+			//dto.Account = Session["Account"].ToString();
+			//dto.Password = Session["Password"].ToString();
+			dto.Account = "Tina";
+			dto.Password = "tina";
+			dto.fk_PermissionsId = 3;
+			dto.fk_TitleId = 2;
+			dto.fk_DepartmentId = 3;
 			return service.CreateStaff(dto);
 		}
 
 		//Read
+		[Authorize]
 		public ActionResult StaffList()
 		{
 			StaffService service = GetStaffRepository();
