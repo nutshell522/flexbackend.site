@@ -22,12 +22,14 @@
 	*資料格式還沒有判斷
 	*新增成功回到總覽畫面
 
-[v]員工登入
+[v]員工登入/登出
 	add loginVM
     web.config 在<system.web> add <authentication>
 	StaffsController add Login() action , add Login.cshtml , 若沒登入過會自動等向/Staff/Login
 					 add Login(LoginVM vm) action 
 					 add ValidLogin() method , 對帳號密碼進行驗證,驗證成功並將密碼編碼之後加到 Cookie裡面
 					 add ProcessLogin() method , 產生Cookie
+	_Layout.cshtml   add 判斷 User.Identity.IsAuthenticated 可以進行變更密碼及登出
+
 	*沒有將密碼雜湊
 
