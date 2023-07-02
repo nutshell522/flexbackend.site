@@ -17,18 +17,38 @@ namespace flexbackend.site.Controllers
 		private AppDbContext db = new AppDbContext();
 
 		// GET: Activity
-		public ActionResult Index()
+		public ActionResult Index(ActivitySearchCriteria criteria )
 		{
-			var activities = db.Activities.ToList()
-										  .Select(a => a.ToIndexVM());
+			ViewBag.Criteria = criteria;
+			PrepareCategoryDataSource(criteria.CategoryId);
+
+			//查詢紀錄，由於第一次進到這個網頁的時候，criteria是沒有值的
+			var query = db.Activities.Include(a => a.ActivityCategory);
+
+            #region Where
+            if (string.IsNullOrEmpty(criteria.ActivityName)== false)
+			{
+				query = query.Where(a => a.ActivityName.Contains(criteria.ActivityName));
+			}
+			if (criteria.CategoryId != null && criteria.CategoryId.Value > 0)
+			{
+				query = query.Where(a => a.fk_ActivityCategoryId == criteria.CategoryId.Value);
+			}
+            #endregion
+
+            var activities = query.ToList()
+								  .Select(a => a.ToIndexVM());
 			return View(activities);
 		}
 
 		public ActionResult Create()
 		{
-			ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName");
-			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName");
-			return View();
+			//ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName");
+            PrepareCategoryDataSource(null);
+
+            //ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName");
+            PrepareSpeakerDataSource(null);
+            return View();
 		}
 
 		[HttpPost]
@@ -60,14 +80,16 @@ namespace flexbackend.site.Controllers
 			//如果驗證失敗，就留在本網頁
 
 			//取得活動類別需要下拉清單的內容
-			ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+			//ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+			PrepareCategoryDataSource(vm.fk_ActivityCategoryId);
 
 
+            ////取得活動講者需要下拉清單的內容
+            //ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
+            PrepareSpeakerDataSource(vm.fk_SpeakerId);
 
-			////取得活動講者需要下拉清單的內容
-			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
-			//顯示網頁
-			return View(vm);
+            //顯示網頁
+            return View(vm);
 		}
 
 		private string SaveUploadedFile(string path, HttpPostedFileBase file1)
@@ -109,12 +131,14 @@ namespace flexbackend.site.Controllers
 
 			ActivityEditVM vm = activity.ToEditVM();
 			//取得活動類別需要下拉清單的內容
-			ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+			//ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+            PrepareCategoryDataSource(vm.fk_ActivityCategoryId);
 
-			////取得活動講者需要下拉清單的內容
-			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
+            //取得活動講者需要下拉清單的內容
+            //ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
+            PrepareSpeakerDataSource(vm.fk_SpeakerId);
 
-			return View(vm);
+            return View(vm);
 		}
 
 		[HttpPost]
@@ -127,12 +151,25 @@ namespace flexbackend.site.Controllers
 				db.SaveChanges();
 				return RedirectToAction("Index");
 			}
-			ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
-			ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
-			return View(vm);
+            //ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+            PrepareCategoryDataSource(vm.fk_ActivityCategoryId);
+
+			//ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
+			PrepareSpeakerDataSource(vm.fk_SpeakerId);
+
+            return View(vm);
 
 		}
 
-
+		private void PrepareCategoryDataSource(int? categoryId)
+		{
+			var categories = db.ActivityCategories.ToList().Prepend(new ActivityCategory());
+            ViewBag.fk_ActivityCategoryId = new SelectList(categories, "ActivityCategoryId", "ActivityCategoryName", categoryId);
+        }
+		
+		private void PrepareSpeakerDataSource(int? speakerId)
+		{
+            ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", speakerId);
+        }
 	}
 }

@@ -6,10 +6,11 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Customized_Shoes
+    [Table("CustomizedShoesPo")]
+    public partial class CustomizedShoesPo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customized_Shoes()
+        public CustomizedShoesPo()
         {
             CustomizedOrders = new HashSet<CustomizedOrder>();
             ShoesPictures = new HashSet<ShoesPicture>();
