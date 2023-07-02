@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using Flex_Activity.dll.Models.Exts;
 
 namespace Flex_Activity.dll.Infra.EFRepositories
 {
@@ -16,6 +17,13 @@ namespace Flex_Activity.dll.Infra.EFRepositories
         public SpeakerEFRepository()
         {
             _db = new AppDbContext();
+        }
+
+        public void CreateSpeaker(SpeakerCreateDto dto)
+        {
+            var speaker = dto.ToCreateEntity();
+            _db.Speakers.Add(speaker);
+            _db.SaveChanges();
         }
 
         public IEnumerable<SpeakerIndexDto> Search()

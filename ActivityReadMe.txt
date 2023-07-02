@@ -65,3 +65,14 @@
 	[ v ]寫Speaker Index的controller
 	[ v ]新增Speaker Index檢視畫面
 [ v ]新增Speaker講師管理的超連結到layout
+
+    Allen錄影檔看到20230616 整天結束
+
+[ Working On ]Speaker的Create
+	[ Working On ]Speaker Create的VM
+	[ Working On ]Speaker Create的Dto
+
+	Allen錄影檔看到20230619 9:03
+
+	20230703 Speaker的Create Post方法還沒寫完
+	尚未寫Speaker的Create的vm轉Dto的擴充方法!
