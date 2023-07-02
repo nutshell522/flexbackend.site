@@ -52,3 +52,6 @@
 [ v ]Activity的搜尋完成，修正好記住歷史資訊的部份
 
 	Allen錄影檔看到20230609 整天結束
+
+[ ]Activity的刪除
+[ ]Activity的查看資訊

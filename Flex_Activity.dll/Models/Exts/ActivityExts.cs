@@ -121,6 +121,27 @@ namespace Flex_Activity.dll.Models.Exts
 
 		}
 
+		public static ActivityDetailVM ToDetailVM(this Activity entity)
+		{
+            return new ActivityDetailVM
+            {
+                ActivityId = entity.ActivityId,
+                ActivityName = entity.ActivityName,
+                fk_ActivityCategoryId = entity.fk_ActivityCategoryId,
+                ActivityDate = entity.ActivityDate,
+                fk_SpeakerId = entity.fk_SpeakerId,
+                ActivityPlace = entity.ActivityPlace,
+                ActivityBookStartTime = entity.ActivityBookStartTime,
+                ActivityBookEndTime = entity.ActivityBookEndTime,
+                ActivityImage = entity.ActivityImage,
+                ActivityAge = entity.ActivityAge,
+                ActivitySalePrice = entity.ActivitySalePrice,
+                ActivityOriginalPrice = entity.ActivityOriginalPrice,
+                ActivityDescription = entity.ActivityDescription
+
+            };
+        }
+
 	}
 }
 

@@ -161,6 +161,49 @@ namespace flexbackend.site.Controllers
 
 		}
 
+		//Get：Delete
+		public ActionResult Delete (int id)
+		{
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Activity activity = db.Activities.Find(id);
+			if (activity == null)
+			{
+				return HttpNotFound();
+			}
+			return View(activity);
+
+		}
+
+		[HttpPost]
+		[ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			Activity activity = db.Activities.Find(id);
+			db.Activities.Remove(activity);
+			db.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult Details(int? id)
+		{
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);	
+			}
+			Activity activity = db.Activities.Find(id);
+			if (activity == null)
+			{
+				return HttpNotFound();
+			}
+
+			ActivityDetailVM vm = activity.ToDetailVM();
+			return View(vm);
+		}
+
 		private void PrepareCategoryDataSource(int? categoryId)
 		{
 			var categories = db.ActivityCategories.ToList().Prepend(new ActivityCategory());
