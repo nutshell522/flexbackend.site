@@ -88,5 +88,72 @@ namespace Customized_Shoes.dll.Models.Exts
 				}).ToList(),
 			};
 		}
+
+		public static CustomizedShoesDto ToEditDto(this CustomizedShoesPo entity) 
+		{
+			return new CustomizedShoesDto
+			{
+				ShoesProductId= entity.ShoesProductId,
+				ShoesName= entity.ShoesName,
+				ShoesOrigin= entity.ShoesOrigin,
+				ShoesDescription= entity.ShoesDescription,
+				ShoesUnitPrice = entity.ShoesUnitPrice,
+				Status = entity.Status,
+				fk_ShoesCategoryId = entity.fk_ShoesCategoryId,
+				fk_ShoesColorId = entity.fk_ShoesColorId,
+				DataCreateTime = entity.DataCreateTime,
+				DataEditTime = entity.DataEditTime,				
+			};				
+		}
+
+		public static CustomizedShoesEditVM ToEditVM(this CustomizedShoesDto dto) 
+		{
+			return new CustomizedShoesEditVM
+			{
+				ShoesProductId = dto.ShoesProductId,
+				ShoesName = dto.ShoesName,
+				ShoesOrigin = dto.ShoesOrigin,
+				ShoesDescription = dto.ShoesDescription,
+				ShoesUnitPrice = dto.ShoesUnitPrice,
+				Status = dto.Status,
+				fk_ShoesCategoryId = dto.fk_ShoesCategoryId,
+				fk_ShoesColorId = dto.fk_ShoesColorId,
+				CreateTime = dto.DataCreateTime.ToString("G"),
+				EditTime = dto.DataEditTime.ToString("G"),
+			};
+		}
+
+		public static CustomizedShoesDto VMToEditDto(this CustomizedShoesEditVM vm) 
+		{
+			return new CustomizedShoesDto
+			{
+				ShoesProductId = vm.ShoesProductId,
+				ShoesName = vm.ShoesName,
+				ShoesOrigin = vm.ShoesOrigin,
+				ShoesDescription = vm.ShoesDescription,
+				ShoesUnitPrice = vm.ShoesUnitPrice,
+				Status = vm.Status,
+				fk_ShoesCategoryId = vm.fk_ShoesCategoryId,
+				fk_ShoesColorId = vm.fk_ShoesColorId,
+				DataCreateTime = DateTime.Parse(vm.CreateTime),
+			};
+		}
+
+		public static CustomizedShoesPo DtoToEditEntity(this CustomizedShoesDto dto) 
+		{
+			return new CustomizedShoesPo
+			{
+				ShoesProductId = dto.ShoesProductId,
+				ShoesName = dto.ShoesName,
+				ShoesOrigin = dto.ShoesOrigin,
+				ShoesDescription = dto.ShoesDescription,
+				ShoesUnitPrice = dto.ShoesUnitPrice,
+				Status = dto.Status,
+				fk_ShoesCategoryId = dto.fk_ShoesCategoryId,
+				fk_ShoesColorId = dto.fk_ShoesColorId,
+				DataCreateTime = dto.DataCreateTime,
+				DataEditTime = dto.DataEditTime,
+			};
+		}
 	}
 }

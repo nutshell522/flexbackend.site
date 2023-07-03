@@ -12,8 +12,12 @@ namespace Customized_Shoes.dll.Models.Interface
 	{
 		void CreateShoes(CustomizedShoesDto dto);
 
-		List<CustomizedShoesDto> Search(ShoesSearchCriteria criteria);
+		IEnumerable<CustomizedShoesDto> Search(ShoesSearchCriteria criteria);
 
-		void EditProductsStatus(List<CustomizedShoesDto> dto);
+		void EditShoesStatus(IEnumerable<CustomizedShoesDto> dto);
+
+		CustomizedShoesDto GetById(int ShoesId);
+
+		void EditShoes(CustomizedShoesDto dto);
 	}
 }

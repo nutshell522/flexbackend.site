@@ -30,10 +30,10 @@ namespace Customized_Shoes.dll.Models.Dtos
 
 		public int? fk_ShoesColorId { get; set; }
 
-		public DateTime? DataCreateTime { get; set; }
+		public DateTime DataCreateTime { get; set; }
 
-		public DateTime? DataEditTime { get; set; }
+		public DateTime DataEditTime { get; set; }
 
-		public List<string> ImgPaths { get; set; }
+		public IEnumerable<string> ImgPaths { get; set; }
 	}
 }
