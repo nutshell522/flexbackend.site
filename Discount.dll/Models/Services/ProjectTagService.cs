@@ -71,5 +71,38 @@ namespace Discount.dll.Models.Services
             id = id == 0 ? null : id;
             return _repo.GetProjectTag(id);
         }
-	}
+        public List<ProductInTagDto> GetProducts(int projectTagId, bool excludeNonTaggedProducts = true, bool excludeOutOfStockProducts = false, string subCategoryPath = null, string productName = null)
+        {
+            return _repo.GetProducts(projectTagId, excludeNonTaggedProducts, excludeOutOfStockProducts, subCategoryPath, productName);
+        }
+
+        public Result DeleteTagItems(List<ProjectTagItemDto> dtos)
+        {
+            for(int i = 0;i < dtos.Count;i++)
+            {
+                _repo.DeleteProjectTagItem(dtos[i]);
+            }
+            return Result.Success();
+        }
+
+        public Result InsertTagItems(List<ProjectTagItemDto> dtos)
+        {
+            for (int i = 0; i < dtos.Count; i++)
+            {
+                if (_repo.IsDuplicateProjectTagItem(dtos[i])) break;
+                _repo.InsertProjectTagItem(dtos[i]);
+            }
+
+            return Result.Success();
+        }
+
+        public class Criteria
+        {
+            public string ProjectTagId { get; set; }
+            public string CategoryName { get; set; }
+            public string ProductName { get; set; }
+            public bool? excludeNonTaggedProducts { get; set; }
+            public bool? excludeOutOfStockProducts { get; set; }
+        }
+    }
 }
