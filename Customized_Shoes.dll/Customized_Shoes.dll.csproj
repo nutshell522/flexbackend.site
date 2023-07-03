@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.138\lib\net461\Dapper.dll</HintPath>
@@ -55,6 +58,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\Dtos\CustomizedShoesDto.cs" />
+    <Compile Include="Models\Dtos\ShoesCategoryDto.cs" />
+    <Compile Include="Models\Dtos\ShoesColorCategoryDto.cs" />
+    <Compile Include="Models\Exts\CustomizedShoesExts.cs" />
+    <Compile Include="Models\Exts\Result.cs" />
+    <Compile Include="Models\ViewModels\CustomizedShoesCreateVM.cs" />
+    <Compile Include="Models\ViewModels\CustomizedShoesIdAndStatusVM.cs" />
+    <Compile Include="Models\ViewModels\CustomizedShoesIndexVM.cs" />
     <Compile Include="Models\ViewModels\SupplierCreateVM.cs" />
     <Compile Include="Models\ViewModels\SupplierCriteria.cs" />
     <Compile Include="Models\ViewModels\SupplierEditVM.cs" />
@@ -62,12 +73,7 @@
     <Compile Include="Models\ViewModels\SuppliersIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Dtos\" />
-    <Folder Include="Models\Infra\" />
-    <Folder Include="Models\Interfaces\" />
-    <Folder Include="Models\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
