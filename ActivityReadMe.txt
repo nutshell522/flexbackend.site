@@ -85,11 +85,11 @@
 
 
 
-	***【Speaker 的 Create沒有依照VM的驗證規則去驗證!!! 待修正】***
+	*****【Speaker 的 Create沒有依照VM的驗證規則去驗證!!! 待修正】*****
 	Speaker的Create完成
 	已修正Speaker Create驗證規則
 	
-[ Working On ]Speaker 的 Edit
+[ V ]Speaker 的 Edit
 	[ V ]Speaker Edit 的 VM
 	[ V ]Speaker Edit 的 Dto
 	[ V ]Speaker Edit 的 VM 轉 Dto擴充方法、Dto 轉 Entity擴充方法
@@ -100,3 +100,12 @@
 	[ V ]Speaker Edit 的 Get Action
 	[ V ]Speaker Edit 的 Post Action
 
+	Speaker的Edit完成
+	***【待邏輯驗證加入並修正】***
+
+[ * ]Speaker 的 搜尋
+	[ v ]Speaker Index 的 VM
+	[ v ]Speaker Index 的 criteria
+	[ v ]Speaker Index 的 Action
+
+*****【Speaker的Edit無法記住之前輸入的值，待修正】*****

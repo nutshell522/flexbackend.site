@@ -212,7 +212,8 @@ namespace flexbackend.site.Controllers
 		
 		private void PrepareSpeakerDataSource(int? speakerId)
 		{
-            ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", speakerId);
+			var speakers = db.Speakers.ToList().Prepend(new Speaker());
+            ViewBag.fk_SpeakerId = new SelectList(speakers, "SpeakerId", "SpeakerName", speakerId);
         }
 	}
 }

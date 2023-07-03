@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace flexbackend.site.Controllers
 {
@@ -18,29 +19,65 @@ namespace flexbackend.site.Controllers
         private AppDbContext db = new AppDbContext();
         private ISpeakerRepository _repo = new SpeakerEFRepository();
 
+
+		//public ActionResult Index()
+		//{
+		//	//呼叫 GetSpeakers() 方法，並將回傳的演講者資料集合傳遞給視圖（View）
+		//	IEnumerable<SpeakerIndexVM> speakers = GetSpeakers();
+		//	return View(speakers);
+		//}
+
+		////用來取得演講者的資料
+		//private IEnumerable<SpeakerIndexVM> GetSpeakers()
+		//{
+		//	//建立一個資料庫儲存庫（Repository）的實例
+		//	ISpeakerRepository repo = new SpeakerEFRepository();
+
+		//	SpeakerServices service = new SpeakerServices(repo);
+		//	return service.Search()
+		//		.Select(dto => new SpeakerIndexVM
+		//		{
+		//			SpeakerId = dto.SpeakerId,
+		//			SpeakerName = dto.SpeakerName,
+		//			FieldName = dto.FieldName
+		//		});
+		//}
 		// GET: Speaker Index
-		public ActionResult Index()
+		public ActionResult Index(SpeakerSearchCriteria criteria)
         {
-            //呼叫 GetSpeakers() 方法，並將回傳的演講者資料集合傳遞給視圖（View）
-            IEnumerable<SpeakerIndexVM> speakers = GetSpeakers();
-            return View(speakers);
-        }
+            //criteria=篩選條件的意思
+            //檢查 criteria 是否為 null，如果是，則將其初始化為一個新的 SpeakerSearchCriteria 物件
+            if(criteria == null)
+            {
+                criteria = new SpeakerSearchCriteria();
+            }
+            PrepareSpeakerFieldDataSource(criteria.FieldId);
+          
 
-        //用來取得演講者的資料
-        private IEnumerable<SpeakerIndexVM> GetSpeakers()
-        {
-            //建立一個資料庫儲存庫（Repository）的實例
-            ISpeakerRepository repo = new SpeakerEFRepository();
+            ViewBag.Criteria = criteria;
 
-            SpeakerServices service = new SpeakerServices(repo);
-            return service.Search()
-                .Select(dto => new SpeakerIndexVM
-                {
-                    SpeakerId = dto.SpeakerId,
-                    SpeakerName = dto.SpeakerName,
-                    FieldName = dto.FieldName
-                });
-        }
+            var query = db.Speakers.Include(s => s.SpeakerField);
+           
+
+			#region Where
+            if(string.IsNullOrEmpty(criteria.SpeakerName) == false)
+            {
+                query = query.Where(s =>s.SpeakerName.Contains(criteria.SpeakerName));
+            }
+            if (criteria.FieldId !=null && criteria.FieldId.Value > 0)
+            {
+                query = query.Where(s=>s.fk_SpeakerFieldId == criteria.FieldId.Value);
+            }
+            #endregion
+
+            var speakers = query.ToList()
+                                .Select(s => s.ToIndexDto())
+                                .Select(dto => dto.ToIndexVM());
+            return View(speakers);      
+            
+		}
+
+	
 
         //Get：Create
         public ActionResult Create()
@@ -158,11 +195,13 @@ namespace flexbackend.site.Controllers
 
         private void PrepareSpeakerFieldDataSource(int? speakerFieldId)
         {
-            ViewBag.fk_SpeakerFieldId = new SelectList(db.SpeakerFields, "FieldId", "FieldName", speakerFieldId);
+            var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField());
+            ViewBag.fk_SpeakerFieldId = new SelectList(fields, "FieldId", "FieldName", speakerFieldId);
         }
         private void PrepareBranchDataSource(int? branchId)
         {
-            ViewBag.fk_SpeakerBranchId = new SelectList(db.Branches, "BranchId", "BranchName", branchId);
+            var branches = db.Branches.ToList().Prepend(new Branch());
+            ViewBag.fk_SpeakerBranchId = new SelectList(branches, "BranchId", "BranchName", branchId);
         }
     }
 }

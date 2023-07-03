@@ -110,5 +110,26 @@ namespace Flex_Activity.dll.Models.Exts
 				
 
 		}
+
+		public static SpeakerIndexVM ToIndexVM(this SpeakerIndexDto dto)
+		{
+			return new SpeakerIndexVM
+			{
+				SpeakerId = dto.SpeakerId,
+				SpeakerName = dto.SpeakerName,
+				fk_SpeakerFieldId = dto.fk_SpeakerFieldId
+			};
+		}
+
+		public static SpeakerIndexDto ToIndexDto (this Speaker entity)
+		{
+			return new SpeakerIndexDto
+			{
+				SpeakerId = entity.SpeakerId,
+				SpeakerName = entity.SpeakerName,
+				fk_SpeakerFieldId = entity.fk_SpeakerFieldId
+			};
+
+		}
 	}
 }

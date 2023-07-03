@@ -16,6 +16,6 @@ namespace Flex_Activity.dll.Models.ViewModels
         public string SpeakerName { get; set; }
 
         [Display(Name = "專長領域")]
-        public string FieldName { get; set; }
+        public int fk_SpeakerFieldId { get; set; }
 	}
 }
