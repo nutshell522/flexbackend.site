@@ -7,34 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Members.dll.Models.ViewsModels
+namespace Members.dll.Models.Dtos
 {
-	public class StaffsIndexVM
+	public class StaffsIndexDto
 	{
 		public int StaffId { get; set; }
 
-		[Required]
-		[StringLength(30)]
 		public string Name { get; set; }
 
 		public byte? Age { get; set; }
 
 		public bool? Gender { get; set; }
 
-		[Required]
-		[StringLength(10)]
-		public string Mobile { get; set; }
-
-		[Required]
-		[StringLength(300)]
 		public string Email { get; set; }
 
-		public DateTime? dueDate { get; set; }
+		public DateTime? DueDate { get; set; }
 
 		public string Department { get; set; }
 
-		public string JobTitle { get; set; }
+		public string TitleName { get; set; }
 
-		public string StaffPermission { get; set; }
+		public string LevelName { get; set; }
 	}
 }

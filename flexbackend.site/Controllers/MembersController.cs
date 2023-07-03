@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Web.Services.Description;
 
 namespace flexbackend.site.Controllers
 {
@@ -21,7 +22,35 @@ namespace flexbackend.site.Controllers
 
 		private AppDbContext db =new AppDbContext();//初始化EF的DbContext物件
 		
-		//會員名單總覽
+
+		//Update--會員資料管理
+		public ActionResult EditMember()
+		{
+			return View();
+		}
+
+		//[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult EditMembers(MembersEditVM vm)
+		//{
+
+		//	檢查Model Binding(輸入驗證與模型驗證)是否成功
+		//	if (ModelState.IsValid == false) return View(vm);
+
+		//	Result result = EditMember(vm);
+
+		//	if (result.IsSuccess)
+		//	{
+		//		return RedirectToAction("MembersList");//返回會員名單總覽
+		//	}
+		//	else
+		//	{
+		//		ModelState.AddModelError(string.Empty, result.ErrorMessage);
+		//		return View(vm);
+		//	}
+		//}
+
+		//Read--會員名單總覽
 		public ActionResult MembersList()
 		{
 			IMemberRepository repo = new MemberEFRepository();
@@ -75,5 +104,12 @@ namespace flexbackend.site.Controllers
 			MemberService service = new MemberService(repo);//讓service使用repo進行會員註冊
 			return service.Register(vm.ToDto());//vm.ToDto()方法將RegisterVM對象vm轉換為RegisterDto對象，並傳给service.Register()方法，進行商業邏輯判斷。
 		}
+
+		//public Result EditMember(MembersEditVM vm)
+		//{
+		//	IMemberRepository repo = new MemberEFRepository();
+		//	MemberService service = new MemberService(repo);
+		//	return service.EditMember(vm.ToMembersEditDto());
+		//}
 	}
 }

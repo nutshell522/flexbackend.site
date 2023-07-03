@@ -6,29 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Members.dll.Models.ViewsModels
+namespace Members.dll.Models.Dtos
 {
-	public class MembersIndexVM
+	public class MembersEditDto
 	{
 		public int MemberId { get; set; }
 
-		[Required]
-		[StringLength(30)]
 		public string Name { get; set; }
+
+		public byte? Age { get; set; }
 
 		public bool? Gender { get; set; }
 
-		[Required]
-		[StringLength(300)]
+		public string Mobile { get; set; }
+
 		public string Email { get; set; }
 
-		//public int fk_LevelId { get; set; }
-
-		public string LevelName { get; set; }
-
-		public int PointSubtotal { get; set; } //這個拿掉畫面上就沒有了
-
+		public DateTime? Birthday { get; set; }
+		
 		public DateTime? Registration { get; set; }
+
+		public int fk_LevelId { get; set; }
 
 		public int? fk_BlackListId { get; set; }
 	}

@@ -85,7 +85,7 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="members-item">
-                    <li><a href="javascript:;">會員名單</a></li>
+                    <li><a href="@Url.Action("MembersList", "Members", new { area = "" })">會員名單</a></li>
                     <li><a href="javascript:;">會員等級</a></li>
                     <li><a href="javascript:;">會員積分</a></li>
                 </ul>
@@ -133,6 +133,7 @@
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="employee-item">
+                    <li><a href="@Url.Action("StaffList", "Staffs", new { area = "" })">員工名單總覽</a></li>
                     <li><a href="javascript:;">員工管理</a></li>
                     <li><a href="javascript:;">員工權限管理</a></li>
                 </ul>
@@ -140,16 +141,37 @@
         </ul>
 
         <ul class="sidebar-bottom">
-            <li>
-                <a href="javascript:;">
-                    <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
-                </a>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
-                </a>
-            </li>
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="javascript:;">
+                            <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Logout", "Staffs", new { area = "" })">
+                            <div><i class="bi bi-door-open-fill"></i><span>登出</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Index" class="nav-link">@(User.Identity.Name)</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("CreateStaff", "Staffs", new { area = "" })">
+                            <div><i class="bi bi-gear-fill"></i><span>註冊員工帳號</span></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Login", "Staffs", new { area = "" })">
+                            <div><i class="bi bi-door-open-fill"></i><span>登入</span></div>
+                        </a>
+                    </li>
+                }
+            }
         </ul>
     </aside>
     <div class="container-right">

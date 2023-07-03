@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,26 +55,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Models\Dtos\MembersDto.cs" />
+    <Compile Include="Models\Dtos\MembersEditDto.cs" />
+    <Compile Include="Models\Dtos\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
-    <Compile Include="Models\Dtos\StaffsDto.cs" />
+    <Compile Include="Models\Dtos\StaffsCreateDto.cs" />
+    <Compile Include="Models\Dtos\StaffsIndexDto.cs" />
     <Compile Include="Models\Exts\MembersExts.cs" />
     <Compile Include="Models\Exts\RegisterExts.cs" />
+    <Compile Include="Models\Exts\StaffsExts.cs" />
     <Compile Include="Models\Interfaces\IMemberRepository.cs" />
+    <Compile Include="Models\Interfaces\IStaffRepository.cs" />
+    <Compile Include="Models\lnfra\DapperRepositories\StaffDapperRepository.cs" />
     <Compile Include="Models\lnfra\EFRepositories\MemberEFRepository.cs" />
     <Compile Include="Models\lnfra\HashUtility.cs" />
     <Compile Include="Models\lnfra\Result.cs" />
     <Compile Include="Models\Services\MemberService.cs" />
-    <Compile Include="Models\ViewsModels\MembersEditVM.cs" />
-    <Compile Include="Models\ViewsModels\MembersIndexVM.cs" />
+    <Compile Include="Models\Services\StaffService.cs" />
+    <Compile Include="Models\ViewsModels\Staff\ForgetPasswordVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\LoginVM.cs" />
+    <Compile Include="Models\ViewsModels\Member\MembersEditVM.cs" />
+    <Compile Include="Models\ViewsModels\Member\MembersIndexVM.cs" />
     <Compile Include="Models\ViewsModels\RegisterVM.cs" />
-    <Compile Include="Models\ViewsModels\StaffsIndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\StaffsCreateVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\StaffsIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\lnfra\DapperRepositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

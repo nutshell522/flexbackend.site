@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using static Dapper.SqlMapper;
 
 namespace Members.dll.Models.lnfra.EFRepositories
 {
@@ -20,17 +22,42 @@ namespace Members.dll.Models.lnfra.EFRepositories
 			_db = new AppDbContext();
 		}
 
-		public List<Member> GetMembers() //取得員工資料
+		//會員資料管理
+		public void EditMember(MembersEditDto dto)
 		{
-			return _db.Members.ToList();
-		} 
+			Member member = new Member
+			{
+				MemberId=dto.MemberId,
+				Name=dto.Name,
+				Age=dto.Age,
+				Gender=dto.Gender,
+				Mobile=dto.Mobile,
+				Email=dto.Email,
+				Birthday=dto.Birthday,
+				Registration=dto.Registration,
+				fk_LevelId=dto.fk_LevelId,
+				fk_BlackListId=dto.fk_BlackListId,
+			};
+			_db.Members.Add(member);
+			_db.SaveChanges();
+		}
 
-		public bool ExistAccount(string account) //判斷帳號是否存在
+		//取得員工資料
+		public List<MembersIndexDto> GetMemberList()
+		{
+			var members = _db.Members.Include(m => m.MemberPoints).Include(m => m.BlackList).Include(m => m.MembershipLevel);
+			var memberList = members.ToList().Select(m => m.ToIndexDto()).ToList();
+			return memberList;
+		}
+
+		//判斷帳號是否存在
+		public bool ExistAccount(string account)
 		{
 			return _db.Members.Any(m => m.Account == account);//Any指的是有沒有
 		}
 
-		public void Register(RegisterDto dto)//通過 RegisterDto傳入Dto
+		//通過 RegisterDto傳入Dto
+		public void Register(RegisterDto dto)
 		{
 			//將RegisterDto 轉為 Member，Member是數據訪問層中對應數據表的實體對象(EF裡面的Member)。
 			Member member = new Member
@@ -50,6 +77,7 @@ namespace Members.dll.Models.lnfra.EFRepositories
 			_db.Members.Add(member);
 			_db.SaveChanges();
 		}
+
 
 	}
 }

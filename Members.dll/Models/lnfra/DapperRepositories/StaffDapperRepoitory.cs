@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Members.dll
+namespace Members.dll.Models.lnfra.DapperRepositories
 {
-    public class Class1
-    {
-    }
+	internal class Class1
+	{
+	}
 }
