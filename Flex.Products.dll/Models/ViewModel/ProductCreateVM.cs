@@ -1,4 +1,4 @@
-﻿using Flex.Products.dll.Models.Infra.Exts;
+﻿using Flex.Products.dll.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,12 +44,14 @@ namespace Flex.Products.dll.Models.ViewModel
 		public string Tag { get; set; }
 
 		[Display(Name = "定價")]
-		[Range(0, 99999, ErrorMessage = "價格須介於{1}至{2}之間")]
+		[Range(0, 99999, ErrorMessage = "{0}須介於{1}至{2}之間")]
+		[DisplayFormat(DataFormatString = "{0:#,#}", ApplyFormatInEditMode = false)]
 		public int? UnitPrice { get; set; }
 
 		[Display(Name = "售價")]
 		[Required(ErrorMessage = "{0}必填")]
-		[Range(0, 99999, ErrorMessage = "價格須介於{1}至{2}之間")]
+		[Range(0, 99999, ErrorMessage = "{0}須介於{1}至{2}之間")]
+		[DisplayFormat(DataFormatString ="{0:#,#}",ApplyFormatInEditMode =false)]
 		public int SalesPrice { get; set; }
 
 		//[Display(Name = "上架時間")]
@@ -73,12 +75,12 @@ namespace Flex.Products.dll.Models.ViewModel
 		public List<string> ImgPaths { get; set; }
 
 		[Display(Name = "規格")]
-		public List<ProductGroupClass> ProductGroups { get; set; }
+		public List<ProductGroupsDto> ProductGroups { get; set; }
 
 		public ProductCreateVM()
 		{
 			ImgPaths = new List<string>();
-			ProductGroups = new List<ProductGroupClass>();
+			ProductGroups = new List<ProductGroupsDto>();
 		}
 	}
 }

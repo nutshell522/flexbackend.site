@@ -70,7 +70,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			return products;
 		}		
 
-		public void EditProductsStatus(List<ProductDto> dto)
+		public void SaveChangeStatus(List<ProductDto> dto)
 		{
 			foreach (var item in dto)
 			{
@@ -82,6 +82,33 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 				_db.SaveChanges();
 			}
+		}
+
+		public ProductDto GetById(string productId)
+		{
+			var product=_db.Products.Include(p=>p.ProductGroups).FirstOrDefault(p => p.ProductId == productId);
+			return product.ToEditDto();
+		}
+
+		public void EditProduct(ProductDto dto)
+		{
+			var product = dto.DtoToEditEntity();
+			product.EditTime= DateTime.Now;
+			//_db.Products.Update(product);
+			_db.Entry(product).State = EntityState.Modified;
+
+			foreach (var group in product.ProductGroups)
+			{
+				if (group.ProductGroupId > 0)
+				{
+					_db.Entry(group).State = EntityState.Modified;
+				}
+				else
+				{
+					_db.Entry(group).State = EntityState.Added;
+				}
+			}
+			_db.SaveChanges(); 
 		}
 	}
 }

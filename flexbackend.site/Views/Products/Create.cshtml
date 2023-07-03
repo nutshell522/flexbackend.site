@@ -19,20 +19,20 @@
         <div class="mb-3 col-12 d-flex">
             <div class="col-3">
                 @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control", placeholder = "商品編碼" } })
                 @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
             </div>
 
             <div class="col-3 ms-3">
                 @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", placeholder = "商品名稱" } })
                 @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="col-12">
             <div class="mb-3">
                 @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new { @class = "form-label" })
-                @Html.TextAreaFor(model => model.ProductDescription, new { @class = "form-control", rows = "5" })
+                @Html.TextAreaFor(model => model.ProductDescription, new { @class = "form-control", rows = "5", placeholder = "商品描述" })
                 @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,13 +50,13 @@
         <div class="mb-3 col-12 d-flex">
             <div class="col-3">
                 @Html.LabelFor(model => model.ProductMaterial, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.ProductMaterial, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProductMaterial, new { htmlAttributes = new { @class = "form-control", placeholder = "材質" } })
                 @Html.ValidationMessageFor(model => model.ProductMaterial, "", new { @class = "text-danger" })
             </div>
 
             <div class="col-3 ms-3">
                 @Html.LabelFor(model => model.ProductOrigin, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.ProductOrigin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProductOrigin, new { htmlAttributes = new { @class = "form-control", placeholder = "產地" } })
                 @Html.ValidationMessageFor(model => model.ProductOrigin, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -89,7 +89,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control", placeholder = "標籤" } })
             @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
         </div>
 
@@ -102,18 +102,19 @@
             <input type="file" name="CreateFile" id="createFile" class="form-control" multiple />
             @Html.ValidationMessageFor(model => model.ImgPaths, "", new { @class = "text-danger" })
         </div>
+
         <div class="p-3 ms-1 mb-3 border border-4 rounded-2 form-control w-75">
-            <div class="mb-3">
-                <span>規格</span>
-                <button class="btn btn-secondary ms-3 " type="button" id="addSpecBtn">新增規格</button>
+            <div class="mb-3 col col-12 d-flex">
+                <span class="me-auto ms-2">規格</span>
+                <button class="btn btn-secondary" type="button" id="addSpecBtn">新增規格</button>
             </div>
             <div id="specContainer">
                 @for (var i = 0; i < Model.ProductGroups.Count; i++)
                 {
                     <div class="product-group d-flex mb-3">
-                        @Html.DropDownListFor(model => model.ProductGroups[i].ColorId, colorCategory, new { @class = "form-select", id = Model.ProductGroups[i].ColorId + "-ColorId" })
-                        @Html.DropDownListFor(model => model.ProductGroups[i].SizeId, sizeCategory, new { @class = "form-select", id = Model.ProductGroups[i].SizeId + "-SizeId" })
-                        <input class='form-control' type='number' name='ProductGroups[@i].Qty' value='@Model.ProductGroups[i].Qty' required='required' />
+                        @Html.DropDownListFor(model => model.ProductGroups[i].ColorId, colorCategory, new { @class = "form-select", id = Model.ProductGroups[i].ColorId + "-ColorId" , min = "1" })
+                        @Html.DropDownListFor(model => model.ProductGroups[i].SizeId, sizeCategory, new { @class = "form-select", id = Model.ProductGroups[i].SizeId + "-SizeId" , min = "1" })
+                        <input class='form-control' type='number' name='ProductGroups[@i].Qty' value='@Model.ProductGroups[i].Qty' required='required' min="1"/>
                         <button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>
                     </div>
                 }
@@ -122,77 +123,88 @@
         </div>
     </div>
     <div class="mb-3">
-        <input type="submit" value="儲存" class="btn btn-primary" />
+        <input id="save" type="submit" value="儲存" class="btn btn-primary" />
         <input type="button" value="取消" class="btn btn-primary" onclick='location.href="@Url.Action("Index")"' />
     </div>
     <div class="d-none">
-        @*@Html.DropDownListFor(modelItem => modelItem.ProductGroups[999].ColorId, colorCategory, new { @class = "form-select", id = "colorSelectTemplate" })
-            @Html.DropDownListFor(modelItem => modelItem.ProductGroups[999].SizeId, sizeCategory, new { @class = "form-select", id = "sizeSelectTemplate" })*@
         @Html.DropDownList("ColorIdTemplate", colorCategory, new { @class = "form-select", id = "colorSelectTemplate" })
         @Html.DropDownList("SizeIdTemplate", sizeCategory, new { @class = "form-select", id = "sizeSelectTemplate" })
     </div>
-
 }
 
 @section Scripts {
-    <script>
+    @*<script>
         var productGroups = @Html.Raw(Json.Encode(Model.ProductGroups));
+        var index = 0;
         $(document).ready(function () {
             checkImg();
             // 呼叫一次產生初始的規格組
             if (productGroups == null || productGroups.length === 0) {
-                addSpecGroup(0);
+                addSpecGroup();
             }
-            
+
             var addSpecBtn = $("#addSpecBtn");
 
             //新增規格
             addSpecBtn.click(function () {
-                addSpecGroup();
+                addSpecGroup(index);
             });
+
         });
 
         function checkImg() {
+            var maxSize = 2 * 1024 * 1024;
             $('input[type="file"]').change(function (e) {
                 var files = e.target.files;
                 if (files && files.length > 0) {
                     $('#previewImages').empty(); // 清空預覽區域
-
                     for (var i = 0; i < files.length; i++) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            var image = $('<img>');
-                            image.attr('src', e.target.result);
-                            image.attr('alt', 'Preview');
-                            image.css('width', '150px');
-                            image.css('height', '150px');
-                            $('#previewImages').append(image);
-                        };
-                        reader.readAsDataURL(files[i]);
+                        if (files[i].size < maxSize) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                var image = $('<img>');
+                                image.attr('src', e.target.result);
+                                image.attr('alt', 'Preview');
+                                image.css('width', '150px');
+                                image.css('height', '150px');
+                                $('#previewImages').append(image);
+                            };
+                            reader.readAsDataURL(files[i]);
+                        }
+                        else {
+                            alert("照片檔案超過2MB");
+                        }
                     }
+                }
+                else {
+                    $('#previewImages').empty(); // 清空預覽區域
                 }
             });
         }
 
-        function addSpecGroup(qty) {
+        function addSpecGroup() {
 
             var specContainer = $("#specContainer");
 
-            var index = specContainer.children(".product-group").length;
+            //var index = specContainer.children(".product-group").length;
+
+            console.log(index);
 
             var newSpecGroup = $("<div class='product-group d-flex mb-3'></div>");
 
             var colorSelect = $("#colorSelectTemplate").clone();
             colorSelect.attr("name", "ProductGroups[" + index + "].ColorId");
+            colorSelect.attr("min", "1");
             colorSelect.removeAttr("id");
             newSpecGroup.append(colorSelect);
 
             var sizeSelect = $("#sizeSelectTemplate").clone();
             sizeSelect.attr("name", "ProductGroups[" + index + "].SizeId");
+            sizeSelect.attr("min", "1");
             sizeSelect.removeAttr("id");
             newSpecGroup.append(sizeSelect);
 
-            var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${index}].Qty' value='${qty}' required='required' />`);
+            var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${index}].Qty'  required='required' placeholder='數量' min='1'/>`);
             newSpecGroup.append(qtyInput);
 
             var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
@@ -203,11 +215,160 @@
                     alert("至少要有一組規格");
                 }
             });
-                newSpecGroup.append(deleteBtn);
 
-                specContainer.append(newSpecGroup);
+            newSpecGroup.append(deleteBtn);
+
+            specContainer.append(newSpecGroup);
+
+            return  index+1;
         }
 
+    </script>*@
+
+    <script>
+        var productGroupsValues = [];
+        var productGroups = @Html.Raw(Json.Encode(Model.ProductGroups));
+
+        $(document).ready(function () {
+
+            checkImg();
+
+            //新增第一組規格
+            if (productGroups == null || productGroups.length === 0) {
+                addSpecGroup(0);
+            }
+
+            //新增規格按鈕綁定事件
+            var addSpecBtn = $("#addSpecBtn");
+            addSpecBtn.click(function () {
+
+                //先確認有幾組規格
+                var numExistingGroups = $(".product-group").length;
+                addSpecGroup(numExistingGroups);
+            });
+        });
+
+        function checkImg() {
+            var maxSize = 2 * 1024 * 1024;
+            $('input[type="file"]').change(function (e) {
+                var files = e.target.files;
+                if (files && files.length > 0) {
+                    $('#previewImages').empty(); // 清空預覽區域
+                    for (var i = 0; i < files.length; i++) {
+                        if (files[i].size < maxSize) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                var image = $('<img>');
+                                image.attr('src', e.target.result);
+                                image.attr('alt', 'Preview');
+                                image.css('width', '150px');
+                                image.css('height', '150px');
+                                $('#previewImages').append(image);
+                            };
+                            reader.readAsDataURL(files[i]);
+                        }
+                        else {
+                            alert("照片檔案超過2MB");
+                        }
+                    }
+                }
+                else {
+                    $('#previewImages').empty(); // 清空預覽區域
+                }
+            });
+        }
+
+        function addSpecGroup(startIndex) {
+            var specContainer = $("#specContainer");
+            
+            console.log(startIndex);
+            
+
+            // 保存現有規格的值
+            $(".product-group").each(function (index) {
+                var colorId = $(this).find(".form-select[name^='ProductGroups']").eq(0).val();
+                var sizeId = $(this).find(".form-select[name^='ProductGroups']").eq(1).val();
+                var qty = $(this).find("input[name^='ProductGroups']").val();
+                productGroupsValues[index] = { ColorId: colorId, SizeId: sizeId, Qty: qty };
+            });
+
+            // 移除所有規格
+            $(".product-group").remove();
+
+            // 重新創建，分兩層處理
+            for (var i = 0; i <= startIndex; i++) {
+                var newSpecGroup = $("<div class='product-group d-flex mb-3'></div>");
+                if (i < startIndex) {
+                    // 新增規格，並將以選擇的值加入
+                    var colorSelect = $("#colorSelectTemplate").clone();
+                    colorSelect.attr("name", "ProductGroups[" + i + "].ColorId");
+                    colorSelect.attr("min", "1");
+                    colorSelect.removeAttr("id");
+                    newSpecGroup.append(colorSelect);
+
+                    var sizeSelect = $("#sizeSelectTemplate").clone();
+                    sizeSelect.attr("name", "ProductGroups[" + i + "].SizeId");
+                    sizeSelect.attr("min", "1");
+                    sizeSelect.removeAttr("id");
+                    newSpecGroup.append(sizeSelect);
+
+                    var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${i}].Qty'  required='required' placeholder='數量' min='1'/>`);
+                    newSpecGroup.append(qtyInput);
+
+                    var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
+
+                    deleteBtn.click(function () {
+                        if (specContainer.children(".product-group").length > 1) {
+                            $(this).parent().remove();
+                        } else {
+                            alert("至少要有一組規格");
+                        }
+                    });
+                    newSpecGroup.append(deleteBtn);
+
+                    // 把值加入
+                    if (i < productGroupsValues.length) {
+                        newSpecGroup.find(".form-select[name^='ProductGroups']").eq(0).val(productGroupsValues[i].ColorId);
+                        newSpecGroup.find(".form-select[name^='ProductGroups']").eq(1).val(productGroupsValues[i].SizeId);
+                        newSpecGroup.find("input[name^='ProductGroups']").val(productGroupsValues[i].Qty);
+                    }
+
+                    specContainer.append(newSpecGroup);
+                }
+                else {
+                    // 新增規格，都是預設值
+                    var colorSelect = $("#colorSelectTemplate").clone();
+                    colorSelect.attr("name", "ProductGroups[" + i + "].ColorId");
+                    colorSelect.attr("min", "1");
+                    colorSelect.removeAttr("id");
+                    newSpecGroup.append(colorSelect);
+
+                    var sizeSelect = $("#sizeSelectTemplate").clone();
+                    sizeSelect.attr("name", "ProductGroups[" + i + "].SizeId");
+                    sizeSelect.attr("min", "1");
+                    sizeSelect.removeAttr("id");
+                    newSpecGroup.append(sizeSelect);
+
+                    var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${i}].Qty'  required='required' placeholder='數量' min='1'/>`);
+                    newSpecGroup.append(qtyInput);
+
+                    var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
+
+                    deleteBtn.click(function () {
+                        if (specContainer.children(".product-group").length > 1) {
+                            $(this).parent().remove();
+                        } else {
+                            alert("至少要有一組規格");
+                        }
+                    });
+                    newSpecGroup.append(deleteBtn);
+                    specContainer.append(newSpecGroup);
+                }
+
+                
+            }
+            
+        }
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }

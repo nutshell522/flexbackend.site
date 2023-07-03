@@ -43,6 +43,6 @@ namespace Flex.Products.dll.Models.Dtos
 
 		public List<string> ImgPaths { get; set; }
 
-		public List<ProductGroupClass> ProductGroups { get; set; }
+		public List<ProductGroupsDto> ProductGroups { get; set; }
 	}
 }

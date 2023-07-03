@@ -1,4 +1,5 @@
-﻿using Flex.Products.dll.Models.Infra.Exts;
+﻿using Flex.Products.dll.Models.Dtos;
+using Flex.Products.dll.Models.Infra.Exts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,12 +41,14 @@ namespace Flex.Products.dll.Models.ViewModel
 		public string Tag { get; set; }
 
 		[Display(Name = "定價")]
-		[Range(0, 99999, ErrorMessage = "價格須介於{1}至{2}之間")]
+		[Range(0, 99999, ErrorMessage = "{0}須介於{1}至{2}之間")]
+		[DisplayFormat(DataFormatString = "{0:#,#}", ApplyFormatInEditMode = false)]
 		public int? UnitPrice { get; set; }
 
 		[Display(Name = "售價")]
 		[Required(ErrorMessage = "{0}必填")]
-		[Range(0, 99999, ErrorMessage = "價格須介於{1}至{2}之間")]
+		[Range(0, 99999, ErrorMessage = "{0}須介於{1}至{2}之間")]
+		[DisplayFormat(DataFormatString ="{0:#,#}",ApplyFormatInEditMode = false)]
 		public int SalesPrice { get; set; }
 
 		[Display(Name = "下架")]
@@ -56,20 +59,18 @@ namespace Flex.Products.dll.Models.ViewModel
 		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_ProductSubCategoryId { get; set; }
 
-		public List<ProductGroupClass> ProductGroupList { get; set; } = new List<ProductGroupClass>();
+		[Display(Name = "創建時間")]
+		public string CreateTime { get; set; }
+
+		[Display(Name = "上次編輯時間")]
+		public string EditTime { get; set; }
 
 		[Display(Name = "庫存")]
-		public string ProductGroup
-		{
-			get
-			{
-				var productGroupList = new List<string>();
-				foreach (var group in ProductGroupList)
-				{
-					productGroupList.Add($"{group.ColorName} / {group.SizeName} / {group.Qty}");
-				}
-				return string.Join(Environment.NewLine, productGroupList);
-			}
+		public List<ProductGroupsDto> ProductGroups { get; set; }
+        public ProductEditVM()
+        {
+			ProductGroups = new List<ProductGroupsDto>();
 		}
-	}
+
+    }
 }

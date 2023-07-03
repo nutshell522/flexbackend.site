@@ -58,10 +58,10 @@ namespace flexbackend.site.Controllers
 				var dtos = new List<ProductDto>();
 				foreach (var product in vm)
 				{
-					dtos.Add(product.ToDto());
+					dtos.Add(product.ToSaveChangeStatusDto());
 				}
 				var service = new ProductService(_repo);
-				var products = service.EditProductsStatus(dtos);
+				var products = service.SaveChangeStatus(dtos);
 				if (products.IsSuccess)
 				{
 					var updatedProducts = service.IndexProduct(new IndexSearchCriteria()).Select(p => p.ToIndexVM());
@@ -110,6 +110,23 @@ namespace flexbackend.site.Controllers
 			PrepareSizeDataSource(null);
 			if (ModelState.IsValid == false) return View(vm);
 
+			#region 規格驗證
+
+			//var isDuplicateSpecs = IsDuplicateSpecs(vm.ProductGroups);
+   //         if (isDuplicateSpecs)
+   //         {
+   //             ModelState.AddModelError("ProductGroups", "規格不得重複");
+   //             return View(vm);
+   //         }
+
+			//var isGroupsValid = IsGroupsValid(vm.ProductGroups);
+			//if (isGroupsValid)
+			//{
+			//	ModelState.AddModelError("ProductGroups", "規格不得留空");
+			//	return View(vm);
+			//}
+			#endregion
+
 			#region 照片上傳
 			var files = Request.Files;
             if (files == null || files.Count == 0)
@@ -130,32 +147,12 @@ namespace flexbackend.site.Controllers
                 return View(vm);
             }
 
-            // 將雜湊後的檔名newFileName加到VM的ImgPaths
-            foreach (var fileName in saveFileName)
+			// 將雜湊後的檔名newFileName加到VM的ImgPaths
+			foreach (var fileName in saveFileName)
             {
                 vm.ImgPaths.Add(fileName);
             }
-            #endregion
-
-            bool isGroupsValid = true;
-            foreach (var group in vm.ProductGroups)
-            {
-
-				PrepareColorDataSource(group.ColorId);
-                PrepareSizeDataSource(group.SizeId);
-
-                if (group.ColorId <= 0 || group.SizeId <= 0 || group.Qty < 1)
-                {
-                    isGroupsValid = false;
-				};
-            }
-            if (!isGroupsValid)
-            {
-                ModelState.AddModelError("ProductGroups", "規格不得留空");
-                return View(vm);
-            }
-
-
+			#endregion
 
             var service = new ProductService(_repo);
             var result = service.CreateProduct(vm.ToCreateDto());
@@ -165,23 +162,31 @@ namespace flexbackend.site.Controllers
 			}
             else
             {
-                ModelState.AddModelError(string.Empty, result.ErroeMessage);
+                if (result.ErroeMessage.Contains("規格"))
+                {
+					ModelState.AddModelError("ProductGroups", result.ErroeMessage);
+				}
+                else
+                {
+					ModelState.AddModelError("ProductId", result.ErroeMessage);
+				}
                 return View(vm);
 			}
 		}
 
 		public ActionResult Edit(string ProductId)
         {
-            if (ProductId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(ProductId);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.fk_ProductSubCategoryId = new SelectList(db.ProductSubCategories, "ProductSubCategoryId", "ProductSubCategoryName", product.fk_ProductSubCategoryId);
+            if (ProductId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var service = new ProductService(_repo);
+            var product = service.GetById(ProductId).ToEditVM();
+
+			if (product == null) return HttpNotFound();
+
+			PrepareProductSubCategoryDataSource(null);
+            PrepareColorDataSource(null);
+            PrepareSizeDataSource(null);
+
             return View(product);
         }
 
@@ -190,16 +195,24 @@ namespace flexbackend.site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,ProductDescription,ProductMaterial,ProductOrigin,UnitPrice,SalesPrice,LogOut,Tag,fk_ProductSubCategoryId,CreateTime,EditTime")] Product product)
+        public ActionResult Edit(ProductEditVM vm)
         {
-            if (ModelState.IsValid)
+
+			PrepareProductSubCategoryDataSource(vm.fk_ProductSubCategoryId);
+			PrepareColorDataSource(null);
+			PrepareSizeDataSource(null);
+			if (!ModelState.IsValid) return View(vm);
+
+			var service= new ProductService(_repo);
+            var result = service.EditProduct(vm.VMToEditDto());
+            if (result.IsSuccess)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.fk_ProductSubCategoryId = new SelectList(db.ProductSubCategories, "ProductSubCategoryId", "ProductSubCategoryName", product.fk_ProductSubCategoryId);
-            return View(product);
+				return RedirectToAction("Index");
+			}
+            else
+            {
+				return View(vm);
+			}
         }
 
         // GET: Products/Delete/5
@@ -261,7 +274,6 @@ namespace flexbackend.site.Controllers
                 .Prepend(new SizeDto { SizeId = 0, SizeName = "尺寸" }), "SizeId", "SizeName", SizeId);
         }
 
-
 		/// <summary>
 		/// 上傳多張照片
 		/// </summary>
@@ -281,7 +293,7 @@ namespace flexbackend.site.Controllers
             {
                 var file = files[i];
 
-                if (file == null || file.ContentLength == 0) continue;
+                if (file == null || file.ContentLength == 0 || file.ContentLength>2 * 1024 * 1024) continue;
 
                 //取得副檔名
                 string ext = System.IO.Path.GetExtension(file.FileName);
@@ -301,6 +313,35 @@ namespace flexbackend.site.Controllers
             return result;
         }
 
+  //      private bool IsDuplicateSpecs(List<ProductGroupsDto> productGroups)
+  //      {
+  //          var groupSpecs = new HashSet<string>();
+  //          foreach (var group in productGroups)
+  //          {
+  //              var colorId=group.ColorId.ToString();
+  //              var sizeId=group.SizeId.ToString();
+  //              var combine = colorId + "-" + sizeId;
 
-    }
+  //              if (groupSpecs.Contains(combine))
+  //              {
+  //                  return true;
+  //              }
+  //              groupSpecs.Add(combine);
+		//	}
+  //          return false;
+  //      }
+
+  //      private bool IsGroupsValid(List<ProductGroupsDto> productGroups)
+  //      {
+  //          bool result=false;
+		//	foreach (var group in productGroups)
+		//	{
+		//		if (group.ColorId <= 0 || group.SizeId <= 0 || group.Qty < 1)
+		//		{
+		//			result = true;
+		//		};
+		//	}
+  //          return result;
+		//}
+	}
 }

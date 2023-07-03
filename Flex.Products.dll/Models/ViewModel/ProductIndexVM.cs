@@ -1,4 +1,5 @@
 ﻿using EFModels.EFModels;
+using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.Exts;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Flex.Products.dll.Models.ViewModel
 		[Display(Name = "商品名稱")]
 		public string ProductName { get; set; }
 
-		public List<ProductGroupClass> ProductGroupList { get; set; } = new List<ProductGroupClass>();
+		public List<ProductGroupsDto> ProductGroupList { get; set; } = new List<ProductGroupsDto>();
 
 		[Display(Name = "庫存")]
 		public string ProductGroup

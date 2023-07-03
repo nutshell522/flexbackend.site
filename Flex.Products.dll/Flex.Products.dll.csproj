@@ -63,9 +63,9 @@
     <Compile Include="Infra\EFRepository\ProductEFRepository.cs" />
     <Compile Include="Infra\EFRepository\ProductSubCategoryRepository.cs" />
     <Compile Include="Exts\ProductExts.cs" />
-    <Compile Include="Exts\ProductGroupClass.cs" />
     <Compile Include="Exts\Result.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
+    <Compile Include="Models\Dtos\ProductGroupsDto.cs" />
     <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
     <Compile Include="Models\Dtos\SizeDto.cs" />
     <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />

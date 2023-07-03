@@ -36,11 +36,6 @@
                 <div class="col col-3 ms-1">
                     @Html.DropDownListFor(model => criteria.Status, ViewBag.StatusOption as SelectList, new { @class = "form-select" })
                 </div>
-                @*<div class="col col-3 right">
-                <button class="btn btn-primary">搜尋</button>
-                @Html.ActionLink("新增商品", "Create", null, new { @class = "btn btn-primary" })
-                <button class="btn btn-primary" onclick="editStatus()">儲存</button>
-            </div>*@
             </div>
             <div class="col col-4 right">
                 <button id="searchBtn" class="btn btn-primary">搜尋</button>
@@ -209,7 +204,7 @@
                             ${product.SubCategoryPath}
                         </td>
                         <td class="text-center align-middle">
-                            ${product.SalesPrice}
+                            ${product.SalesPrice.toLocaleString()}
                         </td>
                         <td class="text-center align-middle">
                             ${product.StatusText}

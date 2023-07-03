@@ -42,12 +42,12 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				SalesPrice = entity.SalesPrice,
 				//StartTime = entity.StartTime,
 				//EndTime = entity.EndTime,
-				Status=entity.Status,
+				Status = entity.Status,
 				LogOut = entity.LogOut,
 				Tag = entity.Tag,
 				//fk_ProductSubCategoryId = entity.fk_ProductSubCategoryId,
 				ProductSubCategory = entity.ProductSubCategory,
-				ProductGroups = entity.ProductGroups.Select(x => new ProductGroupClass
+				ProductGroups = entity.ProductGroups.Select(x => new ProductGroupsDto
 				{
 					ColorId = x.ColorCategory.ColorId,
 					ColorName = x.ColorCategory.ColorName,
@@ -58,8 +58,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 			};
 		}
 
-
-		public static ProductDto ToDto(this ProductIdAndStatusVM vm)
+		public static ProductDto ToSaveChangeStatusDto(this ProductIdAndStatusVM vm)
 		{
 			return new ProductDto
 			{
@@ -67,7 +66,6 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				Status = vm.Status,
 			};
 		}
-
 
 		public static ProductDto ToCreateDto(this ProductCreateVM vm)
 		{
@@ -82,13 +80,13 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				SalesPrice = vm.SalesPrice,
 				//StartTime = vm.StartTime,
 				//EndTime = vm.EndTime,
-				Status=vm.Status,
+				Status = vm.Status,
 				Tag = vm.Tag,
 				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
 				ImgPaths = vm.ImgPaths,
 				ProductGroups = vm.ProductGroups,
-				CreateTime=DateTime.Now,
-				EditTime=DateTime.Now,
+				CreateTime = DateTime.Now,
+				EditTime = DateTime.Now,
 			};
 		}
 
@@ -105,8 +103,8 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				SalesPrice = dto.SalesPrice,
 				//StartTime = dto.StartTime,
 				//EndTime = dto.EndTime,
-				Status= dto.Status,
-				LogOut = dto.LogOut,
+				Status = dto.Status,
+				LogOut = false,
 				Tag = dto.Tag,
 				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
 				CreateTime = dto.CreateTime,
@@ -122,6 +120,98 @@ namespace Flex.Products.dll.Models.Infra.Exts
 					fk_ColorId = p.ColorId,
 					fk_SizeId = p.SizeId,
 					Qty = p.Qty
+				}).ToList()
+			};
+		}
+
+		public static ProductDto ToEditDto(this Product entity)
+		{
+			return new ProductDto
+			{
+				ProductId = entity.ProductId,
+				ProductName = entity.ProductName,
+				ProductDescription = entity.ProductDescription,
+				ProductMaterial = entity.ProductMaterial,
+				ProductOrigin = entity.ProductOrigin,
+				UnitPrice = entity.UnitPrice,
+				SalesPrice = entity.SalesPrice,
+				Status = entity.Status,
+				Tag = entity.Tag,
+				fk_ProductSubCategoryId = entity.fk_ProductSubCategoryId,
+				CreateTime = entity.CreateTime,
+				EditTime = entity.EditTime,
+				ProductGroups = entity.ProductGroups.Select(p => new ProductGroupsDto
+				{
+					ProductGroupId=p.ProductGroupId,
+					ColorId = p.ColorCategory.ColorId,
+					SizeId = p.SizeCategory.SizeId,
+					Qty = p.Qty
+				}).ToList()
+			};
+		}
+
+		public static ProductEditVM ToEditVM(this ProductDto dto)
+		{
+			return new ProductEditVM
+			{
+				ProductId = dto.ProductId,
+				ProductName = dto.ProductName,
+				ProductDescription = dto.ProductDescription,
+				ProductMaterial = dto.ProductMaterial,
+				ProductOrigin = dto.ProductOrigin,
+				UnitPrice = dto.UnitPrice,
+				SalesPrice = dto.SalesPrice,
+				Status = dto.Status,
+				Tag = dto.Tag,
+				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
+				CreateTime = dto.CreateTime.ToString("G"),
+				EditTime = dto.EditTime.ToString("G"),
+				ProductGroups = dto.ProductGroups
+			};
+		}
+
+		public static ProductDto VMToEditDto(this ProductEditVM vm)
+		{
+			return new ProductDto
+			{
+				ProductId = vm.ProductId,
+				ProductName = vm.ProductName,
+				ProductDescription = vm.ProductDescription,
+				ProductMaterial = vm.ProductMaterial,
+				ProductOrigin = vm.ProductOrigin,
+				UnitPrice = vm.UnitPrice,
+				SalesPrice = vm.SalesPrice,
+				Status = vm.Status,
+				Tag = vm.Tag,
+				CreateTime = DateTime.Parse(vm.CreateTime),
+				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
+				ProductGroups = vm.ProductGroups
+			};
+		}
+
+		public static Product DtoToEditEntity(this ProductDto dto)
+		{
+			return new Product
+			{
+				ProductId = dto.ProductId,
+				ProductName = dto.ProductName,
+				ProductDescription = dto.ProductDescription,
+				ProductMaterial = dto.ProductMaterial,
+				ProductOrigin = dto.ProductOrigin,
+				UnitPrice = dto.UnitPrice,
+				SalesPrice = dto.SalesPrice,
+				Status = dto.Status,
+				Tag = dto.Tag,
+				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
+				CreateTime=dto.CreateTime,
+				EditTime=dto.EditTime,
+				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
+				{
+					ProductGroupId = p.ProductGroupId,
+					fk_ProductId = dto.ProductId,
+					fk_ColorId = p.ColorId,
+					fk_SizeId = p.SizeId,
+					Qty = p.Qty,
 				}).ToList()
 			};
 		}
