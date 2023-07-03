@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace EFModels.EFModels
 {
-	public partial class AppDbContext : DbContext
-	{
-		public AppDbContext()
-			: base("name=AppDbContext")
-		{
-		}
+    public partial class AppDbContext : DbContext
+    {
+        public AppDbContext()
+            : base("name=AppDbContext")
+        {
+        }
 
 		public virtual DbSet<Activity> Activities { get; set; }
 		public virtual DbSet<ActivityCategory> ActivityCategories { get; set; }
@@ -65,101 +65,101 @@ namespace EFModels.EFModels
 		public virtual DbSet<Supplier> Suppliers { get; set; }
 		public virtual DbSet<Type> Types { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-			modelBuilder.Entity<ActivityCategory>()
-				.HasMany(e => e.Activities)
-				.WithRequired(e => e.ActivityCategory)
-				.HasForeignKey(e => e.fk_ActivityCategoryId)
-				.WillCascadeOnDelete(false);
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ActivityCategory>()
+                .HasMany(e => e.Activities)
+                .WithRequired(e => e.ActivityCategory)
+                .HasForeignKey(e => e.fk_ActivityCategoryId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<ActivityStatus>()
-				.HasMany(e => e.Activities)
-				.WithRequired(e => e.ActivityStatus)
-				.HasForeignKey(e => e.fk_ActivityStatusId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<ActivityStatus>()
+                .HasMany(e => e.Activities)
+                .WithRequired(e => e.ActivityStatus)
+                .HasForeignKey(e => e.fk_ActivityStatusId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<BlackList>()
-				.HasMany(e => e.Members)
-				.WithOptional(e => e.BlackList)
-				.HasForeignKey(e => e.fk_BlackListId);
+            modelBuilder.Entity<BlackList>()
+                .HasMany(e => e.Members)
+                .WithOptional(e => e.BlackList)
+                .HasForeignKey(e => e.fk_BlackListId);
 
-			modelBuilder.Entity<Branch>()
-				.HasMany(e => e.OneToOneReservations)
-				.WithRequired(e => e.Branch)
-				.HasForeignKey(e => e.fk_BranchId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Branch>()
+                .HasMany(e => e.OneToOneReservations)
+                .WithRequired(e => e.Branch)
+                .HasForeignKey(e => e.fk_BranchId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Branch>()
-				.HasMany(e => e.Speakers)
-				.WithOptional(e => e.Branch)
-				.HasForeignKey(e => e.fk_SpeakerBranchId);
+            modelBuilder.Entity<Branch>()
+                .HasMany(e => e.Speakers)
+                .WithOptional(e => e.Branch)
+                .HasForeignKey(e => e.fk_SpeakerBranchId);
 
-			modelBuilder.Entity<clos>()
-				.HasMany(e => e.orders)
-				.WithOptional(e => e.clos)
-				.HasForeignKey(e => e.close_Id);
+            modelBuilder.Entity<clos>()
+                .HasMany(e => e.orders)
+                .WithOptional(e => e.clos)
+                .HasForeignKey(e => e.close_Id);
 
-			modelBuilder.Entity<ColorCategory>()
-				.HasMany(e => e.ProductGroups)
-				.WithRequired(e => e.ColorCategory)
-				.HasForeignKey(e => e.fk_ColorId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<ColorCategory>()
+                .HasMany(e => e.ProductGroups)
+                .WithRequired(e => e.ColorCategory)
+                .HasForeignKey(e => e.fk_ColorId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<CouponCategory>()
-				.HasMany(e => e.Coupons)
-				.WithRequired(e => e.CouponCategory)
-				.HasForeignKey(e => e.fk_CouponCategoryId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<CouponCategory>()
+                .HasMany(e => e.Coupons)
+                .WithRequired(e => e.CouponCategory)
+                .HasForeignKey(e => e.fk_CouponCategoryId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Coupon>()
-				.HasMany(e => e.CouponSendings)
-				.WithRequired(e => e.Coupon)
-				.HasForeignKey(e => e.fk_CouponId);
+            modelBuilder.Entity<Coupon>()
+                .HasMany(e => e.CouponSendings)
+                .WithRequired(e => e.Coupon)
+                .HasForeignKey(e => e.fk_CouponId);
 
-			modelBuilder.Entity<Customized_materials>()
+            modelBuilder.Entity<Customized_materials>()
+                .HasMany(e => e.CustomizedOrders)
+                .WithOptional(e => e.Customized_materials)
+                .HasForeignKey(e => e.Customized_Eyelet);
+
+            modelBuilder.Entity<Customized_materials>()
+                .HasMany(e => e.CustomizedOrders1)
+                .WithOptional(e => e.Customized_materials1)
+                .HasForeignKey(e => e.Customized_EdgeProtection);
+
+            modelBuilder.Entity<Customized_materials>()
+                .HasMany(e => e.CustomizedOrders2)
+                .WithOptional(e => e.Customized_materials2)
+                .HasForeignKey(e => e.Customized_Rear);
+
+            modelBuilder.Entity<Customized_materials>()
+                .HasMany(e => e.CustomizedOrders3)
+                .WithOptional(e => e.Customized_materials3)
+                .HasForeignKey(e => e.Customized_Tongue);
+
+            modelBuilder.Entity<Customized_materials>()
+                .HasMany(e => e.CustomizedOrders4)
+                .WithOptional(e => e.Customized_materials4)
+                .HasForeignKey(e => e.Customized_Toe);
+
+			modelBuilder.Entity<Customized_Shoes>()
 				.HasMany(e => e.CustomizedOrders)
-				.WithOptional(e => e.Customized_materials)
-				.HasForeignKey(e => e.Customized_Eyelet);
+				.WithOptional(e => e.Customized_Shoes)
+				.HasForeignKey(e => e.Customized_Shoes_Id);
 
-			modelBuilder.Entity<Customized_materials>()
-				.HasMany(e => e.CustomizedOrders1)
-				.WithOptional(e => e.Customized_materials1)
-				.HasForeignKey(e => e.Customized_EdgeProtection);
-
-			modelBuilder.Entity<Customized_materials>()
-				.HasMany(e => e.CustomizedOrders2)
-				.WithOptional(e => e.Customized_materials2)
-				.HasForeignKey(e => e.Customized_Rear);
-
-			modelBuilder.Entity<Customized_materials>()
-				.HasMany(e => e.CustomizedOrders3)
-				.WithOptional(e => e.Customized_materials3)
-				.HasForeignKey(e => e.Customized_Tongue);
-
-			modelBuilder.Entity<Customized_materials>()
-				.HasMany(e => e.CustomizedOrders4)
-				.WithOptional(e => e.Customized_materials4)
-				.HasForeignKey(e => e.Customized_Toe);
+			modelBuilder.Entity<Customized_Shoes>()
+				.HasMany(e => e.ShoesPictures)
+				.WithOptional(e => e.Customized_Shoes)
+				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
 
 			modelBuilder.Entity<CustomizedOrder>()
 				.Property(e => e.Customized_number)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<CustomizedOrder>()
-				.HasMany(e => e.ShoesPictures)
-				.WithOptional(e => e.CustomizedOrder)
-				.HasForeignKey(e => e.fk_ShoesProductOrder_Id);
-
-			modelBuilder.Entity<CustomizedShoesPo>()
-				.HasMany(e => e.CustomizedOrders)
-				.WithOptional(e => e.CustomizedShoesPo)
-				.HasForeignKey(e => e.Customized_Shoes_Id);
-
-			modelBuilder.Entity<CustomizedShoesPo>()
-				.HasMany(e => e.ShoesPictures)
-				.WithOptional(e => e.CustomizedShoesPo)
-				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
+            modelBuilder.Entity<CustomizedOrder>()
+                .HasMany(e => e.ShoesPictures)
+                .WithOptional(e => e.CustomizedOrder)
+                .HasForeignKey(e => e.fk_ShoesProductOrder_Id);
 
 			modelBuilder.Entity<Department>()
 				.HasMany(e => e.Staffs)
@@ -167,327 +167,327 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_DepartmentId)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<JobTitle>()
-				.HasMany(e => e.Staffs)
-				.WithRequired(e => e.JobTitle)
-				.HasForeignKey(e => e.fk_TitleId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<JobTitle>()
+                .HasMany(e => e.Staffs)
+                .WithRequired(e => e.JobTitle)
+                .HasForeignKey(e => e.fk_TitleId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<logistics_companies>()
-				.Property(e => e.tel)
-				.IsUnicode(false);
+            modelBuilder.Entity<logistics_companies>()
+                .Property(e => e.tel)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<logistics_companies>()
-				.HasMany(e => e.orders)
-				.WithRequired(e => e.logistics_companies)
-				.HasForeignKey(e => e.logistics_company_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<logistics_companies>()
+                .HasMany(e => e.orders)
+                .WithRequired(e => e.logistics_companies)
+                .HasForeignKey(e => e.logistics_company_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
-				.Property(e => e.Mobile)
-				.IsUnicode(false);
+            modelBuilder.Entity<Member>()
+                .Property(e => e.Mobile)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Member>()
-				.Property(e => e.Account)
-				.IsUnicode(false);
+            modelBuilder.Entity<Member>()
+                .Property(e => e.Account)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Member>()
-				.Property(e => e.EncryptedPassword)
-				.IsUnicode(false);
+            modelBuilder.Entity<Member>()
+                .Property(e => e.EncryptedPassword)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Member>()
-				.Property(e => e.ConfirmCode)
-				.IsUnicode(false);
+            modelBuilder.Entity<Member>()
+                .Property(e => e.ConfirmCode)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.AlternateAddresses)
-				.WithOptional(e => e.Member)
-				.HasForeignKey(e => e.fk_MemberId);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.AlternateAddresses)
+                .WithOptional(e => e.Member)
+                .HasForeignKey(e => e.fk_MemberId);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.CouponSendings)
-				.WithOptional(e => e.Member)
-				.HasForeignKey(e => e.fk_MemberId);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.CouponSendings)
+                .WithOptional(e => e.Member)
+                .HasForeignKey(e => e.fk_MemberId);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.CustomizedOrders)
-				.WithOptional(e => e.Member)
-				.HasForeignKey(e => e.Fk_ForMemberCustomized_Id);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.CustomizedOrders)
+                .WithOptional(e => e.Member)
+                .HasForeignKey(e => e.Fk_ForMemberCustomized_Id);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.MemberPoints)
-				.WithRequired(e => e.Member)
-				.HasForeignKey(e => e.fk_MemberId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.MemberPoints)
+                .WithRequired(e => e.Member)
+                .HasForeignKey(e => e.fk_MemberId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.orders)
-				.WithRequired(e => e.Member)
-				.HasForeignKey(e => e.fk_member_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.orders)
+                .WithRequired(e => e.Member)
+                .HasForeignKey(e => e.fk_member_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.PointHistories)
-				.WithOptional(e => e.Member)
-				.HasForeignKey(e => e.fk_MemberId);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.PointHistories)
+                .WithOptional(e => e.Member)
+                .HasForeignKey(e => e.fk_MemberId);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.OneToOneReservations)
-				.WithRequired(e => e.Member)
-				.HasForeignKey(e => e.fk_BookerId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.OneToOneReservations)
+                .WithRequired(e => e.Member)
+                .HasForeignKey(e => e.fk_BookerId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.orders1)
-				.WithRequired(e => e.Member1)
-				.HasForeignKey(e => e.fk_member_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.orders1)
+                .WithRequired(e => e.Member1)
+                .HasForeignKey(e => e.fk_member_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.PointTradeIns)
-				.WithRequired(e => e.Member)
-				.HasForeignKey(e => e.fk_MemberId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.PointTradeIns)
+                .WithRequired(e => e.Member)
+                .HasForeignKey(e => e.fk_MemberId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.ShoppingCarts)
-				.WithRequired(e => e.Member)
-				.HasForeignKey(e => e.fk_MemberID);
+            modelBuilder.Entity<Member>()
+                .HasMany(e => e.ShoppingCarts)
+                .WithRequired(e => e.Member)
+                .HasForeignKey(e => e.fk_MemberID);
 
-			modelBuilder.Entity<MembershipLevel>()
-				.Property(e => e.MinSpending)
-				.IsUnicode(false);
+            modelBuilder.Entity<MembershipLevel>()
+                .Property(e => e.MinSpending)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<MembershipLevel>()
-				.HasMany(e => e.Members)
-				.WithRequired(e => e.MembershipLevel)
-				.HasForeignKey(e => e.fk_LevelId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<MembershipLevel>()
+                .HasMany(e => e.Members)
+                .WithRequired(e => e.MembershipLevel)
+                .HasForeignKey(e => e.fk_LevelId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<MembershipLevel>()
-				.HasMany(e => e.Privileges)
-				.WithMany(e => e.MembershipLevels)
-				.Map(m => m.ToTable("MembershipLevelPrivileges").MapLeftKey("fk_LevelId").MapRightKey("fk_PrivilegeId"));
+            modelBuilder.Entity<MembershipLevel>()
+                .HasMany(e => e.Privileges)
+                .WithMany(e => e.MembershipLevels)
+                .Map(m => m.ToTable("MembershipLevelPrivileges").MapLeftKey("fk_LevelId").MapRightKey("fk_PrivilegeId"));
 
-			modelBuilder.Entity<order_statuses>()
-				.HasMany(e => e.orders)
-				.WithRequired(e => e.order_statuses)
-				.HasForeignKey(e => e.order_status_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<order_statuses>()
+                .HasMany(e => e.orders)
+                .WithRequired(e => e.order_statuses)
+                .HasForeignKey(e => e.order_status_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<order>()
-				.Property(e => e.cellphone)
-				.IsUnicode(false);
+            modelBuilder.Entity<order>()
+                .Property(e => e.cellphone)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<order>()
-				.Property(e => e.receipt)
-				.IsUnicode(false);
+            modelBuilder.Entity<order>()
+                .Property(e => e.receipt)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<order>()
-				.HasMany(e => e.orderItems)
-				.WithRequired(e => e.order)
-				.HasForeignKey(e => e.order_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<order>()
+                .HasMany(e => e.orderItems)
+                .WithRequired(e => e.order)
+                .HasForeignKey(e => e.order_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<order>()
-				.HasMany(e => e.PointHistories)
-				.WithOptional(e => e.order)
-				.HasForeignKey(e => e.fk_OrderId);
+            modelBuilder.Entity<order>()
+                .HasMany(e => e.PointHistories)
+                .WithOptional(e => e.order)
+                .HasForeignKey(e => e.fk_OrderId);
 
-			modelBuilder.Entity<order>()
-				.HasMany(e => e.PointTradeIns)
-				.WithOptional(e => e.order)
-				.HasForeignKey(e => e.fk_OrderId);
+            modelBuilder.Entity<order>()
+                .HasMany(e => e.PointTradeIns)
+                .WithOptional(e => e.order)
+                .HasForeignKey(e => e.fk_OrderId);
 
-			modelBuilder.Entity<pay_methods>()
-				.HasMany(e => e.orders)
-				.WithRequired(e => e.pay_methods)
-				.HasForeignKey(e => e.pay_method_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<pay_methods>()
+                .HasMany(e => e.orders)
+                .WithRequired(e => e.pay_methods)
+                .HasForeignKey(e => e.pay_method_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<pay_statuses>()
-				.HasMany(e => e.orders)
-				.WithRequired(e => e.pay_statuses)
-				.HasForeignKey(e => e.pay_status_Id)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<pay_statuses>()
+                .HasMany(e => e.orders)
+                .WithRequired(e => e.pay_statuses)
+                .HasForeignKey(e => e.pay_status_Id)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<PointHistory>()
-				.HasMany(e => e.MemberPoints)
-				.WithRequired(e => e.PointHistory)
-				.HasForeignKey(e => e.fk_PointHistoryId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<PointHistory>()
+                .HasMany(e => e.MemberPoints)
+                .WithRequired(e => e.PointHistory)
+                .HasForeignKey(e => e.fk_PointHistoryId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<PointManage>()
-				.HasOptional(e => e.PointManage1)
-				.WithRequired(e => e.PointManage2);
+            modelBuilder.Entity<PointManage>()
+                .HasOptional(e => e.PointManage1)
+                .WithRequired(e => e.PointManage2);
 
-			modelBuilder.Entity<PointTradeIn>()
-				.Property(e => e.GetPoints)
-				.IsUnicode(false);
+            modelBuilder.Entity<PointTradeIn>()
+                .Property(e => e.GetPoints)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<PointTradeIn>()
-				.Property(e => e.MaxGetPoints)
-				.IsUnicode(false);
+            modelBuilder.Entity<PointTradeIn>()
+                .Property(e => e.MaxGetPoints)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<ProductCategory>()
-				.HasMany(e => e.ProductSubCategories)
-				.WithRequired(e => e.ProductCategory)
-				.HasForeignKey(e => e.fk_ProductCategoryId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<ProductCategory>()
+                .HasMany(e => e.ProductSubCategories)
+                .WithRequired(e => e.ProductCategory)
+                .HasForeignKey(e => e.fk_ProductCategoryId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<ProductGroup>()
-				.Property(e => e.fk_ProductId)
-				.IsUnicode(false);
+            modelBuilder.Entity<ProductGroup>()
+                .Property(e => e.fk_ProductId)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<ProductImg>()
-				.Property(e => e.fk_ProductId)
-				.IsUnicode(false);
+            modelBuilder.Entity<ProductImg>()
+                .Property(e => e.fk_ProductId)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Product>()
-				.Property(e => e.ProductId)
-				.IsUnicode(false);
+            modelBuilder.Entity<Product>()
+                .Property(e => e.ProductId)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Product>()
-				.HasMany(e => e.ProductGroups)
-				.WithRequired(e => e.Product)
-				.HasForeignKey(e => e.fk_ProductId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Product>()
+                .HasMany(e => e.ProductGroups)
+                .WithRequired(e => e.Product)
+                .HasForeignKey(e => e.fk_ProductId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Product>()
-				.HasMany(e => e.ProductImgs)
-				.WithRequired(e => e.Product)
-				.HasForeignKey(e => e.fk_ProductId);
+            modelBuilder.Entity<Product>()
+                .HasMany(e => e.ProductImgs)
+                .WithRequired(e => e.Product)
+                .HasForeignKey(e => e.fk_ProductId);
 
-			modelBuilder.Entity<Product>()
-				.HasMany(e => e.ProjectTagItems)
-				.WithRequired(e => e.Product)
-				.HasForeignKey(e => e.fk_ProductId);
+            modelBuilder.Entity<Product>()
+                .HasMany(e => e.ProjectTagItems)
+                .WithRequired(e => e.Product)
+                .HasForeignKey(e => e.fk_ProductId);
 
-			modelBuilder.Entity<ProductSubCategory>()
-				.HasMany(e => e.Products)
-				.WithRequired(e => e.ProductSubCategory)
-				.HasForeignKey(e => e.fk_ProductSubCategoryId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<ProductSubCategory>()
+                .HasMany(e => e.Products)
+                .WithRequired(e => e.ProductSubCategory)
+                .HasForeignKey(e => e.fk_ProductSubCategoryId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<ProjectTagItem>()
-				.Property(e => e.fk_ProductId)
-				.IsUnicode(false);
+            modelBuilder.Entity<ProjectTagItem>()
+                .Property(e => e.fk_ProductId)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<ProjectTagItem>()
-				.HasOptional(e => e.ProjectTagItems1)
-				.WithRequired(e => e.ProjectTagItem1);
+            modelBuilder.Entity<ProjectTagItem>()
+                .HasOptional(e => e.ProjectTagItems1)
+                .WithRequired(e => e.ProjectTagItem1);
 
-			modelBuilder.Entity<ProjectTag>()
-				.HasMany(e => e.Coupons)
-				.WithOptional(e => e.ProjectTag)
-				.HasForeignKey(e => e.fk_RequiredProjectTagID);
+            modelBuilder.Entity<ProjectTag>()
+                .HasMany(e => e.Coupons)
+                .WithOptional(e => e.ProjectTag)
+                .HasForeignKey(e => e.fk_RequiredProjectTagID);
 
-			modelBuilder.Entity<ProjectTag>()
-				.HasMany(e => e.Discounts)
-				.WithOptional(e => e.ProjectTag)
-				.HasForeignKey(e => e.fk_ProjectTagId);
+            modelBuilder.Entity<ProjectTag>()
+                .HasMany(e => e.Discounts)
+                .WithOptional(e => e.ProjectTag)
+                .HasForeignKey(e => e.fk_ProjectTagId);
 
-			modelBuilder.Entity<ProjectTag>()
-				.HasOptional(e => e.ProjectTags1)
-				.WithRequired(e => e.ProjectTag1);
+            modelBuilder.Entity<ProjectTag>()
+                .HasOptional(e => e.ProjectTags1)
+                .WithRequired(e => e.ProjectTag1);
 
-			modelBuilder.Entity<ReservationStatus>()
-				.HasMany(e => e.OneToOneReservations)
-				.WithRequired(e => e.ReservationStatus)
-				.HasForeignKey(e => e.fk_ReservationStatusId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<ReservationStatus>()
+                .HasMany(e => e.OneToOneReservations)
+                .WithRequired(e => e.ReservationStatus)
+                .HasForeignKey(e => e.fk_ReservationStatusId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<SalesCategory>()
-				.HasMany(e => e.ProductCategories)
-				.WithRequired(e => e.SalesCategory)
-				.HasForeignKey(e => e.fk_SalesCategoryId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesCategory>()
+                .HasMany(e => e.ProductCategories)
+                .WithRequired(e => e.SalesCategory)
+                .HasForeignKey(e => e.fk_SalesCategoryId)
+                .WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<ShoesCategory>()
-				.HasMany(e => e.CustomizedShoesPoes)
+				.HasMany(e => e.Customized_Shoes)
 				.WithOptional(e => e.ShoesCategory)
 				.HasForeignKey(e => e.fk_ShoesCategoryId);
 
-			modelBuilder.Entity<ShoesColorCategory>()
-				.HasMany(e => e.Customized_materials)
-				.WithOptional(e => e.ShoesColorCategory)
-				.HasForeignKey(e => e.material_ColorId);
+            modelBuilder.Entity<ShoesColorCategory>()
+                .HasMany(e => e.Customized_materials)
+                .WithOptional(e => e.ShoesColorCategory)
+                .HasForeignKey(e => e.material_ColorId);
 
 			modelBuilder.Entity<ShoesColorCategory>()
-				.HasMany(e => e.CustomizedShoesPoes)
+				.HasMany(e => e.Customized_Shoes)
 				.WithOptional(e => e.ShoesColorCategory)
 				.HasForeignKey(e => e.fk_ShoesColorId);
 
-			modelBuilder.Entity<ShoppingCart>()
-				.HasOptional(e => e.CartItem)
-				.WithRequired(e => e.ShoppingCart);
+            modelBuilder.Entity<ShoppingCart>()
+                .HasOptional(e => e.CartItem)
+                .WithRequired(e => e.ShoppingCart);
 
-			modelBuilder.Entity<SizeCategory>()
-				.HasMany(e => e.ProductGroups)
-				.WithRequired(e => e.SizeCategory)
-				.HasForeignKey(e => e.fk_SizeId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<SizeCategory>()
+                .HasMany(e => e.ProductGroups)
+                .WithRequired(e => e.SizeCategory)
+                .HasForeignKey(e => e.fk_SizeId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<SpeakerField>()
-				.HasMany(e => e.Speakers)
-				.WithRequired(e => e.SpeakerField)
-				.HasForeignKey(e => e.fk_SpeakerFieldId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<SpeakerField>()
+                .HasMany(e => e.Speakers)
+                .WithRequired(e => e.SpeakerField)
+                .HasForeignKey(e => e.fk_SpeakerFieldId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Speaker>()
-				.Property(e => e.SpeakerPhone)
-				.IsUnicode(false);
+            modelBuilder.Entity<Speaker>()
+                .Property(e => e.SpeakerPhone)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Speaker>()
-				.Property(e => e.SpeakerImg)
-				.IsUnicode(false);
+            modelBuilder.Entity<Speaker>()
+                .Property(e => e.SpeakerImg)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Speaker>()
-				.HasMany(e => e.Activities)
-				.WithRequired(e => e.Speaker)
-				.HasForeignKey(e => e.fk_SpeakerId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Speaker>()
+                .HasMany(e => e.Activities)
+                .WithRequired(e => e.Speaker)
+                .HasForeignKey(e => e.fk_SpeakerId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Speaker>()
-				.HasMany(e => e.OneToOneReservations)
-				.WithRequired(e => e.Speaker)
-				.HasForeignKey(e => e.fk_ReservationSpeakerId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Speaker>()
+                .HasMany(e => e.OneToOneReservations)
+                .WithRequired(e => e.Speaker)
+                .HasForeignKey(e => e.fk_ReservationSpeakerId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<StaffPermission>()
-				.HasMany(e => e.Staffs)
-				.WithRequired(e => e.StaffPermission)
-				.HasForeignKey(e => e.fk_PermissionsId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<StaffPermission>()
+                .HasMany(e => e.Staffs)
+                .WithRequired(e => e.StaffPermission)
+                .HasForeignKey(e => e.fk_PermissionsId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Staff>()
-				.Property(e => e.Mobile)
-				.IsUnicode(false);
+            modelBuilder.Entity<Staff>()
+                .Property(e => e.Mobile)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Staff>()
-				.Property(e => e.Account)
-				.IsUnicode(false);
+            modelBuilder.Entity<Staff>()
+                .Property(e => e.Account)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Staff>()
-				.Property(e => e.Password)
-				.IsUnicode(false);
+            modelBuilder.Entity<Staff>()
+                .Property(e => e.Password)
+                .IsUnicode(false);
 
-			modelBuilder.Entity<Type>()
-				.HasMany(e => e.CartItems)
-				.WithRequired(e => e.Type)
-				.HasForeignKey(e => e.fk_Type)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Type>()
+                .HasMany(e => e.CartItems)
+                .WithRequired(e => e.Type)
+                .HasForeignKey(e => e.fk_Type)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Type>()
-				.HasMany(e => e.orderItems)
-				.WithRequired(e => e.Type)
-				.HasForeignKey(e => e.fk_typeId)
-				.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Type>()
+                .HasMany(e => e.orderItems)
+                .WithRequired(e => e.Type)
+                .HasForeignKey(e => e.fk_typeId)
+                .WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Type>()
-				.HasMany(e => e.PointHistories)
-				.WithOptional(e => e.Type)
-				.HasForeignKey(e => e.fk_TypeId);
+            modelBuilder.Entity<Type>()
+                .HasMany(e => e.PointHistories)
+                .WithOptional(e => e.Type)
+                .HasForeignKey(e => e.fk_TypeId);
 
 			modelBuilder.Entity<Type>()
 				.HasMany(e => e.PointManages)
@@ -495,6 +495,5 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_TypeId)
 				.WillCascadeOnDelete(false);
 		}
-
-    }
+	}
 }

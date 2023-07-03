@@ -1,0 +1,128 @@
+﻿@model EFModels.EFModels.Activity
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>確定要刪除此筆資料嗎?</h3>
+<div>
+    <h4>Activity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fk_ActivityCategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fk_ActivityCategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fk_SpeakerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fk_SpeakerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityPlace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityPlace)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityBookStartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityBookStartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityBookEndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityBookEndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityAge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityAge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivitySalePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivitySalePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityOriginalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityOriginalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fk_ActivityStatusId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fk_ActivityStatusId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

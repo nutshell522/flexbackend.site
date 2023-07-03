@@ -135,13 +135,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\StaffsController.cs" />
+=======
+    <Compile Include="Controllers\SpeakerController.cs" />
+>>>>>>> Cindy03
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2321,6 +2326,7 @@
     <Content Include="Views\Suppliers\Index.cshtml" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Views\Orders\Create.cshtml" />
 =======
     <Content Include="Views\View.cshtml" />
@@ -2332,13 +2338,20 @@
     <Content Include="Views\Staffs\Login.cshtml" />
     <Content Include="Views\Staffs\ForgetPassword.cshtml" />
 >>>>>>> Ying05
+=======
+    <Content Include="Views\Activity\Create.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Activity\Edit.cshtml" />
+    <Content Include="Views\Activity\Delete.cshtml" />
+    <Content Include="Views\Activity\Details.cshtml" />
+    <Content Include="Views\Speaker\Index.cshtml" />
+    <Content Include="Views\Speaker\Create.cshtml" />
+>>>>>>> Cindy03
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\FileContentIndex\merges\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\v17\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Activity\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\DIscount\" />
   </ItemGroup>
@@ -2385,6 +2398,10 @@
     <ProjectReference Include="..\Flex.Products.dll\Flex.Products.dll.csproj">
       <Project>{f79111b2-41fc-4bd2-925f-8dd74f015028}</Project>
       <Name>Flex.Products.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Flex_Activity.dll\Flex_Activity.dll.csproj">
+      <Project>{11e435a6-a7ae-4491-932b-60d88350a7f7}</Project>
+      <Name>Flex_Activity.dll</Name>
     </ProjectReference>
     <ProjectReference Include="..\Members.dll\Members.dll.csproj">
       <Project>{64ee0a94-1592-45ad-a02e-24e58a3e6cf8}</Project>
