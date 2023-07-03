@@ -161,7 +161,7 @@ namespace flexbackend.site.Controllers
 			{
 				//通過驗證，將資料存到db
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return View(vm);
+				return RedirectToAction("StaffList");
 			}
 		}
 
@@ -169,11 +169,11 @@ namespace flexbackend.site.Controllers
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			dto.Mobile = "0921111111";
+			dto.Mobile = "0921133312";
 			//dto.Account = Session["Account"].ToString();
 			//dto.Password = Session["Password"].ToString();
-			dto.Account = "Tina";
-			dto.Password = "tina";
+			dto.Account = "4561";
+			dto.Password = "4561";
 			dto.fk_PermissionsId = 3;
 			dto.fk_TitleId = 2;
 			dto.fk_DepartmentId = 3;
@@ -181,7 +181,7 @@ namespace flexbackend.site.Controllers
 		}
 
 		//Read
-		[Authorize]
+		
 		public ActionResult StaffList()
 		{
 			StaffService service = GetStaffRepository();

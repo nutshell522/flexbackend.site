@@ -30,8 +30,10 @@
 					 add ValidLogin() method , 對帳號密碼進行驗證,驗證成功並將密碼編碼之後加到 Cookie裡面
 					 add ProcessLogin() method , 產生Cookie
 	_Layout.cshtml   add 判斷 User.Identity.IsAuthenticated 可以進行變更密碼及登出
+	add _LayoutLogin.cshtml 指定給 Login.cshtml 作為版型 
 
 	*沒有將密碼雜湊
+	*套用版型以後就會無法登入
 
 [working on]忘記密碼
 	StaffsController add ForgetPassword() action , add ForgetPassWord.cshtml
