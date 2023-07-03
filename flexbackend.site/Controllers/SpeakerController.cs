@@ -1,6 +1,8 @@
 ﻿using EFModels.EFModels;
 using Flex_Activity.dll.Infra.EFRepositories;
 using Flex_Activity.dll.Interface;
+using Flex_Activity.dll.Models.Dto;
+using Flex_Activity.dll.Models.Exts;
 using Flex_Activity.dll.Models.ViewModels;
 using Flex_Activity.dll.Services;
 using System;
@@ -14,8 +16,10 @@ namespace flexbackend.site.Controllers
     public class SpeakerController : Controller
     {
         private AppDbContext db = new AppDbContext();
-        // GET: Speaker
-        public ActionResult Index()
+        private ISpeakerRepository _repo = new SpeakerEFRepository();
+
+		// GET: Speaker
+		public ActionResult Index()
         {
             //呼叫 GetSpeakers() 方法，並將回傳的演講者資料集合傳遞給視圖（View）
             IEnumerable<SpeakerIndexVM> speakers = GetSpeakers();
@@ -61,9 +65,25 @@ namespace flexbackend.site.Controllers
 
                 //將【檔名+路徑】存入VM
                 vm.SpeakerImg = fileName;
-                vm.
-                
+
+                //將vm轉為Dto
+                SpeakerCreateDto speakerDto = vm.ToCreatDto();
+
+				//將Dto傳入Service進行邏輯驗證
+				//SpeakerServices()需要一個型別是ISpeakerRepository的參數
+				var service = new SpeakerServices(_repo);
+                var result = service.CreateSpeaker(speakerDto);
+                if (result.IsSucces)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.ErroeMessage);
+                    return View(vm);
+                }
             }
+            return View(vm);
         }
 
         private string SaveUploadedFile(string path, HttpPostedFileBase fileTeacher)

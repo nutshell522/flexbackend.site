@@ -12,6 +12,26 @@ namespace Flex_Activity.dll.Models.Exts
 {
 	public static class SpeakerExts
 	{
+		public static SpeakerCreateDto ToCreatDto(this SpeakerCreateVM vm)
+		{
+			return new SpeakerCreateDto
+			{
+				SpeakerId = vm.SpeakerId,
+				SpeakerName = vm.SpeakerName,
+
+				SpeakerPhone = vm.SpeakerPhone,
+
+				fk_SpeakerFieldId = vm.fk_SpeakerFieldId,
+
+				SpeakerImg = vm.SpeakerImg,
+
+				fk_SpeakerBranchId = vm.fk_SpeakerBranchId,
+
+				SpeakerDescription = vm.SpeakerDescription
+
+			};
+		}
+
 		public static Speaker ToCreateEntity(this SpeakerCreateDto dto)
 		{
 			return new Speaker
@@ -31,5 +51,7 @@ namespace Flex_Activity.dll.Models.Exts
 
 			};
 		}
+
+		
 	}
 }

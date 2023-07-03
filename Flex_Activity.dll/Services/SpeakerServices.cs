@@ -12,9 +12,12 @@ namespace Flex_Activity.dll.Services
 {
     public class SpeakerServices
     {
-        private ISpeakerRepository _repo;
+		//建立了一個私有欄位 _repo，型別是 ISpeakerRepository
+		private ISpeakerRepository _repo;
 
-        public SpeakerServices (ISpeakerRepository repo)
+		//將實作了 ISpeakerRepository 介面的物件傳入。也就是說，我們將能夠執行資料庫操作的類別的物件傳入 SpeakerServices。
+		//SpeakerServices 就可以使用 _repo 物件來執行與講者資料庫存取相關的操作
+		public SpeakerServices (ISpeakerRepository repo)
         {
             _repo = repo;
         }

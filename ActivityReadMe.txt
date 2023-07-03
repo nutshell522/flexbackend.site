@@ -69,10 +69,20 @@
     Allen錄影檔看到20230616 整天結束
 
 [ Working On ]Speaker的Create
-	[ Working On ]Speaker Create的VM
-	[ Working On ]Speaker Create的Dto
+	[ V ]Speaker Create的VM
+	[ V ]Speaker Create的Dto
+	[ V ]Speaker Create 的 VM 轉 Dto擴充方法、Dto 轉 Entity擴充方法
+	[ v ]Speaker的 ISpeakerRepository
+	[ ]Speaker的 SpeakerEFRepository
+	[ ]Speaker的 SpeakerServices
+	[ ]Speaker Create 的 Get Action
+	[ ]Speaker Create 的 Post Action
 
 	Allen錄影檔看到20230619 9:03
 
 	20230703 Speaker的Create Post方法還沒寫完
 	尚未寫Speaker的Create的vm轉Dto的擴充方法!
+
+
+
+	***【Speaker 的 Create沒有依照VM的驗證規則去驗證!!! 待修正】***
