@@ -46,5 +46,6 @@ namespace Orders.ViewModels
 		public int? close_Id { get; set; }
 		[Display(Name = "總金額")]
 		public int total_price { get; set; }
-    }
+		public List<OrderItemsVM> orderItems { get; set; }
+	}
 }

@@ -21,11 +21,12 @@ namespace flexbackend.site.Controllers
         private IEnumerable<OrdersIndexVM> GetOrders()
         {
             var db = new AppDbContext();
-            return db.orders
+			var orderItems = GetOrderItemsIndex();
+			return db.orders
                 .AsNoTracking()
-                //.Include(p => p.Member1)
-                //.OrderBy(p => p.Category.DisplayOrder)
-                .ToList()
+				//.Include(p => p.orderItems)
+				//.OrderBy(p => p.Category.DisplayOrder)
+				.ToList()
                 .Select(p => new OrdersIndexVM
                 {
                     Id = p.Id,
@@ -46,7 +47,8 @@ namespace flexbackend.site.Controllers
                     order_description = p.order_description,
                     close_Id = p.close_Id,
 					total_price = p.total_price,
-		});
+					orderItems = orderItems.Where(o => o.order_Id == p.Id).ToList()
+				});
         }
 
         public ActionResult Create()
