@@ -20,10 +20,6 @@ namespace EFModels.EFModels
         [StringLength(254)]
         public string ShoesCategoryName { get; set; }
 
-        public DateTime? CategoryCreateTime { get; set; }
-
-        public DateTime? CategoryEditTime { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedShoesPo> CustomizedShoesPoes { get; set; }
     }

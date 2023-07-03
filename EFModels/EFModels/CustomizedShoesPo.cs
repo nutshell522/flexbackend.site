@@ -31,7 +31,7 @@ namespace EFModels.EFModels
 
         public int ShoesUnitPrice { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         public DateTime? EndTime { get; set; }
 
@@ -41,9 +41,9 @@ namespace EFModels.EFModels
 
         public int? fk_ShoesColorId { get; set; }
 
-        public DateTime DataCreateTime { get; set; }
+        public DateTime? DataCreateTime { get; set; }
 
-        public DateTime DataEditTime { get; set; }
+        public DateTime? DataEditTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedOrder> CustomizedOrders { get; set; }
