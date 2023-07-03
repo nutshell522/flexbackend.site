@@ -61,8 +61,11 @@
     <Compile Include="Models\Dtos\CustomizedShoesDto.cs" />
     <Compile Include="Models\Dtos\ShoesCategoryDto.cs" />
     <Compile Include="Models\Dtos\ShoesColorCategoryDto.cs" />
+    <Compile Include="Models\Exts\CategoryExts.cs" />
     <Compile Include="Models\Exts\CustomizedShoesExts.cs" />
     <Compile Include="Models\Exts\Result.cs" />
+    <Compile Include="Models\Exts\ShoesSearchCriteria.cs" />
+    <Compile Include="Models\Interface\IShoesRepository.cs" />
     <Compile Include="Models\ViewModels\CustomizedShoesCreateVM.cs" />
     <Compile Include="Models\ViewModels\CustomizedShoesIdAndStatusVM.cs" />
     <Compile Include="Models\ViewModels\CustomizedShoesIndexVM.cs" />
@@ -73,7 +76,10 @@
     <Compile Include="Models\ViewModels\SuppliersIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Infra\DapperRepository\" />
+    <Folder Include="Models\Infra\EFRepository\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
