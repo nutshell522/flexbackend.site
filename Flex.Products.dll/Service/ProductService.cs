@@ -29,9 +29,9 @@ namespace Flex.Products.dll.Service
 			return products;
 		}
 
-		public Result EditProductsStatus(List<ProductDto> dto)
+		public Result SaveChangeStatus(List<ProductDto> dto)
 		{
-			_repo.EditProductsStatus(dto);
+			_repo.SaveChangeStatus(dto);
 
 			return Result.Success();
 
@@ -45,10 +45,10 @@ namespace Flex.Products.dll.Service
                 return Result.Fail($"商品編碼 {dto.ProductId} 已存在，請更換其他編碼");
             }
 
-            //if (ValidationStartAndEndTime(dto.StartTime, dto.EndTime))
-            //{
-            //    return Result.Fail($"上架時間{dto.StartTime}不得晚於下架時間{dto.EndTime}");
-            //}
+			if (IsGroupsValid(dto.ProductGroups))
+			{
+				return Result.Fail("規格錯誤，請確認是否重複或留空");
+			}
 
             dto.LogOut = false;
             dto.CreateTime = DateTime.Now;
@@ -59,12 +59,21 @@ namespace Flex.Products.dll.Service
             return Result.Success();
         }
 
-		//檢查上下架時間，上架時間不得>下架時間
-		//public bool ValidationStartAndEndTime(DateTime start, DateTime? end)
-		//{
-		//	if (end != null && start > end) { return true; }
-		//	return false;
-		//}
+		public ProductDto GetById(string productId)
+		{
+			return _repo.GetById(productId);
+		}
+
+		public Result EditProduct(ProductDto dto)
+		{
+			if (IsGroupsValid(dto.ProductGroups))
+			{
+				return Result.Fail("規格錯誤，請確認是否重複或留空");
+			}
+			
+			_repo.EditProduct(dto);
+			return Result.Success();
+		}
 
 		//判斷產品識別碼是否已存在
 		public bool ExisProductID(string ProductId)
@@ -72,6 +81,30 @@ namespace Flex.Products.dll.Service
 			return _db.Products.Any(p => p.ProductId == ProductId);
 		}
 
+		//判斷規格是否重複或未填寫
+		private bool IsGroupsValid(List<ProductGroupsDto> productGroups)
+		{
+			var groupSpecs = new HashSet<string>();
+			foreach (var group in productGroups)
+			{
+				var colorId = group.ColorId.ToString();
+				var sizeId = group.SizeId.ToString();
+				var combine = colorId + "-" + sizeId;
+
+				if (groupSpecs.Contains(combine))
+				{
+					return true;
+				}
+				if (group.ColorId <= 0 || group.SizeId <= 0 || group.Qty < 1)
+				{
+					return true;
+				};
+				groupSpecs.Add(combine);
+			}
+			return false;
+		}
+
+
 	}
-	
+
 }

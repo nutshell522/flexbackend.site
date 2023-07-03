@@ -8,11 +8,11 @@ namespace Flex.Products.dll.Models.Infra.Exts
 {
 	public class Result
 	{
-		public bool IsSucces { get; set; }
-		public bool IsFailed => !IsSucces;
+		public bool IsSuccess { get; set; }
+		public bool IsFailed => !IsSuccess;
 		public string ErroeMessage { get; set; }
-		public static Result Success()=>new Result { IsSucces=true,ErroeMessage=null};
+		public static Result Success()=>new Result { IsSuccess = true,ErroeMessage=null};
 		
-		public static Result Fail(string errormessage)=>new Result { IsSucces = false, ErroeMessage = errormessage };
+		public static Result Fail(string errormessage)=>new Result { IsSuccess = false, ErroeMessage = errormessage };
 	}
 }

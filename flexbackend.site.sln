@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項�
 	ProjectSection(SolutionItems) = preProject
 		ActivityReadMe.txt = ActivityReadMe.txt
 		MemberReadMe.txt = MemberReadMe.txt
+		ProdductReadMe.txt = ProdductReadMe.txt
 		StaffReadMe.txt = StaffReadMe.txt
 	EndProjectSection
 EndProject
