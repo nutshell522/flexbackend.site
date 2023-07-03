@@ -12,5 +12,7 @@ namespace Flex_Activity.dll.Interface
         IEnumerable<SpeakerIndexDto> Search();
 
         void CreateSpeaker(SpeakerCreateDto dto);
+        
+        void EditSpeaker (SpeakerEditDto dto);
     }
 }

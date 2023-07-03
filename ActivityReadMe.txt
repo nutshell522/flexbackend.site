@@ -68,15 +68,15 @@
 
     Allen錄影檔看到20230616 整天結束
 
-[ Working On ]Speaker的Create
+[ V ]Speaker的Create
 	[ V ]Speaker Create的VM
 	[ V ]Speaker Create的Dto
 	[ V ]Speaker Create 的 VM 轉 Dto擴充方法、Dto 轉 Entity擴充方法
-	[ v ]Speaker的 ISpeakerRepository
-	[ ]Speaker的 SpeakerEFRepository
-	[ ]Speaker的 SpeakerServices
-	[ ]Speaker Create 的 Get Action
-	[ ]Speaker Create 的 Post Action
+	[ V ]Speaker的 ISpeakerRepository
+	[ V ]Speaker的 SpeakerEFRepository
+	[ V ]Speaker的 SpeakerServices
+	[ V ]Speaker Create 的 Get Action
+	[ V ]Speaker Create 的 Post Action
 
 	Allen錄影檔看到20230619 9:03
 
@@ -86,3 +86,17 @@
 
 
 	***【Speaker 的 Create沒有依照VM的驗證規則去驗證!!! 待修正】***
+	Speaker的Create完成
+	已修正Speaker Create驗證規則
+	
+[ Working On ]Speaker 的 Edit
+	[ V ]Speaker Edit 的 VM
+	[ V ]Speaker Edit 的 Dto
+	[ V ]Speaker Edit 的 VM 轉 Dto擴充方法、Dto 轉 Entity擴充方法
+	[ V  ]Speaker Edit 的 Entity 轉 Dto 擴充方法、 Dto 轉 VM 擴充方法 
+	[ V ]Speaker的 ISpeakerRepository
+	[ V ]Speaker的 SpeakerEFRepository
+	[ V ]Speaker的 SpeakerServices
+	[ V ]Speaker Edit 的 Get Action
+	[ V ]Speaker Edit 的 Post Action
+

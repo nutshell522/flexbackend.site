@@ -36,6 +36,13 @@ namespace Flex_Activity.dll.Services
             _repo.CreateSpeaker(dto);
             return Result.Success();
         }
+
+        public Result EditSpeaker(SpeakerEditDto dto)
+        {
+            _repo.EditSpeaker(dto);
+            return Result.Success();
+
+		}
     }
 
 }

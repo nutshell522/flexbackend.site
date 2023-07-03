@@ -18,7 +18,7 @@ namespace flexbackend.site.Controllers
         private AppDbContext db = new AppDbContext();
         private ISpeakerRepository _repo = new SpeakerEFRepository();
 
-		// GET: Speaker
+		// GET: Speaker Index
 		public ActionResult Index()
         {
             //呼叫 GetSpeakers() 方法，並將回傳的演講者資料集合傳遞給視圖（View）
@@ -42,7 +42,7 @@ namespace flexbackend.site.Controllers
                 });
         }
 
-        //Get：Speaker
+        //Get：Create
         public ActionResult Create()
         {
             PrepareSpeakerFieldDataSource(null);
@@ -51,7 +51,7 @@ namespace flexbackend.site.Controllers
             return View(vm);
         }
 
-        //Post：Speaker
+        //Post：Create
         [HttpPost]
         public ActionResult Create(SpeakerCreateVM vm, HttpPostedFileBase fileTeacher)
         {
@@ -86,6 +86,53 @@ namespace flexbackend.site.Controllers
             return View(vm);
         }
 
+        //Get：Edit
+        public ActionResult Edit (int? id)
+        {
+			//（Bad Request）HTTP 400 錯誤狀態碼，表示客戶端的請求無效
+			if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            Speaker speaker = db.Speakers.Find(id);
+
+            if (speaker == null)
+            {
+                return HttpNotFound();
+            }
+
+            SpeakerEditVM vm = (speaker.ToEditDto()).ToEditVM();
+            PrepareSpeakerFieldDataSource(vm.fk_SpeakerFieldId);
+            PrepareBranchDataSource(vm.fk_SpeakerBranchId);
+
+            return View(vm);
+
+		}
+
+        [HttpPost]
+        public ActionResult Edit (SpeakerEditVM vm)
+        {
+            PrepareSpeakerFieldDataSource(vm.fk_SpeakerFieldId);
+            PrepareBranchDataSource(vm.fk_SpeakerBranchId);
+
+            if (ModelState.IsValid)
+            {
+                SpeakerEditDto dto = vm.ToEditDto();
+                var service = new SpeakerServices(_repo);
+                Result result = service.EditSpeaker(dto);
+
+                if (result.IsSucces)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(vm);
+                }
+                
+            }
+
+            return View(vm);
+
+		}
         private string SaveUploadedFile(string path, HttpPostedFileBase fileTeacher)
         {
             //如果沒有上傳檔案或檔案是空的，就不處理，傳回string.empty

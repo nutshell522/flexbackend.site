@@ -26,7 +26,14 @@ namespace Flex_Activity.dll.Infra.EFRepositories
             _db.SaveChanges();
         }
 
-        public IEnumerable<SpeakerIndexDto> Search()
+		public void EditSpeaker(SpeakerEditDto dto)
+		{
+            var speaker = dto.ToEditEntity();
+            _db.Entry(speaker).State = EntityState.Modified;
+            _db.SaveChanges();
+		}
+
+		public IEnumerable<SpeakerIndexDto> Search()
         {
             return _db.Speakers
                 .AsNoTracking()
