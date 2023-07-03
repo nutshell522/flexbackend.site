@@ -2319,7 +2319,11 @@
     <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Orders\Create.cshtml" />
+=======
+    <Content Include="Views\View.cshtml" />
+>>>>>>> Val03
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

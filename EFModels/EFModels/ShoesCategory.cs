@@ -11,7 +11,7 @@ namespace EFModels.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ShoesCategory()
         {
-            Customized_Shoes = new HashSet<Customized_Shoes>();
+            CustomizedShoesPoes = new HashSet<CustomizedShoesPo>();
         }
 
         public int ShoesCategoryId { get; set; }
@@ -25,6 +25,6 @@ namespace EFModels.EFModels
         public DateTime? CategoryEditTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customized_Shoes> Customized_Shoes { get; set; }
+        public virtual ICollection<CustomizedShoesPo> CustomizedShoesPoes { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace EFModels.EFModels
 
         public virtual Customized_materials Customized_materials4 { get; set; }
 
-        public virtual Customized_Shoes Customized_Shoes { get; set; }
+        public virtual CustomizedShoesPo CustomizedShoesPo { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShoesPicture> ShoesPictures { get; set; }

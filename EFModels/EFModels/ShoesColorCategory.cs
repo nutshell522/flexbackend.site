@@ -12,7 +12,7 @@ namespace EFModels.EFModels
         public ShoesColorCategory()
         {
             Customized_materials = new HashSet<Customized_materials>();
-            Customized_Shoes = new HashSet<Customized_Shoes>();
+            CustomizedShoesPoes = new HashSet<CustomizedShoesPo>();
         }
 
         [Key]
@@ -29,6 +29,6 @@ namespace EFModels.EFModels
         public virtual ICollection<Customized_materials> Customized_materials { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customized_Shoes> Customized_Shoes { get; set; }
+        public virtual ICollection<CustomizedShoesPo> CustomizedShoesPoes { get; set; }
     }
 }

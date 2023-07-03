@@ -51,13 +51,21 @@ namespace flexbackend.site.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			Supplier supplier = db.Suppliers.Find(id);
-
-			if (supplier == null)
+			Supplier supplier = db.Suppliers.FirstOrDefault(x => x.SupplierId == id);
+			if (supplier == null) return HttpNotFound();
+			SupplierEditVM vm = new SupplierEditVM()
 			{
-				return HttpNotFound();
-			}
-			return View(supplier);
+				SupplierId = supplier.SupplierId,
+				SupplierCompanyName = supplier.SupplierCompanyName,
+				HasCertificate = supplier.HasCertificate,
+				Supply_Material = supplier.Supply_Material,
+				SupplierCompanyPhone = supplier.SupplierCompanyPhone,
+				SupplierCompanyEmail = supplier.SupplierCompanyEmail,
+				SupplierCompanyAddress = supplier.SupplierCompanyAddress,
+				SupplierCompanyNumber = supplier.SupplierCompanyNumber,
+				SupplierStartDate = supplier.SupplierStartDate,
+			};
+			return View(vm);
 		}
 
 		// GET: Suppliers/Create
@@ -94,12 +102,22 @@ namespace flexbackend.site.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Supplier supplier = db.Suppliers.Find(id);
-			if (supplier == null)
+			Supplier supplier = db.Suppliers.FirstOrDefault(x=>x.SupplierId==id);
+			if(supplier==null)return HttpNotFound();
+			SupplierEditVM vm = new SupplierEditVM()
 			{
-				return HttpNotFound();
-			}
-			return View(supplier);
+				SupplierId = supplier.SupplierId,
+				SupplierCompanyName = supplier.SupplierCompanyName,
+				HasCertificate = supplier.HasCertificate,
+				Supply_Material = supplier.Supply_Material,
+				SupplierCompanyPhone = supplier.SupplierCompanyPhone,
+				SupplierCompanyEmail = supplier.SupplierCompanyEmail,
+				SupplierCompanyAddress = supplier.SupplierCompanyAddress,
+				SupplierCompanyNumber = supplier.SupplierCompanyNumber,
+				SupplierStartDate = supplier.SupplierStartDate,
+			};
+			
+			return View(vm);
 		}
 
 		// POST: Suppliers/Edit/5
@@ -126,12 +144,21 @@ namespace flexbackend.site.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Supplier supplier = db.Suppliers.Find(id);
-			if (supplier == null)
+			Supplier supplier = db.Suppliers.FirstOrDefault(x => x.SupplierId == id);
+			if (supplier == null) return HttpNotFound();
+			SupplierEditVM vm = new SupplierEditVM()
 			{
-				return HttpNotFound();
-			}
-			return View(supplier);
+				SupplierId = supplier.SupplierId,
+				SupplierCompanyName = supplier.SupplierCompanyName,
+				HasCertificate = supplier.HasCertificate,
+				Supply_Material = supplier.Supply_Material,
+				SupplierCompanyPhone = supplier.SupplierCompanyPhone,
+				SupplierCompanyEmail = supplier.SupplierCompanyEmail,
+				SupplierCompanyAddress = supplier.SupplierCompanyAddress,
+				SupplierCompanyNumber = supplier.SupplierCompanyNumber,
+				SupplierStartDate = supplier.SupplierStartDate,
+			};
+			return View(vm);
 		}
 
 		// POST: Suppliers/Delete/5
