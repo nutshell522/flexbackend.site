@@ -142,11 +142,11 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
-<<<<<<< HEAD
+
     <Compile Include="Controllers\StaffsController.cs" />
-=======
+
     <Compile Include="Controllers\SpeakerController.cs" />
->>>>>>> Cindy03
+
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2324,21 +2324,17 @@
     <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     <Content Include="Views\Orders\Create.cshtml" />
-=======
+
     <Content Include="Views\View.cshtml" />
->>>>>>> Val03
-=======
+
     <Content Include="Views\Members\MembersList.cshtml" />
     <Content Include="Views\Staffs\CreateStaff.cshtml" />
     <Content Include="Views\Staffs\StaffList.cshtml" />
     <Content Include="Views\Staffs\Login.cshtml" />
     <Content Include="Views\Staffs\ForgetPassword.cshtml" />
->>>>>>> Ying05
-=======
+
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\Index.cshtml" />
     <Content Include="Views\Activity\Edit.cshtml" />
@@ -2346,7 +2342,7 @@
     <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
->>>>>>> Cindy03
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
