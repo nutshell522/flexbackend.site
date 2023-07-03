@@ -14,6 +14,7 @@ using System.Web.ModelBinding;
 using System.Web.UI.WebControls;
 using EFModels.EFModels;
 using System.Web.Security;
+using Members.dll.Models.ViewsModels.Staff;
 
 namespace flexbackend.site.Controllers
 {
@@ -26,6 +27,24 @@ namespace flexbackend.site.Controllers
 		{
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
+		}
+
+		//忘記密碼
+		public ActionResult ForgetPassword()
+		{
+			return View();
+		}
+		[HttpPost]
+		public ActionResult ForgetPassword(ForgetPasswordVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ResetPassword();
+			return View();
+		}
+
+		private Result ResetPassword()
+		{
+			throw new NotImplementedException();
 		}
 
 		//Logout

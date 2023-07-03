@@ -71,6 +71,7 @@
     <Compile Include="Models\lnfra\Result.cs" />
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
+    <Compile Include="Models\ViewsModels\Staff\ForgetPasswordVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\LoginVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MembersEditVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MembersIndexVM.cs" />

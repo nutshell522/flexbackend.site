@@ -33,3 +33,10 @@
 
 	*沒有將密碼雜湊
 
+[working on]忘記密碼
+	StaffsController add ForgetPassword() action , add ForgetPassWord.cshtml
+
+[-]修改密碼
+
+
+[-]大頭照
