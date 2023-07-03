@@ -65,7 +65,7 @@
 
 
 
-<form method="get" action="@Url.Action("CreateOrEdit", "ProjectTag")">
+<form id="formIndex" method="get" action="@Url.Action("CreateOrEdit", "ProjectTag")">
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -461,10 +461,15 @@
                     });
                 }
             }
+            $(document).on("click", '.submit', function () {
+                $("#ProjectTagId").val($(this).data("id"));
+                $("#formIndex").submit();
+            })
+
             function tagsNameToHtmlListString(item) {
                 const htmlString = `
                             <li class="w-100">
-                                <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?ProjectTagId=${item.ProjectTagId}">${item.ProjectTagName}</a>
+                                <a class="w-100 fs-6 py-2 text-dark d-block px-1 submit" href="javascript:;" data-id="${item.ProjectTagId}">${item.ProjectTagName}</a>
                             </li>
                         `;
                 return htmlString;
