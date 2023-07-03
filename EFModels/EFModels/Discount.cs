@@ -32,6 +32,8 @@ namespace EFModels.EFModels
 
         public DateTime? EndDate { get; set; }
 
+        public int? OrderBy { get; set; }
+
         public virtual ProjectTag ProjectTag { get; set; }
     }
 }
