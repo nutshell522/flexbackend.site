@@ -28,7 +28,11 @@ namespace Flex_Activity.dll.Services
         }
 
         public Result CreateSpeaker(SpeakerCreateDto dto) 
-        { 
+        {
+            //if (dto.SpeakerPhone.Length != 10)
+            //{
+            //    return Result.Fail("電話號碼長度錯誤");
+            //}
             _repo.CreateSpeaker(dto);
             return Result.Success();
         }

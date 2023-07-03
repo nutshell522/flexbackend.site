@@ -18,7 +18,7 @@ namespace Flex_Activity.dll.Models.ViewModels
         public string SpeakerName { get; set; }
 
         [Display(Name = "連絡電話")]
-        [StringLength(10)]
+        [StringLength(10, MinimumLength =10, ErrorMessage ="電話長度錯誤")]
         public string SpeakerPhone { get; set; }
 
         [Display(Name = "專長領域")]
