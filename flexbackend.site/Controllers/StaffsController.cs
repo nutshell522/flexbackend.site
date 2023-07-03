@@ -38,13 +38,20 @@ namespace flexbackend.site.Controllers
 		public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
-			Result result = ResetPassword();
-			return View();
+			Result result = ResetPassword(vm);
+
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+			return RedirectToAction("Login");
 		}
 
-		private Result ResetPassword()
+		private Result ResetPassword(ForgetPasswordVM vm)
 		{
-			throw new NotImplementedException();
+			StaffService service = GetStaffRepository();
+			return service.ResetPassword(vm.ToForgetPasswordDto());
 		}
 
 		//Logout
@@ -74,7 +81,7 @@ namespace flexbackend.site.Controllers
 			if (result.IsSuccess == false)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return View(vm);
+				return RedirectToAction("Home");
 			}
 
 			//是否記住登入成功的會員
@@ -135,7 +142,6 @@ namespace flexbackend.site.Controllers
 				: Result.Fail("帳號或密碼有誤");
 		}
 
-
 		//Create
 		public ActionResult CreateStaff()
 		{
@@ -181,7 +187,7 @@ namespace flexbackend.site.Controllers
 		}
 
 		//Read
-		
+
 		public ActionResult StaffList()
 		{
 			StaffService service = GetStaffRepository();

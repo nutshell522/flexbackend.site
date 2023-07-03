@@ -206,3 +206,6 @@ FROM Staffs as S
 JOIN Departments as D ON S.fk_DepartmentId=D.DepartmentId
 JOIN JobTitles as J ON S.fk_TitleId=J.TitleId
 JOIN StaffPermissions as SP ON S.fk_PermissionsId=SP.PermissionsId;
+
+--[忘記密碼]
+update Staffs set [Password] = '123123' where Account = '123';

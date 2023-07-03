@@ -50,7 +50,7 @@ namespace Members.dll.Models.Services
 		//會員註冊
 		public Result Register(RegisterDto dto)
 		{
-			//判斷帳號是否已被盜用
+			//判斷帳號是否已被啟用
 			if (_repo.ExistAccount(dto.Account))//呼叫介面裡的方法傳入RegisterDto中的帳號
 			{
 				//丟出異常或傳回 Result

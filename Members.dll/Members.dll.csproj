@@ -55,11 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Dtos\MembersEditDto.cs" />
-    <Compile Include="Models\Dtos\MembersIndexDto.cs" />
+    <Compile Include="Models\Dtos\Member\MembersEditDto.cs" />
+    <Compile Include="Models\Dtos\Member\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
-    <Compile Include="Models\Dtos\StaffsCreateDto.cs" />
-    <Compile Include="Models\Dtos\StaffsIndexDto.cs" />
+    <Compile Include="Models\Dtos\Staff\ForgetPasswordDto.cs" />
+    <Compile Include="Models\Dtos\Staff\StaffsCreateDto.cs" />
+    <Compile Include="Models\Dtos\Staff\StaffsIndexDto.cs" />
     <Compile Include="Models\Exts\MembersExts.cs" />
     <Compile Include="Models\Exts\RegisterExts.cs" />
     <Compile Include="Models\Exts\StaffsExts.cs" />

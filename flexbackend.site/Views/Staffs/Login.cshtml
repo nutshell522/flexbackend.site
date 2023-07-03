@@ -28,14 +28,12 @@
 
         <div class="mb-3">
             <input type="submit" value="登入" class="btn btn-primary" />
-            <input type="submit" value="忘記密碼" class="btn btn-danger" />
+            <a href="@Url.Action("ForgetPassword", "Staffs", new { area = "" })" class="btn btn-danger text-white">忘記密碼</a>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

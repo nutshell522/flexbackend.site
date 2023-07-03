@@ -1,9 +1,11 @@
 ﻿using EFModels.EFModels;
 using Members.dll.Models.Dtos;
 using Members.dll.Models.ViewsModels;
+using Members.dll.Models.ViewsModels.Staff;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,31 @@ namespace Members.dll.Models.Exts
 {
 	public static class StaffsExts
 	{
+		public static ForgetPasswordDto ToForgetPasswordDto(this ForgetPasswordVM vm)
+		{
+			return new ForgetPasswordDto
+			{
+				Account = vm.Account,
+				NewPassword = vm.NewPassword,
+				ConfirmPassword = vm.ConfirmPassword
+			};
+		}
+
+		public static StaffsCreateDto ToStaffsCreateDto(this StaffsCreateVM vm)
+		{
+			return new StaffsCreateDto()
+			{
+				Department = vm.Department,
+				JobTitle = vm.JobTitle,
+				Name = vm.Name,
+				Age = vm.Age,
+				Birthday = vm.Birthday,
+				Gender = vm.Gender,
+				Email = vm.Email,
+				StaffPermission = vm.StaffPermission
+			};
+		}
+
 		public static StaffsIndexVM ToStaffsIndexVM(this StaffsIndexDto dto)
 		{
 			return new StaffsIndexVM()
@@ -43,19 +70,6 @@ namespace Members.dll.Models.Exts
 			};
 		}
 
-		public static StaffsCreateDto ToStaffsCreateDto(this StaffsCreateVM vm)
-		{
-			return new StaffsCreateDto()
-			{
-				Department = vm.Department,
-				JobTitle = vm.JobTitle,
-				Name = vm.Name,
-				Age = vm.Age,
-				Birthday = vm.Birthday,
-				Gender = vm.Gender,
-				Email = vm.Email,
-				StaffPermission = vm.StaffPermission
-			};
-		}
+
 	}
 }

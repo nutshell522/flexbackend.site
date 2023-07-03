@@ -21,6 +21,17 @@ namespace Members.dll.Models.lnfra.DapperRepositories
 			_connStr = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;//不應該寫在這裡
 		}
 
+		//忘記密碼
+		public void SaveNewPassword(string newpassword,string account)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				string sql = @"update Staffs set [Password] = @Password where Account = @Account;";
+				conn.Execute(sql, new { Password = newpassword, Account = account });
+			}
+		}
 
 		public void CreateStaff(StaffsCreateDto dto)
 		{
@@ -34,6 +45,7 @@ VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Mobile,@Account,@Password,@fk_Perm
 			}
 
 		}
+
 
 		//Read
 		IEnumerable<StaffsIndexDto> IStaffRepository.GetStaffs()
