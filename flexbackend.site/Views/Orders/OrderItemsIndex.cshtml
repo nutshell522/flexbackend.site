@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Orders.ViewModels.OrdersIndexVM>
+﻿@model IEnumerable<Orders.ViewModels.OrderItemsVM>
 
 @{
-    ViewBag.Title = "OrdersIndex";
+    ViewBag.Title = "OrderItemsIndex";
 }
 
-<h2>訂單管理</h2>
+<h2>OrderItemsIndex</h2>
 
 <p>
     
@@ -21,7 +21,7 @@
 
             
             <div class="right">
-                <a href="@Url.Action("Create")" class="btn btn-primary text-light">
+                <a href="@Url.Action("Create")" class="btn btn-primary">
                     <i class="bi bi-plus-lg"></i> 新增
                 </a>
             </div>
@@ -42,54 +42,31 @@
                 </label>
             </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.ordertime)
+                    @Html.DisplayNameFor(model => model.order_Id)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.fk_member_Id)
-                                </th><th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.total_price)
+                    @Html.DisplayNameFor(model => model.product_name)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.total_quantity)
+                    @Html.DisplayNameFor(model => model.fk_typeId)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.logistics_company_Id)
+                    @Html.DisplayNameFor(model => model.per_price)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.order_status_Id)
+                    @Html.DisplayNameFor(model => model.quantity)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.pay_method_Id)
+                    @Html.DisplayNameFor(model => model.discount_name)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.pay_status_Id)
+                    @Html.DisplayNameFor(model => model.subtotal)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.coupon_name)
+                    @Html.DisplayNameFor(model => model.discount_subtotal)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.coupon_discount)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.freight)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.cellphone)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.receipt)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.receiver)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.recipient_address)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.order_description)
-                </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.close_Id)
+                    @Html.DisplayNameFor(model => model.Items_description)
                 </th>
                         <th>管理</th>
             </tr>
@@ -113,67 +90,43 @@
 
     @foreach (var item in Model) {
         <tr>
-            @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-            <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ordertime)
+        @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
+        <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.order_Id)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fk_member_Id)
+                    <td>
+                @Html.DisplayFor(modelItem => item.product_name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.total_price)
+                    <td>
+                @Html.DisplayFor(modelItem => item.fk_typeId)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.total_quantity)
+                    <td>
+                @Html.DisplayFor(modelItem => item.per_price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.logistics_company_Id)
+                    <td>
+                @Html.DisplayFor(modelItem => item.quantity)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.order_status_Id)
+                    <td>
+                @Html.DisplayFor(modelItem => item.discount_name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pay_method_Id)
+                    <td>
+                @Html.DisplayFor(modelItem => item.subtotal)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pay_status_Id)
+                    <td>
+                @Html.DisplayFor(modelItem => item.discount_subtotal)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.coupon_name)
+                    <td>
+                @Html.DisplayFor(modelItem => item.Items_description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.coupon_discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.freight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cellphone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.receipt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.receiver)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.recipient_address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.order_description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.close_Id)
-            </td>
-            <td>
+                <td>
                 <div class="manage-btn-container">
                     <a href="@Url.Action("Edit", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                     <a href="@Url.Action("Details", new { id = item.Id  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                     <a href="@Url.Action("Delete", new { id = item.Id  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                 </div>
             </td>
-        </tr>
+            </tr>
     }
     </tbody>
     </table>
