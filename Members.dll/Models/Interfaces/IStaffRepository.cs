@@ -15,5 +15,6 @@ namespace Members.dll.Models.Interfaces
 		void SaveNewPassword(string newpassword,string account);//收到變更後的密碼
 		void CreateStaff(StaffsCreateDto dto);//新增員工資料
 		IEnumerable<StaffsIndexDto> GetStaffs();//取得員工資料
+		void DeleteStaff(int staffId);
 	}
 }

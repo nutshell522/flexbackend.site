@@ -74,6 +74,13 @@ namespace Members.dll.Models.Services
 			return staffsIndexVM;
 		}
 
-
+		public Result DeleteStaff(int staffId)
+		{
+			var db = new AppDbContext();
+			var result = db.Staffs.Where(s => s.StaffId == staffId).FirstOrDefault();
+			_repo.DeleteStaff(staffId);
+			//db.Staffs.Remove(result);
+			return Result.Fail("找不到此員工");
+		}
 	}
 }

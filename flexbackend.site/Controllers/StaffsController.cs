@@ -15,6 +15,9 @@ using System.Web.UI.WebControls;
 using EFModels.EFModels;
 using System.Web.Security;
 using Members.dll.Models.ViewsModels.Staff;
+using System.Net;
+using Microsoft.Ajax.Utilities;
+using System.EnterpriseServices;
 
 namespace flexbackend.site.Controllers
 {
@@ -27,6 +30,38 @@ namespace flexbackend.site.Controllers
 		{
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
+		}
+
+		//刪除員工
+		public ActionResult DeleteStaff(int? staffId)
+		{
+			var db = new AppDbContext();
+
+			//如果staffId為空，返回404錯誤碼
+			if (staffId == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Staff staff = db.Staffs.Find(staffId);
+			if (staff == null)
+			{
+				return HttpNotFound();
+			}
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteStaff(int staffId)
+		{
+			var db = new AppDbContext();
+			StaffService service = GetStaffRepository();
+			service.DeleteStaff(staffId);
+
+			//Staff staff = db.Staffs.Find(staffId);
+			//db.Staffs.Remove(staff);
+			//db.SaveChanges();
+			return RedirectToAction("StaffList");
 		}
 
 		//忘記密碼

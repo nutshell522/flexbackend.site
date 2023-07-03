@@ -7,6 +7,8 @@ namespace EFModels.EFModels
 {
 	public partial class AppDbContext : DbContext
 	{
+		public object result;
+
 		public AppDbContext()
 			: base("name=AppDbContext")
 		{

@@ -22,7 +22,7 @@ namespace Members.dll.Models.lnfra.DapperRepositories
 		}
 
 		//忘記密碼
-		public void SaveNewPassword(string newpassword,string account)
+		public void SaveNewPassword(string newpassword, string account)
 		{
 			using (var conn = new SqlConnection(_connStr))
 			{
@@ -61,6 +61,19 @@ JOIN StaffPermissions as SP ON S.fk_PermissionsId=SP.PermissionsId;";
 			using (var conn = new SqlConnection(_connStr))
 			{
 				return conn.Query<StaffsIndexDto>(sql);
+			}
+		}
+
+		public void DeleteStaff(int staffId)
+		{
+
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				string sql = @"DELETE FROM Staffs
+WHERE StaffId = @StaffId;";
+				conn.Execute(sql, new { StaffId = staffId });
 			}
 		}
 	}

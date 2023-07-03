@@ -35,10 +35,11 @@
 	*沒有將密碼雜湊
 	*套用版型以後就會無法登入
 
-[working on]忘記密碼
+[v]忘記密碼
 	StaffsController add ForgetPassword() action , add ForgetPassWord.cshtml
-
-[-]修改密碼
+	...加入筆記
+	
+	*密碼存入資料庫加入雜湊部分
 
 
 [-]大頭照
