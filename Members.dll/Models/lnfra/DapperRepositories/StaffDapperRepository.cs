@@ -9,6 +9,8 @@ using Members.dll.Models.Interfaces;
 using Members.dll.Models.Dtos;
 using System.Configuration;
 using Members.dll.Models.ViewsModels;
+using Members.dll.Models.Dtos.Staff;
+using System.Security.Principal;
 
 namespace Members.dll.Models.lnfra.DapperRepositories
 {
@@ -46,7 +48,6 @@ VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Mobile,@Account,@Password,@fk_Perm
 
 		}
 
-
 		//Read
 		IEnumerable<StaffsIndexDto> IStaffRepository.GetStaffs()
 		{
@@ -66,7 +67,6 @@ JOIN StaffPermissions as SP ON S.fk_PermissionsId=SP.PermissionsId;";
 
 		public void DeleteStaff(int staffId)
 		{
-
 			using (var conn = new SqlConnection(_connStr))
 			{
 				conn.Open();
@@ -76,5 +76,106 @@ WHERE StaffId = @StaffId;";
 				conn.Execute(sql, new { StaffId = staffId });
 			}
 		}
+
+		public StaffDetailDto StaffDetail(int staffId)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				string sql = @"SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Mobile,Email,Birthday,LevelName,DueDate
+FROM Staffs as S
+JOIN Departments as D ON S.fk_DepartmentId=D.DepartmentId
+JOIN JobTitles as J ON S.fk_TitleId=J.TitleId
+JOIN StaffPermissions as SP ON S.fk_PermissionsId=SP.PermissionsId
+WHERE StaffId=@staffId;";
+				return conn.QueryFirstOrDefault<StaffDetailDto>(sql, new { StaffId = staffId });
+			}
+		}
+
+		//		public void EditStaff(EditStaffDto dto)
+		//		{
+		//			using (var conn = new SqlConnection(_connStr))
+		//			{
+		//				conn.Open();
+
+		//				string sql = @"UPDATE Staffs
+		//SET 
+		//    Department = @Department,
+		//    JobTitle = @TitleName,
+		//    [Name] = @Name,
+		//    Age = @Age,
+		//    Gender = @Gender,
+		//    Mobile = @Mobile,
+		//    Email = @Email,
+		//    Birthday = @Birthday,
+		//    LevelName = @LevelName,
+		//    DueDate = @DueDate
+		//FROM Staffs as S
+		//JOIN Departments as D ON S.fk_DepartmentId = D.DepartmentId
+		//JOIN JobTitles as J ON S.fk_TitleId = J.TitleId
+		//JOIN StaffPermissions as SP ON S.fk_PermissionsId = SP.PermissionsId
+		//WHERE StaffId = @staffId;";
+		//				conn.Execute(sql,dto);
+		//			}
+		//		}
+		public EditStaffDto EditStaff(EditStaffDto dto)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				// 使用 JOIN 子句執行 SELECT 語句
+				string selectSql = @"
+SELECT StaffId, D.DepartmentName AS Department, J.TitleName, S.Name, S.Age, S.Gender, S.Mobile, S.Email, S.Birthday, S.LevelName, S.DueDate
+FROM Staffs AS S
+JOIN Departments AS D ON S.fk_DepartmentId = D.DepartmentId
+JOIN JobTitles AS J ON S.fk_TitleId = J.TitleId
+JOIN StaffPermissions AS SP ON S.fk_PermissionsId = SP.PermissionsId
+WHERE StaffId = @staffId;";
+				var staffData = conn.QueryFirstOrDefault<EditStaffDto>(selectSql, new { dto });
+
+				if (staffData != null)
+				{
+					// 手動構建 UPDATE 語法
+					string updateSql = @"
+UPDATE Staffs
+SET 
+    Department = @Department,
+    JobTitle = @TitleName,
+    [Name] = @Name,
+    Age = @Age,
+    Gender = @Gender,
+    Mobile = @Mobile,
+    Email = @Email,
+    Birthday = @Birthday,
+    LevelName = @LevelName,
+    DueDate = @DueDate
+WHERE StaffId = @StaffId;";
+
+					// 使用 Dapper 的 conn.Execute() 方法執行 UPDATE 語法
+					conn.Execute(updateSql, new
+					{
+						Department = staffData.Department,
+						TitleName = staffData.TitleName,
+						Name = staffData.Name,
+						Age = staffData.Age,
+						Gender = staffData.Gender,
+						Mobile = staffData.Mobile,
+						Email = staffData.Email,
+						Birthday = staffData.Birthday,
+						LevelName = staffData.LevelName,
+						DueDate = staffData.DueDate,
+						StaffId = staffData.StaffId
+					});
+
+				}
+
+				// 返回修改後的 staffData 物件
+				return staffData;
+			}
+		}
+
+
 	}
 }

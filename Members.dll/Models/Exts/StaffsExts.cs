@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Members.dll.Models.Dtos;
+using Members.dll.Models.Dtos.Staff;
 using Members.dll.Models.ViewsModels;
 using Members.dll.Models.ViewsModels.Staff;
 using System;
@@ -70,6 +71,38 @@ namespace Members.dll.Models.Exts
 			};
 		}
 
+		public static StaffDetailVM ToStaffDetailVM(this StaffDetailDto dto)
+		{
+			return new StaffDetailVM()
+			{
+				StaffId = dto.StaffId,
+				Department = dto.Department,
+				TitleName = dto.TitleName,
+				Gender = dto.Gender,
+				Name = dto.Name,
+				Age = dto.Age,
+				Email = dto.Email,
+				StaffPermission = dto.LevelName,
+				DueDate = dto.DueDate,
+			};
+		}
 
+		public static EditStaffDto ToStaffEditDto(this EditStaffVM vm)
+		{
+			return new EditStaffDto()
+			{
+				StaffId = vm.StaffId,
+				Name = vm.Name,
+				Age = vm.Age,
+				Gender = vm.Gender,
+				Mobile = vm.Mobile,
+				Email = vm.Email,
+				Birthday = vm.Birthday,
+				DueDate = vm.DueDate,
+				Department = vm.Department,
+				TitleName = vm.TitleName,
+				LevelName = vm.LevelName
+			};
+		}
 	}
 }

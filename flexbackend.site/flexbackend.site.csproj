@@ -2336,6 +2336,9 @@
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Staffs\EditPassword.cshtml" />
+    <Content Include="Views\Staffs\GetStaffDetail.cshtml" />
+    <Content Include="Views\Staffs\EditStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

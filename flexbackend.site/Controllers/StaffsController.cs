@@ -31,6 +31,47 @@ namespace flexbackend.site.Controllers
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
 		}
+		//編輯員工資料
+		public ActionResult EditStaff(int staffId)
+		{
+			if (staffId == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			
+			return View();
+		}
+		[HttpPost]
+		public ActionResult EditStaff(EditStaffVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ResetStaff(vm);
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+
+			return RedirectToAction("GetStaffDetail");
+		}
+
+		private Result ResetStaff(EditStaffVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			var a = service.ResetStaff(vm.ToStaffEditDto());
+			return Result.Success();
+		}
+
+		//檢視某筆員工
+		public ActionResult GetStaffDetail(int staffId)
+		{
+			if (staffId == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			StaffService service = GetStaffRepository();
+			return View(service.GetStaffDetail(staffId).ToStaffDetailVM());
+		}
 
 		//刪除員工
 		public ActionResult DeleteStaff(int staffId)
@@ -64,6 +105,25 @@ namespace flexbackend.site.Controllers
 
 		//	return new EmptyResult();
 		//}
+
+		public ActionResult EditPassword()
+		{
+			return View();
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize]
+		public ActionResult EditPassword(ForgetPasswordVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ResetPassword(vm);
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+			return RedirectToAction("Login");
+		}
 
 		//忘記密碼
 		public ActionResult ForgetPassword()
@@ -186,6 +246,7 @@ namespace flexbackend.site.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken] //防止跨網站偽造請求的攻擊
+		[Authorize]
 		public ActionResult CreateStaff(StaffsCreateVM vm)
 		{
 			Session["Account"] = "Account";
@@ -223,12 +284,11 @@ namespace flexbackend.site.Controllers
 		}
 
 		//Read
-
+		[Authorize]
 		public ActionResult StaffList()
 		{
 			StaffService service = GetStaffRepository();
 			return View(service.GetStaffs());//return View (model)
 		}
-
 	}
 }

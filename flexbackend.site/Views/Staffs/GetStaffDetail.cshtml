@@ -1,0 +1,90 @@
+﻿@model Members.dll.Models.ViewsModels.Staff.StaffDetailVM
+
+@{
+    ViewBag.Title = "GetStaffDetail";
+}
+
+<h2>會員詳細資料</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StaffId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StaffId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TitleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TitleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StaffPermission)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StaffPermission)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("編輯", "EditStaff", new { id = Model.StaffId }) |
+    @Html.ActionLink("返回會員名單總覽", "StaffList")
+</p>

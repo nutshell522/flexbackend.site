@@ -4,7 +4,7 @@
     ViewBag.Title = "StaffList";
 }
 
-<h2>StaffList</h2>
+<h2>員工名單總覽</h2>
 
 <p>
 
@@ -122,9 +122,9 @@
                     </td>
                     <td>
                         <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="DeleteStaff?staffId=@item.StaffId" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                            <a href="@Url.Action("EditStaff", new {staffId=item.StaffId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("GetStaffDetail", new {staffId=item.StaffId })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                            <a href="DeleteStaff?staffId=@item.StaffId" onclick="confirmDelete(event,'@item.StaffId')" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -134,7 +134,15 @@
 </div>
 @section Scripts{
     <script>
+        function confirmDelete(event, staffId) {
+            event.preventDefault(); // 阻止連結的默認行為
+
+            if (confirm("確定要刪除這個員工嗎？")) {
+                window.location.href = "DeleteStaff?staffId=" + staffId;
+            }
+        }
         window.onload = function () {
+
             // 替排序按鈕寫入排序箭頭出現事件
             document.querySelectorAll(".sort-btn").forEach(item => {
                 item.addEventListener("click", function () {

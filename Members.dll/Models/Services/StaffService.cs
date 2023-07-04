@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Members.dll.Models.Dtos;
+using Members.dll.Models.Dtos.Staff;
 using Members.dll.Models.Exts;
 using Members.dll.Models.Interfaces;
 using Members.dll.Models.lnfra;
@@ -79,8 +80,37 @@ namespace Members.dll.Models.Services
 			var db = new AppDbContext();
 			var result = db.Staffs.Where(s => s.StaffId == staffId).FirstOrDefault();
 			_repo.DeleteStaff(staffId);
-			//db.Staffs.Remove(result);
 			return Result.Fail("找不到此員工");
+		}
+
+		public StaffDetailDto GetStaffDetail(int staffId)
+		{
+			var result = _repo.StaffDetail(staffId);
+			if (result == null)
+			{
+				return new StaffDetailDto();
+			}
+			StaffDetailDto staffDetailDto = _repo.StaffDetail(staffId);
+			return staffDetailDto;
+		}
+
+		//public EditStaffDto GetEditStaff(int staffId)
+		//{
+		//	var result = _repo.(staffId);
+		//	if (result == null)
+		//	{
+		//		return new StaffDetailDto();
+		//	}
+		//	StaffDetailDto staffDetailDto = _repo.StaffDetail(staffId);
+		//	return staffDetailDto;
+		//}
+
+		public EditStaffDto ResetStaff(EditStaffDto dto)
+		{
+			//todo編輯的商業邏輯
+
+			EditStaffDto editStaffDto = _repo.EditStaff(dto);
+			return editStaffDto;
 		}
 	}
 }

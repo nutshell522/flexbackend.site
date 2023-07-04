@@ -12,7 +12,7 @@
 	add StaffsIndexVM
 	add StaffList.cshtml
 
-[v]新增員工
+[v]新增員工 / 註冊員工帳號
 	StaffsController add CreateStaff()*2 Get/Post ,傳入StaffsCreateVM
 					 通過驗證VM->Dto傳入service
 	add IStaffRepository 準備接收StaffService傳入的Dto
@@ -20,7 +20,8 @@
 	add StaffDapperRepository : IStaffRepository 收到 IStaffRepository 傳來的Dto 存入資料庫
 
 	*資料格式還沒有判斷
-	*新增成功回到總覽畫面
+	*新增成功沒有回到總覽畫面
+	*註冊員工帳號是不是要跟新增員工分開
 
 [v]員工登入/登出
 	add loginVM
@@ -46,6 +47,7 @@
 	
 	*密碼存入資料庫加入雜湊部分
 
+
 [v]刪除員工
 	StaffList.cshtml , <a href="DeleteStaff?staffId=@item.StaffId" class="btn-del"><i class="bi bi-trash-fill"></i></a>
 	StaffsController add DeleteStaff(int staffId) action , 檢查是否收到 StaffList.cshtml 傳來的 staffId
@@ -54,5 +56,11 @@
 	StaffDapperRepository : IStaffRepository , DeleteStaff(int staffId)
 
 	*考慮改成接收ajax
+
+[v]變更密碼
+[v]查詢員工
+	撈出一筆員工
+
+[working on]編輯員工
 
 [-]大頭照

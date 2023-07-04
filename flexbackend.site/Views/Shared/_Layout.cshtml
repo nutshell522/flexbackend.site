@@ -79,7 +79,7 @@
             </li>
             <li>
                 <a href="javascript:;" class="collapse-btn" id="members-btn" data-id="#members-item">
-                    <div><i class="bi bi-people-fill"></i><span>會員及顧客</span></div>
+                    <div><i class="bi bi-people-fill"></i><span>會員管理</span></div>
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="members-item">
@@ -127,7 +127,7 @@
             </li>
             <li>
                 <a href="javascript:;" class="collapse-btn" id="employee-btn" data-id="#employee-item">
-                    <div><i class="bi bi-shop"></i><span>員工管理</span></div>
+                    <div><i class="bi bi-shop"></i><span>內部管理</span></div>
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="employee-item">
@@ -143,7 +143,7 @@
                 if (User.Identity.IsAuthenticated)
                 {
                     <li>
-                        <a href="javascript:;">
+                        <a href="@Url.Action("EditPassword", "Staffs", new { area = "" })">
                             <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
                         </a>
                     </li>

@@ -58,7 +58,9 @@
     <Compile Include="Models\Dtos\Member\MembersEditDto.cs" />
     <Compile Include="Models\Dtos\Member\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
+    <Compile Include="Models\Dtos\Staff\EditStaffDto.cs" />
     <Compile Include="Models\Dtos\Staff\ForgetPasswordDto.cs" />
+    <Compile Include="Models\Dtos\Staff\StaffDetailDto.cs" />
     <Compile Include="Models\Dtos\Staff\StaffsCreateDto.cs" />
     <Compile Include="Models\Dtos\Staff\StaffsIndexDto.cs" />
     <Compile Include="Models\Exts\MembersExts.cs" />
@@ -72,11 +74,13 @@
     <Compile Include="Models\lnfra\Result.cs" />
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
+    <Compile Include="Models\ViewsModels\Staff\EditStaffVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\ForgetPasswordVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\LoginVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MembersEditVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MembersIndexVM.cs" />
     <Compile Include="Models\ViewsModels\RegisterVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\StaffDetailVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\StaffsCreateVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\StaffsIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
