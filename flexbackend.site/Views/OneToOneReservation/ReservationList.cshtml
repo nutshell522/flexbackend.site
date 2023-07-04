@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Flex_Activity.dll.Models.ViewModels.DapperVM.OneToOneReservationDapperVM>
+﻿@model IEnumerable<Flex_Activity.dll.Models.ViewModels.DapperVM.ReservationListVM>
 
 @{
-    ViewBag.Title = "一對一預約管理";
+    ViewBag.Title = "ReservationList";
 }
 
-<h2>Index</h2>
+<h2>ReservationList</h2>
 
 <p>
     
@@ -42,13 +42,22 @@
                 </label>
             </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SpeakerId)
+                    @Html.DisplayNameFor(model => model.MemberId)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SpeakerName)
+                    @Html.DisplayNameFor(model => model.Name)
                 </th>
                                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.FieldName)
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.ReservationStartTime)
+                </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.BranchName)
+                </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.ReservationStatusDescription)
                 </th>
                         <th>管理</th>
             </tr>
@@ -75,19 +84,28 @@
         @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
         <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
                     <td>
-                @Html.DisplayFor(modelItem => item.SpeakerId)
+                @Html.DisplayFor(modelItem => item.MemberId)
             </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.SpeakerName)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.FieldName)
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.ReservationStartTime)
+            </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.BranchName)
+            </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.ReservationStatusDescription)
             </td>
                 <td>
                 <div class="manage-btn-container">
-                    @*<a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>*@
-                    <a href="@Url.Action("ReservationList", new {id=item.SpeakerId })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                    @*<a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>*@
+                    <a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                    <a href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                    <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                     
                 </div>
             </td>

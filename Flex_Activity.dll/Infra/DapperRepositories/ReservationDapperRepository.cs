@@ -33,6 +33,20 @@ Join SpeakerFields ON Speakers.fk_SpeakerFieldId = SpeakerFields.FieldId
 			}
 		}
 
-	
+		public IEnumerable<ReservationListDto> GetAll(int speakerId)
+		{
+			string sql = @"SELECT MemberId, Name, Mobile, ReservationStartTime, BranchName, ReservationStatusDescription
+FROM OneToOneReservations
+JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
+JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId
+JOIN ReservationStatuses ON OneToOneReservations.fk_ReservationStatusId = ReservationStatuses.ReservationId
+Where fk_ReservationSpeakerId = @speakerId
+";
+
+			using (var conn = new SqlConnection(_connStr))
+			{
+				return conn.Query<ReservationListDto>(sql, new {speakerId = speakerId});
+			}
+		}
 	}
 }

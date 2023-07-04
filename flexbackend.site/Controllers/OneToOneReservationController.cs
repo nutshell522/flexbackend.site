@@ -17,12 +17,24 @@ namespace flexbackend.site.Controllers
         {
             IReservationRepository repo = new ReservationDapperRepository();
             OneToOneReservationServices service = new OneToOneReservationServices(repo);
+
             var reservations =service.GetAll();
-            var vm = reservations.Select(r => r.ToIndexVM());
-           
+            var vm = reservations.Select(r => r.ToIndexVM());       
             
             return View(vm);
         }
+
+        public ActionResult ReservationList(int id)
+        {
+			IReservationRepository repo = new ReservationDapperRepository();
+			OneToOneReservationServices service = new OneToOneReservationServices(repo);
+
+            var reservations = service.GetAll(id);
+            var vm = reservations.Select(r => r.ToIndexVM());
+
+            return View(vm);
+
+		}
     }
 }
 

@@ -22,5 +22,18 @@ namespace Flex_Activity.dll.Models.Exts
 
 			};
 		}
+
+		public static ReservationListVM ToIndexVM(this ReservationListDto dto)
+		{
+			return new ReservationListVM
+			{
+				MemberId = dto.MemberId,
+				Name = dto.Name,
+				Mobile = dto.Mobile,
+				ReservationStartTime = dto.ReservationStartTime,
+				BranchName = dto.BranchName,
+				ReservationStatusDescription = dto.ReservationStatusDescription
+			};
+		}
 	}
 }

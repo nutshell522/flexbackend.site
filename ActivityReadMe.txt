@@ -133,3 +133,18 @@
 	[ v ]Infra下面建立DapperRepositories資料夾、DapperRepository
 	[ v ]Services
 	[ v ]Controller的Action
+
+	【一對一預約 Index 完成】
+
+
+
+[ v ]一對一預約 講師預約紀錄 ReservationList
+	[ v ] ReservationList Dto
+	[ v ] ReservationList VM
+	[ v ]Dto 轉 VM 的 擴充方法
+	[ v ]IRepository
+	[ v ]DapperRepository
+	[ v ]Services
+	[ v ]Controller的Action
+
+	【一對一預約 講師預約紀錄 ReservationList 完成】

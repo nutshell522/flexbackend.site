@@ -22,5 +22,13 @@ namespace Flex_Activity.dll.Services
             var reservations =_repo.GetAll();
             return reservations.ToList();
         }
+
+        public List<ReservationListDto> GetAll(int speakerId)
+        {
+            var reservations = _repo.GetAll(speakerId);
+            return reservations.ToList();
+
+        }
+
     }
 }

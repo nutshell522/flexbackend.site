@@ -10,5 +10,7 @@ namespace Flex_Activity.dll.Interface
 	public interface IReservationRepository
 	{
 		IEnumerable<OneToOneReservationIndexDto> GetAll();
+
+		IEnumerable<ReservationListDto> GetAll(int speakerId);
 	}
 }
