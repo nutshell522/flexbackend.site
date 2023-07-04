@@ -11,11 +11,12 @@ namespace flexbackend.site.Controllers
 {
 	public class OrdersController : Controller
 	{
-		// GET: Orders
-		public ActionResult OrdersIndex(string searchString)
+        // GET: Orders
+        public ActionResult OrdersIndex(string searchString)
 		{
 			IEnumerable<OrdersIndexVM> orders = GetOrders(searchString);
 			return View(orders);
+
 		}
 
 		[HttpPost]
@@ -203,12 +204,13 @@ namespace flexbackend.site.Controllers
 		}
 
 
-		public ActionResult OrderItemsIndex(int id)
-		{
-			IEnumerable<OrderItemsVM> orderItems = GetOrderItemsIndex(id);
-			return View(orderItems);
-		}
-		private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
+        public ActionResult OrderItemsIndex(int id)
+        {
+            IEnumerable<OrderItemsVM> orderItems = GetOrderItemsIndex(id);
+            TempData["OrderId"] = id; // 將 id 儲存在 TempData 中
+            return View(orderItems);
+        }
+        private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
 		{
 			var db = new AppDbContext();
 
@@ -231,38 +233,40 @@ namespace flexbackend.site.Controllers
 			.ToList();
 		}
 
-		public ActionResult CreateOrderItems()
-		{ 
-			return View();
-		}
-		[HttpPost]
+        public ActionResult CreateOrderItems()
+        {
+            //int orderId = (int)TempData["OrderId"]; // 從 TempData 中讀取值
+            //ViewBag.OrderId = orderId;
+            return View();
+        }
+        [HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult CreateOrderItems(OrderItemsVM vm)
-		{
-			if (ModelState.IsValid == false) return View(vm);
+        public ActionResult CreateOrderItems(OrderItemsVM vm)
+        {
+            int orderId = (int)TempData["OrderId"];
+            //int orderId = ViewBag.OrderId;
+            if (ModelState.IsValid == false) return View(vm);
 
+            (bool IsSuccess, string ErrorMessage) result = CreatenewOrderItems(vm, orderId);
 
-			(bool IsSuccess, string ErrorMessage) result = CreatenewOrderItems(vm);
-
-			if (result.IsSuccess)
-			{
-				return RedirectToAction("OrderItemsIndex");
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return View(vm);
-			}
-		}
-
-		private (bool IsSuccess, string ErrorMessage) CreatenewOrderItems(OrderItemsVM vm)
+            if (result.IsSuccess)
+            {
+                return RedirectToAction("OrderItemsIndex", orderId);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
+                return View(vm);
+            }
+        }
+        private (bool IsSuccess, string ErrorMessage) CreatenewOrderItems(OrderItemsVM vm, int orderId)
 		{
 			var db = new AppDbContext();
 
 			var orderitems = new orderItem
 			{
 				Id = vm.Id,
-				order_Id = vm.order_Id,
+				order_Id = orderId,
 				product_name = vm.product_name,
 				fk_typeId = vm.fk_typeId,
 				per_price = vm.per_price,
