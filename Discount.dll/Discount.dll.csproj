@@ -65,7 +65,9 @@
     <Compile Include="Models\Infra\Result.cs" />
     <Compile Include="Models\Interfaces\IDiscountRepository.cs" />
     <Compile Include="Models\Interfaces\IProjectTagRepository.cs" />
+    <Compile Include="Models\Services\DiscountService.cs" />
     <Compile Include="Models\Services\ProjectTagService.cs" />
+    <Compile Include="Models\ViewModels\DiscountIndexVM.cs" />
     <Compile Include="Models\ViewModels\ProductInTagVM.cs" />
     <Compile Include="Models\ViewModels\ProjectTagIndexVM.cs" />
     <Compile Include="Models\ViewModels\ProjectTagItemVM.cs" />

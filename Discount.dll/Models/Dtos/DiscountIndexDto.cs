@@ -19,6 +19,6 @@ namespace Discount.dll.Models.Dtos
         public int ConditionValue { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public int OrderBy { get; set; }
+        public int? OrderBy { get; set; }
     }
 }

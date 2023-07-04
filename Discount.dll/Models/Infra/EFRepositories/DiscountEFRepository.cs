@@ -21,20 +21,39 @@ namespace Discount.dll.Models.Infra.EFRepositories
         }
         public IEnumerable<DiscountIndexDto> GetDiscounts(bool searchExpired = false, string searchDiscountName = null)
         {
-            IQueryable<Discount> query = _db.Discounts;
+            var  query = _db.Discounts.AsQueryable();
 
-            return _db.Discounts
-                .AsNoTracking()
+			if (!searchExpired)
+			{
+				DateTime today = DateTime.Today;
+
+				query = query.Where(d => d.EndDate == null || d.EndDate >= today);
+			}
+
+			// 根据传入的searchDiscountName参数进行模糊搜索
+			if (!string.IsNullOrEmpty(searchDiscountName))
+			{
+				query = query.Where(d => d.DiscountName.Contains(searchDiscountName));
+			}
+
+			return query
+				.AsNoTracking()
                 .Include(p => p.ProjectTag)
                 .OrderBy(p => p.OrderBy)
                 .Select(p => new DiscountIndexDto
                 {
-                    Id = p.Id,
-                    Name = p.Name,
-                    CategoryName = p.Category.Name,
-                    Price = p.Price,
-                    ProductImage = p.ProductImage,
-                    Stock = p.Stock,
+                    DiscountId = p.DiscountId,
+                    DiscountName = p.DiscountName,
+                    DiscountDescription = p.DiscountDescription,
+                    DiscountType = p.DiscountType,
+                    DiscountValue = p.DiscountValue,
+                    ProjectTagId = p.ProjectTag.ProjectTagId,
+                    ProjectTagName = p.ProjectTag.ProjectTagName,
+                    ConditionType = p.ConditionType,
+                    ConditionValue = p.ConditionValue,
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    OrderBy = p.OrderBy
                 });
         }
 

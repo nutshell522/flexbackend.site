@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "折扣管理";
+}
+@section Styles{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <style>
+        thead {
+            background-color: #0B284A;
+            color: white;
+        }
+
+        tr {
+            border: #ddf;
+        }
+    </style>
+}
+<h2>折扣管理</h2>
+
+<div class="search-bar-container mb-4 d-flex">
+    <div class="left w-50 me-auto">
+        <div class="w-50">
+            <div class="input-group">
+                <input class="form-control search-bar" type="text" placeholder="搜尋...">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="right">
+        <a href="@Url.Action("Create")" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> 新增
+        </a>
+    </div>
+</div>
+<table class="w-100">
+    <thead>
+        <tr>
+            <th class="th-col-0">
+                <label class="form-check-label">
+                    <input class="form-check-input check-all" type="checkbox">
+                </label>
+            </th>
+            <th class="th-col-1">
+                折扣名稱
+            </th>
+            <th class="th-col-1">
+                折扣描述
+            </th>
+            <th class="th-col-1">
+                對應商品
+            </th>
+            <th class="th-col-1">
+                優惠條件
+            </th>
+            <th class="th-col-1">
+                折扣方式
+            </th>
+            <th class="th-col-1">
+                開始時間
+            </th>
+            <th class="th-col-1">
+                結束時間
+            </th>
+            <th class="th-col-1">
+                狀態
+            </th>
+            <th class="th-col-1">
+                折扣優先順序
+            </th>
+            <th>管理</th>
+        </tr>
+    </thead>
+</table>
+@section Scripts{
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script>
+        $(function () {
+            getDatas();
+            function getDatas() {
+                $("table").dataTable({
+                    ajax: {
+                        type: "POST",
+                        url: `/Discount/GetDatas`,
+                        data: {
+                            searchExpired: false,
+                            searchDiscountName: null
+                        },
+                        dataSrc: function (data) {
+                            return data;
+                        },
+                    },
+                    columns: [
+                        {
+                            data: null,
+                            render: function (data) {
+                                return `<input class="form-check-input check-item" type="checkbox" data-id="${data.DiscountId}"></td>`;
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: "DiscountName"
+                        },
+                        {
+                            data: "DiscountDescription"
+                        },
+                        {
+                            data: "ProjectTagNameToShow"
+                        },
+                        {
+                            data: "ConditionValueStr"
+                        },
+                        {
+                            data: "DiscountValueStr"
+                        },
+                        {
+                            data: "StartDateStr"
+                        },
+                        {
+                            data: "EndDateStr"
+                        },
+                        {
+                            data: "DiscountName"
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                return `<span class="text-center ${data.Status == "進行中" ? "status-success" : (data.Status == "已過期" ? "status-dark" : "status-primary")}" >
+                                                    ${data.Status}
+                                                        </span >`;
+                            }
+                        },
+                        {
+                            data: "OrderBy"
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                             return `<div class="manage-btn-container">
+                                <a href="" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                <a href="" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+
+                            </div>`;
+                            },
+                            orderable: false
+                        }
+                    ],
+                    order: [
+                        [5, "desc"]
+                    ],
+                    language: {
+                        paginate: {
+                            previous: '<i class="bi bi-chevron-left"></i>',
+                            next: '<i class="bi bi-chevron-right"></i>'
+                        },
+                        info: "第 _START_ 到 _END_ 筆，總共 _TOTAL_ 筆",
+                    },
+                    dom: '1Brtip',
+                });
+            }
+        })
+    </script>
+}
