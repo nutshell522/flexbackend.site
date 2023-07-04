@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 
 namespace Flex_Activity.dll.Models.Exts
 {
@@ -130,6 +131,47 @@ namespace Flex_Activity.dll.Models.Exts
 				fk_SpeakerFieldId = entity.fk_SpeakerFieldId
 			};
 
+		}
+
+		public static SpeakerDetailDto ToDetailDto (this Speaker entity)
+		{
+			return new SpeakerDetailDto
+			{
+				SpeakerId = entity.SpeakerId,
+				SpeakerName = entity.SpeakerName,
+
+				SpeakerPhone = entity.SpeakerPhone,
+
+				fk_SpeakerFieldId = entity.fk_SpeakerFieldId,
+
+				SpeakerImg = entity.SpeakerImg,
+
+				fk_SpeakerBranchId = entity.fk_SpeakerBranchId,
+
+				SpeakerDescription = entity.SpeakerDescription
+
+			};
+
+		}
+
+		public static SpeakerDetailVM ToDetailVM (this SpeakerDetailDto dto)
+		{
+			return new SpeakerDetailVM
+			{
+				SpeakerId = dto.SpeakerId,
+				SpeakerName = dto.SpeakerName,
+
+				SpeakerPhone = dto.SpeakerPhone,
+
+				fk_SpeakerFieldId = dto.fk_SpeakerFieldId,
+
+				SpeakerImg = dto.SpeakerImg,
+
+				fk_SpeakerBranchId = dto.fk_SpeakerBranchId,
+
+				SpeakerDescription = dto.SpeakerDescription
+
+			};
 		}
 	}
 }

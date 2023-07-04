@@ -48,7 +48,7 @@
 [ v ] 把ViewBag的List寫成副程式，讓Action可以叫用它
 
 
-***【Activity的搜尋功能沒辦法記住歷史查詢過的字，待修正】***
+
 [ v ]Activity的搜尋完成，修正好記住歷史資訊的部份
 
 	Allen錄影檔看到20230609 整天結束
@@ -109,3 +109,17 @@
 	[ v ]Speaker Index 的 Action
 
 *****【Speaker的Edit無法記住之前輸入的值，待修正】*****
+
+[ v ]Speaker 的 查看詳細資訊
+	[ v ]Speaker Detail 的 Dto
+	[ v ]Speaker Detail 的 VM
+	[ v ]Speaker Detail 的 entity 轉 Dto、Dto 轉 VM
+	[ v ]Speaker Detail的 Action (GET)
+
+	【Speaker 的 查看詳細資訊 完成】
+
+[ v ]Speaker 的 刪除
+	[ v ]Speaker Delete 的 Action (GET) (就等於Speaker的查看詳細資訊Details)
+	[ v ]Speaker Delete 的 Action (POST)
+
+	【Speaker 的 刪除 完成】

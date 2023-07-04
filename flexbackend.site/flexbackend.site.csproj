@@ -2336,6 +2336,8 @@
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
     <Content Include="Views\Speaker\Edit.cshtml" />
+    <Content Include="Views\Speaker\Details.cshtml" />
+    <Content Include="Views\Speaker\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

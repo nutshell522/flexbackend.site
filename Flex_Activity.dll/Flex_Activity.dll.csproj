@@ -57,6 +57,7 @@
     <Compile Include="Infra\EFRepositories\SpeakerEFRepository.cs" />
     <Compile Include="Interface\ISpeakerRepository.cs" />
     <Compile Include="Models\Dto\SpeakerCreateDto.cs" />
+    <Compile Include="Models\Dto\SpeakerDetailDto.cs" />
     <Compile Include="Models\Dto\SpeakerEditDto.cs" />
     <Compile Include="Models\Dto\SpeakerIndexDto.cs" />
     <Compile Include="Models\Exts\ActivityExts.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Models\ViewModels\ActivityIndexVM.cs" />
     <Compile Include="Models\ViewModels\ActivitySearchCriteria.cs" />
     <Compile Include="Models\ViewModels\SpeakerCreateVM.cs" />
+    <Compile Include="Models\ViewModels\SpeakerDetailVM.cs" />
     <Compile Include="Models\ViewModels\SpeakerEditVM.cs" />
     <Compile Include="Models\ViewModels\SpeakerIndexVM.cs" />
     <Compile Include="Models\ViewModels\SpeakerSearchCriteria.cs" />

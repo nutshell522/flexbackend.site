@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Net;
 
 namespace flexbackend.site.Controllers
 {
@@ -170,7 +171,51 @@ namespace flexbackend.site.Controllers
             return View(vm);
 
 		}
-        private string SaveUploadedFile(string path, HttpPostedFileBase fileTeacher)
+
+        public ActionResult Details (int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Speaker speaker = db.Speakers.Find(id);
+            if (speaker == null)
+            {
+                return HttpNotFound();
+            }
+            SpeakerDetailDto dto = speaker.ToDetailDto();
+            SpeakerDetailVM vm = dto.ToDetailVM();
+            return View(vm);
+        }
+
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Speaker speaker = db.Speakers.Find(id);
+			if (speaker == null)
+			{
+				return HttpNotFound();
+			}
+			SpeakerDetailDto dto = speaker.ToDetailDto();
+			SpeakerDetailVM vm = dto.ToDetailVM();
+			return View(vm);
+		}
+
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            Speaker speaker = db.Speakers.Find(id);
+            db.Speakers.Remove(speaker);
+            db.SaveChanges();
+            return RedirectToAction("Index");   
+        }
+		private string SaveUploadedFile(string path, HttpPostedFileBase fileTeacher)
         {
             //如果沒有上傳檔案或檔案是空的，就不處理，傳回string.empty
             if (fileTeacher == null || fileTeacher.ContentLength == 0) return string.Empty;
