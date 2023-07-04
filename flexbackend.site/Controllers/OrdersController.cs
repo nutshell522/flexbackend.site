@@ -9,101 +9,105 @@ using System.Web.Mvc;
 
 namespace flexbackend.site.Controllers
 {
-    public class OrdersController : Controller
-    {
-        // GET: Orders
-        public ActionResult OrdersIndex()
-        {
-            IEnumerable<OrdersIndexVM> orders = GetOrders();
-            return View(orders);
-        }
+	public class OrdersController : Controller
+	{
+		// GET: Orders
+		public ActionResult OrdersIndex(string searchString)
+		{
+			IEnumerable<OrdersIndexVM> orders = GetOrders(searchString);
+			return View(orders);
+		}
 
-        private IEnumerable<OrdersIndexVM> GetOrders()
-        {
-            var db = new AppDbContext();
-			var orderItems = GetOrderItemsIndex();
-			return db.orders
-                .AsNoTracking()
-				//.Include(p => p.orderItems)
-				//.OrderBy(p => p.Category.DisplayOrder)
-				.ToList()
-                .Select(p => new OrdersIndexVM
-                {
-                    Id = p.Id,
-                    ordertime = p.ordertime,
-                    fk_member_Id = p.fk_member_Id,
-                    total_quantity = p.total_quantity,
-                    logistics_company_Id = p.logistics_company_Id,
-                    order_status_Id = p.order_status_Id,
-                    pay_method_Id = p.pay_method_Id,
-                    pay_status_Id = p.pay_status_Id,
-                    coupon_name = p.coupon_name,
-                    coupon_discount = p.coupon_discount,
-                    freight = p.freight,
-                    cellphone = p.cellphone,
-                    receipt = p.receipt,
-                    receiver = p.receiver,
-                    recipient_address = p.recipient_address,
-                    order_description = p.order_description,
-                    close_Id = p.close_Id,
+		[HttpPost]
+		private IEnumerable<OrdersIndexVM> GetOrders(string searchString)
+		{
+			var db = new AppDbContext();
+			var orders = db.orders
+				.AsNoTracking();
+
+			if (!string.IsNullOrEmpty(searchString) && int.TryParse(searchString, out int memberId))
+			{
+				orders = (System.Data.Entity.Infrastructure.DbQuery<order>)orders.Where(o => o.fk_member_Id == memberId);
+			}
+
+			return orders.ToList()
+				.Select(p => new OrdersIndexVM
+				{
+					Id = p.Id,
+					ordertime = p.ordertime,
+					fk_member_Id = p.fk_member_Id,
+					total_quantity = p.total_quantity,
+					logistics_company_Id = p.logistics_company_Id,
+					order_status_Id = p.order_status_Id,
+					pay_method_Id = p.pay_method_Id,
+					pay_status_Id = p.pay_status_Id,
+					coupon_name = p.coupon_name,
+					coupon_discount = p.coupon_discount,
+					freight = p.freight,
+					cellphone = p.cellphone,
+					receipt = p.receipt,
+					receiver = p.receiver,
+					recipient_address = p.recipient_address,
+					order_description = p.order_description,
+					close_Id = p.close_Id,
 					total_price = p.total_price,
-					orderItems = orderItems.Where(o => o.order_Id == p.Id).ToList()
+					orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
 				});
-        }
+		}
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(OrdersIndexVM vm)
-        {
-            if (ModelState.IsValid == false) return View(vm);
+		public ActionResult Create()
+		{
+			return View();
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(OrdersIndexVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
 
-            (bool IsSuccess, string ErrorMessage) result = CreateOrders(vm);
+			(bool IsSuccess, string ErrorMessage) result = CreateOrders(vm);
 
-            if (result.IsSuccess)
-            {
-                return RedirectToAction("OrdersIndex");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, result.ErrorMessage);
-                return View(vm);
-            }
+			if (result.IsSuccess)
+			{
+				return RedirectToAction("OrdersIndex");
+			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
 
-        }
-         private (bool IsSuccess, string ErrorMessage) CreateOrders(OrdersIndexVM vm)
-        {
-            var db = new AppDbContext();
+		}
+		private (bool IsSuccess, string ErrorMessage) CreateOrders(OrdersIndexVM vm)
+		{
+			var db = new AppDbContext();
 
-            var order = new order
-            {
-                Id = vm.Id,
-                ordertime = DateTime.Now,
-                fk_member_Id = 1,
-                total_price = vm.total_price,
-                total_quantity = vm.total_quantity,
-                logistics_company_Id = 1,
-                order_status_Id = 1,
-                pay_method_Id = 1,
-                pay_status_Id = 1,
-                coupon_name = vm.coupon_name,
-                coupon_discount = vm.coupon_discount,
-                freight = vm.freight,
-                cellphone = vm.cellphone,
-                receipt = vm.receipt,
-                receiver = vm.receiver,
-                recipient_address = vm.recipient_address,
-                order_description = vm.order_description,
-                close_Id = 1
-            };
-            db.orders.Add(order);
-            db.SaveChanges();
+			var order = new order
+			{
+				Id = vm.Id,
+				ordertime = DateTime.Now,
+				fk_member_Id = 1,
+				total_price = vm.total_price,
+				total_quantity = vm.total_quantity,
+				logistics_company_Id = 1,
+				order_status_Id = 1,
+				pay_method_Id = 1,
+				pay_status_Id = 1,
+				coupon_name = vm.coupon_name,
+				coupon_discount = vm.coupon_discount,
+				freight = vm.freight,
+				cellphone = vm.cellphone,
+				receipt = vm.receipt,
+				receiver = vm.receiver,
+				recipient_address = vm.recipient_address,
+				order_description = vm.order_description,
+				close_Id = 1
+			};
+			db.orders.Add(order);
+			db.SaveChanges();
 
-            return (true, "");
-        }
+			return (true, "");
+		}
 		public ActionResult Edit(int id)
 		{
 			var order = GetOrderById(id);
@@ -133,7 +137,7 @@ namespace flexbackend.site.Controllers
 				order_description = order.order_description,
 				close_Id = order.close_Id,
 				total_price = order.total_price,
-		};
+			};
 
 			return View(vm);
 		}
@@ -158,7 +162,6 @@ namespace flexbackend.site.Controllers
 				return View(vm);
 			}
 		}
-
 		private (bool IsSuccess, string ErrorMessage) UpdateOrder(OrdersIndexVM vm)
 		{
 			var db = new AppDbContext();
@@ -198,71 +201,82 @@ namespace flexbackend.site.Controllers
 			var db = new AppDbContext();
 			return db.orders.FirstOrDefault(o => o.Id == id);
 		}
-		//public ActionResult Editorder()
-		//{
-		//	var currentorder = User.Identity.Name;
-		//	var model = Getorder(currentorder);
-		//	return View(model);
-		//}
-
-		//private object Getorder(int currentorder)
-		//{
-		//	var orderInDb = new AppDbContext().orders.FirstOrDefault(m => m.Id == currentorder);
-		//	return orderInDb == null
-		//		? null
-		//		: new OrdersIndexVM
-		//		{
-		//			Id = orderInDb.Id,
-		//			ordertime = orderInDb.ordertime,
-		//			fk_member_Id = orderInDb.fk_member_Id,
-		//			total_price = orderInDb.total_price,
-		//			total_quantity = orderInDb.total_quantity,
-		//			logistics_company_Id = orderInDb.logistics_company_Id,
-		//			order_status_Id = orderInDb.order_status_Id,
-		//			pay_method_Id = orderInDb.pay_method_Id,
-		//			pay_status_Id = orderInDb.pay_status_Id,
-		//			coupon_name = orderInDb.coupon_name,
-		//			coupon_discount = orderInDb.coupon_discount,
-		//			freight = orderInDb.freight,
-		//			cellphone = orderInDb.cellphone,
-		//			receipt = orderInDb.receipt,
-		//			receiver = orderInDb.receiver,
-		//			recipient_address = orderInDb.recipient_address,
-		//			order_description = orderInDb.order_description,
-		//			close_Id = orderInDb.close_Id
-		//		};
-		//}
 
 
-		public ActionResult OrderItemsIndex()
+		public ActionResult OrderItemsIndex(int id)
 		{
-			IEnumerable<OrderItemsVM> orderItems = GetOrderItemsIndex();
+			IEnumerable<OrderItemsVM> orderItems = GetOrderItemsIndex(id);
 			return View(orderItems);
 		}
-
-		private IEnumerable<OrderItemsVM> GetOrderItemsIndex()
+		private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
 		{
 			var db = new AppDbContext();
+
 			return db.orderItems
-				.AsNoTracking()
-				//.Include(p => p.Member1)
-				//.OrderBy(p => p.Category.DisplayOrder)
-				.ToList()
-				.Select(o => new OrderItemsVM
-				{
-					Id = o.Id,
-					order_Id = o.order_Id,
-					product_name = o.product_name,
-					fk_typeId = o.fk_typeId,
-					per_price = o.per_price,
-					quantity = o.quantity,
-					discount_name = o.discount_name,
-					subtotal = o.subtotal,
-					discount_subtotal = o.discount_subtotal,
-					Items_description = o.Items_description,
-					
-				});
+			.AsNoTracking()
+			.Where(o => o.order_Id == orderId)
+			.Select(o => new OrderItemsVM
+			{
+				Id = o.Id,
+				order_Id = o.order_Id,
+				product_name = o.product_name,
+				fk_typeId = o.fk_typeId,
+				per_price = o.per_price,
+				quantity = o.quantity,
+				discount_name = o.discount_name,
+				subtotal = o.subtotal,
+				discount_subtotal = o.discount_subtotal,
+				Items_description = o.Items_description
+			})
+			.ToList();
+		}
+
+		public ActionResult CreateOrderItems()
+		{ 
+			return View();
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CreateOrderItems(OrderItemsVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+
+
+			(bool IsSuccess, string ErrorMessage) result = CreatenewOrderItems(vm);
+
+			if (result.IsSuccess)
+			{
+				return RedirectToAction("OrderItemsIndex");
+			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+		}
+
+		private (bool IsSuccess, string ErrorMessage) CreatenewOrderItems(OrderItemsVM vm)
+		{
+			var db = new AppDbContext();
+
+			var orderitems = new orderItem
+			{
+				Id = vm.Id,
+				order_Id = vm.order_Id,
+				product_name = vm.product_name,
+				fk_typeId = vm.fk_typeId,
+				per_price = vm.per_price,
+				quantity = vm.quantity,
+				discount_name = vm.discount_name,
+				subtotal = vm.subtotal,
+				discount_subtotal = vm.discount_subtotal,
+				Items_description = vm.Items_description
+			};
+
+			db.orderItems.Add(orderitems);
+			db.SaveChanges();
+
+			return (true, "");
 		}
 	}
-    
 }

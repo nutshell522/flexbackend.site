@@ -11,7 +11,8 @@ namespace Orders.ViewModels
 {
     public class OrdersIndexVM
     {
-        public int Id { get; set; }
+		[Display(Name = "訂單ID")]
+		public int Id { get; set; }
 		[Display(Name = "訂單時間")]
 		public DateTime ordertime { get; set; }
 		[Display(Name = "會員編號")]
@@ -46,6 +47,10 @@ namespace Orders.ViewModels
 		public int? close_Id { get; set; }
 		[Display(Name = "總金額")]
 		public int total_price { get; set; }
+		
+		[Display(Name = "所選訂單ID")]
+		public int SelectedOrderId { get; set; }
 		public List<OrderItemsVM> orderItems { get; set; }
+		public List<OrdersIndexVM> Orders { get; set; }
 	}
 }
