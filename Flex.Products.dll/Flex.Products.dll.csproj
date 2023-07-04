@@ -66,6 +66,7 @@
     <Compile Include="Exts\Result.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
     <Compile Include="Models\Dtos\ProductGroupsDto.cs" />
+    <Compile Include="Models\Dtos\ProductImgDto.cs" />
     <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
     <Compile Include="Models\Dtos\SizeDto.cs" />
     <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />

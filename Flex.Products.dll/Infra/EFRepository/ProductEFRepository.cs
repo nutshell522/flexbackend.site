@@ -89,6 +89,12 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			return product.ToEditDto();
 		}
 
+		public List<ProductImgDto> GetImgById(string productId)
+		{
+			var product = _db.ProductImgs.Where(p => p.fk_ProductId == productId).OrderBy(p=>p.ProductImgId).ToList();
+			return product.ToEditImgDto();
+		}
+
 		public void EditProduct(ProductDto dto)
 		{
 			var product = dto.DtoToEditEntity();

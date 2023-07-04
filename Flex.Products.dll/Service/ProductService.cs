@@ -64,6 +64,11 @@ namespace Flex.Products.dll.Service
 			return _repo.GetById(productId);
 		}
 
+		public List<ProductImgDto> GetImgById(string productId) 
+		{
+			return _repo.GetImgById(productId);
+		}
+
 		public Result EditProduct(ProductDto dto)
 		{
 			if (IsGroupsValid(dto.ProductGroups))

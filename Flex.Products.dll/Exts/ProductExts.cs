@@ -214,5 +214,25 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				}).ToList()
 			};
 		}
+
+		public static List<ProductImgDto> ToEditImgDto(this List<ProductImg> entity)
+		{
+			var result=entity.Select(p => new ProductImgDto
+			{
+				ProductImgId = p.ProductImgId,
+				fk_ProductId=p.fk_ProductId,
+				ImgPath = p.ImgPath
+			}).ToList();
+			return result;
+		}
+
+		public static ProductEditImgVM ToEditImgVM(this List<ProductImgDto> dto,string ProductId)
+		{	
+			return new ProductEditImgVM
+			{
+				ProductId = ProductId,
+				ProductImgs= dto
+			};
+		}
 	}
 }

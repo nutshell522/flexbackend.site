@@ -73,20 +73,20 @@ namespace flexbackend.site.Controllers
 		}
 
 
-		// GET: Products/Details/5
-		public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
+		//// GET: Products/Details/5
+		//public ActionResult Details(string id)
+  //      {
+  //          if (id == null)
+  //          {
+  //              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+  //          }
+  //          Product product = db.Products.Find(id);
+  //          if (product == null)
+  //          {
+  //              return HttpNotFound();
+  //          }
+  //          return View(product);
+  //      }
 
         // GET: Products/Create
         public ActionResult Create()
@@ -199,8 +199,26 @@ namespace flexbackend.site.Controllers
 			}
         }
 
-        // GET: Products/Delete/5
-        public ActionResult Delete(string ProductId)
+        public ActionResult EditImg(string ProductId)
+        {
+            if(ProductId==null)return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var service = new ProductService(_repo);
+            var product = service.GetImgById(ProductId);
+
+            return View(product.ToEditImgVM(ProductId));
+        }
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditImg(ProductEditImgVM vm)
+		{
+			if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			return View(vm);
+		}
+
+		// GET: Products/Delete/5
+		public ActionResult Delete(string ProductId)
         {
             if (ProductId == null)
             {
@@ -296,35 +314,5 @@ namespace flexbackend.site.Controllers
             return result;
         }
 
-  //      private bool IsDuplicateSpecs(List<ProductGroupsDto> productGroups)
-  //      {
-  //          var groupSpecs = new HashSet<string>();
-  //          foreach (var group in productGroups)
-  //          {
-  //              var colorId=group.ColorId.ToString();
-  //              var sizeId=group.SizeId.ToString();
-  //              var combine = colorId + "-" + sizeId;
-
-  //              if (groupSpecs.Contains(combine))
-  //              {
-  //                  return true;
-  //              }
-  //              groupSpecs.Add(combine);
-		//	}
-  //          return false;
-  //      }
-
-  //      private bool IsGroupsValid(List<ProductGroupsDto> productGroups)
-  //      {
-  //          bool result=false;
-		//	foreach (var group in productGroups)
-		//	{
-		//		if (group.ColorId <= 0 || group.SizeId <= 0 || group.Qty < 1)
-		//		{
-		//			result = true;
-		//		};
-		//	}
-  //          return result;
-		//}
 	}
 }

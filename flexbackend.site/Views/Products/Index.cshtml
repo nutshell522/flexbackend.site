@@ -137,7 +137,7 @@
                         <div class="manage-btn-container">
                             <a href="@Url.Action("Edit", new {ProductId=item.ProductId })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                             <a href="@Url.Action("EditImg", new {ProductId=item.ProductId })" class="btn-edit"><i class="bi bi-image"></i></a>
-                            <a href="@Url.Action("Details", new {ProductId=item.ProductId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                            @*<a href="@Url.Action("Details", new {ProductId=item.ProductId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>*@
                             <a href="@Url.Action("Delete", new {ProductId=item.ProductId})" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
@@ -212,15 +212,17 @@
                         <td class="text-center align-middle">
                             ${product.Tag == null ? "" : product.Tag}
                         </td>
-                        <td class="text-center align-middle">
+                        <td class="align-middle text-center">
                             <div class="manage-btn-container">
-                                <a href="/Products/Edit?ProductId=${product.ProductId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                                <a href="/Products/EditImg?ProductId=${product.ProductId}" class="btn-edit"><i class="bi bi-image"></i></a>
-                                <a href="/Products/Details?ProductId=${product.ProductId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                <a href="/Products/Delete?ProductId=${product.ProductId}" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                                <a href="/Products/Edit?ProductId=${product.ProductId}" class="btn-edit ms-4"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/Products/EditImg?ProductId=${product.ProductId}" class="btn-edit ms-1"><i class="bi bi-image"></i></a>
+                                
+                                <a href="/Products/Delete?ProductId=${product.ProductId}" class="btn-del ms-1"><i class="bi bi-trash-fill"></i></a>
                             </div>
                         </td>
                     </tr>`;
+
+                            /*<a href="/Products/Details?ProductId=${product.ProductId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>*/
 
                         table.append(row);
                         });
