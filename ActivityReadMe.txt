@@ -56,6 +56,7 @@
 [ v ]Activity的刪除
 [ v ]Activity的查看資訊
 
+
 [ v ]Speaker的Index
 	[ v ]SpeakerDto
 	[ v ]SpeakerVM
@@ -85,7 +86,7 @@
 
 
 
-	*****【Speaker 的 Create沒有依照VM的驗證規則去驗證!!! 待修正】*****
+	
 	Speaker的Create完成
 	已修正Speaker Create驗證規則
 	
@@ -123,3 +124,12 @@
 	[ v ]Speaker Delete 的 Action (POST)
 
 	【Speaker 的 刪除 完成】
+
+[ v ]一對一預約 Index
+	[ v ]Dto
+	[ v ]VM
+	[ v ]Dto 轉 VM 的 擴充方法
+	[ v ]IRepository
+	[ v ]Infra下面建立DapperRepositories資料夾、DapperRepository
+	[ v ]Services
+	[ v ]Controller的Action

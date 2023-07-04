@@ -1,0 +1,26 @@
+﻿using Flex_Activity.dll.Infra.DapperRepositories;
+using Flex_Activity.dll.Interface;
+using Flex_Activity.dll.Models.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Flex_Activity.dll.Services
+{
+	public class OneToOneReservationServices
+	{
+		private IReservationRepository _repo;
+        public OneToOneReservationServices(IReservationRepository repo)
+        {
+            _repo = repo;
+        }
+
+        public List<OneToOneReservationIndexDto> GetAll()
+        {
+            var reservations =_repo.GetAll();
+            return reservations.ToList();
+        }
+    }
+}

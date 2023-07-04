@@ -139,6 +139,7 @@
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\OneToOneReservationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
@@ -2338,6 +2339,7 @@
     <Content Include="Views\Speaker\Edit.cshtml" />
     <Content Include="Views\Speaker\Details.cshtml" />
     <Content Include="Views\Speaker\Delete.cshtml" />
+    <Content Include="Views\OneToOneReservation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
