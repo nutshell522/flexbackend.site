@@ -110,23 +110,6 @@ namespace flexbackend.site.Controllers
 			PrepareSizeDataSource(null);
 			if (ModelState.IsValid == false) return View(vm);
 
-			#region 規格驗證
-
-			//var isDuplicateSpecs = IsDuplicateSpecs(vm.ProductGroups);
-   //         if (isDuplicateSpecs)
-   //         {
-   //             ModelState.AddModelError("ProductGroups", "規格不得重複");
-   //             return View(vm);
-   //         }
-
-			//var isGroupsValid = IsGroupsValid(vm.ProductGroups);
-			//if (isGroupsValid)
-			//{
-			//	ModelState.AddModelError("ProductGroups", "規格不得留空");
-			//	return View(vm);
-			//}
-			#endregion
-
 			#region 照片上傳
 			var files = Request.Files;
             if (files == null || files.Count == 0)
@@ -174,6 +157,7 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
+		// GET: Products/Edit
 		public ActionResult Edit(string ProductId)
         {
             if (ProductId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -190,14 +174,14 @@ namespace flexbackend.site.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProductEditVM vm)
+		// POST: Products/Edit/5
+		// 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit(ProductEditVM vm)
         {
-
+            
 			PrepareProductSubCategoryDataSource(vm.fk_ProductSubCategoryId);
 			PrepareColorDataSource(null);
 			PrepareSizeDataSource(null);

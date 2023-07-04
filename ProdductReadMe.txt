@@ -33,12 +33,19 @@
 [**************]暫改table設計，啟用Product-casecade方便測試
 
 [處理中]編輯商品主檔&庫存
-[處理中]EditProductVM,Exts(ToEditDto,ToEditVM,ToEditDto,ToEditEntity)
-[處理中]產生Edit畫面
+[處理中]版面調整
+[V]EditProductVM,Exts(ToEditDto,ToEditVM,ToEditDto,ToEditEntity)
+[V]產生Edit畫面
 [V]Edit,EFRepository=>GetById()取得單筆要編輯的商品
 [V]Edit資料寫入
-[處理中]用GroupId判定，新增/編輯
-[處理中]動態成規格，並保存
+[V]動態生成規格,新增按鈕(Color-SelectList,Size-SelectList,Qty-Number,刪除按鈕)
+[V]規格欄位驗證
+[V]編輯資料將，group清空，重新加入，主檔追蹤編輯
 
 
-[]編輯商品照片
+[處理中]編輯商品照片
+[處理中]版面調整
+[處理中]EditImgVM,Exts(ToEditImgDto,ToEditImgVM,ToEditImgDto,ToEditImgEntity)
+[處理中]產生EditImg畫面
+[處理中]EditImg,EFRepository=>GetById()取得單筆要編輯的商品圖片
+

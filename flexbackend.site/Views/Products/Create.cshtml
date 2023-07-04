@@ -150,9 +150,9 @@
             var addSpecBtn = $("#addSpecBtn");
             addSpecBtn.click(function () {
 
-                //先確認有幾組規格
-                var numExistingGroups = $(".product-group").length;
-                addSpecGroup(numExistingGroups);
+            //先確認有幾組規格
+            var numExistingGroups = $(".product-group").length;
+            addSpecGroup(numExistingGroups);
             });
         });
 
@@ -227,7 +227,17 @@
 
                     deleteBtn.click(function () {
                         if (specContainer.children(".product-group").length > 1) {
+                            
+                            var productGroupId = $(this).parent().find("input[name^='ProductGroup']").eq(1).val();
+                            delete productGroupsValues[productGroupId];
                             $(this).parent().remove();
+
+                            $(".product-group").each(function (index) {
+                                $(this).find(".form-select[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].ColorId")
+                                $(this).find(".form-select[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].SizeId")
+                                $(this).find("input[name^='ProductGroups']").attr("name", "ProductGroups[" + index + "].Qty");
+                            })
+
                         } else {
                             alert("至少要有一組規格");
                         }
@@ -264,7 +274,17 @@
 
                     deleteBtn.click(function () {
                         if (specContainer.children(".product-group").length > 1) {
+
+                            var productGroupId = $(this).parent().find("input[name^='ProductGroup']").eq(1).val();
+                            delete productGroupsValues[productGroupId];
                             $(this).parent().remove();
+
+                            $(".product-group").each(function (index) {
+                                $(this).find(".form-select[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].ColorId")
+                                $(this).find(".form-select[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].SizeId")
+                                $(this).find("input[name^='ProductGroups']").attr("name", "ProductGroups[" + index + "].Qty");
+                            })
+
                         } else {
                             alert("至少要有一組規格");
                         }

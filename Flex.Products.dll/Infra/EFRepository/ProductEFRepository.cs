@@ -25,7 +25,6 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 		public void CreateProduct(ProductDto dto)
 		{
-			//將ProductDto依序轉換成Products,group,img存入database
 			var product = dto.ToCreateEntity();
 			 _db.Products.Add(product);
 
@@ -94,20 +93,23 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 		{
 			var product = dto.DtoToEditEntity();
 			product.EditTime= DateTime.Now;
-			//_db.Products.Update(product);
-			_db.Entry(product).State = EntityState.Modified;
+
+			var existingGroups = _db.ProductGroups.Where(p => p.fk_ProductId == product.ProductId).ToList();
+
+			//如果資料庫先清空規格
+			foreach (var group in existingGroups)
+			{
+				_db.ProductGroups.Remove(group);
+			}
 
 			foreach (var group in product.ProductGroups)
 			{
-				if (group.ProductGroupId > 0)
-				{
-					_db.Entry(group).State = EntityState.Modified;
-				}
-				else
-				{
-					_db.Entry(group).State = EntityState.Added;
-				}
+				// 新增新的 ProductGroup
+				_db.ProductGroups.Add(group);
 			}
+
+			_db.Entry(product).State = EntityState.Modified;
+
 			_db.SaveChanges(); 
 		}
 	}

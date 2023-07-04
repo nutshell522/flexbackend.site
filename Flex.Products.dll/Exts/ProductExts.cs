@@ -207,7 +207,6 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				EditTime=dto.EditTime,
 				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
 				{
-					ProductGroupId = p.ProductGroupId,
 					fk_ProductId = dto.ProductId,
 					fk_ColorId = p.ColorId,
 					fk_SizeId = p.SizeId,
