@@ -21,8 +21,8 @@ namespace Customized_Shoes.dll.Models.Exts
 				ShoesDescription = dto.ShoesDescription,
 				ShoesUnitPrice = dto.ShoesUnitPrice,
 				Status = dto.Status,
-				fk_ShoesCategoryId = dto.fk_ShoesCategoryId,
-				fk_ShoesColorId = dto.fk_ShoesColorId,
+				ShoesCategory = dto.ShoesCategory,
+				ShoesColoeCategory = dto.ShoesColoeCategory,
 			};
 					
 		}
@@ -37,13 +37,13 @@ namespace Customized_Shoes.dll.Models.Exts
 				ShoesDescription = entity.ShoesDescription,
 				ShoesUnitPrice = entity.ShoesUnitPrice,
 				Status = entity.Status,
-				fk_ShoesCategoryId = entity.fk_ShoesCategoryId,
-				fk_ShoesColorId = entity.fk_ShoesColorId,
+				ShoesCategory = entity.ShoesCategory.ShoesCategoryName,
+				ShoesColoeCategory = entity.ShoesColorCategory.ColorName,
 
 			};				
 		}
 
-		public static CustomizedShoesDto ToDto(this CustomizedShoesIndexVM vm)
+		public static CustomizedShoesDto ToSaveShoesStatusDto(this CustomizedShoesIdAndStatusVM vm)
 		{
 			return new CustomizedShoesDto {
 				ShoesProductId = vm.ShoesProductId,

@@ -68,6 +68,7 @@
     <Compile Include="Models\Infra\EFRepository\ShoesCategoryRepository.cs" />
     <Compile Include="Models\Infra\EFRepository\ShoesColorRepository.cs" />
     <Compile Include="Models\Interface\IShoesRepository.cs" />
+    <Compile Include="Models\Service\CustomizedShoesService.cs" />
     <Compile Include="Models\ViewModels\CustomizedShoesCreateVM.cs" />
     <Compile Include="Models\ViewModels\CustomizedShoesEditVM.cs" />
     <Compile Include="Models\ViewModels\CustomizedShoesIdAndStatusVM.cs" />

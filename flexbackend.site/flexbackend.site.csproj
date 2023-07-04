@@ -136,6 +136,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\CustomizedShoesPoesController.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
@@ -2335,6 +2336,11 @@
     <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
+    <Content Include="Views\CustomizedShoesPoes\Create.cshtml" />
+    <Content Include="Views\CustomizedShoesPoes\Delete.cshtml" />
+    <Content Include="Views\CustomizedShoesPoes\Details.cshtml" />
+    <Content Include="Views\CustomizedShoesPoes\Edit.cshtml" />
+    <Content Include="Views\CustomizedShoesPoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,112 @@
+﻿@model EFModels.EFModels.CustomizedShoesPo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CustomizedShoesPo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesCategory.ShoesCategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesCategory.ShoesCategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesColorCategory.ColorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesColorCategory.ColorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesOrigin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesOrigin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesUnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesUnitPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCreateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataCreateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEditTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataEditTime)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

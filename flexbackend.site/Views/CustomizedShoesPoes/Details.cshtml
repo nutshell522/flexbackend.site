@@ -1,0 +1,106 @@
+﻿@model EFModels.EFModels.CustomizedShoesPo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CustomizedShoesPo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesCategory.ShoesCategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesCategory.ShoesCategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesColorCategory.ColorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesColorCategory.ColorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesOrigin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesOrigin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoesUnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesUnitPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCreateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataCreateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEditTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataEditTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ShoesProductId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
