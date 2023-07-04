@@ -1,4 +1,5 @@
 ﻿using Discount.dll.Models.Dtos;
+using Discount.dll.Models.Infra;
 using Discount.dll.Models.Infra.EFRepositories;
 using Discount.dll.Models.Interfaces;
 using System;
@@ -11,8 +12,8 @@ namespace Discount.dll.Models.Services
 {
 	public class DiscountService
 	{
-		
-        private IDiscountRepository _repo;
+
+		private IDiscountRepository _repo;
 		public DiscountService(IDiscountRepository repo)
 		{
 			_repo = repo;
@@ -22,5 +23,27 @@ namespace Discount.dll.Models.Services
 		{
 			return _repo.GetDiscounts(searchExpired, searchDiscountName);
 		}
-	}
+		public int Create(DiscountCreateOrEditDto dto)
+		{
+			// TODO 驗證規則
+
+			return _repo.Create(dto);
+		}
+		public Result Delete(int[] ids)
+		{
+			for (int i = 0; i < ids.Length; i++)
+			{
+				_repo.Delete(ids[i]);
+			}
+			return Result.Success();
+		}
+		public Result Update(DiscountCreateOrEditDto dto)
+		{
+			// TODO 驗證規則
+
+			_repo.Update(dto);
+			return Result.Success();
+		}
+
+    }
 }
