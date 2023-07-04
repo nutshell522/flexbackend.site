@@ -1,6 +1,7 @@
 ﻿using Flex_Activity.dll.Infra.DapperRepositories;
 using Flex_Activity.dll.Interface;
 using Flex_Activity.dll.Models.Dto;
+using Flex_Activity.dll.Models.Exts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,12 @@ namespace Flex_Activity.dll.Services
 
         }
 
-    }
+		public Result Delete(int id)
+        {
+           _repo.Delete(id);
+            return Result.Success();
+        }
+
+
+	}
 }

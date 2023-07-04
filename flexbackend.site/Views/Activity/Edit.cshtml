@@ -18,7 +18,7 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.ActivityId, htmlAttributes: new { @class = "form-label" })
 
-                @Html.EditorFor(model => model.ActivityId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ActivityId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ActivityId, "", new { @class = "text-danger" })
         </div>
 
@@ -106,12 +106,12 @@
                 @Html.ValidationMessageFor(model => model.ActivityDescription, "", new { @class = "text-danger" })
         </div>
 
-        <div class="mb-3">
+        @*<div class="mb-3">
             @Html.LabelFor(model => model.fk_ActivityStatusId, htmlAttributes: new { @class = "form-label" })
 
                 @Html.EditorFor(model => model.fk_ActivityStatusId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.fk_ActivityStatusId, "", new { @class = "text-danger" })
-        </div>
+        </div>*@
 
         <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />

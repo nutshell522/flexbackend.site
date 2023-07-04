@@ -15,6 +15,8 @@ namespace Flex_Activity.dll.Models.Dto
 		public string BranchName { get; set; }
 		public string ReservationStatusDescription { get; set; }
 
+		public int ReservationId { get; set; }
+
 		//public int fk_ReservationSpeakerId { get; set; }
 	}
 }

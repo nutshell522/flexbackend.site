@@ -12,5 +12,7 @@ namespace Flex_Activity.dll.Interface
 		IEnumerable<OneToOneReservationIndexDto> GetAll();
 
 		IEnumerable<ReservationListDto> GetAll(int speakerId);
+
+		void Delete(int reservationId);
 	}
 }

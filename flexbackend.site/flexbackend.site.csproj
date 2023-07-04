@@ -2341,6 +2341,7 @@
     <Content Include="Views\Speaker\Delete.cshtml" />
     <Content Include="Views\OneToOneReservation\Index.cshtml" />
     <Content Include="Views\OneToOneReservation\ReservationList.cshtml" />
+    <Content Include="Views\OneToOneReservation\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -59,6 +59,9 @@
                                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.ReservationStatusDescription)
                 </th>
+                                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.ReservationId)
+                </th>
                         <th>管理</th>
             </tr>
         </thead>
@@ -101,11 +104,14 @@
                     <td>
                 @Html.DisplayFor(modelItem => item.ReservationStatusDescription)
             </td>
+                    <td>
+                @Html.DisplayFor(modelItem => item.ReservationId)
+            </td>
                 <td>
                 <div class="manage-btn-container">
                     <a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                    <a href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                    <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                    <a href="@Url.Action("Details", new { /* id=item.PrimaryKey */  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                    <a href="@Url.Action("Delete", new {id=item.ReservationId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                     
                 </div>
             </td>

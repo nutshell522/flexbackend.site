@@ -27,6 +27,9 @@ namespace Flex_Activity.dll.Models.ViewModels.DapperVM
 		[Display(Name="狀態")]
 		public string ReservationStatusDescription { get; set; }
 
+		
+		public int ReservationId { get; set; }
+
 		//public int fk_ReservationSpeakerId { get; set; }
 	}
 }

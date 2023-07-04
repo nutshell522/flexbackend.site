@@ -148,3 +148,12 @@
 	[ v ]Controller的Action
 
 	【一對一預約 講師預約紀錄 ReservationList 完成】
+
+
+[ * ]一對一預約 刪除 (未完成的可以刪除)
+	[ V ]IRepository
+	[ V ]DapperRepository
+	[ V ]Services
+	[ * ]Controller的Action
+
+	***【刪除後跳不回去ReservationList頁面，待修正】***

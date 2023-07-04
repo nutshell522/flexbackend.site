@@ -20,14 +20,17 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityName { get; set; }
 
 		[Display(Name = "活動類別")]
+		[Required]
 		public int fk_ActivityCategoryId { get; set; }
 
 
 
 		[Display(Name = "活動日期")]
+		[Required]
 		public DateTime ActivityDate { get; set; }
 
 		[Display(Name = "活動講者")]
+		[Required]
 		public int fk_SpeakerId { get; set; }
 
 
@@ -37,9 +40,11 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityPlace { get; set; }
 
 		[Display(Name = "報名時間(起)")]
+		[Required]
 		public DateTime ActivityBookStartTime { get; set; }
 
 		[Display(Name = "報名時間(迄)")]
+		[Required]
 		public DateTime ActivityBookEndTime { get; set; }
 
 
@@ -51,16 +56,20 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 
 		[Display(Name = "參加年齡")]
+		[Required]
 		//public byte ActivityAge { get; set; }
 		public int ActivityAge { get; set; }
 
 		[Display(Name = "活動特價")]
+		[Required]
 		public int ActivitySalePrice { get; set; }
 
 		[Display(Name = "活動原價")]
+		[Required]
 		public int ActivityOriginalPrice { get; set; }
 
 		[Display(Name = "活動描述")]
+		[Required]
 		[StringLength(300)]
 		public string ActivityDescription { get; set; }
 

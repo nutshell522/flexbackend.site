@@ -20,6 +20,18 @@ namespace Flex_Activity.dll.Infra.DapperRepositories
 			_connStr = ConfigurationManager.ConnectionStrings["AppDbContext"].ConnectionString;
 		}
 
+		public void Delete(int reservationId)
+		{
+			string sql = @"Delete
+FROM OneToOneReservations
+Where ReservationId = @reservationId";
+
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Execute(sql, new {reservationId});
+			}
+		}
+
 		public IEnumerable<OneToOneReservationIndexDto> GetAll()
 		{
 			string sql = @"SELECT SpeakerId,SpeakerName,  FieldName
@@ -35,7 +47,7 @@ Join SpeakerFields ON Speakers.fk_SpeakerFieldId = SpeakerFields.FieldId
 
 		public IEnumerable<ReservationListDto> GetAll(int speakerId)
 		{
-			string sql = @"SELECT MemberId, Name, Mobile, ReservationStartTime, BranchName, ReservationStatusDescription
+			string sql = @"SELECT MemberId, Name, Mobile, ReservationStartTime, BranchName, ReservationStatusDescription, OneToOneReservations.reservationId
 FROM OneToOneReservations
 JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
 JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId
@@ -48,5 +60,7 @@ Where fk_ReservationSpeakerId = @speakerId
 				return conn.Query<ReservationListDto>(sql, new {speakerId = speakerId});
 			}
 		}
+
+		
 	}
 }

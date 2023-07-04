@@ -26,6 +26,7 @@ namespace flexbackend.site.Controllers
 
         public ActionResult ReservationList(int id)
         {
+			
 			IReservationRepository repo = new ReservationDapperRepository();
 			OneToOneReservationServices service = new OneToOneReservationServices(repo);
 
@@ -35,6 +36,16 @@ namespace flexbackend.site.Controllers
             return View(vm);
 
 		}
+
+        public ActionResult Delete(int id)
+        {
+			IReservationRepository repo = new ReservationDapperRepository();
+			OneToOneReservationServices service = new OneToOneReservationServices(repo);
+
+             service.Delete(id);
+
+			return RedirectToAction("ReservationList");
+        }
     }
 }
 
