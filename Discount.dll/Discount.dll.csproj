@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Dtos\DiscountCreateOrEditDto.cs" />
     <Compile Include="Models\Dtos\DiscountIndexDto.cs" />
     <Compile Include="Models\Dtos\ProductInTagDto.cs" />
     <Compile Include="Models\Dtos\ProjectTagDto.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Models\Interfaces\IProjectTagRepository.cs" />
     <Compile Include="Models\Services\DiscountService.cs" />
     <Compile Include="Models\Services\ProjectTagService.cs" />
+    <Compile Include="Models\ViewModels\DiscountCreateOrEditVM.cs" />
     <Compile Include="Models\ViewModels\DiscountIndexVM.cs" />
     <Compile Include="Models\ViewModels\ProductInTagVM.cs" />
     <Compile Include="Models\ViewModels\ProjectTagIndexVM.cs" />

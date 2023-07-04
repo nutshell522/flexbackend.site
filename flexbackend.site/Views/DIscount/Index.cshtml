@@ -9,7 +9,7 @@
             color: white;
         }
 
-        tr {
+        .d-table tr {
             border: #ddf;
         }
     </style>
@@ -25,14 +25,13 @@
         </div>
     </div>
 
-
     <div class="right">
         <a href="@Url.Action("Create")" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i> 新增
         </a>
     </div>
 </div>
-<table class="w-100">
+<table class="w-100 d-table">
     <thead>
         <tr>
             <th class="th-col-0">
@@ -65,9 +64,9 @@
                 狀態
             </th>
             <th class="th-col-1">
-                折扣優先順序
+                優先度
             </th>
-            <th>管理</th>
+            <th class="text-center">管理</th>
         </tr>
     </thead>
 </table>
@@ -75,9 +74,10 @@
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script>
         $(function () {
+            
             getDatas();
             function getDatas() {
-                $("table").dataTable({
+                $(".d-table").DataTable({
                     ajax: {
                         type: "POST",
                         url: `/Discount/GetDatas`,
@@ -93,7 +93,7 @@
                         {
                             data: null,
                             render: function (data) {
-                                return `<input class="form-check-input check-item" type="checkbox" data-id="${data.DiscountId}"></td>`;
+                                return `<td><input class="form-check-input check-item" type="checkbox" data-id="${data.DiscountId}"></td>`;
                             },
                             orderable: false
                         },
@@ -101,16 +101,19 @@
                             data: "DiscountName"
                         },
                         {
-                            data: "DiscountDescription"
+                            data: "DiscountDescription",
+                            orderable: false
                         },
                         {
                             data: "ProjectTagNameToShow"
                         },
                         {
-                            data: "ConditionValueStr"
+                            data: "ConditionValueStr",
+                            orderable: false
                         },
                         {
-                            data: "DiscountValueStr"
+                            data: "DiscountValueStr",
+                            orderable: false
                         },
                         {
                             data: "StartDateStr"
@@ -119,34 +122,32 @@
                             data: "EndDateStr"
                         },
                         {
-                            data: "DiscountName"
-                        },
-                        {
                             data: null,
                             render: function (data) {
-                                return `<span class="text-center ${data.Status == "進行中" ? "status-success" : (data.Status == "已過期" ? "status-dark" : "status-primary")}" >
-                                                    ${data.Status}
-                                                        </span >`;
+                                return `<div class="text-center ${data.Status == "進行中" ? "status-success" : (data.Status == "已過期" ? "status-dark" : "status-primary")}" >
+                                        ${data.Status}</div >`;
                             }
                         },
                         {
-                            data: "OrderBy"
+                            data: null,
+                            render: function (data) {
+                                return `<div class="text-end">${data.OrderBy}</div>`;
+                            }
                         },
                         {
                             data: null,
                             render: function (data) {
-                             return `<div class="manage-btn-container">
-                                <a href="" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                                <a href="" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                <a href="" class="btn-del"><i class="bi bi-trash-fill"></i></a>
-
-                            </div>`;
+                                return `<div class="manage-btn-container d-flex justify-content-around">
+                                            <a href="" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                            <a href="" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                                        </div>`;
                             },
                             orderable: false
                         }
                     ],
                     order: [
-                        [5, "desc"]
+                        [9, "asc"]
                     ],
                     language: {
                         paginate: {
