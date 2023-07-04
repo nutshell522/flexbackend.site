@@ -235,8 +235,7 @@ namespace flexbackend.site.Controllers
 
         public ActionResult CreateOrderItems()
         {
-            //int orderId = (int)TempData["OrderId"]; // 從 TempData 中讀取值
-            //ViewBag.OrderId = orderId;
+            
             return View();
         }
         [HttpPost]
@@ -244,14 +243,15 @@ namespace flexbackend.site.Controllers
         public ActionResult CreateOrderItems(OrderItemsVM vm)
         {
             int orderId = (int)TempData["OrderId"];
-            //int orderId = ViewBag.OrderId;
+            
             if (ModelState.IsValid == false) return View(vm);
 
-            (bool IsSuccess, string ErrorMessage) result = CreatenewOrderItems(vm, orderId);
+            (bool IsSuccess, string ErrorMessage, int OrderItemId) result = CreatenewOrderItems(vm, orderId);
 
             if (result.IsSuccess)
             {
-                return RedirectToAction("OrderItemsIndex", orderId);
+                int orderItemId = result.OrderItemId;
+                return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
             }
             else
             {
@@ -259,7 +259,7 @@ namespace flexbackend.site.Controllers
                 return View(vm);
             }
         }
-        private (bool IsSuccess, string ErrorMessage) CreatenewOrderItems(OrderItemsVM vm, int orderId)
+        private (bool IsSuccess, string ErrorMessage, int OrderItemId) CreatenewOrderItems(OrderItemsVM vm, int orderId)
 		{
 			var db = new AppDbContext();
 
@@ -280,7 +280,8 @@ namespace flexbackend.site.Controllers
 			db.orderItems.Add(orderitems);
 			db.SaveChanges();
 
-			return (true, "");
-		}
+            return (true, "", orderitems.order_Id);
+
+        }
 	}
 }
