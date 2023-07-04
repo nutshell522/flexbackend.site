@@ -37,9 +37,22 @@
 
 [v]忘記密碼
 	StaffsController add ForgetPassword() action , add ForgetPassWord.cshtml
-	...加入筆記
+					 add ForgetPassword(ForgetPasswordVM vm) action , 呼叫ResetPassword(vm) , 重設新密碼後跳轉回登入頁面
+					 add ResetPassword(ForgetPasswordVM vm) , vm->Dto 傳入 service
+	add ForgetPasswordVM , 建立重設新密碼畫面
+	Service , add ResetPassword(ForgetPasswordDto dto) 驗證帳號是否存在
+	IStaffRepository , add SaveNewPassword(string newpassword,string account)
+	StaffDapperRepository : IStaffRepository , 傳來的newpassword、account 存入資料庫
 	
 	*密碼存入資料庫加入雜湊部分
 
+[v]刪除員工
+	StaffList.cshtml , <a href="DeleteStaff?staffId=@item.StaffId" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+	StaffsController add DeleteStaff(int staffId) action , 檢查是否收到 StaffList.cshtml 傳來的 staffId
+	Service , add DeleteStaff(staffId) , 檢查在資料庫是否有相同的一筆員工資料
+	IStaffRepository , void DeleteStaff(int staffId)
+	StaffDapperRepository : IStaffRepository , DeleteStaff(int staffId)
+
+	*考慮改成接收ajax
 
 [-]大頭照

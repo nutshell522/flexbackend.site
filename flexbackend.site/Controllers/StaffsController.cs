@@ -33,36 +33,37 @@ namespace flexbackend.site.Controllers
 		}
 
 		//刪除員工
-		public ActionResult DeleteStaff(int? staffId)
+		public ActionResult DeleteStaff(int staffId)
 		{
-			var db = new AppDbContext();
-
 			//如果staffId為空，返回404錯誤碼
-			if (staffId == null)
+			if (staffId == 0)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Staff staff = db.Staffs.Find(staffId);
-			if (staff == null)
-			{
-				return HttpNotFound();
-			}
-			return View();
-		}
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult DeleteStaff(int staffId)
-		{
-			var db = new AppDbContext();
 			StaffService service = GetStaffRepository();
 			service.DeleteStaff(staffId);
-
-			//Staff staff = db.Staffs.Find(staffId);
-			//db.Staffs.Remove(staff);
-			//db.SaveChanges();
 			return RedirectToAction("StaffList");
 		}
+
+		//[HttpPost,ActionName("DeleteStaff")]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult DeleteStaff2(int staffId)
+		//{
+		//	var db = new AppDbContext();
+		//	//List<StaffsIndexVM> staffsIndexVM = new List<StaffsIndexVM>();
+		//	var staff = db.Staffs.FirstOrDefault(s => s.StaffId == staffId);
+
+		//	//for (int i = 0; i < staff) ; i++)
+		//	//{
+		//	//	staffsIndexVM.Add(staffsIndexVM[staffId]);
+		//	//}
+
+		//	StaffService service = GetStaffRepository();
+		//	service.DeleteStaff(staffId);
+
+		//	return new EmptyResult();
+		//}
 
 		//忘記密碼
 		public ActionResult ForgetPassword()
