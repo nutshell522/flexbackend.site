@@ -80,6 +80,12 @@ namespace Flex.Products.dll.Service
 			return Result.Success();
 		}
 
+		public Result SaveEditImg(List<ProductImgDto> dto)
+		{
+			_repo.SaveEditImg(dto);
+			return Result.Success();
+		}
+
 		//判斷產品識別碼是否已存在
 		public bool ExisProductID(string ProductId)
 		{

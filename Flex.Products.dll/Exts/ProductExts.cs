@@ -234,5 +234,31 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ProductImgs= dto
 			};
 		}
+
+		public static List<ProductImgDto> VMToEditImgDto(this ProductEditImgVM vm)
+		{
+			var result = new List<ProductImgDto>();
+
+			foreach (var p in vm.ProductImgs)
+			{
+				result.Add(new ProductImgDto
+				{
+					ProductImgId = p.ProductImgId,
+					fk_ProductId=vm.ProductId,
+					ImgPath = p.ImgPath
+				});
+			}
+			return result;
+		}
+
+		public static ProductImg DtoToEditImgEntity(this ProductImgDto dto)
+		{
+			return new ProductImg
+			{
+				ProductImgId = dto.ProductImgId,
+				fk_ProductId = dto.fk_ProductId,
+				ImgPath = dto.ImgPath
+			};
+		}
 	}
 }

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Antlr.Runtime.Tree;
 using EFModels.EFModels;
 using Flex.Products.dll.Exts;
@@ -209,16 +210,45 @@ namespace flexbackend.site.Controllers
             return View(product.ToEditImgVM(ProductId));
         }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult EditImg(ProductEditImgVM vm)
-		{
-			if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			return View(vm);
-		}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditImg(ProductEditImgVM vm, List<string> createImgName, List<HttpPostedFileBase> createfile)
+        {
+            if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-		// GET: Products/Delete/5
-		public ActionResult Delete(string ProductId)
+			var service = new ProductService(_repo);
+
+			var path = Server.MapPath("~/Public/Img");
+            List<ProductImgDto> editImg = EditProductImg(path, createImgName, createfile, vm.ProductId);
+
+			if (vm.ProductImgs==null && createImgName == null)
+            {
+                var errorVm= service.GetImgById(vm.ProductId);
+
+				ModelState.AddModelError(string.Empty, "至少要有一張照片");
+
+                return View(errorVm.ToEditImgVM(vm.ProductId));
+            }
+
+			if (editImg != null || editImg.Count > 0)
+            {
+                foreach (var img in editImg)
+                {
+					vm.ProductImgs.Add(img);
+				}
+            }
+
+            var product = service.SaveEditImg(vm.VMToEditImgDto());
+
+            if (product.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(vm);
+        }
+
+        // GET: Products/Delete/5
+        public ActionResult Delete(string ProductId)
         {
             if (ProductId == null)
             {
@@ -314,5 +344,48 @@ namespace flexbackend.site.Controllers
             return result;
         }
 
+		/// <summary>
+		/// 相片編輯
+		/// </summary>
+		/// <param name="path">存放路徑</param>
+		/// <param name="createImgName">預覽回傳照片名稱</param>
+		/// <param name="createfile">file回傳檔案</param>
+		/// <param name="productId">產品Id</param>
+		/// <returns></returns>
+		private List<ProductImgDto> EditProductImg(string path, List<string> createImgName, List<HttpPostedFileBase> createfile, string productId)
+		{
+			if (createImgName == null || createImgName.Count <= 0) return new List<ProductImgDto>();
+
+			var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
+			var result = new List<ProductImgDto>();
+
+			for (var i = 0; i < createfile.Count; i++)
+			{
+				var file = createfile[i];
+				var fileName = file.FileName;
+				if (file == null || file.ContentLength == 0 || file.ContentLength > 2 * 1024 * 1024) continue;
+				if (createImgName.Any(imgName => imgName == fileName))
+				{
+					var ext = System.IO.Path.GetExtension(fileName);
+
+					if (!allowExts.Contains(ext.ToLower())) continue;
+
+					var newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
+
+					file.SaveAs(System.IO.Path.Combine(path, newFileName));
+					result.Add(new ProductImgDto
+					{
+						fk_ProductId = productId,
+						ImgPath = newFileName,
+					});
+				}
+				else
+				{
+					continue;
+				}
+			}
+
+			return result;
+		}
 	}
 }

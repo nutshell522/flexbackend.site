@@ -44,9 +44,12 @@
 
 
 [處理中]編輯商品照片
-[處理中]版面調整
-[處理中]EditImgVM,Exts(ToEditImgDto,ToEditImgVM,ToEditImgDto,ToEditImgEntity)
-[處理中]EditImg,EFRepository=>GetImgById()取得單筆要編輯的商品圖片
-[處理中]產生EditImg畫面
+[V]版面調整
+[V]EditImgVM,Exts(ToEditImgDto,ToEditImgVM,ToEditImgDto,ToEditImgEntity)
+[V]EditImg,EFRepository=>GetImgById()取得單筆要編輯的商品圖片
+[V]產生EditImg畫面
+[V]刪除現有照片，並回傳
+[V]新增照片，可以刪除並回傳
+[V]當沒有保留任何一張照片，要跳驗證未通過
 
 

@@ -118,5 +118,30 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 			_db.SaveChanges(); 
 		}
+
+		public void SaveEditImg(List<ProductImgDto> dto)
+		{
+			if (dto == null || dto.Count == 0) return;
+			var productId = dto[0].fk_ProductId;
+			var dbImgs = _db.ProductImgs.Where(i => i.fk_ProductId == productId).ToList();
+			
+			foreach(var img in dbImgs)
+			{
+				if(!dto.Any(i=>i.ProductImgId== img.ProductImgId))
+				{
+					_db.ProductImgs.Remove(img);
+				}
+			}
+
+			foreach (var editImg in dto)
+			{
+				//var dbImg = _db.ProductImgs.FirstOrDefault(i => i.ProductImgId == editImg.ProductImgId);
+				if (editImg.ProductImgId == 0)
+				{
+					_db.ProductImgs.Add(editImg.DtoToEditImgEntity());
+				}
+			}
+			_db.SaveChanges();
+		}
 	}
 }

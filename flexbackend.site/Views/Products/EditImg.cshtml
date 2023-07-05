@@ -29,11 +29,14 @@
                 </div>
             }
         </div>
+        <div id="previewCreateImages">
+
+        </div>
     </div>
 
         <div class="mb-3">
             @Html.LabelFor(model=>model.ProductImgs, htmlAttributes:new {@class="form-label"})
-            <input type="file" name="createfile" id="createfile" class="form-control" multiple/>
+            <input type="file" name="createfile" class="form-control" multiple/>
             @Html.ValidationMessageFor(model => model.ProductImgs, "", new {@class="text-danger"})
         </div>
         <div class="mb-3">
@@ -47,18 +50,69 @@
     <script>
         $(document).ready(function () {
             var delBtn = $(".deleteImgBtn");
-            var previewImages = $("#previewImages");
+            //var previewImages = $("#previewImages");
+
+            checkImg();
 
             delBtn.click(function () {
                 $(this).parent(".img-group").remove();
-
-                $(".img-group").each(function (index) {
-                    $(this).find("input[name^='ProductImgs']").eq(0).attr("name", "ProductImgs[" + index + "].ProductImgId");
-                    $(this).find("input[name^='ProductImgs']").eq(1).attr("name", "ProductImgs[" + index + "].ImgPath");
-                    $(this).find("input[name^='ProductImgs']").eq(2).attr("name", "ProductImgs[" + index + "].fk_ProductId");
-                })
+                updateProductImg();
             })
         })
+
+        function updateProductImg() {
+            $(".img-group").each(function (index) {
+                $(this).find("input[name^='ProductImgs']").eq(0).attr("name", "ProductImgs[" + index + "].ProductImgId");
+                $(this).find("input[name^='ProductImgs']").eq(1).attr("name", "ProductImgs[" + index + "].ImgPath");
+                $(this).find("input[name^='ProductImgs']").eq(2).attr("name", "ProductImgs[" + index + "].fk_ProductId");
+            });
+        }
+        function updateCreateImgNum() {
+            $('.createImg-group').each(function (index) {
+                var createImgInput = $(this).find('input[name^="createImgName"]');
+                createImgInput.attr("name", "createImgName[" + index + "]");
+            })
+        }
+
+        function checkImg() {
+            var maxSize = 2 * 1024 * 1024;
+            $('input[name="createfile"]').change(function (e) {
+                var files = e.target.files;
+                if (files && files.length > 0) {
+                    $('#previewCreateImages').empty();
+                    for (let i = 0; i < files.length; i++) {
+                        if (files[i].size < maxSize) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+
+                                var createImgGroup = $('<div class="createImg-group m-2"></div>');
+                                var image = $('<img src="' + e.target.result + '" style="width:150px;height:150px" >');
+                                var createImgName = $('<input type="hidden" name="createImgName[' + i + ']" value="' + files[i].name + '" />')
+                                var deleteBtn = $('<input type="button" value="刪除" class="btn btn-danger ms-3 deleteCreateImgBtn" />');
+
+                                deleteBtn.click(function () {
+                                    $(this).parent().remove();
+                                    updateCreateImgNum();
+                                })
+
+                                createImgGroup.append(image);
+                                createImgGroup.append(deleteBtn);
+                                createImgGroup.append(createImgName);
+
+                                $('#previewCreateImages').append(createImgGroup);
+                            }
+                            reader.readAsDataURL(files[i])
+                        }
+                        else {
+                            alert("照片檔案超過2MB");
+                        }
+                    }
+                }
+                else {
+                    $('#previewCreateImages').empty();
+                }
+            })
+        }
     </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
