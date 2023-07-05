@@ -1,12 +1,11 @@
-﻿@using Customized_Shoes.dll.Models.ViewModels
-@model IEnumerable<Customized_Shoes.dll.Models.ViewModels.SuppliersIndexVM>
+﻿@model IEnumerable<Customized_Shoes.dll.Models.ViewModels.ShoesColorCategoryVM>
 
 @{
-    ViewBag.Title = "Index";
-    var criteria = ViewBag.Criteria as SupplierCriteria;
+    ViewBag.Title = "分類管理";
+    var criteria = ViewBag.Criteria as Customized_Shoes.dll.Models.Exts.ShoesColorCategoryCriteria;
 }
 
-<h2>材料供應商管理</h2>
+<h2>主顏色分類管理</h2>
 
 <p>
 
@@ -16,20 +15,22 @@
         <div class="d-flex">
             <div class="left d-flex me-auto">
                 @* 輸入框區域 寬度可移除下方class w-50 自行調整 *@
-                <div class="left">
+                <div class="row">
                     @*@Html.TextBoxFor(model => criteria.Name, new { @class = "form-control", placeholder = "搜尋..." })*@
-                    <input id="index_Search" class="form-control " name="criteria.CompanyName" type="text" value="@criteria.CompanyName" placeholder="搜尋公司名稱...">
-                    <input id="index_Search" class="form-control " name="criteria.Supply_Material" type="text" value="@criteria.Supply_Material" placeholder="搜尋供應材料...">
+                    <input id="index_Search" class="form-control " name="criteria.ColorName" type="text" value="@criteria.ColorName" placeholder="搜尋顏色分類...">
                 </div>
-            </div>
-            <div class="right">
-                <button id="searchBtn" class="btn btn-primary">搜尋</button>
-                @Html.ActionLink("新增供應商", "Create", null, new { @class = "btn btn-primary" })
+                <div class="right">
+                    <button id="searchBtn" class="btn btn-primary">搜尋</button>
+                    @Html.ActionLink("新增主顏色分類", "Create", null, new { @class = "btn btn-primary" })
+                    <div class="btn btn-dark">
+                        <a href="@Url.Action("Index", "ShoesCategories", new { area = "" })">退回功能分類頁面</a>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
-<div class="table-container">
+<div class="table-container col-4">
     <table>
         <thead>
             <tr>
@@ -45,32 +46,10 @@
                     </label>
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierId)
+                    @Html.DisplayNameFor(model => model.ColorName)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierCompanyName)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.HasCertificate)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Supply_Material)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierCompanyPhone)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierCompanyEmail)
-                </th>
-
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierCompanyAddressText)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierCompanyNumber)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.SupplierStartDate)
+                    @Html.DisplayNameFor(model => model.ColorCode)
                 </th>
                 <th>管理</th>
             </tr>
@@ -96,41 +75,18 @@
             {
                 <tr>
                     @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-                    <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
+                    <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="@item.ShoesColorId"></td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SupplierId)
+                        @Html.DisplayFor(modelItem => item.ColorName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SupplierCompanyName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HasCertificate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supply_Material)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SupplierCompanyPhone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SupplierCompanyEmail)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SupplierCompanyAddressText)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SupplierCompanyNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SupplierStartDate)
+                        @Html.DisplayFor(modelItem => item.ColorCode)
                     </td>
                     <td>
                         <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new {id=item.SupplierId })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {id=item.SupplierId })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {id=item.SupplierId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
-
+                            <a href="@Url.Action("Edit", new { id = item.ShoesColorId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("Details", new { id = item.ShoesColorId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.ShoesColorId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -139,7 +95,71 @@
     </table>
 </div>
 @section Scripts{
+    <script>
 
+        $(document).ready(function () {
+
+            //重新載入畫面
+            function loadColorCategory() {
+                var criteria = {
+                    ColorName: $('#index_Search').val(),
+                };
+                reSetIndexProduct(criteria);
+            }
+
+            function reSetIndexProduct(criteria) {
+                $.ajax({
+                    url: '@Url.Action("Index", "ShoesColorCategories")',
+                    type: 'POST',
+                    data: criteria,
+                    dataType: 'json',
+                    success: function (response) {
+                        // 請求成功後的處理邏輯
+                        //console.log(response);
+
+                        var table = $('.table tbody');
+                        table.empty();
+
+                        $.each(response, function (index, shoescatecolorgories) {
+                            var row = `
+                    <tr>
+                        <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${shoescatecolorgories.ShoesColorId}"></td>
+                        <td>
+                            ${shoescatecolorgories.ColorName}
+                        </td>
+                        <td>
+                            ${shoescatecolorgories.ColorCode}
+                        </td>
+                        <td>
+                            <div class="manage-btn-container">
+                                <a href="/Products/Edit?ShoesCategoryId=${shoescatecolorgories.ShoesColorId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/Products/Details?ShoesCategoryId=${shoescatecolorgories.ShoesColorId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                <a href="/Products/Delete?ShoesCategoryId=${shoescatecolorgories.ShoesColorId}" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                            </div>
+                        </td>
+                    </tr>`;
+
+                        table.append(row);
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // 請求失敗時的處理邏輯
+                        console.log(error);
+                    }
+                });
+            }
+
+            // 在頁面載入完成時觸發請求
+            loadCategory();
+
+            // 監聽搜尋按鈕的點擊事件
+            $('#searchBtn').click(function (e) {
+                e.preventDefault();
+                loadCategory();
+            });
+        });
+
+    </script>
     <script>
         window.onload = function () {
             // 替排序按鈕寫入排序箭頭出現事件

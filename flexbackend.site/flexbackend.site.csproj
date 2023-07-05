@@ -143,6 +143,8 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
+    <Compile Include="Controllers\ShoesCategoriesController.cs" />
+    <Compile Include="Controllers\ShoesColorCategoriesController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\SpeakerController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
@@ -2341,6 +2343,16 @@
     <Content Include="Views\CustomizedShoesPoes\Details.cshtml" />
     <Content Include="Views\CustomizedShoesPoes\Edit.cshtml" />
     <Content Include="Views\CustomizedShoesPoes\Index.cshtml" />
+    <Content Include="Views\ShoesCategories\Create.cshtml" />
+    <Content Include="Views\ShoesCategories\Delete.cshtml" />
+    <Content Include="Views\ShoesCategories\Edit.cshtml" />
+    <Content Include="Views\ShoesCategories\Index.cshtml" />
+    <Content Include="Views\ShoesColorCategories\Create.cshtml" />
+    <Content Include="Views\ShoesColorCategories\Delete.cshtml" />
+    <Content Include="Views\ShoesColorCategories\Details.cshtml" />
+    <Content Include="Views\ShoesColorCategories\Edit.cshtml" />
+    <Content Include="Views\ShoesColorCategories\Index.cshtml" />
+    <Content Include="Views\ShoesCategories\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

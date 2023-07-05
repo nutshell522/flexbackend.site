@@ -1,34 +1,16 @@
 ﻿@model EFModels.EFModels.CustomizedShoesPo
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "刪除產品";
 }
 
-<h2>Delete</h2>
+<h2>刪除產品</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>CustomizedShoesPo</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ShoesCategory.ShoesCategoryName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShoesCategory.ShoesCategoryName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShoesColorCategory.ColorName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShoesColorCategory.ColorName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShoesName)
+            <label class="form-label" for="">鞋種編號</label>
         </dt>
 
         <dd>
@@ -36,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ShoesDescription)
+            <label class="form-label" for="">商品描述</label>
         </dt>
 
         <dd>
@@ -44,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ShoesOrigin)
+            <label class="form-label" for="">產地</label>
         </dt>
 
         <dd>
@@ -52,7 +34,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ShoesUnitPrice)
+            <label class="form-label" for="">產品售價</label>
         </dt>
 
         <dd>
@@ -60,31 +42,29 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            <label class="form-label" for="">是否下架</label>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Status)
         </dd>
+        <dt>
+            <label class="form-label" for="">功能分類</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesCategory.ShoesCategoryName)
+        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DataCreateTime)
+            <label class="form-label" for="">顏色分類</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoesColorCategory.ColorName)
+        </dd>
+        <dt>
+            <label class="form-label" for="">創建時間</label>
         </dt>
 
         <dd>
@@ -92,7 +72,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DataEditTime)
+            <label class="form-label" for="">編輯時間</label>
         </dt>
 
         <dd>
@@ -105,8 +85,10 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="刪除此產品" class="btn btn-danger" /> |
+            <div class="btn btn-dark">
+                @Html.ActionLink("回到產品管理", "Index")
+            </div>
         </div>
     }
 </div>
