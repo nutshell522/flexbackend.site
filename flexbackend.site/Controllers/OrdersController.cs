@@ -224,6 +224,8 @@ namespace flexbackend.site.Controllers
 		private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
 		{
 			var db = new AppDbContext();
+			var fk_typeId = db.Types.AsNoTracking().ToDictionary(ty => ty.TypeId, ty => ty.TypeName);
+			TempData["fk_typeId"] = fk_typeId ?? new Dictionary<int, string>();
 			var typeIds = db.orderItems
 				.AsNoTracking()
 				.Where(o => o.order_Id == orderId)
@@ -277,7 +279,8 @@ namespace flexbackend.site.Controllers
 
             if (result.IsSuccess)
             {
-                int orderItemId = result.OrderItemId;
+				TempData.Keep("fk_typeId");
+				int orderItemId = result.OrderItemId;
                 return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
             }
             else
