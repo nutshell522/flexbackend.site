@@ -18,6 +18,8 @@ using Members.dll.Models.ViewsModels.Staff;
 using System.Net;
 using Microsoft.Ajax.Utilities;
 using System.EnterpriseServices;
+using System.Collections;
+using Flex_Activity.dll.Models.ViewModels;
 
 namespace flexbackend.site.Controllers
 {
@@ -31,18 +33,24 @@ namespace flexbackend.site.Controllers
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
 		}
+		private AppDbContext db = new AppDbContext();
 		//編輯員工資料
 		public ActionResult EditStaff(int staffId)
 		{
-			if (staffId == 0)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
+			if (staffId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			StaffService service = GetStaffRepository();
+			var staff = service.GetByStaffId(staffId).ToStaffEditVM();
+
 			
-			return View();
+			PrepareCategoryDataSource(staff.fk_PermissionsId);
+
+			return View(staff);
 		}
+
+
 		[HttpPost]
-		public ActionResult EditStaff(EditStaffVM vm)
+		public ActionResult EditStaff(EditStaffVM vm)	
 		{
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = ResetStaff(vm);
@@ -51,14 +59,25 @@ namespace flexbackend.site.Controllers
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
 				return View(vm);
 			}
+			PrepareCategoryDataSource(vm.fk_PermissionsId);
+			PrepareCategoryDataSource(vm.fk_DepartmentId);
+			PrepareCategoryDataSource(vm.fk_TitleId);
 
-			return RedirectToAction("GetStaffDetail");
+			return RedirectToAction("StaffList");
+
+		}
+
+		private void PrepareCategoryDataSource(string id)
+		{
+			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
+			ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", id);
+			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
 		}
 
 		private Result ResetStaff(EditStaffVM vm)
 		{
 			StaffService service = GetStaffRepository();
-			var a = service.ResetStaff(vm.ToStaffEditDto());
+			service.ResetStaff(vm.ToStaffEditDto());
 			return Result.Success();
 		}
 

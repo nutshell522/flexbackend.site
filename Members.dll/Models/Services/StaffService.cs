@@ -94,23 +94,25 @@ namespace Members.dll.Models.Services
 			return staffDetailDto;
 		}
 
-		//public EditStaffDto GetEditStaff(int staffId)
-		//{
-		//	var result = _repo.(staffId);
-		//	if (result == null)
-		//	{
-		//		return new StaffDetailDto();
-		//	}
-		//	StaffDetailDto staffDetailDto = _repo.StaffDetail(staffId);
-		//	return staffDetailDto;
-		//}
+		public  EditStaffDto GetByStaffId(int staffId)
+		{
+			return _repo.GetByStaffId(staffId);
+		}
 
-		public EditStaffDto ResetStaff(EditStaffDto dto)
+		public Result ResetStaff(EditStaffDto dto)
 		{
 			//todo編輯的商業邏輯
+			if (dto == null)
+			{
+				return Result.Fail("找不到員工");
+			}
 
-			EditStaffDto editStaffDto = _repo.EditStaff(dto);
-			return editStaffDto;
+			 _repo.EditStaff(dto);
+			return Result.Success();
 		}
+
+	
+
+		
 	}
 }

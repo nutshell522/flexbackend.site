@@ -22,10 +22,12 @@ namespace Members.dll.Models.Dtos.Staff
 
 		public DateTime? DueDate { get; set; }
 
-		public string Department { get; set; }
+		public string fk_DepartmentId { get; set; }
 
 		public string TitleName { get; set; }
 
-		public string LevelName { get; set; }
+		public string fk_TitleId { get; set; }
+
+		public string fk_PermissionsId { get; set; }
 	}
 }

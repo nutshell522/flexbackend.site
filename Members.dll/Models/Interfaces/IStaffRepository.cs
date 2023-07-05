@@ -19,6 +19,7 @@ namespace Members.dll.Models.Interfaces
 		IEnumerable<StaffsIndexDto> GetStaffs();//取得員工資料
 		void DeleteStaff(int staffId);
 		StaffDetailDto StaffDetail(int staffId);
-		EditStaffDto EditStaff(EditStaffDto dto);
+		EditStaffDto GetByStaffId(int staffId);
+		void EditStaff(EditStaffDto dto);
 	}
 }

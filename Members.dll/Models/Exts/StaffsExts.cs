@@ -4,6 +4,7 @@ using Members.dll.Models.Dtos.Staff;
 using Members.dll.Models.ViewsModels;
 using Members.dll.Models.ViewsModels.Staff;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -99,9 +100,28 @@ namespace Members.dll.Models.Exts
 				Email = vm.Email,
 				Birthday = vm.Birthday,
 				DueDate = vm.DueDate,
-				Department = vm.Department,
-				TitleName = vm.TitleName,
-				LevelName = vm.LevelName
+				fk_DepartmentId = vm.fk_DepartmentId,
+				fk_TitleId = vm.fk_TitleId,
+				fk_PermissionsId = vm.fk_PermissionsId
+			};
+		}
+
+		public static EditStaffVM ToStaffEditVM(this EditStaffDto dto)
+		{
+			return new EditStaffVM()
+			{
+				StaffId = dto.StaffId,
+				Name = dto.Name,
+				Age = dto.Age,
+				Gender = dto.Gender,
+				Mobile = dto.Mobile,
+				Email = dto.Email,
+				Birthday = dto.Birthday,
+				DueDate = dto.DueDate,
+				fk_DepartmentId = dto.fk_DepartmentId,
+				fk_TitleId = dto.fk_TitleId,
+				//LevelName = dto.LevelName,
+				fk_PermissionsId = dto.fk_PermissionsId
 			};
 		}
 	}

@@ -14,10 +14,10 @@ namespace Members.dll.Models.ViewsModels.Staff
 		public int StaffId { get; set; }
 
 		[Display(Name = "部門")]
-		public string Department { get; set; }
+		public string fk_DepartmentId { get; set; }
 
 		[Display(Name = "職稱")]
-		public string TitleName { get; set; }
+		public string fk_TitleId { get; set; }
 
 		[Display(Name = "性別")]
 		public bool? Gender { get; set; }
@@ -38,10 +38,11 @@ namespace Members.dll.Models.ViewsModels.Staff
 		public string Email { get; set; }
 
 		[Display(Name = "生日")]
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
 		public DateTime? Birthday { get; set; }
 
 		[Display(Name = "權限")]
-		public string LevelName { get; set; }
+		public string fk_PermissionsId { get; set; }
 
 		[Display(Name = "入職時間")]
 		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
