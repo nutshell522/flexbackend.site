@@ -19,8 +19,16 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Display(Name = "職稱")]
 		public string TitleName { get; set; }
 
-		[Display(Name = "性別")]
 		public bool? Gender { get; set; }
+
+		[Display(Name = "性別")]
+		public string GenderStr
+		{
+			get
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			}
+		}
 
 		[Display(Name = "姓名")]
 		public string Name { get; set; }

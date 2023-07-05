@@ -15,19 +15,19 @@ namespace Members.dll.Models.Dtos.Staff
 		public byte? Age { get; set; }
 
 		public bool? Gender { get; set; }
+
 		public string Mobile { get; set; }
 
 		public string Email { get; set; }
+
 		public DateTime? Birthday { get; set; }
 
 		public DateTime? DueDate { get; set; }
 
-		public string fk_DepartmentId { get; set; }
+		public int fk_DepartmentId { get; set; }
 
-		public string TitleName { get; set; }
+		public int fk_TitleId { get; set; }
 
-		public string fk_TitleId { get; set; }
-
-		public string fk_PermissionsId { get; set; }
+		public int fk_PermissionsId { get; set; }
 	}
 }

@@ -15,14 +15,18 @@ namespace Members.dll.Models.ViewsModels
 		public int StaffId { get; set; }
 
 		[Display(Name = "部門")]
-		public string Department { get; set; }
+		public int fk_DepartmentId { get; set; }
 
 		[Display(Name = "職稱")]
-		public string JobTitle { get; set; }
+		public int fk_TitleId { get; set; }
+		
+		public bool? Gender { get; set; }
 
 		[Display(Name = "性別")]
-		public bool? Gender { get; set; }
-		
+		public string GenderStr { get 
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			} }
 		[Display(Name = "姓名")]
 		[StringLength(30)]
 		public string Name { get; set; }
@@ -34,8 +38,11 @@ namespace Members.dll.Models.ViewsModels
 		[StringLength(300)]
 		public string Email { get; set; }
 
-		[Display(Name = "權限")]
-		public string StaffPermission { get; set; }
+		public string levelName { get; set; }
+		public string Department { get; set; }
+		public string TitleIdName { get; set; }
+
+		public int fk_PermissionsId { get; set; }
 
 		[Display(Name = "入職時間")]
 		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]

@@ -23,10 +23,14 @@ namespace Members.dll.Models.Dtos
 
 		public DateTime? DueDate { get; set; }
 
+		public int fk_DepartmentId { get; set; }
+
+		public int fk_TitleId { get; set; }
+
+		public int fk_PermissionsId { get; set; }
+
+		public string levelName { get; set; }
 		public string Department { get; set; }
-
-		public string TitleName { get; set; }
-
-		public string LevelName { get; set; }
+		public string TitleIdName { get; set; }
 	}
 }

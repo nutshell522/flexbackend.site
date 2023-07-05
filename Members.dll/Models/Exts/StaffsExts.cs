@@ -50,9 +50,12 @@ namespace Members.dll.Models.Exts
 				Gender = dto.Gender,
 				Email = dto.Email,
 				DueDate = dto.DueDate,
-				Department = dto.Department,
-				JobTitle = dto.TitleName,
-				StaffPermission = dto.LevelName
+				fk_DepartmentId = dto.fk_DepartmentId,
+				fk_TitleId = dto.fk_TitleId,
+				fk_PermissionsId = dto.fk_PermissionsId,
+				Department=dto.Department,
+				TitleIdName =dto.TitleIdName,
+				levelName=dto.levelName,
 			};
 		}
 
@@ -66,9 +69,12 @@ namespace Members.dll.Models.Exts
 				Gender = entity.Gender,
 				Email = entity.Email,
 				DueDate = entity.DueDate,
+				fk_DepartmentId = entity.fk_DepartmentId,
+				fk_TitleId = entity.fk_TitleId,
+				fk_PermissionsId = entity.fk_PermissionsId,
 				Department = entity.Department.DepartmentName,
-				TitleName = entity.JobTitle.TitleName,
-				LevelName = entity.StaffPermission.LevelName
+				TitleIdName = entity.JobTitle.TitleName,
+				levelName = entity.StaffPermission.LevelName
 			};
 		}
 
@@ -120,7 +126,6 @@ namespace Members.dll.Models.Exts
 				DueDate = dto.DueDate,
 				fk_DepartmentId = dto.fk_DepartmentId,
 				fk_TitleId = dto.fk_TitleId,
-				//LevelName = dto.LevelName,
 				fk_PermissionsId = dto.fk_PermissionsId
 			};
 		}

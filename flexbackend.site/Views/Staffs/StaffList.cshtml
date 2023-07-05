@@ -2,29 +2,42 @@
 
 @{
     ViewBag.Title = "StaffList";
+    var departments = ViewBag.DepartmentId as SelectList;
+    var criteria = ViewBag.Criteria as Members.dll.Models.ViewsModels.Staff.StaffCriteria;
+    string s_departmentId = criteria.DepartmentId.HasValue ? criteria.DepartmentId.Value.ToString() : "";
 }
 
 <h2>員工名單總覽</h2>
-
-<p>
-
-</p>
-<div class="search-bar-container mb-4 d-flex">
-    <div class="left w-50 me-auto">
-        @* 輸入框區域 寬度可移除下方class w-50 自行調整 *@
-        <div class="w-50">
-            <div class="input-group">
-                <input class="form-control search-bar" type="text" placeholder="搜尋...">
+<section class="container">
+    <form method="get">
+        <div class="d-flex">
+            <div class="mb-3 col-md-3">
+                <label for="s_name">會員姓名</label>
+                <input type="text" class="form-control search-bar" name="name" id="s_name" placeholder="搜尋..." value="@criteria.Name">
+            </div>
+            <div class="mb-3 col-md-3">
+                <label for="s_departmentId">部門</label>
+                <select name="DepartmentId" id="s_departmentId" class="form-select" value="@(criteria.DepartmentId.HasValue?criteria.DepartmentId.Value:0)">
+                    @foreach (var item in departments)
+                    {
+                        <option value="@item.Value" @(s_departmentId == item.Value ? "selected" : "")>@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3 col-md-2 align-self-end me-auto">
+                <button class="btn btn-primary">Search</button>
+            </div>
+            <div class="right">
+                <a href="@Url.Action("CreateStaff", "Staffs", new { area = "" })" class="btn btn-primary">
+                    <i class="bi bi-plus-lg"></i> 新增員工
+                </a>
             </div>
         </div>
-    </div>
-
-
-    <div class="right">
-        <a href="@Url.Action("CreateStaff", "Staffs", new { area = "" })" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> 新增員工
-        </a>
-    </div>
+        
+    </form>
+</section>
+<div class="search-bar-container mb-4 d-flex">
+    
 </div>
 <div class="table-container">
     <table>
@@ -48,10 +61,10 @@
                     @Html.DisplayNameFor(model => model.Department)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.JobTitle)
+                    @Html.DisplayNameFor(model => model.TitleIdName)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Gender)
+                    @Html.DisplayNameFor(model => model.GenderStr)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Name)
@@ -63,7 +76,7 @@
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.StaffPermission)
+                    @Html.DisplayNameFor(model => model.levelName)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.DueDate)
@@ -100,10 +113,10 @@
                         @Html.DisplayFor(modelItem => item.Department)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.JobTitle)
+                        @Html.DisplayFor(modelItem => item.TitleIdName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Gender)
+                        @Html.DisplayFor(modelItem => item.GenderStr)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -115,7 +128,7 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StaffPermission)
+                        @Html.DisplayFor(modelItem => item.levelName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DueDate)

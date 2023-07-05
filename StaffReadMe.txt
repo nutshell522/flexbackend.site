@@ -19,6 +19,8 @@
 	add StaffService 收到Controller傳入的Dto，將資料做檢查，將驗證完畢的Dto傳入IStaffRepository
 	add StaffDapperRepository : IStaffRepository 收到 IStaffRepository 傳來的Dto 存入資料庫
 
+	搜尋
+
 	*資料格式還沒有判斷
 	*新增成功沒有回到總覽畫面
 	*註冊員工帳號是不是要跟新增員工分開

@@ -20,6 +20,8 @@ using Microsoft.Ajax.Utilities;
 using System.EnterpriseServices;
 using System.Collections;
 using Flex_Activity.dll.Models.ViewModels;
+using static Discount.dll.Models.Services.ProjectTagService;
+using System.Data.Entity;
 
 namespace flexbackend.site.Controllers
 {
@@ -42,15 +44,14 @@ namespace flexbackend.site.Controllers
 			StaffService service = GetStaffRepository();
 			var staff = service.GetByStaffId(staffId).ToStaffEditVM();
 
-			
+
 			PrepareCategoryDataSource(staff.fk_PermissionsId);
 
 			return View(staff);
 		}
 
-
 		[HttpPost]
-		public ActionResult EditStaff(EditStaffVM vm)	
+		public ActionResult EditStaff(EditStaffVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = ResetStaff(vm);
@@ -62,16 +63,19 @@ namespace flexbackend.site.Controllers
 			PrepareCategoryDataSource(vm.fk_PermissionsId);
 			PrepareCategoryDataSource(vm.fk_DepartmentId);
 			PrepareCategoryDataSource(vm.fk_TitleId);
+			PrepareCategoryDataSource(vm.GenderInt);
 
 			return RedirectToAction("StaffList");
 
 		}
 
-		private void PrepareCategoryDataSource(string id)
+		private void PrepareCategoryDataSource(int? id)
 		{
+			var dipartments = db.Departments.ToList().Prepend(new Department());
 			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
 			ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", id);
 			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
+			ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "Gender", id);
 		}
 
 		private Result ResetStaff(EditStaffVM vm)
@@ -303,11 +307,29 @@ namespace flexbackend.site.Controllers
 		}
 
 		//Read
-		[Authorize]
-		public ActionResult StaffList()
+		//[Authorize]
+		public ActionResult StaffList(StaffCriteria criteria)
 		{
+			PrepareCategoryDataSource(criteria.DepartmentId);
+			ViewBag.Criteria = criteria;
+			//查詢,第一次進入網頁 criteria 是沒有值
+
+			var query = db.Staffs.Include(d => d.Department);
+			query.Select(d => d.Department.DepartmentName);
+
+			if (string.IsNullOrEmpty(criteria.Name) == false)
+			{
+				query = query.Where(d => d.Name.Contains(criteria.Name));
+			}
+			if (criteria.DepartmentId != null && criteria.DepartmentId.Value > 0)
+			{
+				query = query.Where(d => d.fk_DepartmentId == criteria.DepartmentId.Value);
+			}
+
+			var result = query.ToList().Select(d => d.ToStaffsIndexDto().ToStaffsIndexVM());
+
 			StaffService service = GetStaffRepository();
-			return View(service.GetStaffs());//return View (model)
+			return View(result);//return View (model)
 		}
 	}
 }
