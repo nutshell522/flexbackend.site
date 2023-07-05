@@ -32,6 +32,9 @@ namespace flexbackend.site.Controllers
 			}
 			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
 			var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
+			TempData["PayMethods"] = paymethods ?? new Dictionary<int, string>();
+			var LogisticsCompanies = db.logistics_companies.AsNoTracking().ToDictionary(lc => lc.Id, lc => lc.name);
+			TempData["LogisticsCompanies"] = LogisticsCompanies ?? new Dictionary<int, string>();
 			var paystatuses = db.pay_statuses.AsNoTracking().ToDictionary(ps => ps.Id, ps => ps.pay_status);
 
 			return orders.ToList()
@@ -76,6 +79,8 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
+				TempData.Keep("LogisticsCompanies");
+				TempData.Keep("PayMethods");
 				return RedirectToAction("OrdersIndex");
 			}
 			else
@@ -93,12 +98,12 @@ namespace flexbackend.site.Controllers
 			{
 				Id = vm.Id,
 				ordertime = DateTime.Now,
-				fk_member_Id = 1,
+				fk_member_Id = vm.fk_member_Id,
 				total_price = vm.total_price,
 				total_quantity = vm.total_quantity,
-				logistics_company_Id = 1,
+				logistics_company_Id = vm.logistics_company_Id,
 				order_status_Id = 1,
-				pay_method_Id = 1,
+				pay_method_Id = vm.pay_method_Id,
 				pay_status_Id = 1,
 				coupon_name = vm.coupon_name,
 				coupon_discount = vm.coupon_discount,
@@ -294,8 +299,8 @@ namespace flexbackend.site.Controllers
 				per_price = vm.per_price,
 				quantity = vm.quantity,
 				discount_name = vm.discount_name,
-				subtotal = vm.subtotal,
-				discount_subtotal = vm.discount_subtotal,
+				subtotal = vm.per_price*vm.quantity,
+				discount_subtotal = vm.per_price * vm.quantity,
 				Items_description = vm.Items_description
 			};
 
@@ -375,8 +380,8 @@ namespace flexbackend.site.Controllers
 				 order.per_price = vm.per_price;
 				 order.quantity =vm.quantity;
 				 order.discount_name =vm.discount_name;
-			 order.subtotal = vm.subtotal;
-			order.discount_subtotal = vm.discount_subtotal;
+			 order.subtotal = vm.per_price * vm.quantity;
+			order.discount_subtotal = vm.per_price * vm.quantity;
 				 order.Items_description =vm.Items_description;
 
 			
