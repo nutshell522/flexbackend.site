@@ -2338,6 +2338,7 @@
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\OrderItemsIndex.cshtml" />
     <Content Include="Views\Orders\CreateOrderItems.cshtml" />
+    <Content Include="Views\Orders\EditItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

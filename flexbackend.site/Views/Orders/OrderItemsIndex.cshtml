@@ -4,7 +4,7 @@
     ViewBag.Title = "OrderItemsIndex";
 }
 
-<h2>OrderItemsIndex</h2>
+<h2>訂單明細</h2>
 
 <p>
     
@@ -12,7 +12,11 @@
 <div class="search-bar-container mb-4 d-flex">
     <div class="left w-50 me-auto">
         @* 輸入框區域 寬度可移除下方class w-50 自行調整 *@
-        
+        <div>
+            <a href="@Url.Action("OrdersIndex")" class="btn btn-primary text-light">
+                回到訂單管理
+            </a>
+        </div>
     </div>
     
 
@@ -26,107 +30,110 @@
     <table>
         <thead>
             <tr>
-            @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
-                            @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                                    th-col-0 至 th-col-20
-                                    超過100%資料不會溢出 也不會換行
-                                    如有細緻設定需求，可自己寫css設定寬度
-                            *@
-            <th class="th-col-0 sticky">
-                <label class="form-check-label">
-                    <input class="form-check-input check-all" type="checkbox">
-                </label>
-            </th>
-                                <th class="th-col-1">
+                @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
+                @* 同時也有提供 th-col- 作為粗略每列寬度設定
+                    th-col-0 至 th-col-20
+                    超過100%資料不會溢出 也不會換行
+                    如有細緻設定需求，可自己寫css設定寬度
+                *@
+                <th class="th-col-0 sticky">
+                    <label class="form-check-label">
+                        <input class="form-check-input check-all" type="checkbox">
+                    </label>
+                </th>
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.order_Id)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.product_name)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.fk_typeId)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.per_price)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.quantity)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.discount_name)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.subtotal)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.discount_subtotal)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Items_description)
                 </th>
-                        <th>管理</th>
+                <th>管理</th>
             </tr>
         </thead>
-    <tbody>
-    @* 如有照片要放 
-        格式:
-        <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
-    *@
-    @*  顯示資料內有定義了狀態框，
-            如有需展示狀態顏色，請在td內增加一個span，且定義class
-            有提供四種顏色:
-                綠色 : status-success
-                灰色 : status-dark
-                紅色 : status-danger
-                藍色 : status-primary
-            可依自己需求使用
+        <tbody>
+            @* 如有照片要放
+                格式:
+                <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
+            *@
+            @*  顯示資料內有定義了狀態框，
+                如有需展示狀態顏色，請在td內增加一個span，且定義class
+                有提供四種顏色:
+                    綠色 : status-success
+                    灰色 : status-dark
+                    紅色 : status-danger
+                    藍色 : status-primary
+                可依自己需求使用
 
-            格式: <td class="text-center"><span class="status-success}">進行中</span></td>
-    *@
+                格式: <td class="text-center"><span class="status-success}">進行中</span></td>
+            *@
 
-    @foreach (var item in Model) {
-        <tr>
-        @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-        <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
+                    <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
                     <td>
-                @Html.DisplayFor(modelItem => item.order_Id)
-            </td>
+                        @Html.DisplayFor(modelItem => item.order_Id)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.product_name)
-            </td>
+                        @Html.DisplayFor(modelItem => item.product_name)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.fk_typeId)
-            </td>
+                        @Html.DisplayFor(modelItem => item.fk_typeId)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.per_price)
-            </td>
+                        @Html.DisplayFor(modelItem => item.per_price)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.quantity)
-            </td>
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.discount_name)
-            </td>
+                        @Html.DisplayFor(modelItem => item.discount_name)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.subtotal)
-            </td>
+                        @Html.DisplayFor(modelItem => item.subtotal)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.discount_subtotal)
-            </td>
+                        @Html.DisplayFor(modelItem => item.discount_subtotal)
+                    </td>
                     <td>
-                @Html.DisplayFor(modelItem => item.Items_description)
-            </td>
-                <td>
-                <div class="manage-btn-container">
-                    <a href="@Url.Action("Edit", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                    <a href="@Url.Action("Details", new { id = item.Id  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                    <a href="@Url.Action("Delete", new { id = item.Id  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
-                </div>
-            </td>
-            </tr>
-    }
-    </tbody>
+                        @Html.DisplayFor(modelItem => item.Items_description)
+                    </td>
+                    <td>
+                        <div class="manage-btn-container">
+                            <a href="@Url.Action("EditItems", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                            @*<a href="@Url.Action("Details", new { id = item.Id  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>*@
+                            @*<a href="@Url.Action("Delete", new { id = item.Id  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>*@
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+    
 </div>
+
 @section Scripts{
     <script>
         window.onload = function() {

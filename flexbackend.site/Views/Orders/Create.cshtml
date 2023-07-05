@@ -123,7 +123,9 @@
 }
 
 <div>
-    @Html.ActionLink("回到訂單管理", "OrdersIndex")
+    <a href="@Url.Action("OrdersIndex")" class="btn btn-primary text-light">
+        回到訂單管理
+    </a>
 </div>
 
 @section Scripts {

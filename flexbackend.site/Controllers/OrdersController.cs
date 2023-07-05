@@ -283,5 +283,90 @@ namespace flexbackend.site.Controllers
             return (true, "", orderitems.order_Id);
 
         }
+
+		public ActionResult EditItems(int id)
+		{
+			var order = GetOrderItemsById(id);
+
+			if (order == null)
+			{
+				return HttpNotFound(); // 可以根據你的需求返回一個適當的錯誤頁面或訊息
+			}
+
+			var vm = new OrderItemsVM
+			{
+				Id = order.Id,
+				order_Id= order.order_Id,
+				product_name = order.product_name,
+				fk_typeId = order.fk_typeId,
+				per_price = order.per_price,
+				quantity = order.quantity,
+				discount_name = order.discount_name,
+				subtotal = order.subtotal,
+				discount_subtotal= order.discount_subtotal,
+				Items_description = order.Items_description
+				
+			};
+
+			return View(vm);
+		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditItems(OrderItemsVM vm)
+		{
+			if (ModelState.IsValid == false)
+			{
+				return View(vm);
+			}
+
+			(bool IsSuccess, string ErrorMessage, int OrderItemId) result = UpdateOrderItems(vm);
+
+			if (result.IsSuccess)
+			{
+				int orderItemId = result.OrderItemId;
+				return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
+			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+		}
+		private (bool IsSuccess, string ErrorMessage, int OrderItemId) UpdateOrderItems(OrderItemsVM vm)
+		{
+			var db = new AppDbContext();
+
+			var order = db.orderItems.FirstOrDefault(o => o.Id == vm.Id);
+
+			//if (order == null)
+			//{
+			//	return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
+			//}
+
+			// 更新訂單的相關屬性
+			
+			
+				 order.Id = vm.Id;
+			order.order_Id = vm.order_Id;
+				 order.product_name = vm.product_name;
+				 order.fk_typeId = vm.fk_typeId;
+				 order.per_price = vm.per_price;
+				 order.quantity =vm.quantity;
+				 order.discount_name =vm.discount_name;
+			 order.subtotal = vm.subtotal;
+			order.discount_subtotal = vm.discount_subtotal;
+				 order.Items_description =vm.Items_description;
+
+			
+
+			db.SaveChanges();
+
+			return (true, "", order.order_Id);
+		}
+		private orderItem GetOrderItemsById(int id)
+		{
+			var db = new AppDbContext();
+			return db.orderItems.FirstOrDefault(o => o.Id == id);
+		}
 	}
 }

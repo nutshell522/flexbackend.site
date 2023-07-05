@@ -27,7 +27,7 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.fk_member_Id, htmlAttributes: new { @class = "form-label" })
 
-                @Html.EditorFor(model => model.fk_member_Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.fk_member_Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.fk_member_Id, "", new { @class = "text-danger" })
         </div>
 
@@ -137,13 +137,15 @@
         </div>
 
         <div class="mb-3">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="儲存" class="btn btn-primary" />
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("回到訂單管理", "OrdersIndex")
+    <a href="@Url.Action("OrdersIndex")" class="btn btn-primary text-light">
+        回到訂單管理
+    </a>
 </div>
 
 @section Scripts {
