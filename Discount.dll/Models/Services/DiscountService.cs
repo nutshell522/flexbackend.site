@@ -23,11 +23,15 @@ namespace Discount.dll.Models.Services
 		{
 			return _repo.GetDiscounts(searchExpired, searchDiscountName);
 		}
-		public int Create(DiscountCreateOrEditDto dto)
+		public DiscountCreateOrEditDto GetDiscountById(int id)
+		{
+			return _repo.GetDiscountById(id);
+		}
+		public (int id, Result result) Create(DiscountCreateOrEditDto dto)
 		{
 			// TODO 驗證規則
 
-			return _repo.Create(dto);
+			return (_repo.Create(dto),Result.Success());
 		}
 		public Result Delete(int[] ids)
 		{
@@ -45,5 +49,5 @@ namespace Discount.dll.Models.Services
 			return Result.Success();
 		}
 
-    }
+	}
 }

@@ -2163,6 +2163,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\IndexPageStyle.css" />
+    <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\table.css" />
     <Content Include="Content\variables.css" />
     <Content Include="lib\datatables\css\dataTables.bootstrap.css" />
@@ -2312,6 +2313,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2362,6 +2364,7 @@
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
     <Content Include="Views\DIscount\Index.cshtml" />
+    <Content Include="Views\DIscount\CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
