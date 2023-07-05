@@ -31,68 +31,78 @@
     <table>
         <thead>
             <tr>
-            @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
-                            @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                                    th-col-0 至 th-col-20
-                                    超過100%資料不會溢出 也不會換行
-                                    如有細緻設定需求，可自己寫css設定寬度
-                            *@
-            <th class="th-col-0 sticky">
-                <label class="form-check-label">
-                    <input class="form-check-input check-all" type="checkbox">
-                </label>
-            </th>
-                                <th class="th-col-1">
+                @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
+                @* 同時也有提供 th-col- 作為粗略每列寬度設定
+        th-col-0 至 th-col-20
+        超過100%資料不會溢出 也不會換行
+        如有細緻設定需求，可自己寫css設定寬度
+                *@
+                <th class="th-col-0 sticky">
+                    <label class="form-check-label">
+                        <input class="form-check-input check-all" type="checkbox">
+                    </label>
+                </th>
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.ordertime)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.fk_member_Id)
-                                </th><th class="th-col-1">
+                </th>
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.total_price)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.total_quantity)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.logistics_company_Id)
                 </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.order_status_Id)
+                @*<th class="th-col-1">
+            @Html.DisplayNameFor(model => model.order_status_Id)
+        </th>*@
+                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.order_status)
                 </th>
-                                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.pay_method_Id)
+                @*<th class="th-col-1">
+            @Html.DisplayNameFor(model => model.pay_method_Id)
+        </th>*@
+                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.pay_method)
                 </th>
-                                <th class="th-col-1">
+                @*<th class="th-col-1">
                     @Html.DisplayNameFor(model => model.pay_status_Id)
+                </th>*@
+                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.pay_status)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.coupon_name)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.coupon_discount)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.freight)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.cellphone)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.receipt)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.receiver)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.recipient_address)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.order_description)
                 </th>
-                                <th class="th-col-1">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.close_Id)
                 </th>
-                        <th>管理</th>
+                <th>管理</th>
             </tr>
         </thead>
     <tbody>
@@ -131,14 +141,23 @@
             <td>
                 @Html.DisplayFor(modelItem => item.logistics_company_Id)
             </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.order_status_Id)
+        </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.order_status_Id)
+                @Html.DisplayFor(modelItem => item.order_status)
             </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.pay_method_Id)
+        </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.pay_method_Id)
+                @Html.DisplayFor(modelItem => item.pay_method)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.pay_status_Id)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.pay_status)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.coupon_name)

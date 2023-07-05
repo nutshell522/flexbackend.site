@@ -32,9 +32,9 @@
             <tr>
                 @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
                 @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                    th-col-0 至 th-col-20
-                    超過100%資料不會溢出 也不會換行
-                    如有細緻設定需求，可自己寫css設定寬度
+        th-col-0 至 th-col-20
+        超過100%資料不會溢出 也不會換行
+        如有細緻設定需求，可自己寫css設定寬度
                 *@
                 <th class="th-col-0 sticky">
                     <label class="form-check-label">
@@ -47,8 +47,11 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.product_name)
                 </th>
-                <th class="th-col-1">
+                @*<th class="th-col-1">
                     @Html.DisplayNameFor(model => model.fk_typeId)
+                </th>*@
+                <th class="th-col-1">
+                    @Html.DisplayNameFor(model => model.type)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.per_price)
@@ -99,8 +102,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.product_name)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.fk_typeId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.per_price)

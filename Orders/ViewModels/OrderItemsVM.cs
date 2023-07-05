@@ -17,8 +17,10 @@ namespace Orders.ViewModels
 		[Display(Name = "名稱")]
 		[StringLength(50)]
 		public string product_name { get; set; }
-		[Display(Name = "類別")]
+		[Display(Name = "類別ID")]
 		public int fk_typeId { get; set; }
+		[Display(Name = "類別")]
+		public string type { get; set; }
 		[Display(Name = "單價")]
 		public int? per_price { get; set; }
 		[Display(Name = "數量")]

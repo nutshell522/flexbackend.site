@@ -21,12 +21,18 @@ namespace Orders.ViewModels
 		public int total_quantity { get; set; }
 		[Display(Name = "物流編號")]
 		public int logistics_company_Id { get; set; }
-		[Display(Name = "商品狀態")]
+		[Display(Name = "商品狀態ID")]
 		public int order_status_Id { get; set; }
-		[Display(Name = "付款方式")]
+		[Display(Name = "商品狀態")]
+		public string order_status { get; set; }
+		[Display(Name = "付款方式ID")]
 		public int pay_method_Id { get; set; }
-		[Display(Name = "付款狀態")]
+		[Display(Name = "付款方式")]
+		public string pay_method { get; set; }
+		[Display(Name = "付款狀態ID")]
 		public int pay_status_Id { get; set; }
+		[Display(Name = "付款狀態")]
+		public string pay_status { get; set; }
 		[Display(Name = "優惠")]
 		public string coupon_name { get; set; }
 		[Display(Name = "折扣")]
@@ -50,6 +56,7 @@ namespace Orders.ViewModels
 		
 		[Display(Name = "所選訂單ID")]
 		public int SelectedOrderId { get; set; }
+		
 		public List<OrderItemsVM> orderItems { get; set; }
 		public List<OrdersIndexVM> Orders { get; set; }
 	}

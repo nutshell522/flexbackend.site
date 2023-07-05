@@ -30,6 +30,9 @@ namespace flexbackend.site.Controllers
 			{
 				orders = (System.Data.Entity.Infrastructure.DbQuery<order>)orders.Where(o => o.fk_member_Id == memberId);
 			}
+			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
+			var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
+			var paystatuses = db.pay_statuses.AsNoTracking().ToDictionary(ps => ps.Id, ps => ps.pay_status);
 
 			return orders.ToList()
 				.Select(p => new OrdersIndexVM
@@ -40,8 +43,11 @@ namespace flexbackend.site.Controllers
 					total_quantity = p.total_quantity,
 					logistics_company_Id = p.logistics_company_Id,
 					order_status_Id = p.order_status_Id,
+					order_status = orderStatuses.ContainsKey(p.order_status_Id) ? orderStatuses[p.order_status_Id] : string.Empty,
 					pay_method_Id = p.pay_method_Id,
+					pay_method = paymethods.ContainsKey(p.pay_method_Id) ? orderStatuses[p.pay_method_Id] : string.Empty,
 					pay_status_Id = p.pay_status_Id,
+					pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? orderStatuses[p.pay_status_Id] : string.Empty,
 					coupon_name = p.coupon_name,
 					coupon_discount = p.coupon_discount,
 					freight = p.freight,
@@ -210,30 +216,46 @@ namespace flexbackend.site.Controllers
             TempData["OrderId"] = id; // 將 id 儲存在 TempData 中
             return View(orderItems);
         }
-        private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
+		private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
 		{
 			var db = new AppDbContext();
+			var typeIds = db.orderItems
+				.AsNoTracking()
+				.Where(o => o.order_Id == orderId)
+				.Select(o => o.fk_typeId)
+				.Distinct()
+				.ToList();
 
-			return db.orderItems
-			.AsNoTracking()
-			.Where(o => o.order_Id == orderId)
-			.Select(o => new OrderItemsVM
-			{
-				Id = o.Id,
-				order_Id = o.order_Id,
-				product_name = o.product_name,
-				fk_typeId = o.fk_typeId,
-				per_price = o.per_price,
-				quantity = o.quantity,
-				discount_name = o.discount_name,
-				subtotal = o.subtotal,
-				discount_subtotal = o.discount_subtotal,
-				Items_description = o.Items_description
-			})
-			.ToList();
+			var types = db.Types
+				.AsNoTracking()
+				.Where(tp => typeIds.Contains(tp.TypeId))
+				.ToList()
+				.ToDictionary(tp => tp.TypeId, tp => tp.TypeName);
+
+			var orderItems = db.orderItems
+				.AsNoTracking()
+				.Where(o => o.order_Id == orderId)
+				.ToList()
+				.Select(o => new OrderItemsVM
+				{
+					Id = o.Id,
+					order_Id = o.order_Id,
+					product_name = o.product_name,
+					fk_typeId = o.fk_typeId,
+					type = types.ContainsKey(o.fk_typeId) ? types[o.fk_typeId] : string.Empty,
+					per_price = o.per_price,
+					quantity = o.quantity,
+					discount_name = o.discount_name,
+					subtotal = o.subtotal,
+					discount_subtotal = o.discount_subtotal,
+					Items_description = o.Items_description
+				})
+				.ToList();
+
+			return orderItems;
 		}
 
-        public ActionResult CreateOrderItems()
+		public ActionResult CreateOrderItems()
         {
             
             return View();
