@@ -52,10 +52,12 @@ namespace flexbackend.site.Controllers
             {
                 criteria = new SpeakerSearchCriteria();
             }
-            PrepareSpeakerFieldDataSource(criteria.FieldId);
+
+			ViewBag.Criteria = criteria;
+			PrepareSpeakerFieldDataSource(criteria.FieldId);
           
 
-            ViewBag.Criteria = criteria;
+           
 
             var query = db.Speakers.Include(s => s.SpeakerField);
            
@@ -240,12 +242,13 @@ namespace flexbackend.site.Controllers
 
         private void PrepareSpeakerFieldDataSource(int? speakerFieldId)
         {
-            var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField());
+            
+            var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField { FieldId=0, FieldName="領域分類"});
             ViewBag.fk_SpeakerFieldId = new SelectList(fields, "FieldId", "FieldName", speakerFieldId);
         }
         private void PrepareBranchDataSource(int? branchId)
         {
-            var branches = db.Branches.ToList().Prepend(new Branch());
+            var branches = db.Branches.ToList().Prepend(new Branch { BranchId=0, BranchName="選擇分店"});
             ViewBag.fk_SpeakerBranchId = new SelectList(branches, "BranchId", "BranchName", branchId);
         }
     }

@@ -20,10 +20,12 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string SpeakerName { get; set; }
 
 		[Display(Name = "連絡電話")]
+		[Required]
 		[StringLength(10, MinimumLength = 10, ErrorMessage = "電話長度錯誤")]
 		public string SpeakerPhone { get; set; }
 
 		[Display(Name = "專長領域")]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_SpeakerFieldId { get; set; }
 
 		[Display(Name = "講師照片")]
@@ -31,6 +33,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string SpeakerImg { get; set; }
 
 		[Display(Name = "駐點分店")]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int? fk_SpeakerBranchId { get; set; }
 
 		[Display(Name = "講師簡介")]

@@ -86,7 +86,8 @@
         <tr>
         @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
         <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
-                    <td>
+        
+            <td>
                 @Html.DisplayFor(modelItem => item.MemberId)
             </td>
                     <td>
@@ -111,7 +112,7 @@
                 <div class="manage-btn-container">
                     <a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                     <a href="@Url.Action("Details", new { /* id=item.PrimaryKey */  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                    <a href="@Url.Action("Delete", new {id=item.ReservationId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                    <a href="@Url.Action("Delete", new {id=item.ReservationId,SpeakerId =item.SpeakerId})" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                     
                 </div>
             </td>

@@ -42,8 +42,8 @@ namespace Flex_Activity.dll.Infra.EFRepositories
                 {
                     SpeakerId = s.SpeakerId,
                     SpeakerName = s.SpeakerName,
-                    fk_SpeakerFieldId = s.fk_SpeakerFieldId
-                });
+					FieldName = s.SpeakerField.FieldName
+				});
         }
     }
 }

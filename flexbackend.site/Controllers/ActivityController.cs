@@ -54,42 +54,80 @@ namespace flexbackend.site.Controllers
 		[HttpPost]
 		public ActionResult Create(ActivityCreateVM vm, HttpPostedFileBase file1)
 		{
-			if (ModelState.IsValid) //如果通過欄位驗證
-			{
-				//將file存檔，並取得最後存檔的檔案名稱
-				//path = 路徑
-				string path = Server.MapPath("~/Public/Img"); 
-				
-				//檔案要存放的資料夾位置
-				string fileName = SaveUploadedFile(path, file1);
-
-				//將【路徑+檔名】存入vm裡
-				vm.ActivityImage = fileName;
-
-				//將 view model轉型為Activity
-				Activity activity = vm.ToEntity();
-
-				//新增一筆紀錄
-				db.Activities.Add(activity);
-				db.SaveChanges();
-
-				//網頁轉到Activity /Index/
-				return RedirectToAction("Index");
-			}
-
-			//如果驗證失敗，就留在本網頁
-
+			
 			//取得活動類別需要下拉清單的內容
-			//ViewBag.fk_ActivityCategoryId = new SelectList(db.ActivityCategories, "ActivityCategoryId", "ActivityCategoryName", vm.fk_ActivityCategoryId);
+
 			PrepareCategoryDataSource(vm.fk_ActivityCategoryId);
 
 
-            ////取得活動講者需要下拉清單的內容
-            //ViewBag.fk_SpeakerId = new SelectList(db.Speakers, "SpeakerId", "SpeakerName", vm.fk_SpeakerId);
-            PrepareSpeakerDataSource(vm.fk_SpeakerId);
+			////取得活動講者需要下拉清單的內容
+			PrepareSpeakerDataSource(vm.fk_SpeakerId);
 
-            //顯示網頁
-            return View(vm);
+
+
+			if (ModelState.IsValid) //如果通過欄位驗證
+			{
+				DateTime now = DateTime.Now;
+				DateTime lastWeek = vm.ActivityDate.AddDays(-7); //活動日期前7天
+				if (vm.ActivityBookEndTime >= lastWeek )
+				{
+					//報名結束日期要晚於活動日期一個禮拜前
+					ModelState.AddModelError(string.Empty, "報名結束日期需早於活動日期一個禮拜以上");
+					return View(vm);
+				}
+				if (vm.ActivityDate < now || vm.ActivityBookStartTime < now || vm.ActivityBookEndTime < now)
+				{
+					//活動時間及報名時間不能早於今天
+					ModelState.AddModelError(string.Empty, "請再次確認活動時間及報名時間");
+					return View(vm);
+				}
+				if (vm.ActivityBookStartTime >= vm.ActivityBookEndTime)
+				{
+					//報名時間的起訖有誤
+					ModelState.AddModelError("ActivityBookEndTime", "報名時間有誤");
+					return View(vm);
+				}
+
+				if (file1 == null)
+				{
+					ModelState.AddModelError("ActivityImage", "活動照片必填");
+					return View(vm);
+				}
+
+				if(vm.ActivityOriginalPrice <= vm.ActivitySalePrice)
+				{
+					ModelState.AddModelError("ActivityOriginalPrice", "請再次確認活動價格");
+					return View(vm);
+				}
+
+				else
+				{
+					//將file存檔，並取得最後存檔的檔案名稱
+					//path = 路徑
+					string path = Server.MapPath("~/Public/Img");
+
+					//檔案要存放的資料夾位置
+					string fileName = SaveUploadedFile(path, file1);
+
+					//將【路徑+檔名】存入vm裡
+					vm.ActivityImage = fileName;
+
+
+					//將 view model轉型為Activity
+					Activity activity = vm.ToEntity();
+
+					//新增一筆紀錄
+					db.Activities.Add(activity);
+					db.SaveChanges();
+
+					//網頁轉到Activity /Index/
+					return RedirectToAction("Index");
+				}	
+
+			}
+
+			//如果驗證失敗，就留在本網頁
+			return View(vm);
 		}
 
 		private string SaveUploadedFile(string path, HttpPostedFileBase file1)
@@ -206,14 +244,16 @@ namespace flexbackend.site.Controllers
 
 		private void PrepareCategoryDataSource(int? categoryId)
 		{
-			var categories = db.ActivityCategories.ToList().Prepend(new ActivityCategory());
+			var categories = db.ActivityCategories.ToList().Prepend(new ActivityCategory {ActivityCategoryId =0, ActivityCategoryName="活動分類"});
             ViewBag.fk_ActivityCategoryId = new SelectList(categories, "ActivityCategoryId", "ActivityCategoryName", categoryId);
         }
 		
 		private void PrepareSpeakerDataSource(int? speakerId)
 		{
-			var speakers = db.Speakers.ToList().Prepend(new Speaker());
+			var speakers = db.Speakers.ToList().Prepend(new Speaker { SpeakerId =0, SpeakerName="講師"});
             ViewBag.fk_SpeakerId = new SelectList(speakers, "SpeakerId", "SpeakerName", speakerId);
         }
+
+		
 	}
 }

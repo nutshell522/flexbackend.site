@@ -31,5 +31,7 @@ namespace Flex_Activity.dll.Models.ViewModels.DapperVM
 		public int ReservationId { get; set; }
 
 		//public int fk_ReservationSpeakerId { get; set; }
+
+		public int SpeakerId { get; set; }
 	}
 }

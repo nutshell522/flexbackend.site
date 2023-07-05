@@ -17,13 +17,13 @@ namespace Flex_Activity.dll.Models.Dto
 		public string SpeakerPhone { get; set; }
 
 
-		public int fk_SpeakerFieldId { get; set; }
+		public string FieldName { get; set; }
 
 
 		public string SpeakerImg { get; set; }
 
 
-		public int? fk_SpeakerBranchId { get; set; }
+		public string  BranchName { get; set; }
 
 
 		public string SpeakerDescription { get; set; }

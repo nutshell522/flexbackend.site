@@ -37,14 +37,14 @@ namespace flexbackend.site.Controllers
 
 		}
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int SpeakerId)
         {
 			IReservationRepository repo = new ReservationDapperRepository();
 			OneToOneReservationServices service = new OneToOneReservationServices(repo);
 
              service.Delete(id);
 
-			return RedirectToAction("ReservationList");
+			return RedirectToAction("ReservationList",new { id = SpeakerId });
         }
     }
 }

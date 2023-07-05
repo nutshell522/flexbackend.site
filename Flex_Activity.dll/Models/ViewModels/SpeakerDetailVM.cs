@@ -19,13 +19,13 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string SpeakerPhone { get; set; }
 
 		[Display(Name ="專攻領域")]
-		public int fk_SpeakerFieldId { get; set; }
+		public string FieldName { get; set; }
 
 		[Display(Name ="講師照片")]
 		public string SpeakerImg { get; set; }
 
 		[Display(Name ="駐點分店")]
-		public int? fk_SpeakerBranchId { get; set; }
+		public string BranchName { get; set; }
 
 		[Display(Name ="講師敘述")]
 		public string SpeakerDescription { get; set; }

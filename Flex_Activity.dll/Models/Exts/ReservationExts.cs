@@ -33,7 +33,8 @@ namespace Flex_Activity.dll.Models.Exts
 				ReservationStartTime = dto.ReservationStartTime,
 				BranchName = dto.BranchName,
 				ReservationStatusDescription = dto.ReservationStatusDescription,
-				ReservationId = dto.ReservationId
+				ReservationId = dto.ReservationId,
+				SpeakerId =dto.SpeakerId
 
 			};
 		}

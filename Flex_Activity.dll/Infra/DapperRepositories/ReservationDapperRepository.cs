@@ -47,7 +47,8 @@ Join SpeakerFields ON Speakers.fk_SpeakerFieldId = SpeakerFields.FieldId
 
 		public IEnumerable<ReservationListDto> GetAll(int speakerId)
 		{
-			string sql = @"SELECT MemberId, Name, Mobile, ReservationStartTime, BranchName, ReservationStatusDescription, OneToOneReservations.reservationId
+			string sql = @"SELECT MemberId, Name, Mobile, ReservationStartTime, BranchName, ReservationStatusDescription, OneToOneReservations.reservationId,
+fk_ReservationSpeakerId as SpeakerId
 FROM OneToOneReservations
 JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
 JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId

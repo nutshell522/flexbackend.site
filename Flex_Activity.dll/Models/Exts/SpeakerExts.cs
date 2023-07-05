@@ -118,7 +118,7 @@ namespace Flex_Activity.dll.Models.Exts
 			{
 				SpeakerId = dto.SpeakerId,
 				SpeakerName = dto.SpeakerName,
-				fk_SpeakerFieldId = dto.fk_SpeakerFieldId
+				FieldName = dto.FieldName
 			};
 		}
 
@@ -128,7 +128,7 @@ namespace Flex_Activity.dll.Models.Exts
 			{
 				SpeakerId = entity.SpeakerId,
 				SpeakerName = entity.SpeakerName,
-				fk_SpeakerFieldId = entity.fk_SpeakerFieldId
+				FieldName = entity.SpeakerField.FieldName
 			};
 
 		}
@@ -142,11 +142,11 @@ namespace Flex_Activity.dll.Models.Exts
 
 				SpeakerPhone = entity.SpeakerPhone,
 
-				fk_SpeakerFieldId = entity.fk_SpeakerFieldId,
+				FieldName = entity.SpeakerField.FieldName,
 
 				SpeakerImg = entity.SpeakerImg,
 
-				fk_SpeakerBranchId = entity.fk_SpeakerBranchId,
+				BranchName = entity.Branch.BranchName,
 
 				SpeakerDescription = entity.SpeakerDescription
 
@@ -163,11 +163,11 @@ namespace Flex_Activity.dll.Models.Exts
 
 				SpeakerPhone = dto.SpeakerPhone,
 
-				fk_SpeakerFieldId = dto.fk_SpeakerFieldId,
+				FieldName = dto.FieldName,
 
 				SpeakerImg = dto.SpeakerImg,
 
-				fk_SpeakerBranchId = dto.fk_SpeakerBranchId,
+				BranchName = dto.BranchName,
 
 				SpeakerDescription = dto.SpeakerDescription
 

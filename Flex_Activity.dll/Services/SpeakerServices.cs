@@ -1,4 +1,5 @@
-﻿using Flex_Activity.dll.Interface;
+﻿using EFModels.EFModels;
+using Flex_Activity.dll.Interface;
 using Flex_Activity.dll.Models.Dto;
 using Flex_Activity.dll.Models.Exts;
 using System;
@@ -14,6 +15,7 @@ namespace Flex_Activity.dll.Services
     {
 		//建立了一個私有欄位 _repo，型別是 ISpeakerRepository
 		private ISpeakerRepository _repo;
+        private AppDbContext _db;
 
 		//將實作了 ISpeakerRepository 介面的物件傳入。也就是說，我們將能夠執行資料庫操作的類別的物件傳入 SpeakerServices。
 		//SpeakerServices 就可以使用 _repo 物件來執行與講者資料庫存取相關的操作
@@ -29,10 +31,12 @@ namespace Flex_Activity.dll.Services
 
         public Result CreateSpeaker(SpeakerCreateDto dto) 
         {
-            //if (dto.SpeakerPhone.Length != 10)
-            //{
-            //    return Result.Fail("電話號碼長度錯誤");
-            //}
+            //檢查手機號碼是否存在
+            if (HasPhone(dto.SpeakerPhone))
+            {
+                return Result.Fail("此號碼已被使用");
+            }
+            
             _repo.CreateSpeaker(dto);
             return Result.Success();
         }
@@ -43,6 +47,13 @@ namespace Flex_Activity.dll.Services
             return Result.Success();
 
 		}
+
+
+        //判斷手機號碼是否已經存在
+        public bool HasPhone (string phone)
+        {
+            return _db.Speakers.Any(s => s.SpeakerPhone == phone);
+        }
     }
 
 }

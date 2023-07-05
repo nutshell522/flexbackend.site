@@ -21,6 +21,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 		[Display(Name = "活動類別")]
 		[Required]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_ActivityCategoryId { get; set; }
 
 
@@ -31,6 +32,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 		[Display(Name = "活動講者")]
 		[Required]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_SpeakerId { get; set; }
 
 
@@ -57,6 +59,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 		[Display(Name = "參加年齡")]
 		[Required]
+		[Range(1, 130, ErrorMessage = "{0}輸入錯誤")]
 		//public byte ActivityAge { get; set; }
 		public int ActivityAge { get; set; }
 

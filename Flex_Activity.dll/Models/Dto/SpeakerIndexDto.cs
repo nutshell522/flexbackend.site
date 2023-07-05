@@ -13,6 +13,6 @@ namespace Flex_Activity.dll.Models.Dto
 
         public string SpeakerName { get; set; }
 
-        public int fk_SpeakerFieldId { get; set; }
+        public string FieldName { get; set; }
     }
 }

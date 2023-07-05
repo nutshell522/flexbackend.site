@@ -154,6 +154,14 @@
 	[ V ]IRepository
 	[ V ]DapperRepository
 	[ V ]Services
-	[ * ]Controller的Action
+	[ v ]Controller的Action
 
-	***【刪除後跳不回去ReservationList頁面，待修正】***
+	***【刪除後跳不回去ReservationList頁面，已修正】***
+
+[ v ]修正 Activity Create 日期的驗證bug
+[ v ]修正 Reservation刪除之後可以跳回去ReservationList頁面
+[ Working On ]新增 Speaker Create、Edit 的電話不能重複
+[ Working On ]新增 Activity Create 日期的邏輯驗證
+
+
+***[待修正】Activity Create、Edit 的時間日期、圖片
