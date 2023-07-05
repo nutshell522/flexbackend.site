@@ -46,7 +46,21 @@ namespace flexbackend.site.Controllers
                 return Json(products);
             }
             return View(products);
+		}
 
+        [HttpPost]
+		public ActionResult ReLoadIndex(IndexSearchCriteria criteria)
+		{
+			criteria = criteria ?? new IndexSearchCriteria();
+			PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
+
+			ViewBag.Criteria = criteria;
+			ViewBag.StatusOption = new SelectList(criteria.StatusOption);
+
+			var service = new ProductService(_repo);
+			var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
+
+			return Json(products);
 		}
 
 
@@ -196,6 +210,7 @@ namespace flexbackend.site.Controllers
 			}
             else
             {
+                ModelState.AddModelError("ProductGroups", result.ErroeMessage);
 				return View(vm);
 			}
         }
@@ -230,13 +245,13 @@ namespace flexbackend.site.Controllers
                 return View(errorVm.ToEditImgVM(vm.ProductId));
             }
 
-			if (editImg != null || editImg.Count > 0)
+			if (editImg != null && editImg.Count > 0)
             {
                 foreach (var img in editImg)
                 {
-					vm.ProductImgs.Add(img);
-				}
-            }
+                    vm.ProductImgs.Add(img);
+                }
+			}
 
             var product = service.SaveEditImg(vm.VMToEditImgDto());
 

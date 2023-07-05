@@ -14,5 +14,10 @@ namespace Flex.Products.dll.Models.ViewModel
 
 		[Display(Name ="商品照片")]
 		public List<ProductImgDto> ProductImgs { get; set; }
-	}
+        public ProductEditImgVM()
+        {
+			ProductImgs = new List<ProductImgDto>();
+
+		}
+    }
 }
