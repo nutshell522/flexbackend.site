@@ -31,11 +31,13 @@ namespace flexbackend.site.Controllers
 				orders = (System.Data.Entity.Infrastructure.DbQuery<order>)orders.Where(o => o.fk_member_Id == memberId);
 			}
 			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
+			TempData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
 			var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
 			TempData["PayMethods"] = paymethods ?? new Dictionary<int, string>();
 			var LogisticsCompanies = db.logistics_companies.AsNoTracking().ToDictionary(lc => lc.Id, lc => lc.name);
 			TempData["LogisticsCompanies"] = LogisticsCompanies ?? new Dictionary<int, string>();
 			var paystatuses = db.pay_statuses.AsNoTracking().ToDictionary(ps => ps.Id, ps => ps.pay_status);
+			TempData["paystatuses"] = paystatuses ?? new Dictionary<int, string>();
 
 			return orders.ToList()
 				.Select(p => new OrdersIndexVM
@@ -166,6 +168,10 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
+				TempData.Keep("orderStatuses");
+				TempData.Keep("paystatuses");
+				TempData.Keep("LogisticsCompanies");
+				TempData.Keep("PayMethods");
 				return RedirectToAction("OrdersIndex");
 			}
 			else
@@ -213,7 +219,6 @@ namespace flexbackend.site.Controllers
 			var db = new AppDbContext();
 			return db.orders.FirstOrDefault(o => o.Id == id);
 		}
-
 
         public ActionResult OrderItemsIndex(int id)
         {
@@ -353,6 +358,8 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
+				TempData.Keep("fk_typeId");
+				
 				int orderItemId = result.OrderItemId;
 				return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
 			}
@@ -399,4 +406,5 @@ namespace flexbackend.site.Controllers
 			return db.orderItems.FirstOrDefault(o => o.Id == id);
 		}
 	}
+	
 }
