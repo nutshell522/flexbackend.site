@@ -35,5 +35,14 @@ namespace Orders.ViewModels
 		[Display(Name = "描述")]
 		[StringLength(50)]
 		public string Items_description { get; set; }
+
+		[Display(Name = "收件人電話")]
+		public string cellphone { get; set; }
+		[Display(Name = "收據號碼")]
+		public string receipt { get; set; }
+		[Display(Name = "收件人名稱")]
+		public string receiver { get; set; }
+		[Display(Name = "收件人地址")]
+		public string recipient_address { get; set; }
 	}
 }

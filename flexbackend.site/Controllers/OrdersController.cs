@@ -223,9 +223,21 @@ namespace flexbackend.site.Controllers
         public ActionResult OrderItemsIndex(int id)
         {
             IEnumerable<OrderItemsVM> orderItems = GetOrderItemsIndex(id);
-            TempData["OrderId"] = id; // 將 id 儲存在 TempData 中
-            return View(orderItems);
-        }
+			//TempData["OrderId"] = id; // 將 id 儲存在 TempData 中
+			//return View(orderItems);
+			var order = GetOrderById(id);
+
+			if (order != null)
+			{
+				ViewData["Cellphone"] = order.cellphone;
+				ViewData["Receipt"] = order.receipt;
+				ViewData["Receiver"] = order.receiver;
+				ViewData["RecipientAddress"] = order.recipient_address;
+			}
+
+			TempData["OrderId"] = id; // 將 id 儲存在 TempData 中
+			return View(orderItems);
+		}
 		private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
 		{
 			var db = new AppDbContext();
@@ -405,6 +417,8 @@ namespace flexbackend.site.Controllers
 			var db = new AppDbContext();
 			return db.orderItems.FirstOrDefault(o => o.Id == id);
 		}
+
+		
 	}
 	
 }

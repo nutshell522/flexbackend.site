@@ -84,7 +84,7 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.freight)
                 </th>
-                <th class="th-col-1">
+                @*<th class="th-col-1">
                     @Html.DisplayNameFor(model => model.cellphone)
                 </th>
                 <th class="th-col-1">
@@ -95,7 +95,7 @@
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.recipient_address)
-                </th>
+                </th>*@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.order_description)
                 </th>
@@ -168,7 +168,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.freight)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.cellphone)
             </td>
             <td>
@@ -179,7 +179,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.recipient_address)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.order_description)
             </td>
@@ -191,7 +191,6 @@
                     <a href="@Url.Action("Edit", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                     @*<a href="@Url.Action("OrderItemsIndex", new { id = item.Id  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>*@
                     <a href="@Url.Action("OrderItemsIndex", new { id = item.Id })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                    @*<a href="@Url.Action("Delete", new { id = item.Id  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>*@
                 </div>
             </td>
         </tr>
