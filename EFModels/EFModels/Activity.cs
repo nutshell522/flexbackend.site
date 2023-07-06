@@ -47,12 +47,6 @@ namespace EFModels.EFModels
 
         public virtual ActivityStatus ActivityStatus { get; set; }
 
-        public virtual ActivityCategory ActivityCategory1 { get; set; }
-
-        public virtual ActivityStatus ActivityStatus1 { get; set; }
-
         public virtual Speaker Speaker { get; set; }
-
-        public virtual Speaker Speaker1 { get; set; }
     }
 }

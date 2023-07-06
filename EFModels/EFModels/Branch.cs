@@ -12,9 +12,7 @@ namespace EFModels.EFModels
         public Branch()
         {
             OneToOneReservations = new HashSet<OneToOneReservation>();
-            OneToOneReservations1 = new HashSet<OneToOneReservation>();
             Speakers = new HashSet<Speaker>();
-            Speakers1 = new HashSet<Speaker>();
         }
 
         public int BranchId { get; set; }
@@ -31,12 +29,6 @@ namespace EFModels.EFModels
         public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Speaker> Speakers { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Speaker> Speakers1 { get; set; }
     }
 }

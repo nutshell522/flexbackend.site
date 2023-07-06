@@ -6,21 +6,23 @@ namespace EFModels.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class ActivityCategory
+    [Table("ShoesChooses")]
+    public partial class ShoesChoos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ActivityCategory()
+        public ShoesChoos()
         {
-            Activities = new HashSet<Activity>();
+            ShoesGroups = new HashSet<ShoesGroup>();
         }
 
-        public int ActivityCategoryId { get; set; }
+        [Key]
+        public int OptionId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string ActivityCategoryName { get; set; }
+        public string OptinName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Activity> Activities { get; set; }
+        public virtual ICollection<ShoesGroup> ShoesGroups { get; set; }
     }
 }

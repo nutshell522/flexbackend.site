@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\logistics_companiesController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -2340,6 +2341,7 @@
     <Content Include="Views\Orders\CreateOrderItems.cshtml" />
     <Content Include="Views\Orders\EditItems.cshtml" />
     <Content Include="Views\Orders\OrdersDetail.cshtml" />
+    <Content Include="Views\logistics_companies\Logistics_companiesIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

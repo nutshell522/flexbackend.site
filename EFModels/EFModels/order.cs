@@ -57,9 +57,10 @@ namespace EFModels.EFModels
 
         public bool? close { get; set; }
 
-        public int total_price { get; set; }
+        [Column("[close_time")]
+        public DateTime? C_close_time { get; set; }
 
-        public DateTime? close_time { get; set; }
+        public int total_price { get; set; }
 
         public virtual logistics_companies logistics_companies { get; set; }
 

@@ -14,6 +14,7 @@ namespace EFModels.EFModels
         {
             CustomizedOrders = new HashSet<CustomizedOrder>();
             ShoesPictures = new HashSet<ShoesPicture>();
+            ShoesGroups = new HashSet<ShoesGroup>();
         }
 
         [Key]
@@ -54,5 +55,8 @@ namespace EFModels.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShoesPicture> ShoesPictures { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShoesGroup> ShoesGroups { get; set; }
     }
 }
