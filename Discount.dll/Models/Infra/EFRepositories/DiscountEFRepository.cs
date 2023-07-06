@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Runtime.Remoting.Contexts;
+using System.Security.Principal;
 
 namespace Discount.dll.Models.Infra.EFRepositories
 {
@@ -47,6 +48,67 @@ namespace Discount.dll.Models.Infra.EFRepositories
 			var discount = _db.Discounts.Find(id);
 			_db.Discounts.Remove(discount);
 			_db.SaveChanges();
+		}
+
+		public bool ExistsDiscountName(string discountName)
+		{
+			return _db.Discounts.Any(m => m.DiscountName == discountName);
+		}
+
+		public bool ExistsDiscountName(string discountName, int id)
+		{
+			return _db.Discounts.Any(m => m.DiscountName == discountName && m.DiscountId != id);
+		}
+
+		public (bool exists,int smallerNum,int largerNum) ExistsOrderby(int OrderBy)
+		{
+			bool exists = _db.Discounts.Any(m => m.OrderBy == OrderBy);
+
+			if (exists)
+			{
+				int smallerNumber = OrderBy - 1;
+				int largerNumber = OrderBy + 1;
+
+				while (_db.Discounts.Any(m => m.OrderBy == smallerNumber))
+				{
+					smallerNumber--;
+				}
+				while (_db.Discounts.Any(m => m.OrderBy == largerNumber))
+				{
+					largerNumber++;
+				}
+				return (exists, Math.Max(0,smallerNumber), largerNumber);
+			}
+			return (exists, 0, 0);
+		}
+
+		public (bool exists, int smallerNum, int largerNum) ExistsOrderby(int OrderBy, int id)
+		{
+			bool exists = _db.Discounts.Any(m => m.OrderBy == OrderBy && m.DiscountId != id);
+
+			if (exists)
+			{
+				int smallerNumber = OrderBy - 1;
+				int largerNumber = OrderBy + 1;
+
+				while (_db.Discounts.Any(m => m.OrderBy == smallerNumber && m.DiscountId != id))
+				{
+					smallerNumber--;
+				}
+				while (_db.Discounts.Any(m => m.OrderBy == largerNumber && m.DiscountId != id))
+				{
+					largerNumber++;
+				}
+
+				return (exists, Math.Max(0, smallerNumber), largerNumber);
+			}
+
+			return (exists, 0, 0);
+		}
+
+		public bool ExistsStartDate(DateTime startDate, int id)
+		{
+			return _db.Discounts.Any(m => m.DiscountId == id && m.StartDate < DateTime.Today && m.StartDate == startDate);
 		}
 
 		public DiscountCreateOrEditDto GetDiscountById(int id)

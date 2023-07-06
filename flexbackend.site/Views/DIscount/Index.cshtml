@@ -26,7 +26,7 @@
     </div>
 
     <div class="right">
-        <a href="@Url.Action("Create")" class="btn btn-primary">
+        <a href="@Url.Action("CreateOrEdit")" class="btn btn-primary">
             <i class="bi bi-plus-lg"></i> 新增
         </a>
     </div>
@@ -34,11 +34,6 @@
 <table class="w-100 d-table">
     <thead>
         <tr>
-            <th class="th-col-0">
-                <label class="form-check-label">
-                    <input class="form-check-input check-all" type="checkbox">
-                </label>
-            </th>
             <th class="th-col-1">
                 折扣名稱
             </th>
@@ -91,13 +86,6 @@
                     },
                     columns: [
                         {
-                            data: null,
-                            render: function (data) {
-                                return `<td><input class="form-check-input check-item" type="checkbox" data-id="${data.DiscountId}"></td>`;
-                            },
-                            orderable: false
-                        },
-                        {
                             data: "DiscountName"
                         },
                         {
@@ -138,16 +126,15 @@
                             data: null,
                             render: function (data) {
                                 return `<div class="manage-btn-container d-flex justify-content-around">
-                                            <a href="" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                                            <a href="" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                            <a href="" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                                            <a href="CreateOrEdit?id=${data.DiscountId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="#" class="btn-del" data-id="${data.DiscountId}"><i class="bi bi-trash-fill"></i></a>
                                         </div>`;
                             },
                             orderable: false
                         }
                     ],
                     order: [
-                        [9, "asc"]
+                        [8, "asc"]
                     ],
                     language: {
                         paginate: {
@@ -157,6 +144,25 @@
                         info: "第 _START_ 到 _END_ 筆，總共 _TOTAL_ 筆",
                     },
                     dom: '1Brtip',
+                });
+            }
+
+            $(document).on("click", ".btn-del", function () {
+                deleteDiscount($(this).data("id"));
+            })
+
+            function deleteDiscount(discountId) {
+                $.ajax({
+                    url: '/ControllerName/Delete/' + discountId,
+                    type: 'DELETE',
+                    success: function (response) {
+                        alert("刪除資料成功.");
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert("Failed to delete resource.");
+                    }
                 });
             }
         })

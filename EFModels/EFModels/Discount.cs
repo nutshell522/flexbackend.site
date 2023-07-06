@@ -14,7 +14,6 @@ namespace EFModels.EFModels
         [StringLength(20)]
         public string DiscountName { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string DiscountDescription { get; set; }
 

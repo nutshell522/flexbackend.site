@@ -22,7 +22,6 @@ namespace flexbackend.site.Controllers
 		{
 			_repo = new DiscountEFRepository();
 			_service = new DiscountService(_repo);
-
 		}
 
 		// GET: Discount
@@ -45,10 +44,7 @@ namespace flexbackend.site.Controllers
 		}
 		public ActionResult CreateOrEdit(int? id)
 		{
-			List<SelectListItem> projectTagitems = new List<SelectListItem>
-			{
-				new SelectListItem { Value = null , Text = "所有商品" },
-			};
+			List<SelectListItem> projectTagitems = new List<SelectListItem>();
 			var db = new AppDbContext();
 			projectTagitems.AddRange(db.ProjectTags.Where(p => p.Status == true)
 							.Select(p => new SelectListItem { Value = p.ProjectTagId.ToString(), Text = p.ProjectTagName }));
@@ -106,7 +102,7 @@ namespace flexbackend.site.Controllers
 		[HttpPost]
 		public ActionResult CreateOrEdit(DiscountCreateOrEditVM vm)
 		{
-			if(vm.DiscountId == 0)
+			if (vm.DiscountId == 0)
 			{
 				if (ModelState.IsValid)
 				{
@@ -123,5 +119,14 @@ namespace flexbackend.site.Controllers
 			}
 			return Json("");
 		}
+
+		[HttpDelete]
+		public ActionResult Delete(int id)
+		{
+			int[] ids = new int[id];
+			_service.Delete(ids);
+			return Content("Resource deleted successfully.");
+		}
+
 	}
 }

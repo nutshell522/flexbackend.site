@@ -40,7 +40,7 @@
         </div>
         <div class="mb-3">
             @Html.LabelFor(model => model.OrderBy, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.OrderBy, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.OrderBy, new { htmlAttributes = new { @class = "form-control", type = "number", min = 0 } })
             @Html.ValidationMessageFor(model => model.OrderBy, "", new { @class = "text-danger" })
         </div>
 
@@ -54,7 +54,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.ConditionValue, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.ConditionValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ConditionValue, new { htmlAttributes = new { @class = "form-control", type = "number", min = 0 } })
             @Html.ValidationMessageFor(model => model.ConditionValue, "", new { @class = "text-danger" })
         </div>
 
@@ -68,7 +68,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.DiscountValue, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", type = "number", min = 0 } })
             @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
         </div>
 
@@ -119,6 +119,9 @@
                     if (data.IsSuccess) {
                         alert("提交成功！");
                         window.location.href = "/Discount/Index";
+                    }
+                    else if (data.ErrorMessage == undefined) {
+                        return;
                     }
                     else {
                         alert(data.ErrorMessage);

@@ -13,6 +13,7 @@ namespace Discount.dll.Models.ViewModels
 	{
 		public int DiscountId { get; set; }
 		[Display(Name = "折扣名稱")]
+		[Required]
 		public string DiscountName { get; set; }
 		[Display(Name = "折扣描述")]
 		public string DiscountDescription { get; set; }
@@ -33,6 +34,7 @@ namespace Discount.dll.Models.ViewModels
 		public int DiscountValue { get; set; }
 
 		[Display(Name = "開始時間")]
+		[Required]
 		public DateTime StartDate { get; set; }
 		
 		[Display(Name = "結束時間")]

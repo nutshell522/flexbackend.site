@@ -15,5 +15,10 @@ namespace Discount.dll.Models.Interfaces
         int Create(DiscountCreateOrEditDto dto);
 		void Delete(int id);
 		void Update(DiscountCreateOrEditDto dto);
+		bool ExistsDiscountName(string discountName);
+		bool ExistsDiscountName(string discountName, int id);
+		bool ExistsStartDate(DateTime startDate, int id);
+		(bool exists, int smallerNum, int largerNum) ExistsOrderby(int OrderBy);
+		(bool exists, int smallerNum, int largerNum) ExistsOrderby(int OrderBy, int id);
 	}
 }
