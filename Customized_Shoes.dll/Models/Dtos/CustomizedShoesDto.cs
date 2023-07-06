@@ -32,7 +32,7 @@ namespace Customized_Shoes.dll.Models.Dtos
 
 		public string ShoesCategory { get; set; }
 
-		public string ShoesColoeCategory { get; set; }
+		public string ShoesColorCategory { get; set; }
 
 		public DateTime DataCreateTime { get; set; }
 

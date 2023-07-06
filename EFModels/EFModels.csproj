@@ -99,7 +99,9 @@
     <Compile Include="EFModels\ReservationStatus.cs" />
     <Compile Include="EFModels\SalesCategory.cs" />
     <Compile Include="EFModels\ShoesCategory.cs" />
+    <Compile Include="EFModels\ShoesChoos.cs" />
     <Compile Include="EFModels\ShoesColorCategory.cs" />
+    <Compile Include="EFModels\ShoesGroup.cs" />
     <Compile Include="EFModels\ShoesPicture.cs" />
     <Compile Include="EFModels\ShoppingCart.cs" />
     <Compile Include="EFModels\SizeCategory.cs" />

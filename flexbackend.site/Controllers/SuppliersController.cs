@@ -105,8 +105,9 @@ namespace flexbackend.site.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Supplier supplier = db.Suppliers.FirstOrDefault(x=>x.SupplierId==id);
-			if(supplier==null)return HttpNotFound();
+			Supplier supplier = db.Suppliers.FirstOrDefault(x => x.SupplierId == id);
+			if(supplier == null)return HttpNotFound();
+			
 			SupplierEditVM vm = new SupplierEditVM()
 			{
 				SupplierId = supplier.SupplierId,

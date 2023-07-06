@@ -22,7 +22,6 @@ namespace EFModels.EFModels
         [StringLength(50)]
         public string CouponName { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string CouponCode { get; set; }
 

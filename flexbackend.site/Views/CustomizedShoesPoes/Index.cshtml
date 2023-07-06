@@ -10,6 +10,17 @@
 
 }
 
+@section Styles {
+
+    <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
+    <style>
+        thead {
+            background-color: #0B284A;
+            color: white;
+        }
+    </style>
+}
+
 <h2>客製化商品管理</h2>
 
 <p>
@@ -40,110 +51,133 @@
     </form>
 </div>
 
-<div class="table-container">
-    <table class="table table-striped table-hover">
-        <thead>
+<table id="indexShoes" class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="th-col-0 sticky">
+                <input id="check-all-status" class="form-check-input check-all me-2" type="checkbox" onclick="getAllStatus(this)">
+                <label class="form-check-label" for="check-all-status">下架</label>
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.ShoesName)
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.ShoesDescription)
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.ShoesOrigin)
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.ShoesUnitPrice)
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.ShoesCategory)
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.ShoesColoeCategory)
+            </th>
+            <th class="th-col-2 text-center">
+                @Html.DisplayNameFor(model => model.StatusText)
+            </th>
+            <th class="th-col-2 text-center">管理</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* 如有照片要放
+            格式:
+            <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
+        *@
+        @*  顯示資料內有定義了狀態框，
+            如有需展示狀態顏色，請在td內增加一個span，且定義class
+            有提供四種顏色:
+                綠色 : status-success
+                灰色 : status-dark
+                紅色 : status-danger
+                藍色 : status-primary
+            可依自己需求使用
+
+            格式: <td class="text-center"><span class="status-success}">進行中</span></td>
+        *@
+
+        @foreach (var item in Model)
+        {
             <tr>
-                @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
-                @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                    th-col-0 至 th-col-20
-                    超過100%資料不會溢出 也不會換行
-                    如有細緻設定需求，可自己寫css設定寬度
-                *@
-                <th class="th-col-0 sticky">
-                    <input id="check-all-status" class="form-check-input check-all me-2" type="checkbox" onclick="getAllStatus(this)">
-                    <label class="form-check-label" for="check-all-status">下架</label>
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.ShoesName)
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.ShoesDescription)
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.ShoesOrigin)
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.ShoesUnitPrice)
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.ShoesCategory)
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.ShoesColoeCategory)
-                </th>
-                <th class="th-col-2 text-center">
-                    @Html.DisplayNameFor(model => model.StatusText)
-                </th>
-                <th class="th-col-2 text-center">管理</th>
+                @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
+                <td class="sticky text-center align-middle">
+                    <input class="form-check-input check-item" type="checkbox" data-id="@item.ShoesProductId" onclick="saveStatus(this)" @(item.Status ? "checked" : "") />
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ShoesName)
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ShoesDescription)
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ShoesOrigin)
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ShoesUnitPrice)
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ShoesCategory)
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ShoesColoeCategory)
+                </td>
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.StatusText)
+                </td>
+                <td class="text-center align-middle">
+                    <div class="manage-btn-container">
+                        <a href="@Url.Action("Edit", new { id = item.ShoesProductId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                        <a href="@Url.Action("Details", new { id = item.ShoesProductId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                        <a href="@Url.Action("Delete", new { id = item.ShoesProductId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @* 如有照片要放
-                格式:
-                <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
-            *@
-            @*  顯示資料內有定義了狀態框，
-                如有需展示狀態顏色，請在td內增加一個span，且定義class
-                有提供四種顏色:
-                    綠色 : status-success
-                    灰色 : status-dark
-                    紅色 : status-danger
-                    藍色 : status-primary
-                可依自己需求使用
-
-                格式: <td class="text-center"><span class="status-success}">進行中</span></td>
-            *@
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-                    <td class="sticky text-center align-middle">
-                        <input class="form-check-input check-item" type="checkbox" data-id="@item.ShoesProductId" onclick="saveStatus(this)" @(item.Status ? "checked" : "") />
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.ShoesName)
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.ShoesDescription)
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.ShoesOrigin)
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.ShoesUnitPrice)
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.ShoesCategory)
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.ShoesColoeCategory)
-                    </td>
-                    <td class="text-center align-middle">
-                        @Html.DisplayFor(modelItem => item.StatusText)
-                    </td>
-                    <td class="text-center align-middle">
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new { id = item.ShoesProductId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new { id = item.ShoesProductId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.ShoesProductId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
 @section Scripts{
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script>
 
         $(document).ready(function () {
 
+            $('#indexShoes').DataTable(
+                {
+                    "searching": false,
+                    "paging": true, // 如果要顯示分頁器，設為 true
+                    "pageLength": 5, // 設定預設每頁顯示筆數
+                    "lengthMenu": [5, 10, 15, 20, "All"],
+                    oLanguage: {    // 中文化
+                        "sLengthMenu": "每頁顯示 _MENU_筆",
+                        "sZeroRecords": "沒有找到符合條件的資料",
+                        "sProcessing": "載入中...",
+                        "sInfo": "當前第 _START_ - _END_ 筆　共計 _TOTAL_ 筆",
+                        "sInfoEmpty": "沒有記錄",
+                        "sInfoFiltered": "(從 _MAX_ 條記錄中過濾)",
+                        "sSearch": "搜尋：",
+                        "oPaginate":
+                        {
+                            "sFirst": "首頁",
+                            "sPrevious": "前一頁",
+                            "sNext": "後一頁",
+                            "sLast": "尾頁"
+                        }
+                    },
+                    "columnDefs": [{
+                        "orderable": false,
+                        "targets": [0, 8]
+                    }],
+                    "order": [[1, 'asc']]
+                }
+            );
+
             //重新載入畫面
             function loadProducts() {
                 var criteria = {
-                    Name: $('#index_Search').val(),                    
+                    Name: $('#index_Search').val(),
                     Status: $('#criteria_Status').val()
                 };
                 reSetIndexShoes(criteria);
@@ -191,8 +225,8 @@
                         </td>
                         <td class="text-center align-middle">
                             <div class="manage-btn-container">
-                                <a href="/CustomizedShoesPoes/Edit?ProductId=${shoes.ShoesProductId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                                <a href="/CustomizedShoesPoes/Details?ProductId=${shoes.ShoesProductId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                <a href="/CustomizedShoesPoes/Edit?ShoesProductId=${shoes.ShoesProductId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/CustomizedShoesPoes/Details?ShoesProductId=${shoes.ShoesProductId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                                 <a href="/CustomizedShoesPoes/Delete?ProductId=${shoes.ShoesProductId}" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                             </div>
                         </td>

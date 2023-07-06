@@ -22,7 +22,7 @@ namespace Customized_Shoes.dll.Models.Exts
 				ShoesUnitPrice = dto.ShoesUnitPrice,
 				Status = dto.Status,
 				ShoesCategory = dto.ShoesCategory,
-				ShoesColoeCategory = dto.ShoesColoeCategory,
+				ShoesColoeCategory = dto.ShoesColorCategory,
 			};
 					
 		}
@@ -38,7 +38,7 @@ namespace Customized_Shoes.dll.Models.Exts
 				ShoesUnitPrice = entity.ShoesUnitPrice,
 				Status = entity.Status,
 				ShoesCategory = entity.ShoesCategory.ShoesCategoryName,
-				ShoesColoeCategory = entity.ShoesColorCategory.ColorName,
+				ShoesColorCategory = entity.ShoesColorCategory.ColorName,
 
 			};				
 		}
@@ -66,6 +66,7 @@ namespace Customized_Shoes.dll.Models.Exts
 				fk_ShoesColorId = vm.fk_ShoesColorId,
 				DataCreateTime = DateTime.Now,
 				DataEditTime = DateTime.Now,
+				ImgPaths = vm.ImgPaths,
 			};				
 		}
 
@@ -81,6 +82,8 @@ namespace Customized_Shoes.dll.Models.Exts
 				Status = dto.Status,
 				fk_ShoesCategoryId = dto.fk_ShoesCategoryId,
 				fk_ShoesColorId = dto.fk_ShoesColorId,
+				DataCreateTime = dto.DataCreateTime,
+				DataEditTime = dto.DataEditTime,
 				ShoesPictures = dto.ImgPaths.Select(p => new ShoesPicture 
 				{ 
 					fk_ShoesPictureProduct_Id = dto.ShoesProductId,

@@ -54,7 +54,9 @@ namespace EFModels.EFModels
 		public virtual DbSet<ReservationStatus> ReservationStatuses { get; set; }
 		public virtual DbSet<SalesCategory> SalesCategories { get; set; }
 		public virtual DbSet<ShoesCategory> ShoesCategories { get; set; }
+		public virtual DbSet<ShoesChoos> ShoesChooses { get; set; }
 		public virtual DbSet<ShoesColorCategory> ShoesColorCategories { get; set; }
+		public virtual DbSet<ShoesGroup> ShoesGroups { get; set; }
 		public virtual DbSet<ShoesPicture> ShoesPictures { get; set; }
 		public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 		public virtual DbSet<SizeCategory> SizeCategories { get; set; }
@@ -142,6 +144,12 @@ namespace EFModels.EFModels
 				.WithOptional(e => e.Customized_materials4)
 				.HasForeignKey(e => e.Customized_Toe);
 
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.ShoesGroups)
+				.WithRequired(e => e.Customized_materials)
+				.HasForeignKey(e => e.fk_MaterialId)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<CustomizedOrder>()
 				.Property(e => e.Customized_number)
 				.IsUnicode(false);
@@ -160,6 +168,12 @@ namespace EFModels.EFModels
 				.HasMany(e => e.ShoesPictures)
 				.WithOptional(e => e.CustomizedShoesPo)
 				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
+
+			modelBuilder.Entity<CustomizedShoesPo>()
+				.HasMany(e => e.ShoesGroups)
+				.WithRequired(e => e.CustomizedShoesPo)
+				.HasForeignKey(e => e.fk_ShoesMainId)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Department>()
 				.HasMany(e => e.Staffs)
@@ -408,15 +422,22 @@ namespace EFModels.EFModels
 				.WithOptional(e => e.ShoesCategory)
 				.HasForeignKey(e => e.fk_ShoesCategoryId);
 
-			modelBuilder.Entity<ShoesColorCategory>()
-				.HasMany(e => e.Customized_materials)
-				.WithOptional(e => e.ShoesColorCategory)
-				.HasForeignKey(e => e.material_ColorId);
+			modelBuilder.Entity<ShoesChoos>()
+				.HasMany(e => e.ShoesGroups)
+				.WithRequired(e => e.ShoesChoos)
+				.HasForeignKey(e => e.fk_OptionId)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<ShoesColorCategory>()
 				.HasMany(e => e.CustomizedShoesPoes)
 				.WithOptional(e => e.ShoesColorCategory)
 				.HasForeignKey(e => e.fk_ShoesColorId);
+
+			modelBuilder.Entity<ShoesColorCategory>()
+				.HasMany(e => e.ShoesGroups)
+				.WithRequired(e => e.ShoesColorCategory)
+				.HasForeignKey(e => e.fk_ShoesColorId)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<ShoppingCart>()
 				.HasOptional(e => e.CartItem)

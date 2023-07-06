@@ -16,6 +16,7 @@ namespace EFModels.EFModels
             CustomizedOrders2 = new HashSet<CustomizedOrder>();
             CustomizedOrders3 = new HashSet<CustomizedOrder>();
             CustomizedOrders4 = new HashSet<CustomizedOrder>();
+            ShoesGroups = new HashSet<ShoesGroup>();
         }
 
         [Key]
@@ -24,8 +25,6 @@ namespace EFModels.EFModels
         [Required]
         [StringLength(50)]
         public string material_Name { get; set; }
-
-        public int? material_ColorId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedOrder> CustomizedOrders { get; set; }
@@ -42,6 +41,7 @@ namespace EFModels.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedOrder> CustomizedOrders4 { get; set; }
 
-        public virtual ShoesColorCategory ShoesColorCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShoesGroup> ShoesGroups { get; set; }
     }
 }
