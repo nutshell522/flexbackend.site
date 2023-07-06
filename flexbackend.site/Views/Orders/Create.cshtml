@@ -43,7 +43,7 @@
         @Html.ValidationMessageFor(model => model.logistics_company_Id, "", new { @class = "text-danger" })
     </div>*@
     <div class="mb-3">
-        @Html.LabelFor(model => model.logistics_company_Id, htmlAttributes: new { @class = "form-label" })
+        @Html.LabelFor(model => model.logistics_companys, htmlAttributes: new { @class = "form-label" })
         @if (TempData["LogisticsCompanies"] != null && ((Dictionary<int, string>)TempData["LogisticsCompanies"]).Any())
         {
             @Html.DropDownListFor(model => model.logistics_company_Id, new SelectList((Dictionary<int, string>)TempData["LogisticsCompanies"], "Key", "Value"), "請選擇", new { @class = "form-control" })
@@ -67,7 +67,7 @@
             @Html.ValidationMessageFor(model => model.pay_method_Id, "", new { @class = "text-danger" })
         </div>*@
     <div class="mb-3">
-        @Html.LabelFor(model => model.pay_method_Id, htmlAttributes: new { @class = "form-label" })
+        @Html.LabelFor(model => model.pay_method, htmlAttributes: new { @class = "form-label" })
         @if (TempData["PayMethods"] != null && ((Dictionary<int, string>)TempData["PayMethods"]).Any())
         {
             @Html.DropDownListFor(model => model.pay_method_Id, new SelectList((Dictionary<int, string>)TempData["PayMethods"], "Key", "Value"), "請選擇", new { @class = "form-control" })
@@ -97,11 +97,11 @@
         @Html.ValidationMessageFor(model => model.coupon_discount, "", new { @class = "text-danger" })
     </div>
 
-    <div class="mb-3">
+    @*<div class="mb-3">
         @Html.LabelFor(model => model.freight, htmlAttributes: new { @class = "form-label" })
         @Html.EditorFor(model => model.freight, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.freight, "", new { @class = "text-danger" })
-    </div>
+    </div>*@
 
     <div class="mb-3">
         @Html.LabelFor(model => model.cellphone, htmlAttributes: new { @class = "form-label" })

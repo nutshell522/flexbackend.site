@@ -21,6 +21,8 @@ namespace Orders.ViewModels
 		public int total_quantity { get; set; }
 		[Display(Name = "物流編號")]
 		public int logistics_company_Id { get; set; }
+		[Display(Name = "物流公司")]
+		public string logistics_companys { get; set; }
 		[Display(Name = "商品狀態ID")]
 		public int order_status_Id { get; set; }
 		[Display(Name = "商品狀態")]

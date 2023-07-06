@@ -47,12 +47,13 @@ namespace flexbackend.site.Controllers
 					fk_member_Id = p.fk_member_Id,
 					total_quantity = p.total_quantity,
 					logistics_company_Id = p.logistics_company_Id,
+					logistics_companys = LogisticsCompanies.ContainsKey(p.logistics_company_Id) ? LogisticsCompanies[p.logistics_company_Id] : string.Empty,
 					order_status_Id = p.order_status_Id,
 					order_status = orderStatuses.ContainsKey(p.order_status_Id) ? orderStatuses[p.order_status_Id] : string.Empty,
 					pay_method_Id = p.pay_method_Id,
-					pay_method = paymethods.ContainsKey(p.pay_method_Id) ? orderStatuses[p.pay_method_Id] : string.Empty,
+					pay_method = paymethods.ContainsKey(p.pay_method_Id) ? paymethods[p.pay_method_Id] : string.Empty,
 					pay_status_Id = p.pay_status_Id,
-					pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? orderStatuses[p.pay_status_Id] : string.Empty,
+					pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? paystatuses[p.pay_status_Id] : string.Empty,
 					coupon_name = p.coupon_name,
 					coupon_discount = p.coupon_discount,
 					freight = p.freight,
@@ -109,7 +110,7 @@ namespace flexbackend.site.Controllers
 				pay_status_Id = 1,
 				coupon_name = vm.coupon_name,
 				coupon_discount = vm.coupon_discount,
-				freight = vm.freight,
+				freight = 60,
 				cellphone = vm.cellphone,
 				receipt = vm.receipt,
 				receiver = vm.receiver,
@@ -236,6 +237,7 @@ namespace flexbackend.site.Controllers
 			}
 
 			TempData["OrderId"] = id; // 將 id 儲存在 TempData 中
+			
 			return View(orderItems);
 		}
 		private IEnumerable<OrderItemsVM> GetOrderItemsIndex(int orderId)
@@ -281,16 +283,17 @@ namespace flexbackend.site.Controllers
 
 		public ActionResult CreateOrderItems()
         {
-            
-            return View();
+			TempData.Keep("OrderId");
+
+			return View();
         }
         [HttpPost]
 		[ValidateAntiForgeryToken]
         public ActionResult CreateOrderItems(OrderItemsVM vm)
         {
-            int orderId = (int)TempData["OrderId"];
-            
-            if (ModelState.IsValid == false) return View(vm);
+			int orderId =(int)TempData["OrderId"];
+
+			if (ModelState.IsValid == false) return View(vm);
 
             (bool IsSuccess, string ErrorMessage, int OrderItemId) result = CreatenewOrderItems(vm, orderId);
 
