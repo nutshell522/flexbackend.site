@@ -24,6 +24,8 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 
 		[Display(Name = "活動日期")]
+		[DataType(DataType.DateTime)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
 		public DateTime ActivityDate { get; set; }
 
 		[Display(Name = "活動地點")]

@@ -1,4 +1,5 @@
 ﻿using EFModels.EFModels;
+using Flex_Activity.dll.Infra;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -50,9 +51,9 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public DateTime ActivityBookEndTime { get; set; }
 
 
-		[Display(Name = "課程圖片")]
-		//[Required]
-		[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
+		[Display(Name = "活動照片")]
+		
+		//[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
 		[StringLength(300)]
 		public string ActivityImage { get; set; }
 

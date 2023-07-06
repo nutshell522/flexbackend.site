@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Flex_Activity.dll.Services
 {
@@ -21,7 +22,8 @@ namespace Flex_Activity.dll.Services
 		//SpeakerServices 就可以使用 _repo 物件來執行與講者資料庫存取相關的操作
 		public SpeakerServices (ISpeakerRepository repo)
         {
-            _repo = repo;
+            this._repo = repo;
+            _db = new AppDbContext ();
         }
 
         public IEnumerable<SpeakerIndexDto> Search()
@@ -37,6 +39,7 @@ namespace Flex_Activity.dll.Services
                 return Result.Fail("此號碼已被使用");
             }
             
+            //手機號碼不存在就把dto傳給Repository存到database並回傳成功訊息
             _repo.CreateSpeaker(dto);
             return Result.Success();
         }
@@ -53,6 +56,7 @@ namespace Flex_Activity.dll.Services
         public bool HasPhone (string phone)
         {
             return _db.Speakers.Any(s => s.SpeakerPhone == phone);
+            //return _db.Speakers.Any(s => s.SpeakerPhone == phone);
         }
     }
 

@@ -119,7 +119,7 @@ namespace flexbackend.site.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, result.ErroeMessage);
+                    ModelState.AddModelError("SpeakerPhone", result.ErroeMessage);
                     return View(vm);
                 }
             }
@@ -242,11 +242,11 @@ namespace flexbackend.site.Controllers
 
         private void PrepareSpeakerFieldDataSource(int? speakerFieldId)
         {
-            
-            var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField { FieldId=0, FieldName="領域分類"});
-            ViewBag.fk_SpeakerFieldId = new SelectList(fields, "FieldId", "FieldName", speakerFieldId);
-        }
-        private void PrepareBranchDataSource(int? branchId)
+   			var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField { FieldId = 0, FieldName = "領域分類" });
+			ViewBag.fk_SpeakerFieldId = new SelectList(fields, "FieldId", "FieldName", speakerFieldId);
+
+		}
+		private void PrepareBranchDataSource(int? branchId)
         {
             var branches = db.Branches.ToList().Prepend(new Branch { BranchId=0, BranchName="選擇分店"});
             ViewBag.fk_SpeakerBranchId = new SelectList(branches, "BranchId", "BranchName", branchId);
