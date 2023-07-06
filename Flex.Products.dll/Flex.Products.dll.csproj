@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,8 +57,10 @@
   <ItemGroup>
     <Compile Include="Exts\CategoryExts.cs" />
     <Compile Include="Exts\IndexSearchCriteria.cs" />
+    <Compile Include="Infra\DapperRepository\SalesCategotyDPRepository.cs" />
     <Compile Include="Infra\EFRepository\ColorRepository.cs" />
     <Compile Include="Infra\EFRepository\SizeRepository.cs" />
+    <Compile Include="Interface\ICategoryRepository.cs" />
     <Compile Include="Models\Dtos\ColorDto.cs" />
     <Compile Include="Models\Dtos\ProductDto.cs" />
     <Compile Include="Infra\EFRepository\ProductEFRepository.cs" />
@@ -68,8 +71,13 @@
     <Compile Include="Models\Dtos\ProductGroupsDto.cs" />
     <Compile Include="Models\Dtos\ProductImgDto.cs" />
     <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
+    <Compile Include="Models\Dtos\SalesCategoryDto.cs" />
     <Compile Include="Models\Dtos\SizeDto.cs" />
     <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />
+    <Compile Include="Models\ViewModel\SalesCategoryCreateVM.cs" />
+    <Compile Include="Models\ViewModel\SalesCategoryEditVM.cs" />
+    <Compile Include="Models\ViewModel\SalesCategoryIndexVM.cs" />
+    <Compile Include="Service\CategoryService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductEditImgVM.cs" />
@@ -77,9 +85,7 @@
     <Compile Include="Models\ViewModel\ProductIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infra\DapperRepository\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

@@ -25,6 +25,7 @@
 [V]規格要抓到selectlist
 [V]照片上傳及呈現
 [V]照片上傳異常，會直接上傳，非驗證通過後才上傳
+[處理中]照片上傳刪除預覽，被刪除的照片不用上傳
 [V]規格要能回傳值
 [V]動態生成規格,新增按鈕(Color-SelectList,Size-SelectList,Qty-Number,刪除按鈕)
 [V]照片上傳欄位驗證
@@ -51,5 +52,12 @@
 [V]刪除現有照片，並回傳
 [V]新增照片，可以刪除並回傳
 [V]當沒有保留任何一張照片，要跳驗證未通過
+
+
+[處理中]銷售分類(Dapper)
+[V]SalesCategoryDto,SalesCategoryCreateVM,SalesCategoryEditVM
+[處理中]Exts(ToIndexVM,ToCreateDto,ToEditVM,ToDto)
+[處理中]DapperRepository=>GetById()取得單筆要編輯的商品
+
 
 
