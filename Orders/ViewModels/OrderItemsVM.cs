@@ -44,5 +44,7 @@ namespace Orders.ViewModels
 		public string receiver { get; set; }
 		[Display(Name = "收件人地址")]
 		public string recipient_address { get; set; }
+		[Display(Name = "結單")]
+		public bool close { get; set; }
 	}
 }

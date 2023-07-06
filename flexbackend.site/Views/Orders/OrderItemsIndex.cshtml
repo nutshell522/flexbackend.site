@@ -19,12 +19,14 @@
         </div>
     </div>
 
-
-    <div class="right">
-        <a href="@Url.Action("CreateOrderItems")" class="btn btn-primary text-light">
-            <i class="bi bi-plus-lg"></i> 新增
-        </a>
-    </div>
+    @if (TempData["close"] != null && !(bool)TempData["close"])
+    {
+        <div class="right">
+            <a href="@Url.Action("CreateOrderItems")" class="btn btn-primary text-light">
+                <i class="bi bi-plus-lg"></i> 新增
+            </a>
+        </div>
+    }
 </div>
 <h2>訂單詳情</h2>
 
@@ -32,6 +34,7 @@
 <p><strong>收據號碼:</strong> @ViewData["Receipt"]</p>
 <p><strong>收件人名稱:</strong> @ViewData["Receiver"]</p>
 <p><strong>收件人地址:</strong> @ViewData["RecipientAddress"]</p>
+<p><strong>是否結單:</strong> @(TempData["close"] != null && (bool)TempData["close"] ? "是" : "否")</p>
 <div class="table-container">
     <table>
         <thead>
@@ -80,25 +83,25 @@
         </thead>
         <tbody>
             @* 如有照片要放
-                格式:
-                <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
+        格式:
+        <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
             *@
             @*  顯示資料內有定義了狀態框，
-                如有需展示狀態顏色，請在td內增加一個span，且定義class
-                有提供四種顏色:
-                    綠色 : status-success
-                    灰色 : status-dark
-                    紅色 : status-danger
-                    藍色 : status-primary
-                可依自己需求使用
+        如有需展示狀態顏色，請在td內增加一個span，且定義class
+        有提供四種顏色:
+            綠色 : status-success
+            灰色 : status-dark
+            紅色 : status-danger
+            藍色 : status-primary
+        可依自己需求使用
 
-                格式: <td class="text-center"><span class="status-success}">進行中</span></td>
+        格式: <td class="text-center"><span class="status-success}">進行中</span></td>
             *@
 
             @foreach (var item in Model)
             {
                 <tr>
-                    @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
+                    @* 下方data-id后方栏位抓id，可方便勾选框抓数据 *@
                     <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
                     <td>
                         @Html.DisplayFor(modelItem => item.order_Id)
@@ -106,7 +109,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.product_name)
                     </td>
-                    
+
                     <td>
                         @Html.DisplayFor(modelItem => item.type)
                     </td>
@@ -129,9 +132,12 @@
                         @Html.DisplayFor(modelItem => item.Items_description)
                     </td>
                     <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("EditItems", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>                           
-                        </div>
+                        @if (TempData["close"] != null && !(bool)TempData["close"])
+                        {
+                            <div class="manage-btn-container">
+                                <a href="@Url.Action("EditItems", new { id = item.Id })" class="btn-edit-@item.Id"><i class="bi bi-pencil-square"></i></a>
+                            </div>
+                        }
                     </td>
                 </tr>
             }
@@ -199,6 +205,14 @@
                 btnEdit.style.display = this.checked ? "none" : "block";
             });
         });
-    
+        document.querySelectorAll(".status-switch").forEach(function (statusSwitch) {
+            statusSwitch.addEventListener("change", function () {
+                var orderId = this.dataset.orderId;
+                var btnEdit = document.querySelector(".btn-edit-" + orderId);
+                if (btnEdit) {
+                    btnEdit.style.display = this.checked ? "none" : "block";
+                }
+            });
+        });
     </script>
 }

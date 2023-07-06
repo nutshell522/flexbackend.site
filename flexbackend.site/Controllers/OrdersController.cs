@@ -233,6 +233,7 @@ namespace flexbackend.site.Controllers
 
 			if (order != null)
 			{
+				TempData["close"] = order.close;
 				ViewData["Cellphone"] = order.cellphone;
 				ViewData["Receipt"] = order.receipt;
 				ViewData["Receiver"] = order.receiver;
