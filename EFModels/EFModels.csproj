@@ -64,7 +64,6 @@
     <Compile Include="EFModels\BlackList.cs" />
     <Compile Include="EFModels\Branch.cs" />
     <Compile Include="EFModels\CartItem.cs" />
-    <Compile Include="EFModels\clos.cs" />
     <Compile Include="EFModels\ColorCategory.cs" />
     <Compile Include="EFModels\Coupon.cs" />
     <Compile Include="EFModels\CouponCategory.cs" />

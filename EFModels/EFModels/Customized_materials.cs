@@ -16,6 +16,11 @@ namespace EFModels.EFModels
             CustomizedOrders2 = new HashSet<CustomizedOrder>();
             CustomizedOrders3 = new HashSet<CustomizedOrder>();
             CustomizedOrders4 = new HashSet<CustomizedOrder>();
+            CustomizedOrders5 = new HashSet<CustomizedOrder>();
+            CustomizedOrders6 = new HashSet<CustomizedOrder>();
+            CustomizedOrders7 = new HashSet<CustomizedOrder>();
+            CustomizedOrders8 = new HashSet<CustomizedOrder>();
+            CustomizedOrders9 = new HashSet<CustomizedOrder>();
         }
 
         [Key]
@@ -42,6 +47,23 @@ namespace EFModels.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedOrder> CustomizedOrders4 { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomizedOrder> CustomizedOrders5 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomizedOrder> CustomizedOrders6 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomizedOrder> CustomizedOrders7 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomizedOrder> CustomizedOrders8 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomizedOrder> CustomizedOrders9 { get; set; }
+
         public virtual ShoesColorCategory ShoesColorCategory { get; set; }
+
+        public virtual ShoesColorCategory ShoesColorCategory1 { get; set; }
     }
 }

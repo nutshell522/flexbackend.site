@@ -19,7 +19,6 @@ namespace EFModels.EFModels
 		public virtual DbSet<BlackList> BlackLists { get; set; }
 		public virtual DbSet<Branch> Branches { get; set; }
 		public virtual DbSet<CartItem> CartItems { get; set; }
-		public virtual DbSet<clos> closes { get; set; }
 		public virtual DbSet<ColorCategory> ColorCategories { get; set; }
 		public virtual DbSet<CouponCategory> CouponCategories { get; set; }
 		public virtual DbSet<Coupon> Coupons { get; set; }
@@ -73,9 +72,21 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_ActivityCategoryId)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<ActivityCategory>()
+				.HasMany(e => e.Activities1)
+				.WithRequired(e => e.ActivityCategory1)
+				.HasForeignKey(e => e.fk_ActivityCategoryId)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<ActivityStatus>()
 				.HasMany(e => e.Activities)
 				.WithRequired(e => e.ActivityStatus)
+				.HasForeignKey(e => e.fk_ActivityStatusId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<ActivityStatus>()
+				.HasMany(e => e.Activities1)
+				.WithRequired(e => e.ActivityStatus1)
 				.HasForeignKey(e => e.fk_ActivityStatusId)
 				.WillCascadeOnDelete(false);
 
@@ -91,14 +102,20 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Branch>()
+				.HasMany(e => e.OneToOneReservations1)
+				.WithRequired(e => e.Branch1)
+				.HasForeignKey(e => e.fk_BranchId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Branch>()
 				.HasMany(e => e.Speakers)
 				.WithOptional(e => e.Branch)
 				.HasForeignKey(e => e.fk_SpeakerBranchId);
 
-			modelBuilder.Entity<clos>()
-				.HasMany(e => e.orders)
-				.WithOptional(e => e.clos)
-				.HasForeignKey(e => e.close_Id);
+			modelBuilder.Entity<Branch>()
+				.HasMany(e => e.Speakers1)
+				.WithOptional(e => e.Branch1)
+				.HasForeignKey(e => e.fk_SpeakerBranchId);
 
 			modelBuilder.Entity<ColorCategory>()
 				.HasMany(e => e.ProductGroups)
@@ -142,6 +159,31 @@ namespace EFModels.EFModels
 				.WithOptional(e => e.Customized_materials4)
 				.HasForeignKey(e => e.Customized_Toe);
 
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders5)
+				.WithOptional(e => e.Customized_materials5)
+				.HasForeignKey(e => e.Customized_Eyelet);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders6)
+				.WithOptional(e => e.Customized_materials6)
+				.HasForeignKey(e => e.Customized_EdgeProtection);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders7)
+				.WithOptional(e => e.Customized_materials7)
+				.HasForeignKey(e => e.Customized_Rear);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders8)
+				.WithOptional(e => e.Customized_materials8)
+				.HasForeignKey(e => e.Customized_Tongue);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders9)
+				.WithOptional(e => e.Customized_materials9)
+				.HasForeignKey(e => e.Customized_Toe);
+
 			modelBuilder.Entity<CustomizedOrder>()
 				.Property(e => e.Customized_number)
 				.IsUnicode(false);
@@ -149,6 +191,11 @@ namespace EFModels.EFModels
 			modelBuilder.Entity<CustomizedOrder>()
 				.HasMany(e => e.ShoesPictures)
 				.WithOptional(e => e.CustomizedOrder)
+				.HasForeignKey(e => e.fk_ShoesProductOrder_Id);
+
+			modelBuilder.Entity<CustomizedOrder>()
+				.HasMany(e => e.ShoesPictures1)
+				.WithOptional(e => e.CustomizedOrder1)
 				.HasForeignKey(e => e.fk_ShoesProductOrder_Id);
 
 			modelBuilder.Entity<CustomizedShoesPo>()
@@ -397,6 +444,12 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_ReservationStatusId)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<ReservationStatus>()
+				.HasMany(e => e.OneToOneReservations1)
+				.WithRequired(e => e.ReservationStatus1)
+				.HasForeignKey(e => e.fk_ReservationStatusId)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<SalesCategory>()
 				.HasMany(e => e.ProductCategories)
 				.WithRequired(e => e.SalesCategory)
@@ -411,6 +464,11 @@ namespace EFModels.EFModels
 			modelBuilder.Entity<ShoesColorCategory>()
 				.HasMany(e => e.Customized_materials)
 				.WithOptional(e => e.ShoesColorCategory)
+				.HasForeignKey(e => e.material_ColorId);
+
+			modelBuilder.Entity<ShoesColorCategory>()
+				.HasMany(e => e.Customized_materials1)
+				.WithOptional(e => e.ShoesColorCategory1)
 				.HasForeignKey(e => e.material_ColorId);
 
 			modelBuilder.Entity<ShoesColorCategory>()
@@ -434,6 +492,12 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_SpeakerFieldId)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<SpeakerField>()
+				.HasMany(e => e.Speakers1)
+				.WithRequired(e => e.SpeakerField1)
+				.HasForeignKey(e => e.fk_SpeakerFieldId)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<Speaker>()
 				.Property(e => e.SpeakerPhone)
 				.IsUnicode(false);
@@ -449,8 +513,20 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Speaker>()
+				.HasMany(e => e.Activities1)
+				.WithRequired(e => e.Speaker1)
+				.HasForeignKey(e => e.fk_SpeakerId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Speaker>()
 				.HasMany(e => e.OneToOneReservations)
 				.WithRequired(e => e.Speaker)
+				.HasForeignKey(e => e.fk_ReservationSpeakerId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Speaker>()
+				.HasMany(e => e.OneToOneReservations1)
+				.WithRequired(e => e.Speaker1)
 				.HasForeignKey(e => e.fk_ReservationSpeakerId)
 				.WillCascadeOnDelete(false);
 

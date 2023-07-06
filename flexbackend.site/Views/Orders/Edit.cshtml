@@ -171,10 +171,10 @@
     </div>
 
     <div class="mb-3">
-        @Html.LabelFor(model => model.close_Id, htmlAttributes: new { @class = "form-label" })
+        @Html.LabelFor(model => model.close, htmlAttributes: new { @class = "form-label" })
 
-        @Html.EditorFor(model => model.close_Id, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.close_Id, "", new { @class = "text-danger" })
+        @Html.CheckBoxFor(model => model.close, new { htmlAttributes = new { @class = "status-switch" } })
+        @Html.ValidationMessageFor(model => model.close, "", new { @class = "text-danger" })
     </div>
 
     <div class="mb-3">

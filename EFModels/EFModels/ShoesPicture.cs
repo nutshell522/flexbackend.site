@@ -20,6 +20,8 @@ namespace EFModels.EFModels
 
         public virtual CustomizedOrder CustomizedOrder { get; set; }
 
+        public virtual CustomizedOrder CustomizedOrder1 { get; set; }
+
         public virtual CustomizedShoesPo CustomizedShoesPo { get; set; }
     }
 }

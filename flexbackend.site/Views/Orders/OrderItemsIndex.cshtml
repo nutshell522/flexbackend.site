@@ -53,9 +53,7 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.product_name)
                 </th>
-                @*<th class="th-col-1">
-                        @Html.DisplayNameFor(model => model.fk_typeId)
-                    </th>*@
+           
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.type)
                 </th>
@@ -108,9 +106,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.product_name)
                     </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.fk_typeId)
-                        </td>*@
+                    
                     <td>
                         @Html.DisplayFor(modelItem => item.type)
                     </td>
@@ -134,9 +130,7 @@
                     </td>
                     <td>
                         <div class="manage-btn-container">
-                            <a href="@Url.Action("EditItems", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            @*<a href="@Url.Action("Details", new { id = item.Id  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>*@
-                            @*<a href="@Url.Action("Delete", new { id = item.Id  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>*@
+                            <a href="@Url.Action("EditItems", new { id = item.Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>                           
                         </div>
                     </td>
                 </tr>
@@ -198,12 +192,13 @@
     });
   }
         };
-     @*document.addEventListener("DOMContentLoaded", function () {
-            var searchBtn = document.querySelector(".search-btn");
-            searchBtn.addEventListener("click", function () {
-                var searchString = document.querySelector(".search-bar").value;
-                window.location.href = "@Url.Action("OrdersIndex")?searchString=" + searchString;
+
+        document.querySelectorAll(".status-switch").forEach(function (statusSwitch) {
+            statusSwitch.addEventListener("change", function () {
+                var btnEdit = this.parentNode.querySelector(".btn-edit");
+                btnEdit.style.display = this.checked ? "none" : "block";
             });
-        });*@
+        });
+    
     </script>
 }

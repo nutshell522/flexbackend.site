@@ -13,6 +13,7 @@ namespace EFModels.EFModels
         public ReservationStatus()
         {
             OneToOneReservations = new HashSet<OneToOneReservation>();
+            OneToOneReservations1 = new HashSet<OneToOneReservation>();
         }
 
         [Key]
@@ -25,5 +26,8 @@ namespace EFModels.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OneToOneReservation> OneToOneReservations1 { get; set; }
     }
 }

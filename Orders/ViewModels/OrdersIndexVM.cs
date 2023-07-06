@@ -15,6 +15,8 @@ namespace Orders.ViewModels
 		public int Id { get; set; }
 		[Display(Name = "訂單時間")]
 		public DateTime ordertime { get; set; }
+		[Display(Name = "結單時間")]
+		public DateTime close_time { get; set; }
 		[Display(Name = "會員編號")]
 		public int fk_member_Id { get; set; }
 		[Display(Name = "總數量")]
@@ -51,8 +53,11 @@ namespace Orders.ViewModels
 		public string recipient_address { get; set; }
 		[Display(Name = "商品描述")]
 		public string order_description { get; set; }
+		//[Display(Name = "結單")]
+		//public int? close_Id { get; set; }
 		[Display(Name = "結單")]
-		public int? close_Id { get; set; }
+		public bool close { get; set; }
+		public bool IsClosed => close && close_time != null;
 		[Display(Name = "總金額")]
 		public int total_price { get; set; }
 		

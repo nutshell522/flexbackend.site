@@ -62,14 +62,17 @@ namespace flexbackend.site.Controllers
 					receiver = p.receiver,
 					recipient_address = p.recipient_address,
 					order_description = p.order_description,
-					close_Id = p.close_Id,
+					close = (bool)p.close,
 					total_price = p.total_price,
 					orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
 				});
+
 		}
 
 		public ActionResult Create()
 		{
+			TempData.Keep("LogisticsCompanies");
+			TempData.Keep("PayMethods");
 			return View();
 		}
 		[HttpPost]
@@ -116,7 +119,7 @@ namespace flexbackend.site.Controllers
 				receiver = vm.receiver,
 				recipient_address = vm.recipient_address,
 				order_description = vm.order_description,
-				close_Id = 1
+				close = false
 			};
 			db.orders.Add(order);
 			db.SaveChanges();
@@ -150,7 +153,7 @@ namespace flexbackend.site.Controllers
 				receiver = order.receiver,
 				recipient_address = order.recipient_address,
 				order_description = order.order_description,
-				close_Id = order.close_Id,
+				close = (bool)order.close,
 				total_price = order.total_price,
 			};
 
@@ -208,7 +211,7 @@ namespace flexbackend.site.Controllers
 			order.receiver = vm.receiver;
 			order.recipient_address = vm.recipient_address;
 			order.order_description = vm.order_description;
-			order.close_Id = vm.close_Id;
+			order.close = vm.close;
 			order.total_price = vm.total_price;
 
 			db.SaveChanges();
@@ -421,7 +424,19 @@ namespace flexbackend.site.Controllers
 			return db.orderItems.FirstOrDefault(o => o.Id == id);
 		}
 
-		
+		public ActionResult ChangeStatus(int orderId, bool isChecked)
+		{
+			var db = new AppDbContext();
+			var order = db.orders.FirstOrDefault(o => o.Id == orderId);
+
+			if (order != null)
+			{
+				order.close = isChecked;
+				db.SaveChanges();
+			}
+
+			return Json(new { success = true });
+		}
 	}
 	
 }
