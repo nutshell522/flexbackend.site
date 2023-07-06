@@ -10,7 +10,7 @@ namespace Members.dll.Models.ViewsModels.Staff
 {
 	public class EditStaffVM
 	{
-		[Display(Name = "編號")]
+		[Display(Name = "員工編號")]
 		public int StaffId { get; set; }
 
 		[Display(Name = "部門")]
@@ -19,9 +19,9 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Display(Name = "職稱")]
 		public int fk_TitleId { get; set; }
 
-		public bool? Gender { get; set; }
-
 		[Display(Name = "性別")]
+		public bool? Gender { get; set; }
+		
 		public string GenderStr
 		{
 			get
@@ -29,14 +29,6 @@ namespace Members.dll.Models.ViewsModels.Staff
 				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
 			}
 		}
-		public int GenderInt
-		{
-			get
-			{
-				return Gender.HasValue ? (this.Gender.Value ? 1 : 2) : 0;
-			}
-		}
-
 		[Display(Name = "姓名")]
 		[StringLength(30)]
 		public string Name { get; set; }
@@ -59,7 +51,7 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Display(Name = "權限")]
 		public int fk_PermissionsId { get; set; }
 
-		[Display(Name = "入職時間")]
+		[Display(Name = "入職日")]
 		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
 		public DateTime? DueDate { get; set; }
 	}

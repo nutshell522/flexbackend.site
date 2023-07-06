@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "EditStaff";
+    SelectList gender = ViewBag.Gender as SelectList;
 }
 
 <h2>編輯員工資訊</h2>
@@ -23,9 +24,8 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.fk_DepartmentId, htmlAttributes: new { @class = "form-label" })
-
-                @Html.DropDownListFor(model => model.fk_DepartmentId, ViewBag.DepartmentId as SelectList, new { @class = "form-select" })
-                @Html.ValidationMessageFor(model => model.fk_DepartmentId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.fk_DepartmentId, ViewBag.DepartmentId as SelectList, new { @class = "form-select" })
+            @Html.ValidationMessageFor(model => model.fk_DepartmentId, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
@@ -38,7 +38,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "form-label" })
-            @Html.DropDownListFor(model => model.Gender,ViewBag.StaffId as SelectList, new { @class = "form-select" })
+            @Html.DropDownListFor(model => model.Gender, gender, new { @class = "form-select" })
             @Html.ValidationMessageFor(model => model.GenderStr, "", new { @class = "text-danger" })
         </div>
 
@@ -72,9 +72,8 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "form-label" })
-
-                @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+            <input type="text" class="form-control" name="Birthday" id="Birthday" value="@(Model.Birthday.HasValue?Model.Birthday.Value.ToString("yyyy'/'MM'/'dd"):string.Empty)">
+            @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
@@ -86,21 +85,25 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.DueDate, htmlAttributes: new { @class = "form-label" })
-
-                @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })
+            <input type="text" class="form-control" name="DueDate" id="DueDate" value="@(Model.DueDate.HasValue?Model.DueDate.Value.ToString("yyyy'/'MM'/'dd"):string.Empty)">
                 @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="提交變更" class="btn btn-danger" />
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返回會員總覽", "StaffList")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#Birthday").datepicker({ dateFormat: 'yy/mm/dd' });
+        })
+    </script>
 }

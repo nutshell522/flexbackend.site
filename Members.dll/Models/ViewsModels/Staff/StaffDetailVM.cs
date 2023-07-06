@@ -36,8 +36,16 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Display(Name = "年齡")]
 		public byte? Age { get; set; }
 
+		[Display(Name = "手機")]
+		[StringLength(30)]
+		public string Mobile { get; set; }
+
 		[Display(Name = "信箱")]
 		public string Email { get; set; }
+
+		[Display(Name = "生日")]
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		public DateTime? Birthday { get; set; }
 
 		[Display(Name = "權限")]
 		public string StaffPermission { get; set; }

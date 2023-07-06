@@ -15,10 +15,14 @@ namespace Members.dll.Models.ViewsModels
 
 		[Display(Name = "部門")]
 		[Required]
+		public int fk_DepartmentId { get; set; }
+
 		public string Department { get; set; }
 
 		[Display(Name = "職稱")]
 		[Required]
+		public int fk_TitleId { get; set; }
+
 		public string JobTitle { get; set; }
 
 		[Display(Name = "姓名")]
@@ -33,11 +37,16 @@ namespace Members.dll.Models.ViewsModels
 		[Required]
 		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
 
-		public DateTime Birthday { get; set; }
+		public DateTime? Birthday { get; set; }
+
+		public bool? Gender { get; set; }
 
 		[Display(Name = "性別")]
 		[Required]
-		public bool? Gender { get; set; }
+		public string GenderStr
+		{
+			get { return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : ""; }
+		}
 
 		[Display(Name = "信箱")]
 		[Required]
@@ -47,6 +56,7 @@ namespace Members.dll.Models.ViewsModels
 
 		[Display(Name = "權限")]
 		[Required]
+		public int fk_PermissionsId { get; set; }
 		public string StaffPermission { get; set; }
 
 	}

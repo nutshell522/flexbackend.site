@@ -47,6 +47,25 @@ namespace Members.dll.Models.Exts
 			};
 		}
 
+		public static MembersIndexVM ToIndexVM(this Member entity)
+		{
+			//在這邊判斷轉換的顯示文字?
+			//string gender = entity.Gender ? "男" : "女";
+			//string blacklisted = entity.fk_BlackListId.HasValue ? "是" : "否";
+
+			return new MembersIndexVM
+			{
+				MemberId = entity.MemberId,
+				Name = entity.Name,
+				Gender = entity.Gender,
+				Email = entity.Email,
+				LevelName = entity.MembershipLevel.LevelName,
+				PointSubtotal = entity.MemberPoints.Sum(p => p.PointSubtotal),
+				Registration = entity.Registration,
+				fk_BlackListId = entity.fk_BlackListId
+			};
+		}
+
 		/********************************************************************/
 		public static MembersEditVM ToMembersEditVM(this MembersEditDto dto)
 		{
@@ -58,7 +77,6 @@ namespace Members.dll.Models.Exts
 				Mobile = dto.Mobile,
 				Email = dto.Email,
 				Birthday = dto.Birthday,
-				Registration = dto.Registration,
 				fk_LevelId = dto.fk_LevelId,
 				fk_BlackListId = dto.fk_BlackListId
 			};

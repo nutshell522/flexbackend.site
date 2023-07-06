@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EFModels.EFModels.Member>
+﻿@model IEnumerable<Members.dll.Models.ViewsModels.MembersIndexVM>
 
 @{
     ViewBag.Title = "Index";
@@ -42,46 +42,28 @@
                     </label>
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.BlackList.Behavior)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.MembershipLevel.LevelName)
+                    @Html.DisplayNameFor(model => model.MemberId)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Age)
-                </th>
-                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Gender)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Mobile)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Birthday)
+                    @Html.DisplayNameFor(model => model.LevelName)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.CommonAddress)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Account)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.EncryptedPassword)
+                    @Html.DisplayNameFor(model => model.PointSubtotal)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Registration)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.IsConfirmed)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.ConfirmCode)
+                    @Html.DisplayNameFor(model => model.fk_BlackListId)
                 </th>
                 <th>管理</th>
             </tr>
@@ -109,52 +91,35 @@
                     @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
                     <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.BlackList.Behavior)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MembershipLevel.LevelName)
+                        @Html.DisplayFor(modelItem => item.MemberId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Age)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mobile)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Birthday)
+                        @Html.DisplayFor(modelItem => item.LevelName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CommonAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Account)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EncryptedPassword)
+                        @Html.DisplayFor(modelItem => item.PointSubtotal)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Registration)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsConfirmed)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ConfirmCode)
+                        @Html.DisplayFor(modelItem => item.fk_BlackListId)
                     </td>
                     <td>
                         <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new { id = item.MemberId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new { id = item.MemberId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.MemberId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                            <a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                            <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+
                         </div>
                     </td>
                 </tr>

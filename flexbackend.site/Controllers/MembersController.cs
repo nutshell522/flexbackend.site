@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Web.Services.Description;
+using System.Data.Entity;
 
 namespace flexbackend.site.Controllers
 {
@@ -59,6 +60,8 @@ namespace flexbackend.site.Controllers
 		}
 
 		//會員註冊
+
+
 		public ActionResult Register()
 		{
 			return View();
@@ -111,5 +114,7 @@ namespace flexbackend.site.Controllers
 		//	MemberService service = new MemberService(repo);
 		//	return service.EditMember(vm.ToMembersEditDto());
 		//}
+
+
 	}
 }

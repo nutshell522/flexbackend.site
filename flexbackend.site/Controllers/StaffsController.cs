@@ -22,6 +22,9 @@ using System.Collections;
 using Flex_Activity.dll.Models.ViewModels;
 using static Discount.dll.Models.Services.ProjectTagService;
 using System.Data.Entity;
+using System.Web.Http.Filters;
+using flexbackend.site.Filters;
+using static flexbackend.site.Filters.AuthorizeFilter;
 
 namespace flexbackend.site.Controllers
 {
@@ -36,7 +39,13 @@ namespace flexbackend.site.Controllers
 			return new StaffService(repo);
 		}
 		private AppDbContext db = new AppDbContext();
-		//編輯員工資料
+
+		/// <summary>
+		/// 中級的員工權限才可以編輯員工資料
+		/// </summary>
+		/// <param name="staffId"></param>
+		/// <returns></returns>
+		[AuthorizeFilter(UserRole.IntermediatePermission)]
 		public ActionResult EditStaff(int staffId)
 		{
 			if (staffId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -44,15 +53,19 @@ namespace flexbackend.site.Controllers
 			StaffService service = GetStaffRepository();
 			var staff = service.GetByStaffId(staffId).ToStaffEditVM();
 
-
-			PrepareCategoryDataSource(staff.fk_PermissionsId);
+			//PrepareCategoryDataSource(staff.fk_PermissionsId);
+			PrepareCategoryDataSource(staff.fk_DepartmentId);
+			//PrepareCategoryDataSource(staff.fk_TitleId);
 
 			return View(staff);
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[AuthorizeFilter(UserRole.IntermediatePermission)]
 		public ActionResult EditStaff(EditStaffVM vm)
 		{
+			PrepareCategoryDataSource(vm.fk_DepartmentId);
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = ResetStaff(vm);
 			if (result.IsSuccess == false)
@@ -60,10 +73,9 @@ namespace flexbackend.site.Controllers
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
 				return View(vm);
 			}
-			PrepareCategoryDataSource(vm.fk_PermissionsId);
-			PrepareCategoryDataSource(vm.fk_DepartmentId);
-			PrepareCategoryDataSource(vm.fk_TitleId);
-			PrepareCategoryDataSource(vm.GenderInt);
+			//PrepareCategoryDataSource(vm.fk_PermissionsId);
+			//PrepareCategoryDataSource(vm.fk_TitleId);
+			//PrepareCategoryDataSource(vm.GenderInt);
 
 			return RedirectToAction("StaffList");
 
@@ -71,11 +83,16 @@ namespace flexbackend.site.Controllers
 
 		private void PrepareCategoryDataSource(int? id)
 		{
-			var dipartments = db.Departments.ToList().Prepend(new Department());
+			var dipartments = db.Departments.ToList().Prepend(new Department()).ToList();
 			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
-			ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", id);
+			ViewBag.DepartmentId = new SelectList(dipartments, "DepartmentId", "DepartmentName", id);
 			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
-			ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "Gender", id);
+			List<SelectListItem> gender = new List<SelectListItem>
+			{
+			new SelectListItem { Value = "true" , Text = "男" },
+			new SelectListItem { Value = "false" , Text = "女" },
+			};
+			ViewBag.Gender = gender;
 		}
 
 		private Result ResetStaff(EditStaffVM vm)
@@ -96,7 +113,7 @@ namespace flexbackend.site.Controllers
 			return View(service.GetStaffDetail(staffId).ToStaffDetailVM());
 		}
 
-		//刪除員工
+		[AuthorizeFilter(UserRole.AdvancedPermission)]
 		public ActionResult DeleteStaff(int staffId)
 		{
 			//如果staffId為空，返回404錯誤碼
@@ -135,7 +152,7 @@ namespace flexbackend.site.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Authorize]
+		//[Authorize]
 		public ActionResult EditPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
@@ -148,12 +165,13 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("Login");
 		}
 
-		//忘記密碼
 		public ActionResult ForgetPassword()
 		{
 			return View();
 		}
+
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
@@ -173,7 +191,11 @@ namespace flexbackend.site.Controllers
 			return service.ResetPassword(vm.ToForgetPasswordDto());
 		}
 
-		//Logout
+		public ActionResult NoPermission()
+		{
+			return View();
+		}
+
 		public ActionResult Logout()
 		{
 			Session.Abandon();
@@ -181,9 +203,11 @@ namespace flexbackend.site.Controllers
 			return Redirect("/Staffs/Login");
 		}
 
-		//Login
 		public ActionResult Login()
 		{
+			//Session["UserRole"] = "GeneralPermission";
+			Session["UserRole"] = "IntermediatePermission";
+			//Session["UserRole"] = "AdvancedPermission";
 			return View();
 		}
 
@@ -264,6 +288,7 @@ namespace flexbackend.site.Controllers
 		//Create
 		public ActionResult CreateStaff()
 		{
+			PrepareCategoryDataSource(null);
 			return View();
 		}
 
@@ -295,11 +320,11 @@ namespace flexbackend.site.Controllers
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			dto.Mobile = "0921133312";
+			dto.Mobile = "0921133444";
 			//dto.Account = Session["Account"].ToString();
 			//dto.Password = Session["Password"].ToString();
-			dto.Account = "4561";
-			dto.Password = "4561";
+			dto.Account = "444";
+			dto.Password = "444";
 			dto.fk_PermissionsId = 3;
 			dto.fk_TitleId = 2;
 			dto.fk_DepartmentId = 3;
@@ -307,7 +332,7 @@ namespace flexbackend.site.Controllers
 		}
 
 		//Read
-		//[Authorize]
+		[Authorize]
 		public ActionResult StaffList(StaffCriteria criteria)
 		{
 			PrepareCategoryDataSource(criteria.DepartmentId);

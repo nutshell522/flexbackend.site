@@ -38,8 +38,13 @@ namespace Members.dll.Models.ViewsModels
 		[StringLength(300)]
 		public string Email { get; set; }
 
+		[Display(Name = "權限")]
 		public string levelName { get; set; }
+
+		[Display(Name = "部門")]
 		public string Department { get; set; }
+
+		[Display(Name = "職稱")]
 		public string TitleIdName { get; set; }
 
 		public int fk_PermissionsId { get; set; }

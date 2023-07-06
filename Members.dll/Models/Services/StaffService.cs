@@ -96,6 +96,9 @@ namespace Members.dll.Models.Services
 
 		public  EditStaffDto GetByStaffId(int staffId)
 		{
+			//如果取得會員生日
+			//將格式轉換
+			//塞給dto
 			return _repo.GetByStaffId(staffId);
 		}
 

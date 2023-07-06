@@ -25,5 +25,9 @@ namespace Members.dll.Models.Dtos.Staff
 		public string TitleName { get; set; }
 
 		public string LevelName { get; set; }
+
+		public string Mobile { get; set; }
+
+		public DateTime? Birthday { get;set; }
 	}
 }

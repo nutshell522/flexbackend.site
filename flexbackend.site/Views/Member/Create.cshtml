@@ -1,4 +1,4 @@
-﻿@model EFModels.EFModels.Member
+﻿@model Members.dll.Models.ViewsModels.Member.MemberCreateVM
 
 @{
     ViewBag.Title = "Create";
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="row">
-        <h4>Member</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="mb-3">
@@ -29,10 +28,8 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "form-label" })
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Gender)
-                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
@@ -54,63 +51,25 @@
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.CommonAddress, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.CommonAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CommonAddress, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.EncryptedPassword, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.EncryptedPassword, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EncryptedPassword, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.Registration, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.Registration, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Registration, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.IsConfirmed, htmlAttributes: new { @class = "form-label" })
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsConfirmed)
-                    @Html.ValidationMessageFor(model => model.IsConfirmed, "", new { @class = "text-danger" })
-                </div>
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.ConfirmCode, htmlAttributes: new { @class = "form-label" })
-                @Html.EditorFor(model => model.ConfirmCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ConfirmCode, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.fk_LevelId, "fk_LevelId", htmlAttributes: new { @class = "form-label" })
-                @Html.DropDownList("fk_LevelId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.LabelFor(model => model.fk_LevelId, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.fk_LevelId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.fk_LevelId, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.fk_BlackListId, "fk_BlackListId", htmlAttributes: new { @class = "form-label" })
-                @Html.DropDownList("fk_BlackListId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.LabelFor(model => model.fk_BlackListId, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.fk_BlackListId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.fk_BlackListId, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="新增" class="btn btn-primary" />
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返回會員名單總覽", "Index")
 </div>
 
 @section Scripts {

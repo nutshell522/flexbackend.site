@@ -99,7 +99,7 @@ WHERE StaffId=@staffId;";
 			{
 				conn.Open();
 
-				string sql = @"SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Mobile,Email,Birthday,LevelName,DueDate
+				string sql = @"SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Mobile,Email,Birthday,LevelName,DueDate,fk_DepartmentId,fk_TitleId,fk_PermissionsId
 FROM Staffs as S
 JOIN Departments as D ON S.fk_DepartmentId=D.DepartmentId
 JOIN JobTitles as J ON S.fk_TitleId=J.TitleId

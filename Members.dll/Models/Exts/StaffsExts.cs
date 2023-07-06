@@ -36,7 +36,10 @@ namespace Members.dll.Models.Exts
 				Birthday = vm.Birthday,
 				Gender = vm.Gender,
 				Email = vm.Email,
-				StaffPermission = vm.StaffPermission
+				StaffPermission = vm.StaffPermission,
+				fk_TitleId = vm.fk_TitleId,
+				fk_PermissionsId=vm.fk_PermissionsId,
+				fk_DepartmentId=vm.fk_DepartmentId
 			};
 		}
 
@@ -53,9 +56,9 @@ namespace Members.dll.Models.Exts
 				fk_DepartmentId = dto.fk_DepartmentId,
 				fk_TitleId = dto.fk_TitleId,
 				fk_PermissionsId = dto.fk_PermissionsId,
-				Department=dto.Department,
-				TitleIdName =dto.TitleIdName,
-				levelName=dto.levelName,
+				Department = dto.Department,
+				TitleIdName = dto.TitleIdName,
+				levelName = dto.levelName,
 			};
 		}
 
@@ -91,6 +94,8 @@ namespace Members.dll.Models.Exts
 				Email = dto.Email,
 				StaffPermission = dto.LevelName,
 				DueDate = dto.DueDate,
+				Mobile = dto.Mobile,
+				Birthday = dto.Birthday
 			};
 		}
 

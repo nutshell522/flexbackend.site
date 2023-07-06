@@ -7,6 +7,25 @@
     string s_departmentId = criteria.DepartmentId.HasValue ? criteria.DepartmentId.Value.ToString() : "";
 }
 
+@section Styles{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <style>
+        .table-container {
+            width: 100%; /* 設定容器寬度 */
+        }
+
+        table {
+            width: 100%; /* 設定表格寬度 */
+            border-collapse: collapse; /* 合併邊框 */
+            background-color: aquamarine;
+        }
+        .th-col-1 
+        {
+            background-color: aquamarine;
+        }
+    </style>
+}
+
 <h2>員工名單總覽</h2>
 <section class="container">
     <form method="get">
@@ -33,11 +52,11 @@
                 </a>
             </div>
         </div>
-        
+
     </form>
 </section>
 <div class="search-bar-container mb-4 d-flex">
-    
+
 </div>
 <div class="table-container">
     <table>
@@ -54,7 +73,7 @@
                         <input class="form-check-input check-all" type="checkbox">
                     </label>
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-1 ">
                     @Html.DisplayNameFor(model => model.StaffId)
                 </th>
                 <th class="th-col-1">
