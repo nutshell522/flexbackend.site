@@ -28,7 +28,7 @@
         </div>
         <select class="form-select" name="statusFilter">
             <option value="">請選擇</option>
-            @foreach (var status in TempData["orderStatuses"] as Dictionary<int, string>)
+            @foreach (var status in ViewData["orderStatuses"] as Dictionary<int, string>)
             {
                 <option value="@status.Key">@status.Value</option>
             }

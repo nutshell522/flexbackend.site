@@ -26,16 +26,16 @@
         @Html.EditorFor(model => model.fk_member_Id, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.fk_member_Id, "", new { @class = "text-danger" })
     </div>
-    <div class="mb-3">
+    @*<div class="mb-3">
         @Html.LabelFor(model => model.total_quantity, htmlAttributes: new { @class = "form-label" })
         @Html.EditorFor(model => model.total_quantity, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.total_quantity, "", new { @class = "text-danger" })
-    </div>
-    <div class="mb-3">
+    </div>*@
+    @*<div class="mb-3">
         @Html.LabelFor(model => model.total_price, htmlAttributes: new { @class = "form-label" })
         @Html.EditorFor(model => model.total_price, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.total_price, "", new { @class = "text-danger" })
-    </div>
+    </div>*@
 
     @*<div class="mb-3">
         @Html.LabelFor(model => model.logistics_company_Id, htmlAttributes: new { @class = "form-label" })

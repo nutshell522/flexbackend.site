@@ -36,6 +36,7 @@ namespace flexbackend.site.Controllers
 				orders = (System.Data.Entity.Infrastructure.DbQuery<order>)orders.Where(o => o.order_status_Id == statusId);
 			}
 			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
+			ViewData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
 			TempData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
 			var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
 			TempData["PayMethods"] = paymethods ?? new Dictionary<int, string>();
@@ -45,32 +46,39 @@ namespace flexbackend.site.Controllers
 			TempData["paystatuses"] = paystatuses ?? new Dictionary<int, string>();
 
 			return orders.ToList()
-				.Select(p => new OrdersIndexVM
-				{
-					Id = p.Id,
-					ordertime = p.ordertime,
-					fk_member_Id = p.fk_member_Id,
-					total_quantity = p.total_quantity,
-					logistics_company_Id = p.logistics_company_Id,
-					logistics_companys = LogisticsCompanies.ContainsKey(p.logistics_company_Id) ? LogisticsCompanies[p.logistics_company_Id] : string.Empty,
-					order_status_Id = p.order_status_Id,
-					order_status = orderStatuses.ContainsKey(p.order_status_Id) ? orderStatuses[p.order_status_Id] : string.Empty,
-					pay_method_Id = p.pay_method_Id,
-					pay_method = paymethods.ContainsKey(p.pay_method_Id) ? paymethods[p.pay_method_Id] : string.Empty,
-					pay_status_Id = p.pay_status_Id,
-					pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? paystatuses[p.pay_status_Id] : string.Empty,
-					coupon_name = p.coupon_name,
-					coupon_discount = p.coupon_discount,
-					freight = p.freight,
-					cellphone = p.cellphone,
-					receipt = p.receipt,
-					receiver = p.receiver,
-					recipient_address = p.recipient_address,
-					order_description = p.order_description,
-					close = (bool)p.close,
-					total_price = p.total_price,
-					orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
-				});
+		.Select(p =>
+		{
+			var orderItems = GetOrderItemsIndex(p.Id);
+			int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+			int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+
+			return new OrdersIndexVM
+			{
+				Id = p.Id,
+				ordertime = p.ordertime,
+				fk_member_Id = p.fk_member_Id,
+				total_quantity = totalquantity,
+				logistics_company_Id = p.logistics_company_Id,
+				logistics_companys = LogisticsCompanies.ContainsKey(p.logistics_company_Id) ? LogisticsCompanies[p.logistics_company_Id] : string.Empty,
+				order_status_Id = p.order_status_Id,
+				order_status = orderStatuses.ContainsKey(p.order_status_Id) ? orderStatuses[p.order_status_Id] : string.Empty,
+				pay_method_Id = p.pay_method_Id,
+				pay_method = paymethods.ContainsKey(p.pay_method_Id) ? paymethods[p.pay_method_Id] : string.Empty,
+				pay_status_Id = p.pay_status_Id,
+				pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? paystatuses[p.pay_status_Id] : string.Empty,
+				coupon_name = p.coupon_name,
+				coupon_discount = p.coupon_discount,
+				freight = p.freight,
+				cellphone = p.cellphone,
+				receipt = p.receipt,
+				receiver = p.receiver,
+				recipient_address = p.recipient_address,
+				order_description = p.order_description,
+				close = (bool)p.close,
+				total_price = totalDiscountSubtotal,
+				orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
+			};
+		});
 
 		}
 
@@ -110,8 +118,8 @@ namespace flexbackend.site.Controllers
 				Id = vm.Id,
 				ordertime = DateTime.Now,
 				fk_member_Id = vm.fk_member_Id,
-				total_price = vm.total_price,
-				total_quantity = vm.total_quantity,
+				total_price = 0,
+				total_quantity = 0,
 				logistics_company_Id = vm.logistics_company_Id,
 				order_status_Id = 1,
 				pay_method_Id = vm.pay_method_Id,
@@ -139,13 +147,18 @@ namespace flexbackend.site.Controllers
 			{
 				return HttpNotFound(); // 可以根據你的需求返回一個適當的錯誤頁面或訊息
 			}
+			var orderItems = GetOrderItemsIndex(order.Id);
+			int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+			int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
 
+			// 將計算結果指派給 total_price 屬性
 			var vm = new OrdersIndexVM
 			{
+
 				Id = order.Id,
 				ordertime = order.ordertime,
 				fk_member_Id = order.fk_member_Id,
-				total_quantity = order.total_quantity,
+				total_quantity = totalquantity,
 				logistics_company_Id = order.logistics_company_Id,
 				order_status_Id = order.order_status_Id,
 				pay_method_Id = order.pay_method_Id,
@@ -159,7 +172,7 @@ namespace flexbackend.site.Controllers
 				recipient_address = order.recipient_address,
 				order_description = order.order_description,
 				close = (bool)order.close,
-				total_price = order.total_price,
+				total_price = totalDiscountSubtotal,
 			};
 
 			return View(vm);
@@ -199,7 +212,7 @@ namespace flexbackend.site.Controllers
 			{
 				return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
 			}
-
+			
 			// 更新訂單的相關屬性
 			//order.ordertime = vm.ordertime;
 			order.fk_member_Id = vm.fk_member_Id;
