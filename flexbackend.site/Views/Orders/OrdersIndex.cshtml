@@ -25,9 +25,16 @@
 
         <div class="input-group">
             <input class="form-control search-bar" type="text" placeholder="搜尋會員編號" name="searchString">
-            <button class="btn btn-primary" type="submit">搜尋</button>
         </div>
-
+        <select class="form-select" name="statusFilter">
+            <option value="">請選擇</option>
+            @foreach (var status in TempData["orderStatuses"] as Dictionary<int, string>)
+            {
+                <option value="@status.Key">@status.Value</option>
+            }
+        </select>
+        <div class="input-group"> <button class="btn btn-primary" type="submit">搜尋</button></div>
+       
     </div>
 
     <div class="right">
@@ -282,6 +289,23 @@
                 }
             });
         });
-    });
+         });
+     
+        document.addEventListener("DOMContentLoaded", function () {
+            var searchBtn = document.querySelector(".btn-primary");
+            searchBtn.addEventListener("click", function () {
+                var searchString = document.querySelector(".search-bar").value;
+                var statusFilter = document.querySelector("select[name='statusFilter']").value;
+
+                var url = "@Url.Action("OrdersIndex")";
+                url += "?searchString=" + searchString;
+                if (statusFilter) {
+                    url += "&statusFilter=" + statusFilter;
+                }
+
+                window.location.href = url;
+            });
+        });
+   
     </script>
 }

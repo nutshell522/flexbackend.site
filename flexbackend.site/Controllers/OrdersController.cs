@@ -12,15 +12,16 @@ namespace flexbackend.site.Controllers
 	public class OrdersController : Controller
 	{
         // GET: Orders
-        public ActionResult OrdersIndex(string searchString)
+        public ActionResult OrdersIndex(string searchString, string statusFilter)
 		{
-			IEnumerable<OrdersIndexVM> orders = GetOrders(searchString);
+			IEnumerable<OrdersIndexVM> orders = GetOrders(searchString,statusFilter);
+			
 			return View(orders);
 
 		}
 
 		[HttpPost]
-		private IEnumerable<OrdersIndexVM> GetOrders(string searchString)
+		private IEnumerable<OrdersIndexVM> GetOrders(string searchString, string statusFilter)
 		{
 			var db = new AppDbContext();
 			var orders = db.orders
@@ -29,6 +30,10 @@ namespace flexbackend.site.Controllers
 			if (!string.IsNullOrEmpty(searchString) && int.TryParse(searchString, out int memberId))
 			{
 				orders = (System.Data.Entity.Infrastructure.DbQuery<order>)orders.Where(o => o.fk_member_Id == memberId);
+			}
+			if (!string.IsNullOrEmpty(statusFilter) && int.TryParse(statusFilter, out int statusId))
+			{
+				orders = (System.Data.Entity.Infrastructure.DbQuery<order>)orders.Where(o => o.order_status_Id == statusId);
 			}
 			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
 			TempData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
