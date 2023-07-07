@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.ModelBinding;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Antlr.Runtime.Tree;
 using EFModels.EFModels;
 using Flex.Products.dll.Exts;
@@ -45,7 +46,21 @@ namespace flexbackend.site.Controllers
                 return Json(products);
             }
             return View(products);
+		}
 
+        [HttpPost]
+		public ActionResult ReLoadIndex(IndexSearchCriteria criteria)
+		{
+			criteria = criteria ?? new IndexSearchCriteria();
+			PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
+
+			ViewBag.Criteria = criteria;
+			ViewBag.StatusOption = new SelectList(criteria.StatusOption);
+
+			var service = new ProductService(_repo);
+			var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
+
+			return Json(new { data= products });
 		}
 
 
@@ -73,20 +88,20 @@ namespace flexbackend.site.Controllers
 		}
 
 
-		// GET: Products/Details/5
-		public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
+		//// GET: Products/Details/5
+		//public ActionResult Details(string id)
+  //      {
+  //          if (id == null)
+  //          {
+  //              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+  //          }
+  //          Product product = db.Products.Find(id);
+  //          if (product == null)
+  //          {
+  //              return HttpNotFound();
+  //          }
+  //          return View(product);
+  //      }
 
         // GET: Products/Create
         public ActionResult Create()
@@ -109,23 +124,6 @@ namespace flexbackend.site.Controllers
 			PrepareColorDataSource(null);
 			PrepareSizeDataSource(null);
 			if (ModelState.IsValid == false) return View(vm);
-
-			#region 規格驗證
-
-			//var isDuplicateSpecs = IsDuplicateSpecs(vm.ProductGroups);
-   //         if (isDuplicateSpecs)
-   //         {
-   //             ModelState.AddModelError("ProductGroups", "規格不得重複");
-   //             return View(vm);
-   //         }
-
-			//var isGroupsValid = IsGroupsValid(vm.ProductGroups);
-			//if (isGroupsValid)
-			//{
-			//	ModelState.AddModelError("ProductGroups", "規格不得留空");
-			//	return View(vm);
-			//}
-			#endregion
 
 			#region 照片上傳
 			var files = Request.Files;
@@ -174,6 +172,7 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
+		// GET: Products/Edit
 		public ActionResult Edit(string ProductId)
         {
             if (ProductId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -190,14 +189,14 @@ namespace flexbackend.site.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProductEditVM vm)
+		// POST: Products/Edit/5
+		// 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
+		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit(ProductEditVM vm)
         {
-
+            
 			PrepareProductSubCategoryDataSource(vm.fk_ProductSubCategoryId);
 			PrepareColorDataSource(null);
 			PrepareSizeDataSource(null);
@@ -211,8 +210,56 @@ namespace flexbackend.site.Controllers
 			}
             else
             {
+                ModelState.AddModelError("ProductGroups", result.ErroeMessage);
 				return View(vm);
 			}
+        }
+
+        public ActionResult EditImg(string ProductId)
+        {
+            if(ProductId==null)return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var service = new ProductService(_repo);
+            var product = service.GetImgById(ProductId);
+
+            return View(product.ToEditImgVM(ProductId));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditImg(ProductEditImgVM vm, List<string> createImgName, List<HttpPostedFileBase> createfile)
+        {
+            if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var service = new ProductService(_repo);
+
+			var path = Server.MapPath("~/Public/Img");
+            List<ProductImgDto> editImg = EditProductImg(path, createImgName, createfile, vm.ProductId);
+
+			if (vm.ProductImgs==null && createImgName == null)
+            {
+                var errorVm= service.GetImgById(vm.ProductId);
+
+				ModelState.AddModelError(string.Empty, "至少要有一張照片");
+
+                return View(errorVm.ToEditImgVM(vm.ProductId));
+            }
+
+			if (editImg != null && editImg.Count > 0)
+            {
+                foreach (var img in editImg)
+                {
+                    vm.ProductImgs.Add(img);
+                }
+			}
+
+            var product = service.SaveEditImg(vm.VMToEditImgDto());
+
+            if (product.IsSuccess)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(vm);
         }
 
         // GET: Products/Delete/5
@@ -255,9 +302,10 @@ namespace flexbackend.site.Controllers
                 new ProductSubCategoryRepository()
                 .GetProductSubCategory()
                 .Prepend(new ProductSubCategoryDto { ProductSubCategoryId=0,SubCategoryPath="請選擇分類"}), "ProductSubCategoryId", "SubCategoryPath", ProductSubCategoryId);
-        }
 
-        private void PrepareColorDataSource(int? ColorId)
+		}
+
+		private void PrepareColorDataSource(int? ColorId)
         {
             ViewBag.Color = new SelectList(
                 new ColorRepository()
@@ -312,35 +360,48 @@ namespace flexbackend.site.Controllers
             return result;
         }
 
-  //      private bool IsDuplicateSpecs(List<ProductGroupsDto> productGroups)
-  //      {
-  //          var groupSpecs = new HashSet<string>();
-  //          foreach (var group in productGroups)
-  //          {
-  //              var colorId=group.ColorId.ToString();
-  //              var sizeId=group.SizeId.ToString();
-  //              var combine = colorId + "-" + sizeId;
+		/// <summary>
+		/// 相片編輯
+		/// </summary>
+		/// <param name="path">存放路徑</param>
+		/// <param name="createImgName">預覽回傳照片名稱</param>
+		/// <param name="createfile">file回傳檔案</param>
+		/// <param name="productId">產品Id</param>
+		/// <returns></returns>
+		private List<ProductImgDto> EditProductImg(string path, List<string> createImgName, List<HttpPostedFileBase> createfile, string productId)
+		{
+			if (createImgName == null || createImgName.Count <= 0) return new List<ProductImgDto>();
 
-  //              if (groupSpecs.Contains(combine))
-  //              {
-  //                  return true;
-  //              }
-  //              groupSpecs.Add(combine);
-		//	}
-  //          return false;
-  //      }
+			var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
+			var result = new List<ProductImgDto>();
 
-  //      private bool IsGroupsValid(List<ProductGroupsDto> productGroups)
-  //      {
-  //          bool result=false;
-		//	foreach (var group in productGroups)
-		//	{
-		//		if (group.ColorId <= 0 || group.SizeId <= 0 || group.Qty < 1)
-		//		{
-		//			result = true;
-		//		};
-		//	}
-  //          return result;
-		//}
+			for (var i = 0; i < createfile.Count; i++)
+			{
+				var file = createfile[i];
+				var fileName = file.FileName;
+				if (file == null || file.ContentLength == 0 || file.ContentLength > 2 * 1024 * 1024) continue;
+				if (createImgName.Any(imgName => imgName == fileName))
+				{
+					var ext = System.IO.Path.GetExtension(fileName);
+
+					if (!allowExts.Contains(ext.ToLower())) continue;
+
+					var newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
+
+					file.SaveAs(System.IO.Path.Combine(path, newFileName));
+					result.Add(new ProductImgDto
+					{
+						fk_ProductId = productId,
+						ImgPath = newFileName,
+					});
+				}
+				else
+				{
+					continue;
+				}
+			}
+
+			return result;
+		}
 	}
 }

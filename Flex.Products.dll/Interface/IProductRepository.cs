@@ -21,5 +21,9 @@ namespace Flex.Products.dll.Interface
 		ProductDto GetById(string productId);
 
 		void EditProduct(ProductDto dto);
+
+		List<ProductImgDto> GetImgById(string productId);
+
+		void SaveEditImg(List<ProductImgDto> dto);
 	}
 }

@@ -94,10 +94,10 @@
                 <span class="me-auto">規格</span>
                 <input class="btn btn-secondary" id="addSpecBtn" type="button" value="新增規格" />
             </div>
-            <div class="specContainer">
+            <div id="specContainer">
                 @for (var i = 0; i < Model.ProductGroups.Count; i++)
                 {
-                    <div class="productGroup d-flex mb-3" id="@Model.ProductGroups[i].ProductGroupId">
+                    <div class="product-group d-flex mb-3">
                         <select name="ProductGroups[@i].ColorId" class="form-select" min="1">
                             @foreach (var item in colorCategory)
                             {
@@ -111,8 +111,8 @@
                             }
                         </select>
                         <input class="form-control" type="number" name="ProductGroups[@i].Qty" value="@Model.ProductGroups[i].Qty" min="1" required="required" />
-                        <button class="btn btn-danger deleteSpecBtn ms-2">刪除</button>
-                        <input type="hidden" name="ProductGroups[@i].ProductGroupId" value="@Model.ProductGroups[i].ProductGroupId" />
+                        <button class="btn btn-danger deleteSpecBtn ms-2" type="button">刪除</button>
+                        @*<input class="form-control" type="hidden" name="ProductGroups[@i].ProductGroupId" value="@Model.ProductGroups[i].ProductGroupId" />*@
                     </div>
                 }
             </div>
@@ -136,7 +136,7 @@
         </div>
 
         <div class="mb-3">
-            <input type="submit" value="確認" class="btn btn-primary" />
+            <input id="save" type="submit" value="確認" class="btn btn-primary" />
             <input type="button" value="返回" class="btn btn-primary" onclick='location.href="@Url.Action("Index")"' />
         </div>
     </div>
@@ -147,5 +147,160 @@
 }
 
 @section Scripts {
+
+    <script>
+        var productGroupsValues = [];
+        var productGroups = @Html.Raw(Json.Encode(Model.ProductGroups));
+
+        $(document).ready(function () {
+            //綁定現有刪除按鈕事件
+            var deleteBtn = $(".deleteSpecBtn");
+            let specContainer = $("#specContainer");
+            deleteBtn.click(function () {
+                if (specContainer.children(".product-group").length > 1) {
+
+                    var productGroupId = $(this).parent().find("input[name^='ProductGroup']").eq(1).val();
+                    delete productGroupsValues[productGroupId];
+                    $(this).parent().remove();
+
+                    $(".product-group").each(function (index) {
+                        $(this).find(".form-select[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].ColorId");
+                        $(this).find(".form-select[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].SizeId");
+                        $(this).find("input[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].Qty");
+                        /*$(this).find("input[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].ProductGroupId");*/
+                    })
+
+                }
+                else {
+                    alert("至少要有一組規格");
+                }
+            });
+
+            //新增規格按鈕綁定事件
+            var addSpecBtn = $("#addSpecBtn");
+            addSpecBtn.click(function () {
+                //先確認有幾組規格
+                var numExistingGroups = $(".product-group").length;
+                addSpecGroup(numExistingGroups);
+            });
+        });
+
+        function addSpecGroup(startIndex) {
+            let specContainer = $("#specContainer");
+
+            // 保存現有規格的值
+            $(".product-group").each(function (index) {
+                var colorId = $(this).find(".form-select[name^='ProductGroups']").eq(0).val();
+                var sizeId = $(this).find(".form-select[name^='ProductGroups']").eq(1).val();
+                var qty = $(this).find("input[name^='ProductGroups']").eq(0).val();
+                /*var productGroupId = $(this).find("input[name^='ProductGroups']").eq(1).val();*/
+                productGroupsValues[index] = { ColorId: colorId, SizeId: sizeId, Qty: qty, } /*ProductGroupId: productGroupId };*/
+            });
+
+            // 移除所有規格
+            $(".product-group").remove();
+
+            // 重新創建，分兩層處理
+            for (var i = 0; i <= startIndex; i++) {
+                var newSpecGroup = $("<div class='product-group d-flex mb-3'></div>");
+                if (i < startIndex) {
+                    // 新增規格，並將以選擇的值加入
+                    var colorSelect = $("#ColorSelectTemplate").clone();
+                    colorSelect.attr("name", "ProductGroups[" + i + "].ColorId");
+                    colorSelect.attr("min", "1");
+                    colorSelect.removeAttr("id");
+                    newSpecGroup.append(colorSelect);
+
+                    var sizeSelect = $("#SizeSelectTemplate").clone();
+                    sizeSelect.attr("name", "ProductGroups[" + i + "].SizeId");
+                    sizeSelect.attr("min", "1");
+                    sizeSelect.removeAttr("id");
+                    newSpecGroup.append(sizeSelect);
+
+                    var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${i}].Qty'  required='required' placeholder='數量' min='1'/>`);
+                    newSpecGroup.append(qtyInput);
+
+                    //var productgroupInput = $(`<input class='form-control' type='hidden' name='ProductGroups[${i}].ProductGroupId'/>`);
+                    //newSpecGroup.append(productgroupInput);
+
+                    var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
+                    deleteBtn.click(function () {
+                        if (specContainer.children(".product-group").length > 1) {
+
+                            var productGroupId = $(this).parent().find("input[name^='ProductGroup']").eq(1).val();
+                            delete productGroupsValues[productGroupId];
+                            $(this).parent().remove();
+
+                            $(".product-group").each(function (index) {
+                                $(this).find(".form-select[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].ColorId");
+                                $(this).find(".form-select[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].SizeId");
+                                $(this).find("input[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].Qty");
+                                /*$(this).find("input[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].ProductGroupId");*/
+                            })
+
+                        } else {
+                            alert("至少要有一組規格");
+                        }
+                    });
+                    newSpecGroup.append(deleteBtn);
+
+
+                    newSpecGroup.find(".form-select[name^='ProductGroups']").eq(0).val(productGroupsValues[i].ColorId);
+                    newSpecGroup.find(".form-select[name^='ProductGroups']").eq(1).val(productGroupsValues[i].SizeId);
+                    newSpecGroup.find("input[name^='ProductGroups']").eq(0).val(productGroupsValues[i].Qty);
+                    newSpecGroup.find("input[name^='ProductGroups']").eq(1).val(productGroupsValues[i].ProductGroupId)
+
+                    specContainer.append(newSpecGroup);
+                }
+                else {
+                    // 新增規格，都是預設值
+                    var colorSelect = $("#ColorSelectTemplate").clone();
+                    colorSelect.attr("name", "ProductGroups[" + i + "].ColorId");
+                    colorSelect.attr("min", "1");
+                    colorSelect.removeAttr("id");
+                    newSpecGroup.append(colorSelect);
+
+                    var sizeSelect = $("#SizeSelectTemplate").clone();
+                    sizeSelect.attr("name", "ProductGroups[" + i + "].SizeId");
+                    sizeSelect.attr("min", "1");
+                    sizeSelect.removeAttr("id");
+                    newSpecGroup.append(sizeSelect);
+
+                    var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${i}].Qty'  required='required' placeholder='數量' min='1'/>`);
+                    newSpecGroup.append(qtyInput);
+
+                    //var productgroupInput = $(`<input class='form-control' type='hidden' name='ProductGroups[${i}].ProductGroupId'/>`);
+                    //newSpecGroup.append(productgroupInput);
+
+                    var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
+                    deleteBtn.click(function () {
+                        if (specContainer.children(".product-group").length > 1) {
+
+                            var productGroupId = $(this).parent().find("input[name^='ProductGroup']").eq(1).val();
+                            delete productGroupsValues[productGroupId];
+                            $(this).parent().remove();
+
+                            $(".product-group").each(function (index) {
+                                $(this).find(".form-select[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].ColorId");
+                                $(this).find(".form-select[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].SizeId");
+                                $(this).find("input[name^='ProductGroups']").eq(0).attr("name", "ProductGroups[" + index + "].Qty");
+                                $(this).find("input[name^='ProductGroups']").eq(1).attr("name", "ProductGroups[" + index + "].ProductGroupId");
+                            })
+
+                        } else {
+                            alert("至少要有一組規格");
+                        }
+                    });
+                    newSpecGroup.append(deleteBtn);
+
+                    specContainer.append(newSpecGroup);
+                }
+
+            }
+
+        }
+    </script>
+
+
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -207,12 +207,57 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				EditTime=dto.EditTime,
 				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
 				{
-					ProductGroupId = p.ProductGroupId,
 					fk_ProductId = dto.ProductId,
 					fk_ColorId = p.ColorId,
 					fk_SizeId = p.SizeId,
 					Qty = p.Qty,
 				}).ToList()
+			};
+		}
+
+		public static List<ProductImgDto> ToEditImgDto(this List<ProductImg> entity)
+		{
+			var result=entity.Select(p => new ProductImgDto
+			{
+				ProductImgId = p.ProductImgId,
+				fk_ProductId=p.fk_ProductId,
+				ImgPath = p.ImgPath
+			}).ToList();
+			return result;
+		}
+
+		public static ProductEditImgVM ToEditImgVM(this List<ProductImgDto> dto,string ProductId)
+		{	
+			return new ProductEditImgVM
+			{
+				ProductId = ProductId,
+				ProductImgs= dto
+			};
+		}
+
+		public static List<ProductImgDto> VMToEditImgDto(this ProductEditImgVM vm)
+		{
+			var result = new List<ProductImgDto>();
+
+			foreach (var p in vm.ProductImgs)
+			{
+				result.Add(new ProductImgDto
+				{
+					ProductImgId = p.ProductImgId,
+					fk_ProductId=vm.ProductId,
+					ImgPath = p.ImgPath
+				});
+			}
+			return result;
+		}
+
+		public static ProductImg DtoToEditImgEntity(this ProductImgDto dto)
+		{
+			return new ProductImg
+			{
+				ProductImgId = dto.ProductImgId,
+				fk_ProductId = dto.fk_ProductId,
+				ImgPath = dto.ImgPath
 			};
 		}
 	}

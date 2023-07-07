@@ -170,6 +170,7 @@
     <Compile Include="Controllers\logistics_companiesController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
     <Compile Include="Controllers\ShoesCategoriesController.cs" />
@@ -2405,6 +2406,10 @@
     <Content Include="Views\ShoesChoos\Index.cshtml" />
     <Content Include="Views\DIscount\Index.cshtml" />
     <Content Include="Views\DIscount\CreateOrEdit.cshtml" />
+    <Content Include="Views\Products\EditImg.cshtml" />
+    <Content Include="Views\ProductCategories\SalesCategoryIndex.cshtml" />
+    <Content Include="Views\ProductCategories\CreateSalesCategory.cshtml" />
+    <Content Include="Views\ProductCategories\EditSalesCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

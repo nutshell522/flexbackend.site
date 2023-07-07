@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Flex.Products.dll.Models.Dtos;
+using Flex.Products.dll.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,33 @@ namespace Flex.Products.dll.Exts
 {
 	public static class CategoryExts
 	{
+		public static SalesCategoryIndexVM ToIndexVM(this SalesCategoryDto dto)
+		{
+			return new SalesCategoryIndexVM
+			{
+				SalesCategoryId = dto.SalesCategoryId,
+				SalesCategoryName = dto.SalesCategoryName,
+			};
+		}
+		
+		public static SalesCategoryDto ToCreateDto(this SalesCategoryCreateVM vm)
+		{
+			return new SalesCategoryDto
+			{
+				SalesCategoryId = vm.SalesCategoryId,
+				SalesCategoryName = vm.SalesCategoryName,
+			};
+		}
+
+		public static SalesCategoryEditVM ToEditVM(this SalesCategoryDto dto)
+		{
+			return new SalesCategoryEditVM
+			{
+				SalesCategoryId = dto.SalesCategoryId,
+				SalesCategoryName = dto.SalesCategoryName,
+			};
+		}
+
 		public static ProductSubCategoryDto ToDto(this ProductSubCategory entity)
 		{
 			return new ProductSubCategoryDto
