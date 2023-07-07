@@ -22,7 +22,7 @@
 }
 
 <h2>商品管理</h2>
-
+@Html.AntiForgeryToken()
 <div class="search-bar-container mb-4 d-flex">
     <form method="post" class="me-auto">
         <div class="row">
@@ -124,7 +124,7 @@
                     <div class="d-flex justify-content-center">
                         <a href="@Url.Action("Edit", new {ProductId=item.ProductId })" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>
                         <a href="@Url.Action("EditImg", new {ProductId=item.ProductId })" class="btn-edit me-1"><i class="bi bi-image"></i></a>
-                        <a href="@Url.Action("Delete", new {ProductId=item.ProductId})" class="btn-del me-1"><i class="bi bi-trash-fill"></i></a>
+                        <a href="#" class="btn-del me-1" onclick="deleteProduct(event,@item.ProductId,@item.ProductName)"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </td>
             </tr>
@@ -193,6 +193,34 @@
 
             });*@
         });
+
+         function deleteProduct(event, productId, productName){
+                event.preventDefault();
+
+             if (confirm("確認是否要刪除 : " + productName)) {
+                 var data = {
+                     productId: productId,
+                     __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                 };
+                $.ajax({
+                    url: '@Url.Action("Delete", "Products")',
+                    type: 'POST',
+                    data: data,
+                    success: function (result) {
+                        if (result.success) {
+                            alert(productName + "已被刪除");
+                            location.reload()
+                        }
+                        else {
+                            alert("刪除失敗 : " + result.message);
+                        }
+                    },
+                    error: function () {
+                        alert("刪除失敗");
+                    }
+                });
+                }
+          }
 
         //重新載入畫面
         function loadProducts() {

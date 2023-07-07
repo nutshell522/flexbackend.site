@@ -64,8 +64,18 @@ namespace Flex.Products.dll.Service
 
 		public Result DeleteSalesCategory(int salesCategoryId)
 		{
-			 _repo.DeleteSalesCategory(salesCategoryId);
-			return Result.Success();
+
+			try
+			{
+				_repo.DeleteSalesCategory(salesCategoryId);
+				return Result.Success();
+			}
+			catch (Exception ex)
+			{
+
+				string errorMessage = "删除失败：分類使用中，無法刪除，如確定要刪除請聯繫管理員，謝謝!!" ;
+				return Result.Fail(errorMessage);
+			}
 		}
 
 		public bool ExisSalesCategoryName(string salesCatogoryName)

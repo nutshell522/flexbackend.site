@@ -86,7 +86,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.ImgPaths, htmlAttributes: new { @class = "form-label" })
-            <input type="file" name="CreateFile" id="createFile" class="form-control" multiple />
+            <input type="file" name="createfile" id="createFile" class="form-control" multiple />
             @Html.ValidationMessageFor(model => model.ImgPaths, "", new { @class = "text-danger" })
         </div>
 
@@ -125,7 +125,6 @@
         var productGroups = @Html.Raw(Json.Encode(Model.ProductGroups));
 
         $(document).ready(function () {
-
             checkImg();
 
             //新增第一組規格
@@ -143,22 +142,52 @@
             });
         });
 
+        function updateProductImg() {
+            $(".img-group").each(function (index) {
+                $(this).find("input[name^='ProductImgs']").eq(0).attr("name", "ProductImgs[" + index + "].ProductImgId");
+                $(this).find("input[name^='ProductImgs']").eq(1).attr("name", "ProductImgs[" + index + "].ImgPath");
+                $(this).find("input[name^='ProductImgs']").eq(2).attr("name", "ProductImgs[" + index + "].fk_ProductId");
+            });
+        }
+        function updateCreateImgNum() {
+            $('.createImg-group').each(function (index) {
+                var createImgInput = $(this).find('input[name^="createImgName"]');
+                createImgInput.attr("name", "createImgName[" + index + "]");
+            })
+        }
+
         function checkImg() {
             var maxSize = 2 * 1024 * 1024;
-            $('input[type="file"]').change(function (e) {
+            $('input[name="createfile"]').change(function (e) {
                 var files = e.target.files;
                 if (files && files.length > 0) {
                     $('#previewImages').empty(); // 清空預覽區域
-                    for (var i = 0; i < files.length; i++) {
+                    for (let i = 0; i < files.length; i++) {
                         if (files[i].size < maxSize) {
                             var reader = new FileReader();
                             reader.onload = function (e) {
-                                var image = $('<img>');
-                                image.attr('src', e.target.result);
-                                image.attr('alt', 'Preview');
-                                image.css('width', '150px');
-                                image.css('height', '150px');
-                                $('#previewImages').append(image);
+                                //var image = $('<img>');
+                                //image.attr('src', e.target.result);
+                                //image.attr('alt', 'Preview');
+                                //image.css('width', '150px');
+                                //image.css('height', '150px');
+                                //$('#previewImages').append(image);
+
+                                var createImgGroup = $('<div class="createImg-group m-2"></div>');
+                                var image = $('<img src="' + e.target.result + '" style="width:150px;height:150px" >');
+                                var createImgName = $('<input type="hidden" name="createImgName[' + i + ']" value="' + files[i].name + '" />')
+                                var deleteBtn = $('<input type="button" value="刪除" class="btn btn-danger ms-3 deleteCreateImgBtn" />');
+
+                                deleteBtn.click(function () {
+                                    $(this).parent().remove();
+                                    updateCreateImgNum();
+                                })
+
+                                createImgGroup.append(image);
+                                createImgGroup.append(deleteBtn);
+                                createImgGroup.append(createImgName);
+
+                                $('#previewImages').append(createImgGroup);
                             };
                             reader.readAsDataURL(files[i]);
                         }
@@ -285,98 +314,6 @@
         }
     </script>
 
-
-    @*<script>
-            var productGroups = @Html.Raw(Json.Encode(Model.ProductGroups));
-            var index = 0;
-            $(document).ready(function () {
-                checkImg();
-                // 呼叫一次產生初始的規格組
-                if (productGroups == null || productGroups.length === 0) {
-                    addSpecGroup();
-                }
-
-                var addSpecBtn = $("#addSpecBtn");
-
-                //新增規格
-                addSpecBtn.click(function () {
-                    addSpecGroup(index);
-                });
-
-            });
-
-            function checkImg() {
-                var maxSize = 2 * 1024 * 1024;
-                $('input[type="file"]').change(function (e) {
-                    var files = e.target.files;
-                    if (files && files.length > 0) {
-                        $('#previewImages').empty(); // 清空預覽區域
-                        for (var i = 0; i < files.length; i++) {
-                            if (files[i].size < maxSize) {
-                                var reader = new FileReader();
-                                reader.onload = function (e) {
-                                    var image = $('<img>');
-                                    image.attr('src', e.target.result);
-                                    image.attr('alt', 'Preview');
-                                    image.css('width', '150px');
-                                    image.css('height', '150px');
-                                    $('#previewImages').append(image);
-                                };
-                                reader.readAsDataURL(files[i]);
-                            }
-                            else {
-                                alert("照片檔案超過2MB");
-                            }
-                        }
-                    }
-                    else {
-                        $('#previewImages').empty(); // 清空預覽區域
-                    }
-                });
-            }
-
-            function addSpecGroup() {
-
-                var specContainer = $("#specContainer");
-
-                //var index = specContainer.children(".product-group").length;
-
-                console.log(index);
-
-                var newSpecGroup = $("<div class='product-group d-flex mb-3'></div>");
-
-                var colorSelect = $("#colorSelectTemplate").clone();
-                colorSelect.attr("name", "ProductGroups[" + index + "].ColorId");
-                colorSelect.attr("min", "1");
-                colorSelect.removeAttr("id");
-                newSpecGroup.append(colorSelect);
-
-                var sizeSelect = $("#sizeSelectTemplate").clone();
-                sizeSelect.attr("name", "ProductGroups[" + index + "].SizeId");
-                sizeSelect.attr("min", "1");
-                sizeSelect.removeAttr("id");
-                newSpecGroup.append(sizeSelect);
-
-                var qtyInput = $(`<input class='form-control' type='number' name='ProductGroups[${index}].Qty'  required='required' placeholder='數量' min='1'/>`);
-                newSpecGroup.append(qtyInput);
-
-                var deleteBtn = $("<button type='button' class='btn btn-danger deleteSpecBtn ms-2'>刪除</button>");
-                deleteBtn.click(function () {
-                    if (specContainer.children(".product-group").length > 1) {
-                        $(this).parent().remove();
-                        } else {
-                        alert("至少要有一組規格");
-                    }
-                });
-
-                newSpecGroup.append(deleteBtn);
-
-                specContainer.append(newSpecGroup);
-
-                return  index+1;
-            }
-
-        </script>*@
 
     @Scripts.Render("~/bundles/jqueryval")
 }

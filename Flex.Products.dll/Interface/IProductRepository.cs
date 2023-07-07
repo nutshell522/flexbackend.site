@@ -25,5 +25,7 @@ namespace Flex.Products.dll.Interface
 		List<ProductImgDto> GetImgById(string productId);
 
 		void SaveEditImg(List<ProductImgDto> dto);
+
+		void DeleteProduct(string productId);
 	}
 }

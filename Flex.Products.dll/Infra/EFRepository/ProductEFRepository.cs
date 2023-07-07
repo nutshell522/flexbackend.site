@@ -143,5 +143,14 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			}
 			_db.SaveChanges();
 		}
+
+		public void DeleteProduct(string productId)
+		{
+			var product = _db.Products.FirstOrDefault(p => p.ProductId == productId);
+			if(product==null)return;
+
+			product.LogOut = true;
+			_db.SaveChanges();
+		}
 	}
 }

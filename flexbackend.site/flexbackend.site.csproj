@@ -200,7 +200,6 @@
     <Content Include="CodeTemplates\PackageVersions5.2.7.xml" />
     <Content Include="CodeTemplates\PackageVersions5.2.8.xml" />
     <Content Include="CodeTemplates\PackageVersions5.2.9.xml" />
-    <Content Include="Content\autoTable.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -2212,6 +2211,7 @@
     <Content Include="lib\datatables\js\dataTables.jqueryui.min.js" />
     <Content Include="lib\datatables\js\dataTables.material.js" />
     <Content Include="lib\datatables\js\dataTables.material.min.js" />
+    <Content Include="lib\datatables\js\dataTables.responsive.min.js" />
     <Content Include="lib\datatables\js\dataTables.semanticui.js" />
     <Content Include="lib\datatables\js\dataTables.semanticui.min.js" />
     <Content Include="lib\datatables\js\dataTables.uikit.js" />

@@ -8,6 +8,9 @@
     <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
     
     <style>
+        table{
+            width:100%;
+        }
         thead {
             background-color: #0B284A;
             color: white;
@@ -32,7 +35,7 @@
             <th class="d-none">
                 @Html.DisplayNameFor(model => model.SalesCategoryId)
             </th>
-            <th class="th-col-6 text-center align-items-center  justify-content-center">
+            <th class="th-col-3 text-center align-items-center  justify-content-center">
                 @Html.DisplayNameFor(model => model.SalesCategoryName)
             </th>
             <th class="th-col-6 text-center align-items-center  justify-content-center">管理</th>
@@ -52,7 +55,7 @@
                 <td>
                     <div class="manage-btn-container d-flex align-items-center justify-content-center">
                         <a href="@Url.Action("EditSalesCategory", new {salesCategoryId=item.SalesCategoryId })" class="btn-edit ms-1"><i class="bi bi-pencil-square"></i></a>
-                        <a href="#" class="btn-del ms-1" onclick="deleteCategory(e,@item.SalesCategoryId)"><i class="bi bi-trash-fill"></i></a>
+                        <a href="#" class="btn-del ms-1" onclick="deleteCategory(event,@item.SalesCategoryId)"><i class="bi bi-trash-fill"></i></a>
 
                     </div>
                 </td>
@@ -63,6 +66,7 @@
 
 @section Scripts{
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.responsive.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -89,13 +93,13 @@
                             "sLast": "尾頁"
                         }
                     },
-                    "responsive": true, //響應式啟用
+                    "responsive": true
                 }
             );
         });
 
-        function deleteCategory(e, salesCategoryId) {
-            e.preventDefault();
+        function deleteCategory(event, salesCategoryId) {
+            event.preventDefault();
 
             if (confirm("確定要刪除分類嗎?")) {
                 $.ajax({
@@ -108,7 +112,7 @@
                             location.reload();
                         }
                         else {
-                            alert("刪除失敗");
+                            alert("刪除失敗" + result.message);
                         }
                     },
                     error: function () {

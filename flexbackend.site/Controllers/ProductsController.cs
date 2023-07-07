@@ -118,7 +118,7 @@ namespace flexbackend.site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductCreateVM vm)
+        public ActionResult Create(ProductCreateVM vm, List<string> createImgName, List<HttpPostedFileBase> createfile)
 		{
 			PrepareProductSubCategoryDataSource(vm.fk_ProductSubCategoryId);
 			PrepareColorDataSource(null);
@@ -126,8 +126,7 @@ namespace flexbackend.site.Controllers
 			if (ModelState.IsValid == false) return View(vm);
 
 			#region 照片上傳
-			var files = Request.Files;
-            if (files == null || files.Count == 0)
+            if (createfile == null || createfile.Count == 0)
             {
                 ModelState.AddModelError("ImgPaths", "請選擇檔案");
                 return View(vm);
@@ -138,17 +137,17 @@ namespace flexbackend.site.Controllers
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
             // 將CreateFile存檔，並取得最後存檔的名稱，副檔名可能不合規格，所以在做一次偵錯
-            List<string> saveFileName = SaveFileName(path,files);
-            if (saveFileName == null || saveFileName.Count == 0)
+            var imgs = SaveFileName(path, createImgName, createfile,null);
+            if (imgs.Count == 0 || imgs==null)
             {
                 ModelState.AddModelError("ImgPaths", "請選擇檔案");
                 return View(vm);
             }
 
 			// 將雜湊後的檔名newFileName加到VM的ImgPaths
-			foreach (var fileName in saveFileName)
+			foreach (var fileName in imgs)
             {
-                vm.ImgPaths.Add(fileName);
+                vm.ImgPaths.Add(fileName.ImgPath);
             }
 			#endregion
 
@@ -234,7 +233,7 @@ namespace flexbackend.site.Controllers
 			var service = new ProductService(_repo);
 
 			var path = Server.MapPath("~/Public/Img");
-            List<ProductImgDto> editImg = EditProductImg(path, createImgName, createfile, vm.ProductId);
+            List<ProductImgDto> editImg = SaveFileName(path, createImgName, createfile, vm.ProductId);
 
 			if (vm.ProductImgs==null && createImgName == null)
             {
@@ -263,30 +262,40 @@ namespace flexbackend.site.Controllers
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(string ProductId)
-        {
-            if (ProductId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(ProductId);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
+        //public ActionResult Delete(string ProductId)
+        //{
+        //    if (ProductId == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Product product = db.Products.Find(ProductId);
+        //    if (product == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(product);
+        //}
 
         // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string ProductId)
+        [HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Delete(string productId)
         {
-            Product product = db.Products.Find(ProductId);
-            db.Products.Remove(product);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if(productId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var service = new ProductService(_repo);
+
+            Result result = service.DeleteProduct(productId);
+
+            if (result.IsSuccess)
+            {
+                return Json(new { success = true });
+            }
+            else
+            {
+				return Json(new { success = false,message=result.ErroeMessage });
+			}
         }
+
          protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -327,38 +336,38 @@ namespace flexbackend.site.Controllers
 		/// <param name="path">照片存放路徑</param>
 		/// <param name="files">照片</param>
 		/// <returns></returns>
-		private List<string> SaveFileName(string path, HttpFileCollectionBase files)
-        {
-            //沒上傳或是空值，就不處理;
-            if (files == null || files.Count == 0) return new List<string>();
+		//private List<string> SaveFileName(string path, HttpFileCollectionBase files)
+  //      {
+  //          //沒上傳或是空值，就不處理;
+  //          if (files == null || files.Count == 0) return new List<string>();
 
-            List<string> result = new List<string>();
+  //          List<string> result = new List<string>();
 
-            //允許的副檔名
-            var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
-            for (int i = 0; i < files.Count; i++)
-            {
-                var file = files[i];
+  //          //允許的副檔名
+  //          var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
+  //          for (int i = 0; i < files.Count; i++)
+  //          {
+  //              var file = files[i];
 
-                if (file == null || file.ContentLength == 0 || file.ContentLength>2 * 1024 * 1024) continue;
+  //              if (file == null || file.ContentLength == 0 || file.ContentLength>2 * 1024 * 1024) continue;
 
-                //取得副檔名
-                string ext = System.IO.Path.GetExtension(file.FileName);
+  //              //取得副檔名
+  //              string ext = System.IO.Path.GetExtension(file.FileName);
 
-                //檢查副檔名是否在允許範圍，不允許就不處理
-                if (!allowExts.Contains(ext.ToLower())) continue;
+  //              //檢查副檔名是否在允許範圍，不允許就不處理
+  //              if (!allowExts.Contains(ext.ToLower())) continue;
 
-                //生成一個新的檔名
-                string newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
+  //              //生成一個新的檔名
+  //              string newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
 
-                //儲存檔案
-                file.SaveAs(System.IO.Path.Combine(path, newFileName));
+  //              //儲存檔案
+  //              file.SaveAs(System.IO.Path.Combine(path, newFileName));
 
-                //將檔案名稱加入結果清單
-                result.Add(newFileName);
-            }
-            return result;
-        }
+  //              //將檔案名稱加入結果清單
+  //              result.Add(newFileName);
+  //          }
+  //          return result;
+  //      }
 
 		/// <summary>
 		/// 相片編輯
@@ -368,7 +377,7 @@ namespace flexbackend.site.Controllers
 		/// <param name="createfile">file回傳檔案</param>
 		/// <param name="productId">產品Id</param>
 		/// <returns></returns>
-		private List<ProductImgDto> EditProductImg(string path, List<string> createImgName, List<HttpPostedFileBase> createfile, string productId)
+		private List<ProductImgDto> SaveFileName(string path, List<string> createImgName, List<HttpPostedFileBase> createfile, string productId)
 		{
 			if (createImgName == null || createImgName.Count <= 0) return new List<ProductImgDto>();
 
