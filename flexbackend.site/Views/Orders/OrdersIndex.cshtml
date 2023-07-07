@@ -183,13 +183,13 @@
     <script>
             // 在頁面載入完成時觸發請求
 
-            $('#indexorders').DataTable(
+           $('#indexProduct').DataTable(
                 {
                     "searching": false,
                     "paging": true, // 如果要顯示分頁器，設為 true
                     "pageLength": 5, // 設定預設每頁顯示筆數
                     "lengthMenu": [5, 10, 15, 20, "All"],
-                    oLanguage: {    // 中文化
+                    oLanguage: {    // 中文化  
                         "sLengthMenu": "每頁顯示 _MENU_筆",
                         "sZeroRecords": "沒有找到符合條件的資料",
                         "sProcessing": "載入中...",
@@ -212,12 +212,8 @@
                     "order": [[1, 'asc']]
                 }
             );
-        table.on('draw.dt', function () {
-            $('.status-switch').off('change'); // 移除之前的事件处理程序
-            $('.status-switch').on('change', function () {
-                // AJAX 请求代码
-            });
-        });
+
+      
 
 
 
@@ -288,7 +284,7 @@
                 type: 'POST',
                 data: { orderId: orderId, isChecked: isChecked },
                 success: function (result) {
-                    
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
 
