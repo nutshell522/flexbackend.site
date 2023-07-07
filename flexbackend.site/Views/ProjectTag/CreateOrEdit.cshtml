@@ -32,7 +32,6 @@
                 }
 
         .pj-tag {
-            font-size: 12px;
             padding: 1px 4px 1px 5px;
             background-color: #5C83E2;
             color: #deefff;
@@ -42,10 +41,6 @@
                 background-color: #589a69;
                 color: #bfffde;
             }
-
-        .pt-table {
-            font-size: 12px;
-        }
 
             .pt-table thead {
                 background-color: #0B284A;
@@ -65,7 +60,7 @@
 
 
 
-<form method="get" action="@Url.Action("CreateOrEdit", "ProjectTag")">
+<form id="formIndex" method="get" action="@Url.Action("CreateOrEdit", "ProjectTag")">
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -144,7 +139,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script>
-        $(function () {
+        $(document).ready(function () {
             const TagNameInput = $("#ProjectTagName");
             const TagName = $("#tag-name");
             const $dropMenu = $("#drop-menu");
@@ -461,10 +456,15 @@
                     });
                 }
             }
+            $(document).on("click", '.submit', function () {
+                $("#ProjectTagId").val($(this).data("id"));
+                $("#formIndex").submit();
+            })
+
             function tagsNameToHtmlListString(item) {
                 const htmlString = `
                             <li class="w-100">
-                                <a class="w-100 fs-6 py-2 text-dark d-block px-1" href="/ProjectTag/CreateOrEdit?ProjectTagId=${item.ProjectTagId}">${item.ProjectTagName}</a>
+                                <a class="w-100 fs-6 py-2 text-dark d-block px-1 submit" href="javascript:;" data-id="${item.ProjectTagId}">${item.ProjectTagName}</a>
                             </li>
                         `;
                 return htmlString;
