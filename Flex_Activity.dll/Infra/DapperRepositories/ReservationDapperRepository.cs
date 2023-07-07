@@ -9,6 +9,7 @@ using System.Data;
 using Flex_Activity.dll.Interface;
 using Flex_Activity.dll.Models.Dto;
 using System.Data.SqlClient;
+using EFModels.EFModels;
 
 namespace Flex_Activity.dll.Infra.DapperRepositories
 {
@@ -62,6 +63,20 @@ Where fk_ReservationSpeakerId = @speakerId
 			}
 		}
 
-		
+		public IEnumerable<OneToOneReservationDetailDapperDto> GetOneDetail(int speakerId, int MemberId)
+		{
+			string sql = @"SELECT MemberId, Name, Mobile, ReservationStartTime, ReservationEndTime, 
+BranchName, ReservationCreatedDate, ReservationStatusDescription, fk_ReservationSpeakerId, fk_ReservationStatusId
+FROM OneToOneReservations
+JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
+JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId
+JOIN ReservationStatuses ON OneToOneReservations.fk_ReservationStatusId = ReservationStatuses.ReservationId
+WHERE fk_ReservationSpeakerId = @speakerId AND MemberId = @MemberId";
+
+			using(var conn = new SqlConnection(_connStr))
+			{
+				return conn.Query<OneToOneReservationDetailDapperDto>(sql, new {speakerId = speakerId, MemberId = MemberId });
+			}
+		}
 	}
 }

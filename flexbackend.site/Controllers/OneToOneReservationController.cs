@@ -46,6 +46,21 @@ namespace flexbackend.site.Controllers
 
 			return RedirectToAction("ReservationList",new { id = SpeakerId });
         }
-    }
+
+        public ActionResult Details(int speakerId, int MemberId)
+        {
+            IReservationRepository repo = new ReservationDapperRepository();
+            OneToOneReservationServices service = new OneToOneReservationServices(repo);
+
+            var detailDto = service.GetOneDetail(speakerId, MemberId);
+			var vm = detailDto.Select(d => d.ToDetailVM()).ToList();
+
+
+			return View(vm);
+            
+
+		}
+
+	}
 }
 

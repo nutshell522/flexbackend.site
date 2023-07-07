@@ -5,8 +5,10 @@ using Flex_Activity.dll.Models.ViewModels.DapperVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 
 namespace Flex_Activity.dll.Models.Exts
 {
@@ -37,6 +39,41 @@ namespace Flex_Activity.dll.Models.Exts
 				SpeakerId =dto.SpeakerId
 
 			};
+		}
+
+		public static OneToOneReservationDetailDapperDto ToDetailDto (this OneToOneReservation entity)
+		{
+			return new OneToOneReservationDetailDapperDto
+			{
+				MemberId = entity.Member.MemberId,
+				Name = entity.Member.Name,
+				Mobile = entity.Member.Mobile,
+				ReservationStartTime = entity.ReservationStartTime,
+				ReservationEndTime = entity.ReservationEndTime,
+				BranchName = entity.Branch.BranchName,
+				ReservationCreatedDate = entity.ReservationCreatedDate,
+				ReservationStatusDescription = entity.ReservationStatus.ReservationStatusDescription,
+				fk_ReservationSpeakerId = entity.fk_ReservationSpeakerId,
+				fk_ReservationStatusId = entity.fk_ReservationStatusId
+			};
+	}
+
+		public static OneToOneReservationDetailDapperVM ToDetailVM (this OneToOneReservationDetailDapperDto dto)
+		{
+			return new OneToOneReservationDetailDapperVM
+			{
+				MemberId = dto.MemberId,
+				Name = dto.Name,
+				Mobile = dto.Mobile,
+				ReservationStartTime = dto.ReservationStartTime,
+				ReservationEndTime = dto.ReservationEndTime,
+				BranchName = dto.BranchName,
+				ReservationCreatedDate = dto.ReservationCreatedDate,
+				ReservationStatusDescription = dto.ReservationStatusDescription,
+				fk_ReservationSpeakerId = dto.fk_ReservationSpeakerId,
+				fk_ReservationStatusId = dto.fk_ReservationStatusId
+			};
+
 		}
 	}
 }

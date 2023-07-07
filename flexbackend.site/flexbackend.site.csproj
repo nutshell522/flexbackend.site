@@ -2339,9 +2339,11 @@
     <Content Include="Views\Speaker\Edit.cshtml" />
     <Content Include="Views\Speaker\Details.cshtml" />
     <Content Include="Views\Speaker\Delete.cshtml" />
-    <Content Include="Views\OneToOneReservation\Index.cshtml" />
     <Content Include="Views\OneToOneReservation\ReservationList.cshtml" />
     <Content Include="Views\OneToOneReservation\Delete.cshtml" />
+    <Content Include="Views\OneToOneReservation\Index.cshtml" />
+    <Content Include="Views\OneToOneReservation\Detail.cshtml" />
+    <Content Include="Views\OneToOneReservation\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

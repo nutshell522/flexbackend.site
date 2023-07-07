@@ -150,7 +150,7 @@
 	【一對一預約 講師預約紀錄 ReservationList 完成】
 
 
-[ * ]一對一預約 刪除 (未完成的可以刪除)
+[ * ]一對一預約 刪除 (未完成的可以刪除) 【Dapper】
 	[ V ]IRepository
 	[ V ]DapperRepository
 	[ V ]Services
@@ -168,7 +168,35 @@
 
 7/6
 [   ]待修正 Speaker Create、Edit 的電話不能重複，如果輸入重複電話號碼，會死在html
-[ v ]待修正 Activity 已上架的活動只能編輯敘述
-[ v ]待修正 Activity 未上架的活動 編輯時間的時候 用萬年曆dateTimePicker和datePicker會出 大 事!!!
 [   ]待修正 Activity Create、Edit的邏輯驗證，錯誤訊息沒辦法一次一起出來
 [   ]待修正 Activity Create、 Edit 照片的驗證，錯誤訊息不會出現
+
+[ v ]待修正 Activity 已上架的活動只能編輯敘述
+[ v ]待修正 Activity 未上架的活動 編輯時間的時候 用萬年曆dateTimePicker和datePicker會出 大 事!!!
+
+
+
+7/7 【OneToOneReservation Detail】【Dapper】
+[ V ]OneToOneReservationDetailDapper Dto
+[ V ]OneToOneReservationDetailDapper VM
+[ V ]OneToOneReservationDetail擴充方法
+[ V ]OneToOneReservationDetail SQL語法
+[ V ] IReservationRepository
+[ V ] DapperReservationRepository
+[ V ]去上一頁的html把要傳入的參數打開
+[ V ] Services
+[ V ] Controller
+[ V ]改html
+
+7/7-2 【OneToOneReservation Edit】 【Dapper】
+[  ]OneToOneReservationEditlDapper Dto
+[  ]OneToOneReservationEditlDapper VM
+[  ]OneToOneReservationEdit擴充方法
+[  ]OneToOneReservationEdit SQL語法
+[  ] IReservationRepository
+[  ] DapperReservationRepository
+[  ]去上一頁的html把要傳入的參數打開
+[  ] Services
+[  ] Controller
+[  ]改html
+

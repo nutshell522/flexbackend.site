@@ -37,6 +37,13 @@ namespace Flex_Activity.dll.Services
             return Result.Success();
         }
 
+		public List<OneToOneReservationDetailDapperDto> GetOneDetail(int speakerId, int MemberId)
+        {
+            var detailDto = _repo.GetOneDetail(speakerId, MemberId);
+          
+            return detailDto.ToList();
+        }
+
 
 	}
 }
