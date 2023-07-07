@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\CustomizedShoesPoesController.cs" />
+    <Compile Include="Controllers\Customized_materialsController.cs" />
     <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
     <Compile Include="Controllers\ShoesCategoriesController.cs" />
+    <Compile Include="Controllers\ShoesChoosController.cs" />
     <Compile Include="Controllers\ShoesColorCategoriesController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\SpeakerController.cs" />
@@ -2353,6 +2355,16 @@
     <Content Include="Views\ShoesColorCategories\Edit.cshtml" />
     <Content Include="Views\ShoesColorCategories\Index.cshtml" />
     <Content Include="Views\ShoesCategories\Details.cshtml" />
+    <Content Include="Views\Customized_materials\Create.cshtml" />
+    <Content Include="Views\Customized_materials\Delete.cshtml" />
+    <Content Include="Views\Customized_materials\Details.cshtml" />
+    <Content Include="Views\Customized_materials\Edit.cshtml" />
+    <Content Include="Views\Customized_materials\Index.cshtml" />
+    <Content Include="Views\ShoesChoos\Create.cshtml" />
+    <Content Include="Views\ShoesChoos\Delete.cshtml" />
+    <Content Include="Views\ShoesChoos\Details.cshtml" />
+    <Content Include="Views\ShoesChoos\Edit.cshtml" />
+    <Content Include="Views\ShoesChoos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
