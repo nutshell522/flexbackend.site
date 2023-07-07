@@ -34,10 +34,10 @@
         </div>
         <select class="form-select" name="statusFilter">
             <option value="">請選擇</option>
-            @foreach (var status in TempData["orderStatuses"] as Dictionary<int, string>)
+            @foreach (var status in ViewData["orderStatuses"] as Dictionary<int, string>)
             {
                 <option value="@status.Key">@status.Value</option>
-            }
+            }s
         </select>
         <div class="input-group"> <button class="btn btn-primary" type="submit">搜尋</button></div>
        
@@ -293,14 +293,12 @@
                            var checkbox_value = document.getElementById("checkbox").isChecked;
                            var names = document.getElementsByName("test4");
                            if (checkbox_value == true) {
-                               for (let i = 0; i < names.length; i++) {
-                                   names[i].style.display = "none";
-                               }
+                               $('#test4').attr("disabled",true);
+                               $("#test4").css("pointer-events","none");
                            }
                            else {
-                               for (let i = 0; i < names.length; i++) {
-                                   names[i].style.display = "block";
-                               }
+                               $('#test4').attr("disabled",false);
+                               $("#test4").css("pointer-events","auto");
                                // 处理成功后的操作
                            }
                        }
