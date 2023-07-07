@@ -42,9 +42,9 @@ namespace EFModels.EFModels
 
         public int? fk_ShoesColorId { get; set; }
 
-        public DateTime? DataCreateTime { get; set; }
+        public DateTime DataCreateTime { get; set; }
 
-        public DateTime? DataEditTime { get; set; }
+        public DateTime DataEditTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedOrder> CustomizedOrders { get; set; }

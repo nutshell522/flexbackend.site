@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Customized_Shoes.dll.Models.Exts;
 using Customized_Shoes.dll.Models.ViewModels;
 using EFModels.EFModels;
 
@@ -18,22 +19,24 @@ namespace flexbackend.site.Controllers
 		// GET: Suppliers
 		public ActionResult Index(SupplierCriteria criteria)
 		{
+			criteria = criteria ?? new SupplierCriteria();
+
 			ViewBag.Criteria = criteria;
 
-			var query = db.Suppliers;
+			IEnumerable<Supplier> query = db.Suppliers;
 
 			#region where
 			if (string.IsNullOrEmpty(criteria.CompanyName) == false)
 			{
-				query = (DbSet<Supplier>)query.Where(p => p.SupplierCompanyName.Contains(criteria.CompanyName));
+				query = query.Where(p => p.SupplierCompanyName.Contains(criteria.CompanyName));
 			}
 			if (criteria.Id != null && criteria.Id.Value > 0)
 			{
-				query = (DbSet<Supplier>)query.Where(p => p.SupplierId == criteria.Id.Value);
+				query = query.Where(p => p.SupplierId == criteria.Id.Value);
 			}
 			if (string.IsNullOrEmpty(criteria.Supply_Material) == false)
 			{
-				query = (DbSet<Supplier>)query.Where(p => p.Supply_Material.Contains(criteria.Supply_Material));
+				query = query.Where(p => p.Supply_Material.Contains(criteria.Supply_Material));
 			}
 
 			#endregion
@@ -102,8 +105,9 @@ namespace flexbackend.site.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Supplier supplier = db.Suppliers.FirstOrDefault(x=>x.SupplierId==id);
-			if(supplier==null)return HttpNotFound();
+			Supplier supplier = db.Suppliers.FirstOrDefault(x => x.SupplierId == id);
+			if(supplier == null)return HttpNotFound();
+			
 			SupplierEditVM vm = new SupplierEditVM()
 			{
 				SupplierId = supplier.SupplierId,

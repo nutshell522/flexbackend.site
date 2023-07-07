@@ -10,17 +10,17 @@ namespace Customized_Shoes.dll.Models.ViewModels
 {
 	public class SuppliersIndexVM
 	{
-		[Display(Name = "公司加入編號")]
+		[Display(Name = "公司編號")]
 		public int SupplierId { get; set; }
 
 		[Display(Name = "公司名稱")]
 		[StringLength(50)]
 		public string SupplierCompanyName { get; set; }
 
-		[Display(Name = "是否有合格證明")]
+		[Display(Name = "合格證明")]
 		public bool? HasCertificate { get; set; }
 
-		[Display(Name = "公司提供產品")]
+		[Display(Name = "提供產品")]
 		[StringLength(50)]
 		public string Supply_Material { get; set; }
 
@@ -49,7 +49,7 @@ namespace Customized_Shoes.dll.Models.ViewModels
 		[Display(Name = "統一編號")]
 		public int? SupplierCompanyNumber { get; set; }
 
-		[Display(Name = "開始合作時間")]
+		[Display(Name = "合作開始時間")]
 		public DateTime? SupplierStartDate { get; set; }
 	}
 }

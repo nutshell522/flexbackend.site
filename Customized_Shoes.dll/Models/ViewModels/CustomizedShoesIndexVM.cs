@@ -43,11 +43,17 @@ namespace Customized_Shoes.dll.Models.ViewModels
 			}
 		}
 
+		//[Display(Name = "商品分類")]
+		//public int? fk_ShoesCategoryId { get; set; }
+
 		[Display(Name = "商品分類")]
-		public int? fk_ShoesCategoryId { get; set; }
+		public string ShoesCategory { get; set; }
+
+		//[Display(Name = "主顏色分類")]
+		//public int? fk_ShoesColorId { get; set; }
 
 		[Display(Name = "主顏色分類")]
-		public int? fk_ShoesColorId { get; set; }
+		public string ShoesColoeCategory { get; set; }
 
 
 	}

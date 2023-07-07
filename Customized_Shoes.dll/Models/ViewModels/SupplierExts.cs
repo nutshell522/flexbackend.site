@@ -23,7 +23,6 @@ namespace Customized_Shoes.dll.Models.ViewModels
 				SupplierCompanyAddress = entity.SupplierCompanyAddress,
 				SupplierCompanyNumber = entity.SupplierCompanyNumber,
 				SupplierStartDate = entity.SupplierStartDate,
-
 			};
 
 		}

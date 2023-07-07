@@ -12,59 +12,60 @@ namespace EFModels.EFModels
         {
         }
 
-        public virtual DbSet<Activity> Activities { get; set; }
-        public virtual DbSet<ActivityCategory> ActivityCategories { get; set; }
-        public virtual DbSet<ActivityStatus> ActivityStatuses { get; set; }
-        public virtual DbSet<AlternateAddress> AlternateAddresses { get; set; }
-        public virtual DbSet<BlackList> BlackLists { get; set; }
-        public virtual DbSet<Branch> Branches { get; set; }
-        public virtual DbSet<CartItem> CartItems { get; set; }
-        public virtual DbSet<ColorCategory> ColorCategories { get; set; }
-        public virtual DbSet<CouponCategory> CouponCategories { get; set; }
-        public virtual DbSet<Coupon> Coupons { get; set; }
-        public virtual DbSet<CouponSending> CouponSendings { get; set; }
-        public virtual DbSet<Customized_materials> Customized_materials { get; set; }
-        public virtual DbSet<CustomizedOrder> CustomizedOrders { get; set; }
-        public virtual DbSet<CustomizedShoesPo> CustomizedShoesPoes { get; set; }
-        public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<Discount> Discounts { get; set; }
-        public virtual DbSet<JobTitle> JobTitles { get; set; }
-        public virtual DbSet<logistics_companies> logistics_companies { get; set; }
-        public virtual DbSet<MemberPoint> MemberPoints { get; set; }
-        public virtual DbSet<Member> Members { get; set; }
-        public virtual DbSet<MembershipLevel> MembershipLevels { get; set; }
-        public virtual DbSet<OneToOneReservation> OneToOneReservations { get; set; }
-        public virtual DbSet<order_statuses> order_statuses { get; set; }
-        public virtual DbSet<orderItem> orderItems { get; set; }
-        public virtual DbSet<order> orders { get; set; }
-        public virtual DbSet<pay_methods> pay_methods { get; set; }
-        public virtual DbSet<pay_statuses> pay_statuses { get; set; }
-        public virtual DbSet<PointHistory> PointHistories { get; set; }
-        public virtual DbSet<PointManage> PointManages { get; set; }
-        public virtual DbSet<PointTradeIn> PointTradeIns { get; set; }
-        public virtual DbSet<Privilege> Privileges { get; set; }
-        public virtual DbSet<ProductCategory> ProductCategories { get; set; }
-        public virtual DbSet<ProductGroup> ProductGroups { get; set; }
-        public virtual DbSet<ProductImg> ProductImgs { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<ProductSubCategory> ProductSubCategories { get; set; }
-        public virtual DbSet<ProjectTagItem> ProjectTagItems { get; set; }
-        public virtual DbSet<ProjectTag> ProjectTags { get; set; }
-        public virtual DbSet<ReservationStatus> ReservationStatuses { get; set; }
-        public virtual DbSet<SalesCategory> SalesCategories { get; set; }
-        public virtual DbSet<ShoesCategory> ShoesCategories { get; set; }
-        public virtual DbSet<ShoesChoos> ShoesChooses { get; set; }
-        public virtual DbSet<ShoesColorCategory> ShoesColorCategories { get; set; }
-        public virtual DbSet<ShoesGroup> ShoesGroups { get; set; }
-        public virtual DbSet<ShoesPicture> ShoesPictures { get; set; }
-        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public virtual DbSet<SizeCategory> SizeCategories { get; set; }
-        public virtual DbSet<SpeakerField> SpeakerFields { get; set; }
-        public virtual DbSet<Speaker> Speakers { get; set; }
-        public virtual DbSet<StaffPermission> StaffPermissions { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
-        public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<Type> Types { get; set; }
+		public virtual DbSet<Activity> Activities { get; set; }
+		public virtual DbSet<ActivityCategory> ActivityCategories { get; set; }
+		public virtual DbSet<ActivityStatus> ActivityStatuses { get; set; }
+		public virtual DbSet<AlternateAddress> AlternateAddresses { get; set; }
+		public virtual DbSet<BlackList> BlackLists { get; set; }
+		public virtual DbSet<Branch> Branches { get; set; }
+		public virtual DbSet<CartItem> CartItems { get; set; }
+		public virtual DbSet<clos> closes { get; set; }
+		public virtual DbSet<ColorCategory> ColorCategories { get; set; }
+		public virtual DbSet<CouponCategory> CouponCategories { get; set; }
+		public virtual DbSet<Coupon> Coupons { get; set; }
+		public virtual DbSet<CouponSending> CouponSendings { get; set; }
+		public virtual DbSet<Customized_materials> Customized_materials { get; set; }
+		public virtual DbSet<CustomizedOrder> CustomizedOrders { get; set; }
+		public virtual DbSet<CustomizedShoesPo> CustomizedShoesPoes { get; set; }
+		public virtual DbSet<Department> Departments { get; set; }
+		public virtual DbSet<Discount> Discounts { get; set; }
+		public virtual DbSet<JobTitle> JobTitles { get; set; }
+		public virtual DbSet<logistics_companies> logistics_companies { get; set; }
+		public virtual DbSet<MemberPoint> MemberPoints { get; set; }
+		public virtual DbSet<Member> Members { get; set; }
+		public virtual DbSet<MembershipLevel> MembershipLevels { get; set; }
+		public virtual DbSet<OneToOneReservation> OneToOneReservations { get; set; }
+		public virtual DbSet<order_statuses> order_statuses { get; set; }
+		public virtual DbSet<orderItem> orderItems { get; set; }
+		public virtual DbSet<order> orders { get; set; }
+		public virtual DbSet<pay_methods> pay_methods { get; set; }
+		public virtual DbSet<pay_statuses> pay_statuses { get; set; }
+		public virtual DbSet<PointHistory> PointHistories { get; set; }
+		public virtual DbSet<PointManage> PointManages { get; set; }
+		public virtual DbSet<PointTradeIn> PointTradeIns { get; set; }
+		public virtual DbSet<Privilege> Privileges { get; set; }
+		public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+		public virtual DbSet<ProductGroup> ProductGroups { get; set; }
+		public virtual DbSet<ProductImg> ProductImgs { get; set; }
+		public virtual DbSet<Product> Products { get; set; }
+		public virtual DbSet<ProductSubCategory> ProductSubCategories { get; set; }
+		public virtual DbSet<ProjectTagItem> ProjectTagItems { get; set; }
+		public virtual DbSet<ProjectTag> ProjectTags { get; set; }
+		public virtual DbSet<ReservationStatus> ReservationStatuses { get; set; }
+		public virtual DbSet<SalesCategory> SalesCategories { get; set; }
+		public virtual DbSet<ShoesCategory> ShoesCategories { get; set; }
+		public virtual DbSet<ShoesChoos> ShoesChooses { get; set; }
+		public virtual DbSet<ShoesColorCategory> ShoesColorCategories { get; set; }
+		public virtual DbSet<ShoesGroup> ShoesGroups { get; set; }
+		public virtual DbSet<ShoesPicture> ShoesPictures { get; set; }
+		public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+		public virtual DbSet<SizeCategory> SizeCategories { get; set; }
+		public virtual DbSet<SpeakerField> SpeakerFields { get; set; }
+		public virtual DbSet<Speaker> Speakers { get; set; }
+		public virtual DbSet<StaffPermission> StaffPermissions { get; set; }
+		public virtual DbSet<Staff> Staffs { get; set; }
+		public virtual DbSet<Supplier> Suppliers { get; set; }
+		public virtual DbSet<Type> Types { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -138,15 +139,9 @@ namespace EFModels.EFModels
                 .WithOptional(e => e.Customized_materials4)
                 .HasForeignKey(e => e.Customized_Toe);
 
-            modelBuilder.Entity<Customized_materials>()
-                .HasMany(e => e.ShoesGroups)
-                .WithRequired(e => e.Customized_materials)
-                .HasForeignKey(e => e.fk_MaterialId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<CustomizedOrder>()
-                .Property(e => e.Customized_number)
-                .IsUnicode(false);
+			modelBuilder.Entity<CustomizedOrder>()
+				.Property(e => e.Customized_number)
+				.IsUnicode(false);
 
             modelBuilder.Entity<CustomizedOrder>()
                 .HasMany(e => e.ShoesPictures)
@@ -163,17 +158,11 @@ namespace EFModels.EFModels
                 .WithOptional(e => e.CustomizedShoesPo)
                 .HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
 
-            modelBuilder.Entity<CustomizedShoesPo>()
-                .HasMany(e => e.ShoesGroups)
-                .WithRequired(e => e.CustomizedShoesPo)
-                .HasForeignKey(e => e.fk_ShoesMainId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Department>()
-                .HasMany(e => e.Staffs)
-                .WithRequired(e => e.Department)
-                .HasForeignKey(e => e.fk_DepartmentId)
-                .WillCascadeOnDelete(false);
+			modelBuilder.Entity<Department>()
+				.HasMany(e => e.Staffs)
+				.WithRequired(e => e.Department)
+				.HasForeignKey(e => e.fk_DepartmentId)
+				.WillCascadeOnDelete(false);
 
             modelBuilder.Entity<JobTitle>()
                 .HasMany(e => e.Staffs)
@@ -416,26 +405,19 @@ namespace EFModels.EFModels
                 .WithOptional(e => e.ShoesCategory)
                 .HasForeignKey(e => e.fk_ShoesCategoryId);
 
-            modelBuilder.Entity<ShoesChoos>()
-                .HasMany(e => e.ShoesGroups)
-                .WithRequired(e => e.ShoesChoos)
-                .HasForeignKey(e => e.fk_OptionId)
-                .WillCascadeOnDelete(false);
+			modelBuilder.Entity<ShoesColorCategory>()
+				.HasMany(e => e.Customized_materials)
+				.WithOptional(e => e.ShoesColorCategory)
+				.HasForeignKey(e => e.material_ColorId);
 
             modelBuilder.Entity<ShoesColorCategory>()
                 .HasMany(e => e.CustomizedShoesPoes)
                 .WithOptional(e => e.ShoesColorCategory)
                 .HasForeignKey(e => e.fk_ShoesColorId);
 
-            modelBuilder.Entity<ShoesColorCategory>()
-                .HasMany(e => e.ShoesGroups)
-                .WithRequired(e => e.ShoesColorCategory)
-                .HasForeignKey(e => e.fk_ShoesColorId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ShoppingCart>()
-                .HasOptional(e => e.CartItem)
-                .WithRequired(e => e.ShoppingCart);
+			modelBuilder.Entity<ShoppingCart>()
+				.HasOptional(e => e.CartItem)
+				.WithRequired(e => e.ShoppingCart);
 
             modelBuilder.Entity<SizeCategory>()
                 .HasMany(e => e.ProductGroups)

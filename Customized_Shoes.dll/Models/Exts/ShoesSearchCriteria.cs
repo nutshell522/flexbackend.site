@@ -9,7 +9,7 @@ namespace Customized_Shoes.dll.Models.Exts
 	public class ShoesSearchCriteria
 	{
 		public string Name { get; set; }
-		public int? ShoesUnitPrice { get; set; }
+		public int? ShoesCategoryId { get; set; }
 		public string Status { get; set; }
 		public List<string> StatusOption { get; set; }
 		public ShoesSearchCriteria()
