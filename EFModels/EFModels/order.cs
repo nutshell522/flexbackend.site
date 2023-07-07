@@ -55,12 +55,11 @@ namespace EFModels.EFModels
         [StringLength(50)]
         public string order_description { get; set; }
 
+        public int total_price { get; set; }
+
         public bool? close { get; set; }
 
-        [Column("close_time")]
         public DateTime? close_time { get; set; }
-
-        public int total_price { get; set; }
 
         public virtual logistics_companies logistics_companies { get; set; }
 
