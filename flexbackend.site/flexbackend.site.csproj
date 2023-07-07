@@ -203,8 +203,10 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\OneToOneReservationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -220,6 +222,8 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
 >>>>>>> Ying06
+=======
+>>>>>>> Lance03
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\SpeakerController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
@@ -2405,6 +2409,9 @@
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\View.cshtml" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Lance03
     <Content Include="Views\Members\MembersList.cshtml" />
 =======
 >>>>>>> Ying06
@@ -2419,6 +2426,7 @@
     <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2479,6 +2487,12 @@
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Member\Edit.cshtml" />
 >>>>>>> Ying06
+=======
+    <Content Include="Views\Products\EditImg.cshtml" />
+    <Content Include="Views\ProductCategories\SalesCategoryIndex.cshtml" />
+    <Content Include="Views\ProductCategories\CreateSalesCategory.cshtml" />
+    <Content Include="Views\ProductCategories\EditSalesCategory.cshtml" />
+>>>>>>> Lance03
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

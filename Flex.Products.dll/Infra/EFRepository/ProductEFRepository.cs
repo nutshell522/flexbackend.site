@@ -25,7 +25,6 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 		public void CreateProduct(ProductDto dto)
 		{
-			//將ProductDto依序轉換成Products,group,img存入database
 			var product = dto.ToCreateEntity();
 			 _db.Products.Add(product);
 
@@ -90,25 +89,59 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			return product.ToEditDto();
 		}
 
+		public List<ProductImgDto> GetImgById(string productId)
+		{
+			var product = _db.ProductImgs.Where(p => p.fk_ProductId == productId).OrderBy(p=>p.ProductImgId).ToList();
+			return product.ToEditImgDto();
+		}
+
 		public void EditProduct(ProductDto dto)
 		{
 			var product = dto.DtoToEditEntity();
 			product.EditTime= DateTime.Now;
-			//_db.Products.Update(product);
-			_db.Entry(product).State = EntityState.Modified;
+
+			var existingGroups = _db.ProductGroups.Where(p => p.fk_ProductId == product.ProductId).ToList();
+
+			//如果資料庫先清空規格
+			foreach (var group in existingGroups)
+			{
+				_db.ProductGroups.Remove(group);
+			}
 
 			foreach (var group in product.ProductGroups)
 			{
-				if (group.ProductGroupId > 0)
+				// 新增新的 ProductGroup
+				_db.ProductGroups.Add(group);
+			}
+
+			_db.Entry(product).State = EntityState.Modified;
+
+			_db.SaveChanges(); 
+		}
+
+		public void SaveEditImg(List<ProductImgDto> dto)
+		{
+			if (dto == null || dto.Count == 0) return;
+			var productId = dto[0].fk_ProductId;
+			var dbImgs = _db.ProductImgs.Where(i => i.fk_ProductId == productId).ToList();
+			
+			foreach(var img in dbImgs)
+			{
+				if(!dto.Any(i=>i.ProductImgId== img.ProductImgId))
 				{
-					_db.Entry(group).State = EntityState.Modified;
-				}
-				else
-				{
-					_db.Entry(group).State = EntityState.Added;
+					_db.ProductImgs.Remove(img);
 				}
 			}
-			_db.SaveChanges(); 
+
+			foreach (var editImg in dto)
+			{
+				//var dbImg = _db.ProductImgs.FirstOrDefault(i => i.ProductImgId == editImg.ProductImgId);
+				if (editImg.ProductImgId == 0)
+				{
+					_db.ProductImgs.Add(editImg.DtoToEditImgEntity());
+				}
+			}
+			_db.SaveChanges();
 		}
 	}
 }
