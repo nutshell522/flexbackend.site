@@ -163,11 +163,17 @@
 
                     <td>
                         <div class="manage-btn-container">
+
                             @if (!item.close)
                             {
-                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn-edit unclosed"><i class="bi bi-pencil-square"></i></a>
                             }
-                            
+                            else
+                            {
+                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn-edit closed" style="display: none;"><i class="bi bi-pencil-square"></i></a>
+                            }
+
+
 
                             <a href="@Url.Action("OrderItemsIndex", new { id = item.Id })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                         </div>
@@ -284,14 +290,19 @@
                $('.status-switch').on('change', function () {
                    var isChecked = $(this).prop('checked');
                    var orderId = $(this).data('order-id');
-                   var row = $(this).closest('tr');
+                   //var row = $(this).closest('tr');
+                   var editBtn = $(this).closest('tr').find('.btn-edit');
 
                    $.ajax({
                        url: '@Url.Action("ChangeStatus", "Orders")',
                        type: 'POST',
                        data: { orderId: orderId, isChecked: isChecked },
                        success: function (result) {
-                            row.toggleClass('closed', isChecked);
+                            if (isChecked) {
+                editBtn.hide();
+            } else {
+                editBtn.show();
+            }
                        }
                        });
                
