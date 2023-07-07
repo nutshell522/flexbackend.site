@@ -37,7 +37,8 @@ namespace flexbackend.site.Controllers
 			}
 			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
 			TempData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
-			var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
+            ViewData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
+            var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
 			TempData["PayMethods"] = paymethods ?? new Dictionary<int, string>();
 			var LogisticsCompanies = db.logistics_companies.AsNoTracking().ToDictionary(lc => lc.Id, lc => lc.name);
 			TempData["LogisticsCompanies"] = LogisticsCompanies ?? new Dictionary<int, string>();
