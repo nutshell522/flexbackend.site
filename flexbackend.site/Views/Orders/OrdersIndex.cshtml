@@ -165,8 +165,9 @@
                         <div class="manage-btn-container">
                             @if (!item.close)
                             {
-                                <a href="@Url.Action("Edit", new { id = item.Id })"name="test4" class="btn-edit">測試@*<i name="test4" class="bi bi-pencil-square"></i>*@</a>
+                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                             }
+                            
 
                             <a href="@Url.Action("OrderItemsIndex", new { id = item.Id })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                         </div>
@@ -188,7 +189,7 @@
   var table = $('#indexorders').DataTable({
     "searching": false,
     "paging": true,
-    "pageLength": 5,
+    "pageLength": 1,
     "lengthMenu": [5, 10, 15, 20, "All"],
                     oLanguage: {    // 中文化  
                         "sLengthMenu": "每頁顯示 _MENU_筆",
@@ -290,17 +291,7 @@
                        type: 'POST',
                        data: { orderId: orderId, isChecked: isChecked },
                        success: function (result) {
-                           var checkbox_value = document.getElementById("checkbox").isChecked;
-                           var names = document.getElementsByName("test4");
-                           if (checkbox_value == true) {
-                               $('#test4').attr("disabled",true);
-                               $("#test4").css("pointer-events","none");
-                           }
-                           else {
-                               $('#test4').attr("disabled",false);
-                               $("#test4").css("pointer-events","auto");
-                               // 处理成功后的操作
-                           }
+                            row.toggleClass('closed', isChecked);
                        }
                        });
                
