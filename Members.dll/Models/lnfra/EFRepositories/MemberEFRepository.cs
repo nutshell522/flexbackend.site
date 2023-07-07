@@ -23,23 +23,11 @@ namespace Members.dll.Models.lnfra.EFRepositories
 		}
 
 		//會員資料管理
-		public void EditMember(MembersEditDto dto)
+		public MembersEditDto GetMemberId(int? memberId)
 		{
-			Member member = new Member
-			{
-				MemberId=dto.MemberId,
-				Name=dto.Name,
-				Age=dto.Age,
-				Gender=dto.Gender,
-				Mobile=dto.Mobile,
-				Email=dto.Email,
-				Birthday=dto.Birthday,
-				Registration=dto.Registration,
-				fk_LevelId=dto.fk_LevelId,
-				fk_BlackListId=dto.fk_BlackListId,
-			};
-			_db.Members.Add(member);
-			_db.SaveChanges();
+			var member = _db.Members.Include(m => m.MembershipLevel).Include(m=>m.BlackList);
+			var members = member.ToList().FirstOrDefault(m => m.MemberId == memberId);
+			return members.ToMembersEditDto();
 		}
 
 		//取得員工資料
@@ -78,6 +66,11 @@ namespace Members.dll.Models.lnfra.EFRepositories
 			_db.SaveChanges();
 		}
 
-
+		public void EditMember(MembersEditDto dto)
+		{		
+			var member = dto.ToMembersEditEntity();
+			_db.Entry(member).State = EntityState.Modified;
+			_db.SaveChanges();
+		}
 	}
 }

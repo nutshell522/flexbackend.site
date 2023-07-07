@@ -22,8 +22,15 @@ namespace Members.dll.Models.ViewsModels.Member
 		public byte? Age { get; set; } //只顯示
 
 		[Display(Name = "性別")]
-		[Required]
 		public bool? Gender { get; set; }
+
+		public string GenderStr
+		{
+			get
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			}
+		}
 
 		[Display(Name = "手機")]
 		[Required]

@@ -96,12 +96,12 @@
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberCreateVM.cs" />
-    <Compile Include="Models\ViewsModels\Member\MemberDetail.cs" />
+    <Compile Include="Models\ViewsModels\Member\MemberDetailVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\StaffCriteria.cs" />
     <Compile Include="Models\ViewsModels\Staff\EditStaffVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\ForgetPasswordVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\LoginVM.cs" />
-    <Compile Include="Models\ViewsModels\Member\MembersEditVM.cs" />
+    <Compile Include="Models\ViewsModels\Member\MemberEditVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MembersIndexVM.cs" />
     <Compile Include="Models\ViewsModels\RegisterVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\StaffDetailVM.cs" />

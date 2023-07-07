@@ -10,6 +10,7 @@ namespace Members.dll.Models.ViewsModels
 {
 	public class MembersIndexVM
 	{
+		[Display(Name = "會員編號")]
 		public int MemberId { get; set; }
 
 		[Display(Name = "姓名")]
@@ -17,8 +18,16 @@ namespace Members.dll.Models.ViewsModels
 		[StringLength(30)]
 		public string Name { get; set; }
 
-		[Display(Name = "性別")]
 		public bool? Gender { get; set; }
+
+		[Display(Name = "性別")]
+		public string GenderStr
+		{
+			get
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			}
+		}
 
 		[Display(Name = "信箱")]
 		[Required]

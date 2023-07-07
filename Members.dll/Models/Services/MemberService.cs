@@ -3,6 +3,7 @@ using Members.dll.Models.Dtos;
 using Members.dll.Models.Exts;
 using Members.dll.Models.Interfaces;
 using Members.dll.Models.lnfra;
+using Members.dll.Models.lnfra.EFRepositories;
 using Members.dll.Models.ViewsModels;
 using System;
 using System.Collections.Generic;
@@ -24,16 +25,7 @@ namespace Members.dll.Models.Services
 		//會員資料管理
 		public Result EditMember(MembersEditDto dto)
 		{
-			//判斷是否符合等級
-			//if () 
-			//{
-			
-			//} else
-			//{
-
-			//}
-
-			//判斷是否為黑名單
+			_repo.EditMember(dto);
 
 			return Result.Success();
 		}
@@ -70,6 +62,24 @@ namespace Members.dll.Models.Services
 			//todo 寄發 email
 
 			return Result.Success();
+		}
+		public MembersEditDto GetMemberId(int? memberId)
+		{
+			//var memberInDb = new AppDbContext().Members.FirstOrDefault(m => m.MemberId == id);
+			//return memberInDb == null
+			//	? null
+			//	: new MemberEditVM
+			//	{
+			//		Name = memberInDb.Name,
+			//		Age = memberInDb.Age,
+			//		Gender = memberInDb.Gender,
+			//		Mobile = memberInDb.Mobile,
+			//		Email = memberInDb.Email,
+			//		Birthday = memberInDb.Birthday,
+			//		fk_LevelId = memberInDb.fk_LevelId,
+			//		fk_BlackListId = memberInDb.fk_LevelId,
+			//	};
+			return _repo.GetMemberId(memberId);
 		}
 	}
 }

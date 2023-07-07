@@ -9,6 +9,13 @@ using System.Web.Mvc;
 using EFModels.EFModels;
 using Members.dll.Models.ViewsModels;
 using Members.dll.Models.lnfra;
+using Members.dll.Models.ViewsModels.Member;
+using Members.dll.Models.Services;
+using Members.dll.Models.Interfaces;
+using Members.dll.Models.lnfra.DapperRepositories;
+using Members.dll.Models.lnfra.EFRepositories;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using Members.dll.Models.Exts;
 
 namespace flexbackend.site.Controllers
 {
@@ -36,27 +43,56 @@ namespace flexbackend.site.Controllers
 			return View(vms);
 		}
 
+
 		// GET: Member/Details/5
-		public ActionResult Details(int? id)
+		public ActionResult Details(int? memberId)
 		{
-			if (id == null)
+			if (memberId == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			Member member = db.Members.Find(id);
+			Member member = db.Members.Find(memberId);
 			if (member == null)
 			{
 				return HttpNotFound();
 			}
-			return View(member);
+
+			MemberDetailVM vms = new MemberDetailVM
+			{
+				MemberId = member.MemberId,
+				Name = member.Name,
+				Age = member.Age,
+				Gender = member.Gender,
+				Mobile = member.Mobile,
+				Email = member.Email,
+				Birthday = member.Birthday,
+				Registration = member.Registration,
+				fk_LevelId = member.fk_LevelId,
+				fk_BlackListId = member.fk_BlackListId
+			};
+			return View(vms);
 		}
+
 
 		// GET: Member/Create
 		public ActionResult Create()
 		{
 			ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior");
 			ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName");
+			PrepareCategoryDataSource(null);
+
 			return View();
+		}
+
+		private void PrepareCategoryDataSource(int? id)
+		{
+			ViewBag.LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", id);
+			List<SelectListItem> gender = new List<SelectListItem>
+			{
+			new SelectListItem { Value = "true" , Text = "男" },
+			new SelectListItem { Value = "false" , Text = "女" },
+			};
+			ViewBag.Gender = gender;
 		}
 
 		// POST: Member/Create
@@ -78,32 +114,23 @@ namespace flexbackend.site.Controllers
 			return View(member);
 		}
 
+
 		// GET: Member/Edit/5
 
 		[Authorize]
-		public ActionResult Edit()
+		public ActionResult Edit(int? memberId)
 		{
-			var currentUserAccount = User.Identity.Name; 
-			var model = GetMemberProfile(currentUserAccount);
-			return View(model);
+			if (memberId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			MemberService service = GetMemberRepository();
+			var member = service.GetMemberId(memberId).ToMembersEditVM();
+			if (memberId == null) return HttpNotFound();
+			return View(member);
 		}
 
-		private MembersEditVM GetMemberProfile(string account)
+		private MemberService GetMemberRepository()
 		{
-			var memberInDb = new AppDbContext().Members.FirstOrDefault(m => m.Account == account);
-			return memberInDb == null
-				? null
-				: new MembersEditVM
-				{
-					Name = memberInDb.Name,
-					Age = memberInDb.Age,
-					Gender = memberInDb.Gender,
-					Mobile = memberInDb.Mobile,
-					Email = memberInDb.Email,
-					Birthday = memberInDb.Birthday,
-					fk_LevelId=memberInDb.fk_LevelId,
-					fk_BlackListId= memberInDb.fk_LevelId,
-				};
+			IMemberRepository repo = new MemberEFRepository();
+			return new MemberService(repo);
 		}
 
 		// POST: Member/Edit/5
@@ -111,60 +138,23 @@ namespace flexbackend.site.Controllers
 		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(MembersEditVM vm)
+		public ActionResult Edit(MemberEditVM vm)
 		{
-			//ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior", member.fk_BlackListId);
-			//ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", member.fk_LevelId);
+			ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior", vm.fk_BlackListId);
+			ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", vm.fk_LevelId);
+			if (!ModelState.IsValid) return View(vm);
 
-			Result updateResult = UpdateProfile(vm);
-
-			if (updateResult.IsSuccess) return RedirectToAction("Index");
-
-			ModelState.AddModelError(string.Empty, updateResult.ErrorMessage);
-			return View(vm);
+			MemberService service = GetMemberRepository();
+			var result = service.EditMember(vm.ToMembersEditDto());
+			if (result.IsSuccess)
+			{
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(vm);
+			}
 		}
-
-		private Result UpdateProfile(MembersEditVM vm)
-		{
-			// 取得在db裡的原始記錄
-			var db = new AppDbContext();
-
-			var currentUserAccount = User.Identity.Name;
-			var memberInDb = db.Members.FirstOrDefault(m => m.Account == currentUserAccount);
-			if (memberInDb == null) return Result.Fail("找不到要修改的會員記錄");
-
-			// 更新記錄
-			memberInDb.Name = vm.Name;
-			memberInDb.Gender = vm.Gender;
-			memberInDb.Age = vm.Age;
-			memberInDb.Mobile = vm.Mobile;
-			memberInDb.Email = vm.Email;
-			memberInDb.Birthday = vm.Birthday;
-			memberInDb.fk_LevelId = vm.fk_LevelId;
-			memberInDb.fk_BlackListId = vm.fk_BlackListId;
-
-			db.SaveChanges();
-
-			return Result.Success();
-		}
-
-		// POST: Member/Edit/5
-		// 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-		// 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		//public ActionResult Edit([Bind(Include = "MemberId,Name,Age,Gender,Mobile,Email,Birthday,CommonAddress,Account,EncryptedPassword,Registration,IsConfirmed,ConfirmCode,fk_LevelId,fk_BlackListId")] Member member)
-		//{
-		//	if (ModelState.IsValid)
-		//	{
-		//		db.Entry(member).State = EntityState.Modified;
-		//		db.SaveChanges();
-		//		return RedirectToAction("Index");
-		//	}
-		//	ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior", member.fk_BlackListId);
-		//	ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", member.fk_LevelId);
-		//	return View(member);
-		//}
 
 		// GET: Member/Delete/5
 		public ActionResult Delete(int? id)

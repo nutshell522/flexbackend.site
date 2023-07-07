@@ -14,8 +14,6 @@ namespace Members.dll.Models.Dtos
 
 		public string Name { get; set; }
 
-		public byte? Age { get; set; }
-
 		public bool? Gender { get; set; }
 
 		public string Mobile { get; set; }
@@ -24,8 +22,6 @@ namespace Members.dll.Models.Dtos
 
 		public DateTime? Birthday { get; set; }
 		
-		public DateTime? Registration { get; set; }
-
 		public int fk_LevelId { get; set; }
 
 		public int? fk_BlackListId { get; set; }

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
 
 <h2>Index</h2>
@@ -48,7 +49,7 @@
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Gender)
+                    @Html.DisplayNameFor(model => model.GenderStr)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Email)
@@ -116,8 +117,8 @@
                     </td>
                     <td>
                         <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new {/* id=item.PrimaryKey */ })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                            <a href="@Url.Action("Edit", new {memberId=item.MemberId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("Details", new {memberId=item.MemberId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                             <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
 
                         </div>
