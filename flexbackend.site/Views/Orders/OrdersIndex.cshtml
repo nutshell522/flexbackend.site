@@ -43,11 +43,6 @@
         </a>
     </div>
 </div>
-<div>
-    <a href="@Url.Action("OrdersIndex")" class="btn btn-primary text-light">
-        儲存
-    </a>
-</div>
 <div class="table-container">
     <table id="indexorders" class="table table-striped table-hover">
         <thead>
@@ -182,36 +177,43 @@
     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script>
             // 在頁面載入完成時觸發請求
+        
+        $('#indexorders').datatable(
+            {
+                "searching": false,
+                "paging": true, // 如果要顯示分頁器，設為 true
+                "pagelength": 5, // 設定預設每頁顯示筆數
+                "lengthmenu": [5, 10, 15, 20, "all"],
+                olanguage: {    // 中文化
+                    "slengthmenu": "每頁顯示 _menu_筆",
+                    "szerorecords": "沒有找到符合條件的資料",
+                    "sprocessing": "載入中...",
+                    "sinfo": "當前第 _start_ - _end_ 筆　共計 _total_ 筆",
+                    "sinfoempty": "沒有記錄",
+                    "sinfofiltered": "(從 _max_ 條記錄中過濾)",
+                    "ssearch": "搜尋：",
+                    "opaginate":
+                    {
+                        "sfirst": "首頁",
+                        "sprevious": "前一頁",
+                        "snext": "後一頁",
+                        "slast": "尾頁"
+                    }
+                },
+                "columndefs": [{
+                    "orderable": false,
+                    "targets": [0, 7]
+                }],
+                "order": [[1, 'asc']]
+            }
 
-            $('#indexorders').DataTable(
-                {
-                    "searching": false,
-                    "paging": true, // 如果要顯示分頁器，設為 true
-                    "pageLength": 5, // 設定預設每頁顯示筆數
-                    "lengthMenu": [5, 10, 15, 20, "All"],
-                    oLanguage: {    // 中文化
-                        "sLengthMenu": "每頁顯示 _MENU_筆",
-                        "sZeroRecords": "沒有找到符合條件的資料",
-                        "sProcessing": "載入中...",
-                        "sInfo": "當前第 _START_ - _END_ 筆　共計 _TOTAL_ 筆",
-                        "sInfoEmpty": "沒有記錄",
-                        "sInfoFiltered": "(從 _MAX_ 條記錄中過濾)",
-                        "sSearch": "搜尋：",
-                        "oPaginate":
-                        {
-                            "sFirst": "首頁",
-                            "sPrevious": "前一頁",
-                            "sNext": "後一頁",
-                            "sLast": "尾頁"
-                        }
-                    },
-                    "columnDefs": [{
-                        "orderable": false,
-                        "targets": [0, 7]
-                    }],
-                    "order": [[1, 'asc']]
-                }
             );
+        //table.on('draw.dt', function () {
+        //    $('.status-switch').off('change'); // 移除之前的事件处理程序
+        //    $('.status-switch').on('change', function () {
+        //        // AJAX 请求代码
+        //    });
+        //});
 
 
 
@@ -272,25 +274,28 @@
                 window.location.href = "@Url.Action("OrdersIndex")?searchString=" + searchString;
             });
     });
-         $(document).ready(function () {
-        $('.status-switch').on('change', function () {
-            var isChecked = $(this).prop('checked');
-            var orderId = $(this).data('order-id');
+         
+          $(document).ready(function (){
+                $('.status-switch').on('change', function () {
+                    var isChecked = $(this).prop('checked');
+                    var orderId = $(this).data('order-id');
 
-            $.ajax({
-                url: '@Url.Action("ChangeStatus", "Orders")',
-                type: 'POST',
-                data: { orderId: orderId, isChecked: isChecked },
-                success: function (result) {
-
-                },
-                error: function (xhr, status, error) {
-
-                }
+                    $.ajax({
+                        url: '@Url.Action("ChangeStatus", "Orders")',
+                        type: 'POST',
+                        data: { orderId: orderId, isChecked: isChecked },
+                        success: function (result) {
+                            location.reload();
+                            // 成功處理回應後的操作
+                        },
+                        error: function (xhr, status, error) {
+                            // 處理錯誤情況
+                        }
+                    });
+                });
             });
-        });
-         });
-     
+        
+
         document.addEventListener("DOMContentLoaded", function () {
             var searchBtn = document.querySelector(".btn-primary");
             searchBtn.addEventListener("click", function () {
@@ -306,6 +311,6 @@
                 window.location.href = url;
             });
         });
-   
+
     </script>
 }
