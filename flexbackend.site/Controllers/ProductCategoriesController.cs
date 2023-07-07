@@ -14,97 +14,108 @@ using System.Web.Mvc;
 
 namespace flexbackend.site.Controllers
 {
-    public class ProductCategoriesController : Controller
-    {
-        private ICategoryRepository _repo=new SalesCategotyDPRepository();
-        private AppDbContext _db=new AppDbContext();
+	public class ProductCategoriesController : Controller
+	{
+		private ICategoryRepository _repo = new SalesCategotyDPRepository();
+		private AppDbContext _db = new AppDbContext();
 
-        // GET: ProductCategories
-        public ActionResult SalesCategoryIndex()
-        {
-            var service = new CategoryService(_repo).Search();
-            var vm = service.Select(s => s.ToIndexVM());
+		// GET: ProductCategories
+		public ActionResult SalesCategoryIndex()
+		{
+			var service = new CategoryService(_repo).Search();
+			var vm = service.Select(s => s.ToIndexVM());
+			if (Request.IsAjaxRequest())
+			{
+				return Json(vm);
+			}
 			return View(vm);
-        }
+		}
 
-        [HttpPost]
+		[HttpPost]
 		public ActionResult ReLoadSalesCategoryIndex()
 		{
 			var service = new CategoryService(_repo).Search();
 			var vm = service.Select(s => s.ToIndexVM());
-			return Json(vm);
+			return Json(new { data = vm });
 		}
 
 		// GET: ProductCategories/CreateSalesCategory
 		public ActionResult CreateSalesCategory()
-        {
-            var vm = new SalesCategoryCreateVM();
-            return View(vm);
-        }
+		{
+			var vm = new SalesCategoryCreateVM();
+			return View(vm);
+		}
 
 		// POST: ProductCategories/CreateSalesCategory
 		[HttpPost]
-        public ActionResult CreateSalesCategory(SalesCategoryCreateVM vm)
-        {
-            if(ModelState.IsValid==false) return View(vm);
+		public ActionResult CreateSalesCategory(SalesCategoryCreateVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
 
-            var service=new CategoryService(_repo);
-            Result result = service.CreateSalesCategory(vm.ToCreateDto());
+			var service = new CategoryService(_repo);
+			Result result = service.CreateSalesCategory(vm.ToCreateDto());
 
-            if(result.IsSuccess) return RedirectToAction("SalesCategoryIndex");
+			if (result.IsFailed)
+			{
+				ModelState.AddModelError("SalesCategoryName", result.ErroeMessage);
+				return View(vm);
+			}
 
-            return View(vm);
+			return RedirectToAction("SalesCategoryIndex");
+
 		}
 
 		// GET: ProductCategories/EditSalesCategory/
 		public ActionResult EditSalesCategory(int salesCategoryId)
-        {
-            if (salesCategoryId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
-            
-            var service = new CategoryService(_repo);
-            var vm = service.GetSalesCategoryById(salesCategoryId).ToEditVM();
+		{
+			if (salesCategoryId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
 
-            if(vm==null)return HttpNotFound();
+			var service = new CategoryService(_repo);
+			var vm = service.GetSalesCategoryById(salesCategoryId).ToEditVM();
+
+			if (vm == null) return HttpNotFound();
 
 			return View(vm);
-        }
+		}
 
 		//POST: ProductCategories/EditSalesCategory/
 		[HttpPost]
-        public ActionResult EditSalesCategory(SalesCategoryEditVM vm)
-        {
-            if (ModelState.IsValid == false) return View(vm);
-            var service = new CategoryService(_repo);
-            //Result result = service.EditSalesCategory(vm.ToEditDto());
+		public ActionResult EditSalesCategory(SalesCategoryEditVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+			var service = new CategoryService(_repo);
+			Result result = service.EditSalesCategory(vm.ToEditDto());
 
-            //if (result.IsSuccess)
-            //{
-            //    return RedirectToAction("SalesCategoryIndex");
-            //}
-            return View(vm);
+			if (result.IsFailed)
+			{
+				ModelState.AddModelError("SalesCategoryName", result.ErroeMessage);
+				return View(vm);
+			}
 
-        }
+			return RedirectToAction("SalesCategoryIndex");
+		}
 
-        // GET: ProductCategories/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+		// GET: ProductCategories/Delete/5
+		//public ActionResult Delete(int id)
+		//{
+		//	return View();
+		//}
 
-        // POST: ProductCategories/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+		// POST: ProductCategories/Delete/5
+		[HttpPost]
+		public ActionResult Delete(int salesCategoryId)
+		{
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-    }
+			var service = new CategoryService(_repo);
+			Result result = service.DeleteSalesCategory(salesCategoryId);
+
+			if (result.IsSuccess)
+			{
+				return Json(new { success = true });
+			}
+			return Json(new { success = false });
+
+		}
+	}
+
 }

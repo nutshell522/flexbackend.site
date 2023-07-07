@@ -200,6 +200,7 @@
     <Content Include="CodeTemplates\PackageVersions5.2.7.xml" />
     <Content Include="CodeTemplates\PackageVersions5.2.8.xml" />
     <Content Include="CodeTemplates\PackageVersions5.2.9.xml" />
+    <Content Include="Content\autoTable.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />

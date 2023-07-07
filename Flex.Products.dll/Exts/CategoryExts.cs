@@ -38,6 +38,16 @@ namespace Flex.Products.dll.Exts
 			};
 		}
 
+		public static SalesCategoryDto ToEditDto(this SalesCategoryEditVM vm)
+		{
+			return new SalesCategoryDto
+			{
+				SalesCategoryId = vm.SalesCategoryId,
+				SalesCategoryName = vm.SalesCategoryName,
+			};
+		}
+
+
 		public static ProductSubCategoryDto ToDto(this ProductSubCategory entity)
 		{
 			return new ProductSubCategoryDto

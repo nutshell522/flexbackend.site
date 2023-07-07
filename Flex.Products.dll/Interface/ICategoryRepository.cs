@@ -14,5 +14,9 @@ namespace Flex.Products.dll.Interface
 		void CreateSalesCategory(SalesCategoryDto dto);
 
 		SalesCategoryDto GetSalesCategoryById(int salesCategoryId);
+
+		void EditSalesCategory(SalesCategoryDto dto);
+
+		void DeleteSalesCategory(int salesCategoryId);
 	}
 }

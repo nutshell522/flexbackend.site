@@ -6,6 +6,7 @@
 
 @section Styles {
     <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
+    
     <style>
         thead {
             background-color: #0B284A;
@@ -13,7 +14,6 @@
         }
     </style>
 }
-
 <h2>銷售分類管理</h2>
 
 
@@ -32,10 +32,10 @@
             <th class="d-none">
                 @Html.DisplayNameFor(model => model.SalesCategoryId)
             </th>
-            <th class="th-col-3 text-center align-items-center  justify-content-center">
+            <th class="th-col-6 text-center align-items-center  justify-content-center">
                 @Html.DisplayNameFor(model => model.SalesCategoryName)
             </th>
-            <th class="th-col-3 text-center align-items-center  justify-content-center">管理</th>
+            <th class="th-col-6 text-center align-items-center  justify-content-center">管理</th>
         </tr>
     </thead>
     <tbody>
@@ -52,8 +52,7 @@
                 <td>
                     <div class="manage-btn-container d-flex align-items-center justify-content-center">
                         <a href="@Url.Action("EditSalesCategory", new {salesCategoryId=item.SalesCategoryId })" class="btn-edit ms-1"><i class="bi bi-pencil-square"></i></a>
-                        <a href="@Url.Action("Details", new {/* id=item.PrimaryKey */ })" class="btn-view ms-1"><i class="bi bi-clipboard-check"></i></a>
-                        <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del ms-1"><i class="bi bi-trash-fill"></i></a>
+                        <a href="#" class="btn-del ms-1" onclick="deleteCategory(e,@item.SalesCategoryId)"><i class="bi bi-trash-fill"></i></a>
 
                     </div>
                 </td>
@@ -67,11 +66,13 @@
     <script>
 
         $(document).ready(function () {
-            var dataTable =$('#indexProduct').DataTable(
+            $('#indexSalesCategory').DataTable(
                 {
                     "ordering": false,
                     "searching": false,
-                    "paging": false, // 如果要顯示分頁器，設為 true
+                    "pageLength": 5, // 設定預設每頁顯示筆數
+                    "stateSave": true,
+                    "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
                     oLanguage: {    // 中文化
                         "sLengthMenu": "每頁顯示 _MENU_筆",
                         "sZeroRecords": "沒有找到符合條件的資料",
@@ -88,10 +89,34 @@
                             "sLast": "尾頁"
                         }
                     },
+                    "responsive": true, //響應式啟用
                 }
             );
-
-            dataTable.ajax.url('@Url.Action("SalesCategoryIndex", "ProductCategories")').load();
         });
+
+        function deleteCategory(e, salesCategoryId) {
+            e.preventDefault();
+
+            if (confirm("確定要刪除分類嗎?")) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "ProductCategories")',
+                    type: 'POST',
+                    data: { salesCategoryId: salesCategoryId },
+                    success: function (result) {
+                        if (result.success) {
+                            alert("刪除成功");
+                            location.reload();
+                        }
+                        else {
+                            alert("刪除失敗");
+                        }
+                    },
+                    error: function () {
+                        alert("刪除失敗");
+                    }
+                });
+            }
+        }
+
     </script>
 }

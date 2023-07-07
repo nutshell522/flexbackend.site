@@ -48,20 +48,20 @@ namespace flexbackend.site.Controllers
             return View(products);
 		}
 
-        [HttpPost]
-		public ActionResult ReLoadIndex(IndexSearchCriteria criteria)
-		{
-			criteria = criteria ?? new IndexSearchCriteria();
-			PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
+  //      [HttpPost]
+		//public ActionResult ReLoadIndex(IndexSearchCriteria criteria)
+		//{
+		//	criteria = criteria ?? new IndexSearchCriteria();
+		//	PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
 
-			ViewBag.Criteria = criteria;
-			ViewBag.StatusOption = new SelectList(criteria.StatusOption);
+		//	ViewBag.Criteria = criteria;
+		//	ViewBag.StatusOption = new SelectList(criteria.StatusOption);
 
-			var service = new ProductService(_repo);
-			var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
+		//	var service = new ProductService(_repo);
+		//	var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
 
-			return Json(new { data= products });
-		}
+		//	return Json(new { data= products });
+		//}
 
 
 		[HttpPost]

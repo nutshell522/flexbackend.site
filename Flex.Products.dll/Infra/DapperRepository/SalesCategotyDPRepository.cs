@@ -52,5 +52,28 @@ where SalesCategoryId=@SalesCategoryId;"
 				return conn.QueryFirstOrDefault<SalesCategoryDto>(sql, new { SalesCategoryId = salesCategoryId });
 			}
 		}
+
+		public void EditSalesCategory(SalesCategoryDto dto)
+		{
+			using (var conn=new SqlConnection(_connStr))
+			{
+				string sql = @"update SalesCategories
+set SalesCategoryName=@SalesCategoryName
+where SalesCategoryId=@SalesCategoryId";
+
+				conn.Execute(sql, new { SalesCategoryId =dto.SalesCategoryId, SalesCategoryName =dto.SalesCategoryName});
+			}
+		}
+
+		public void DeleteSalesCategory(int salesCategoryId)
+		{
+			using (var conn=new SqlConnection(_connStr))
+			{
+				string sql = @"delete SalesCategories
+where SalesCategoryId=@SalesCategoryId";
+
+				conn.Execute(sql, new { SalesCategoryId = salesCategoryId });
+			}
+		}
 	}
 }
