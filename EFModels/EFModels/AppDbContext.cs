@@ -11,6 +11,14 @@ namespace EFModels.EFModels
             : base("name=AppDbContext")
         {
         }
+	public partial class AppDbContext : DbContext
+	{
+		public object result;
+
+		public AppDbContext()
+			: base("name=AppDbContext")
+		{
+		}
 
 		public virtual DbSet<Activity> Activities { get; set; }
 		public virtual DbSet<ActivityCategory> ActivityCategories { get; set; }

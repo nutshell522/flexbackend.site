@@ -25,19 +25,23 @@ namespace EFModels.EFModels
 
         public int MemberId { get; set; }
 
+        [Display(Name ="姓名")]
         [Required]
         [StringLength(30)]
         public string Name { get; set; }
 
-        public byte? Age { get; set; }
+		[Display(Name = "年紀")]
+		public byte? Age { get; set; }
 
-        public bool? Gender { get; set; }
+		[Display(Name = "性別")]
+		public bool? Gender { get; set; }
 
         [Required]
         [StringLength(10)]
         public string Mobile { get; set; }
 
-        [Required]
+        [Display(Name = "信箱")]
+		[Required]
         [StringLength(300)]
         public string Email { get; set; }
 
@@ -56,7 +60,8 @@ namespace EFModels.EFModels
         [StringLength(70)]
         public string EncryptedPassword { get; set; }
 
-        public DateTime? Registration { get; set; }
+        [Display(Name = "註冊時間")]
+		public DateTime? Registration { get; set; }
 
         public bool? IsConfirmed { get; set; }
 

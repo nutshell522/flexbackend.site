@@ -60,6 +60,13 @@ VALUES
 
 SELECT * FROM Members;
 
+--[會員詳細資訊]
+SELECT MemberId,[Name],Age,Gender,Mobile,Email,Birthday,LevelName,PointSubtotal,Registration,Behavior 
+FROM Members
+JOIN MembershipLevels ON fk_LevelId=MembershipLevels.LevelId
+JOIN MemberPoints ON fk_MemberId=Members.MemberId
+LEFT JOIN BlackLists ON fk_BlackListId=BlackLists.BlackListId
+WHERE MemberId=1;
 
 --[會員名單總覽]
 SELECT MemberId,[Name],Gender,Email,LevelName,PointSubtotal,Registration,Behavior 
@@ -194,15 +201,19 @@ VALUES
 
 SELECT * FROM Staffs;
 
---員工名單總覽
+--[員工名單總覽]
 SELECT *
 FROM Staffs
 JOIN Departments ON Staffs.fk_DepartmentId=Departments.DepartmentId
 JOIN JobTitles ON Staffs.fk_TitleId=JobTitles.TitleId
 JOIN StaffPermissions ON Staffs.fk_PermissionsId=StaffPermissions.PermissionsId;
 
-SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Email,LevelName,dueDate
+--[員工詳細資訊]
+SELECT StaffId,D.DepartmentName as [Department],TitleName,[Name],Age,Gender,Mobile,Email,Birthday,LevelName,DueDate
 FROM Staffs as S
 JOIN Departments as D ON S.fk_DepartmentId=D.DepartmentId
 JOIN JobTitles as J ON S.fk_TitleId=J.TitleId
 JOIN StaffPermissions as SP ON S.fk_PermissionsId=SP.PermissionsId;
+
+--[忘記密碼]
+update Staffs set [Password] = '123123' where Account = '123';

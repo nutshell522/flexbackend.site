@@ -5,25 +5,32 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Members.dll.Models.ViewsModels
+namespace Members.dll.Models.ViewsModels.Member
 {
-	public class MembersEditVM
+	public class MemberCreateVM
 	{
+		//public int MemberId { get; set; } //只顯示
 
-		public int MemberId { get; set; } //只顯示
-
-		[Display(Name="姓名")] 
+		[Display(Name = "姓名")]
 		[Required]
 		[StringLength(10)]
-		public string Name { get; set; } 
+		public string Name { get; set; }
 
-		[Display(Name = "年齡")]
+		[Display(Name = "年紀")]
 		public byte? Age { get; set; } //只顯示
 
 		[Display(Name = "性別")]
-		[Required]
 		public bool? Gender { get; set; }
+
+		public string GenderStr
+		{
+			get
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			}
+		}
 
 		[Display(Name = "手機")]
 		[Required]
@@ -35,17 +42,14 @@ namespace Members.dll.Models.ViewsModels
 		[StringLength(300)]
 		public string Email { get; set; }
 
-		[Display(Name="生日")]
+		[Display(Name = "生日")]
 		[Column(TypeName = "date")]
 		public DateTime? Birthday { get; set; }
-
-		[Display(Name = "註冊時間")] //只顯示
-		public DateTime? Registration { get; set; }
 
 		[Display(Name = "會員等級")]
 		public int fk_LevelId { get; set; }
 
-		[Display(Name = "是否為黑名單")] 
+		[Display(Name = "是否為黑名單")]
 		public int? fk_BlackListId { get; set; }
 	}
 }
