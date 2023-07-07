@@ -22,6 +22,7 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Display(Name = "確認密碼")]
 		[Required]
 		[DataType(DataType.Password)]
+		[Compare("NewPassword", ErrorMessage = "必須與新設密碼相同")]		
 		[StringLength(10)]
 		public string ConfirmPassword { get; set; }
 	}

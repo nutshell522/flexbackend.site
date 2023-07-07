@@ -30,10 +30,6 @@ namespace Members.dll.Models.Exts
 		//擴充方法，將EF entity 轉為 MembersIndexDto，將資料取出
 		public static MembersIndexDto ToIndexDto(this Member entity)
 		{
-			//在這邊判斷轉換的顯示文字?
-			//string gender = entity.Gender ? "男" : "女";
-			//string blacklisted = entity.fk_BlackListId.HasValue ? "是" : "否";
-
 			return new MembersIndexDto
 			{
 				MemberId = entity.MemberId,
@@ -47,10 +43,25 @@ namespace Members.dll.Models.Exts
 			};
 		}
 
-		/********************************************************************/
-		public static MembersEditVM ToMembersEditVM(this MembersEditDto dto)
+		public static MembersIndexVM ToIndexVM(this Member entity)
 		{
-			return new MembersEditVM
+			return new MembersIndexVM
+			{
+				MemberId = entity.MemberId,
+				Name = entity.Name,
+				Gender = entity.Gender,
+				Email = entity.Email,
+				LevelName = entity.MembershipLevel.LevelName,
+				PointSubtotal = entity.MemberPoints.Sum(p => p.PointSubtotal),
+				Registration = entity.Registration,
+				fk_BlackListId = entity.fk_BlackListId
+			};
+		}
+
+
+		public static MemberEditVM ToMembersEditVM(this MembersEditDto dto)
+		{
+			return new MemberEditVM
 			{
 				MemberId = dto.MemberId,
 				Name = dto.Name,
@@ -58,7 +69,6 @@ namespace Members.dll.Models.Exts
 				Mobile = dto.Mobile,
 				Email = dto.Email,
 				Birthday = dto.Birthday,
-				Registration = dto.Registration,
 				fk_LevelId = dto.fk_LevelId,
 				fk_BlackListId = dto.fk_BlackListId
 			};
@@ -73,9 +83,36 @@ namespace Members.dll.Models.Exts
 				Mobile = entity.Mobile,
 				Email = entity.Email,
 				Birthday = entity.Birthday,
-				Registration =entity.Registration,
 				fk_LevelId = entity.fk_LevelId,
 				fk_BlackListId=entity.fk_BlackListId
+			};
+		}
+		public static MembersEditDto ToMembersEditEntity(this MembersEditDto dto)
+		{
+			return new MembersEditDto
+			{
+				MemberId = dto.MemberId,
+				Name = dto.Name,
+				Gender = dto.Gender,
+				Mobile = dto.Mobile,
+				Email = dto.Email,
+				Birthday = dto.Birthday,
+				fk_LevelId = dto.fk_LevelId,
+				fk_BlackListId = dto.fk_BlackListId
+			};
+		}
+		public static MembersEditDto ToMembersEditDto(this MemberEditVM vm)
+		{
+			return new MembersEditDto
+			{
+				MemberId = vm.MemberId,
+				Name = vm.Name,
+				Gender = vm.Gender,
+				Mobile = vm.Mobile,
+				Email = vm.Email,
+				Birthday = vm.Birthday,
+				fk_LevelId = vm.fk_LevelId,
+				fk_BlackListId = vm.fk_BlackListId
 			};
 		}
 	}
