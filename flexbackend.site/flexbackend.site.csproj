@@ -2342,6 +2342,8 @@
     <Content Include="Views\Orders\EditItems.cshtml" />
     <Content Include="Views\Orders\OrdersDetail.cshtml" />
     <Content Include="Views\logistics_companies\Logistics_companiesIndex.cshtml" />
+    <Content Include="Views\logistics_companies\create.cshtml" />
+    <Content Include="Views\logistics_companies\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
