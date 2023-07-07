@@ -165,7 +165,7 @@
                         <div class="manage-btn-container">
                             @if (!item.close)
                             {
-                                <a href="@Url.Action("Edit", new { id = item.Id })"name="test4" class="btn-edit"><i name="test4" class="bi bi-pencil-square"></i></a>
+                                <a href="@Url.Action("Edit", new { id = item.Id })"name="test4" class="btn-edit">測試@*<i name="test4" class="bi bi-pencil-square"></i>*@</a>
                             }
 
                             <a href="@Url.Action("OrderItemsIndex", new { id = item.Id })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
@@ -280,30 +280,32 @@
          
            function bindStatusSwitchEvent() {
     $('.status-switch').off('change'); // 解除之前的事件绑定
-    $('.status-switch').on('change', function () {
-      var isChecked = $(this).prop('checked');
-        var orderId = $(this).data('order-id');
-        var row = $(this).closest('tr');
+               $('.status-switch').on('change', function () {
+                   var isChecked = $(this).prop('checked');
+                   var orderId = $(this).data('order-id');
+                   var row = $(this).closest('tr');
 
-      $.ajax({
-        url: '@Url.Action("ChangeStatus", "Orders")',
-        type: 'POST',
-        data: { orderId: orderId, isChecked: isChecked },
-          success: function (result) {
-              var checkbox_value = document.getElementById("checkbox").isChecked;
-              if (checkbox_value == true) {
-                  document.getElementByName("test4").style.display = "none";
-              }
-              else {
-                  document.getElementByName("test4").style.display = "block";
-              }
-              console.log(checkbox_value);
-          // 处理成功后的操作
-        },
-        error: function (xhr, status, error) {
-          // 处理错误情况
-        }
-      });
+                   $.ajax({
+                       url: '@Url.Action("ChangeStatus", "Orders")',
+                       type: 'POST',
+                       data: { orderId: orderId, isChecked: isChecked },
+                       success: function (result) {
+                           var checkbox_value = document.getElementById("checkbox").isChecked;
+                           var names = document.getElementsByName("test4");
+                           if (checkbox_value == true) {
+                               for (let i = 0; i < names.length; i++) {
+                                   names[i].style.display = "none";
+                               }
+                           }
+                           else {
+                               for (let i = 0; i < names.length; i++) {
+                                   names[i].style.display = "block";
+                               }
+                               // 处理成功后的操作
+                           }
+                       }
+                       });
+               
     });
   }
 });
