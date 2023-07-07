@@ -19,6 +19,8 @@ namespace flexbackend.site.App_Start
 			GlobalConfiguration.Configuration.UseSqlServerStorage("Server=.;Database=Flex;User Id=sa5;Password=sa5;");
 
 			// 在每次啟動時執行
+			BackgroundJob.Enqueue(() => UpdateOrderBy());
+			// 午夜12:00時自動執行
 			RecurringJob.AddOrUpdate("update-order-by-job", () => UpdateOrderBy(), "0 0 * * *");
 
 			// 啟動 Hangfire 背景作業處理器

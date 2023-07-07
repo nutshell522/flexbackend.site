@@ -112,7 +112,7 @@ namespace Discount.dll.Models.Services
 			}
 
 			// 驗證開始日期
-			var existsStartDate = _repo.ExistsStartDate(dto.StartDate,dto.DiscountId);
+			var existsStartDate = !_repo.ExistsStartDate(dto.StartDate,dto.DiscountId);
 			if (dto.StartDate<DateTime.Today && existsStartDate)
 			{
 				return Result.Fail("開始日期已不可更動");

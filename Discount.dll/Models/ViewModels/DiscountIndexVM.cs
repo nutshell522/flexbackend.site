@@ -79,7 +79,7 @@ namespace Discount.dll.Models.ViewModels
 		{
 			get
 			{
-				if(EndDate.HasValue && EndDate.Value < DateTime.Today)
+				if (EndDate.HasValue && EndDate.Value < DateTime.Today)
 				{
 					return "已過期";
 				}
@@ -87,18 +87,19 @@ namespace Discount.dll.Models.ViewModels
 				{
 					return "未開始";
 				}
-                else
-                {
+				else
+				{
 					return "進行中";
-                }
-            }
+				}
+			}
 		}
-			
 
-		[Display(Name = "折扣優先順序")]
+
 		public int? OrderBy { get; set; }
+		[Display(Name = "折扣優先順序")]
+		public string OrderByStr => OrderBy.HasValue ? OrderBy.Value.ToString() : "--";
 	}
-	
+
 	public static class DiscountIndexVMExts
 	{
 		public static DiscountIndexVM ToIndexVM(this DiscountIndexDto dto)

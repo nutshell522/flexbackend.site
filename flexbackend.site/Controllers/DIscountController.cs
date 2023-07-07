@@ -123,7 +123,8 @@ namespace flexbackend.site.Controllers
 		[HttpDelete]
 		public ActionResult Delete(int id)
 		{
-			int[] ids = new int[id];
+			int[] ids = new int[1];
+			ids[0] = id;
 			_service.Delete(ids);
 			return Content("Resource deleted successfully.");
 		}
