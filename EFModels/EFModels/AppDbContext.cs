@@ -405,7 +405,8 @@ namespace EFModels.EFModels
             modelBuilder.Entity<SalesCategory>()
                 .HasMany(e => e.ProductCategories)
                 .WithRequired(e => e.SalesCategory)
-                .HasForeignKey(e => e.fk_SalesCategoryId)
+                .HasForeig
+                nKey(e => e.fk_SalesCategoryId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ShoesCategory>()
