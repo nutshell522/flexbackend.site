@@ -142,15 +142,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\logistics_companiesController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\OneToOneReservationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     <Compile Include="Controllers\ShoesCategoriesController.cs" />
     <Compile Include="Controllers\ShoesChoosController.cs" />
     <Compile Include="Controllers\ShoesColorCategoriesController.cs" />
 >>>>>>> Val04
+=======
+>>>>>>> Cindy04
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\SpeakerController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
@@ -2345,6 +2349,7 @@
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\OrderItemsIndex.cshtml" />
     <Content Include="Views\Orders\CreateOrderItems.cshtml" />
@@ -2380,6 +2385,16 @@
     <Content Include="Views\ShoesChoos\Edit.cshtml" />
     <Content Include="Views\ShoesChoos\Index.cshtml" />
 >>>>>>> Val04
+=======
+    <Content Include="Views\Speaker\Edit.cshtml" />
+    <Content Include="Views\Speaker\Details.cshtml" />
+    <Content Include="Views\Speaker\Delete.cshtml" />
+    <Content Include="Views\OneToOneReservation\ReservationList.cshtml" />
+    <Content Include="Views\OneToOneReservation\Delete.cshtml" />
+    <Content Include="Views\OneToOneReservation\Index.cshtml" />
+    <Content Include="Views\OneToOneReservation\Detail.cshtml" />
+    <Content Include="Views\OneToOneReservation\Details.cshtml" />
+>>>>>>> Cindy04
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

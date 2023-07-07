@@ -127,9 +127,9 @@ namespace Flex_Activity.dll.Models.Exts
             {
                 ActivityId = entity.ActivityId,
                 ActivityName = entity.ActivityName,
-                fk_ActivityCategoryId = entity.fk_ActivityCategoryId,
+				ActivityCategoryName = entity.ActivityCategory.ActivityCategoryName,
                 ActivityDate = entity.ActivityDate,
-                fk_SpeakerId = entity.fk_SpeakerId,
+				SpeakerName = entity.Speaker.SpeakerName,
                 ActivityPlace = entity.ActivityPlace,
                 ActivityBookStartTime = entity.ActivityBookStartTime,
                 ActivityBookEndTime = entity.ActivityBookEndTime,
