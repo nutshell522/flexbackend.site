@@ -145,12 +145,9 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
-<<<<<<< HEAD
-=======
     <Compile Include="Controllers\ShoesCategoriesController.cs" />
     <Compile Include="Controllers\ShoesChoosController.cs" />
     <Compile Include="Controllers\ShoesColorCategoriesController.cs" />
->>>>>>> Val04
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\SpeakerController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
@@ -2344,7 +2341,6 @@
     <Content Include="Views\Activity\Details.cshtml" />
     <Content Include="Views\Speaker\Index.cshtml" />
     <Content Include="Views\Speaker\Create.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\OrderItemsIndex.cshtml" />
     <Content Include="Views\Orders\CreateOrderItems.cshtml" />
@@ -2353,7 +2349,6 @@
     <Content Include="Views\logistics_companies\Logistics_companiesIndex.cshtml" />
     <Content Include="Views\logistics_companies\create.cshtml" />
     <Content Include="Views\logistics_companies\Edit.cshtml" />
-=======
     <Content Include="Views\CustomizedShoesPoes\Create.cshtml" />
     <Content Include="Views\CustomizedShoesPoes\Delete.cshtml" />
     <Content Include="Views\CustomizedShoesPoes\Details.cshtml" />
@@ -2379,7 +2374,6 @@
     <Content Include="Views\ShoesChoos\Details.cshtml" />
     <Content Include="Views\ShoesChoos\Edit.cshtml" />
     <Content Include="Views\ShoesChoos\Index.cshtml" />
->>>>>>> Val04
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
