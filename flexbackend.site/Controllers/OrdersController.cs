@@ -77,8 +77,9 @@ namespace flexbackend.site.Controllers
                         total_price = totalDiscountSubtotal,
                         orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
                     };
+                    
                 });
-
+         
         }
 
 		public ActionResult Create()
@@ -146,7 +147,7 @@ namespace flexbackend.site.Controllers
 			{
 				return HttpNotFound(); // 可以根據你的需求返回一個適當的錯誤頁面或訊息
 			}
-            var orderItems = GetOrderItemsIndex(p.Id);
+            var orderItems = GetOrderItemsIndex(order.Id);
             int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
             int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
             var vm = new OrdersIndexVM

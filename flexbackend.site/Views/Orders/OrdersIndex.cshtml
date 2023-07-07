@@ -12,6 +12,9 @@
             background-color: #0B284A;
             color: white;
         }
+        .closed .btn-edit {
+            display: none;
+        }
     </style>
 }
 
@@ -159,7 +162,7 @@
                         <div class="manage-btn-container">
                             @if (!item.close)
                             {
-                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="@Url.Action("Edit", new { id = item.Id })"id="close" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                             }
 
                             <a href="@Url.Action("OrderItemsIndex", new { id = item.Id })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
@@ -276,16 +279,15 @@
     $('.status-switch').off('change'); // 解除之前的事件绑定
     $('.status-switch').on('change', function () {
       var isChecked = $(this).prop('checked');
-      var orderId = $(this).data('order-id');
+        var orderId = $(this).data('order-id');
+        var row = $(this).closest('tr');
 
       $.ajax({
         url: '@Url.Action("ChangeStatus", "Orders")',
         type: 'POST',
         data: { orderId: orderId, isChecked: isChecked },
-        success: function (result) {
-             var currentPageUrl = window.location.href;
-              window.location.href = currentPageUrl;
-          // 处理成功后的操作
+          success: function (result) {
+            row.toggleClass(document.getElementById("close").style.display = "none", isChecked)
         },
         error: function (xhr, status, error) {
           // 处理错误情况
@@ -294,7 +296,7 @@
     });
   }
 });
-        
+
 
         document.addEventListener("DOMContentLoaded", function () {
             var searchBtn = document.querySelector(".btn-primary");
