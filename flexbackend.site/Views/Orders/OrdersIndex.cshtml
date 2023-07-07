@@ -15,6 +15,9 @@
         .closed .btn-edit {
             display: none;
         }
+        .unclosed .btn-edit {
+            display: block;
+        }
     </style>
 }
 
@@ -162,14 +165,14 @@
                         <div class="manage-btn-container">
                             @if (!item.close)
                             {
-                                <a href="@Url.Action("Edit", new { id = item.Id })"id="close" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="@Url.Action("Edit", new { id = item.Id })"name="test4" class="btn-edit"><i name="test4" class="bi bi-pencil-square"></i></a>
                             }
 
                             <a href="@Url.Action("OrderItemsIndex", new { id = item.Id })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                         </div>
                     </td>
                     <td>
-                        <input type="checkbox" class="status-switch" data-order-id="@item.Id" @(item.close ? "checked" : "") />
+                        <input type="checkbox" id="checkbox" class="status-switch" data-order-id="@item.Id" @(item.close ? "checked" : "") />
                     </td>
                 </tr>
             }
@@ -287,7 +290,15 @@
         type: 'POST',
         data: { orderId: orderId, isChecked: isChecked },
           success: function (result) {
-            row.toggleClass(document.getElementById("close").style.display = "none", isChecked)
+              var checkbox_value = document.getElementById("checkbox").isChecked;
+              if (checkbox_value == true) {
+                  document.getElementByName("test4").style.display = "none";
+              }
+              else {
+                  document.getElementByName("test4").style.display = "block";
+              }
+              console.log(checkbox_value);
+          // 处理成功后的操作
         },
         error: function (xhr, status, error) {
           // 处理错误情况
@@ -296,7 +307,7 @@
     });
   }
 });
-
+        
 
         document.addEventListener("DOMContentLoaded", function () {
             var searchBtn = document.querySelector(".btn-primary");
