@@ -212,7 +212,23 @@ namespace flexbackend.site.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)
         {
-            Speaker speaker = db.Speakers.Find(id);
+			//DateTime today = DateTime.Today;
+			//bool hasUnfinishedActivities = db.Activities.Any(a => a.fk_SpeakerId == id &&  a.ActivityDate >= today);
+   //         bool hasReservationInfo = db.OneToOneReservations.Any(o => o.fk_ReservationSpeakerId == id); ;
+
+			//bool hasUnfinishedReservations = db.OneToOneReservations.Any(o => o.fk_ReservationSpeakerId == id && o.ReservationEndTime >= today);
+
+   //         if (hasUnfinishedActivities || hasUnfinishedReservations)
+   //         {
+			//	string alertMessage = "無法刪除，講師有未完成的活動。";
+			//	string script = $"alert('{alertMessage}');";
+			//	script += "window.location.href='/Speaker/Index';"; // 返回到 Index 頁面
+			//	return Content("<script>" + script + "</script>");
+
+			//}
+
+
+			Speaker speaker = db.Speakers.Find(id);
             db.Speakers.Remove(speaker);
             db.SaveChanges();
             return RedirectToAction("Index");   

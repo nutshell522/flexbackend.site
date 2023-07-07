@@ -10,6 +10,14 @@
     string id_categoryId = criteria.CategoryId.HasValue ? criteria.CategoryId.Value.ToString() : "";
 
 }
+<style>
+    .disabled-btn {
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+
 
 <h2>活動管理</h2>
 
@@ -20,7 +28,7 @@
     <form method="get" class="me-auto">
         <div class="row">
             <div class="left d-flex">
- 輸入框區域 寬度可移除下方class w-50 自行調整 
+ 輸入框區域 寬度可移除下方class w-50 自行調整
 <div class="col col-3">
 <div class="input-group me-2">
 <input class="form-control search-bar" type="text" placeholder="搜尋..." name="ActivityName" value="@criteria.ActivityName" id="search">
@@ -183,7 +191,7 @@
                         <div class="manage-btn-container">
                             <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                             <a href="@Url.Action("Details", new {id=item.ActivityId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                            <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del @(item.ActivityStatusDescription=="已下架" ? "disabled-btn" : "")"><i class="bi bi-trash-fill"></i></a>
 
                         </div>
                     </td>

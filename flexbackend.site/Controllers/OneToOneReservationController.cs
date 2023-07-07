@@ -1,6 +1,8 @@
 ﻿using Flex_Activity.dll.Infra.DapperRepositories;
 using Flex_Activity.dll.Interface;
+using Flex_Activity.dll.Models.Dto;
 using Flex_Activity.dll.Models.Exts;
+using Flex_Activity.dll.Models.ViewModels.DapperVM;
 using Flex_Activity.dll.Services;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,7 @@ namespace flexbackend.site.Controllers
 
 		}
 
+        [HttpPost]
         public ActionResult Delete(int id, int SpeakerId)
         {
 			IReservationRepository repo = new ReservationDapperRepository();
@@ -61,6 +64,31 @@ namespace flexbackend.site.Controllers
 
 		}
 
+        //Get
+        public ActionResult Edit (int speakerId, int MemberId)
+        {
+            IReservationRepository repo = new ReservationDapperRepository();
+            OneToOneReservationServices services = new OneToOneReservationServices(repo);
+
+            var editInfoDto = services.GetOneEditInfo(speakerId, MemberId);
+            var vm = editInfoDto.ToEditVM();
+            return View(vm);
+            
+        }
+
+        [HttpPost]
+        public ActionResult Edit (ReservationEditDapperVM vm)
+        {
+			IReservationRepository repo = new ReservationDapperRepository();
+			OneToOneReservationServices service = new OneToOneReservationServices(repo);
+			if (ModelState.IsValid)
+            {
+                var result = service.Update(vm.ToEditDto());
+                return RedirectToAction("Index");
+            }
+            return View(vm);
+
+        }
 	}
 }
 

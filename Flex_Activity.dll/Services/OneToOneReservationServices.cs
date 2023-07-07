@@ -44,6 +44,20 @@ namespace Flex_Activity.dll.Services
             return detailDto.ToList();
         }
 
+        public Result Update (ReservationEditDapperDto dto)
+        {
+             _repo.Update(dto);
+            return Result.Success();
+
+           
+        }
+
+		public ReservationEditDapperDto GetOneEditInfo(int speakerId, int MemberId)
+        {
+            var detailDto = _repo.GetOneEditInfo(speakerId, MemberId);
+            return detailDto.FirstOrDefault();
+            
+        }
 
 	}
 }

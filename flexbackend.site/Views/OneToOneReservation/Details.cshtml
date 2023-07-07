@@ -17,10 +17,16 @@
     @*<h4>OneToOneReservationDetailDapperVM</h4>*@
     <hr />
     <dl class="dl-horizontal">
+        @{
+            object reservationSpeakerId = null; // 創一個變數來存 ReservationSpeakerId，這樣末端的button才能抓到值
+            object memberId = null;
+        }
+
         @foreach (var item in Model)
         {
             <dt>
                 @Html.DisplayNameFor(model => item.MemberId)
+                @{ memberId = item.MemberId;}
             </dt>
 
             <dd>
@@ -89,6 +95,7 @@
 
             <dd class="hidden">
                 @Html.DisplayFor(model => item.fk_ReservationSpeakerId)
+                @{ reservationSpeakerId = item.fk_ReservationSpeakerId; }
             </dd>
 
             <dt class="hidden">
@@ -104,6 +111,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { speakerId = reservationSpeakerId, MemberId = memberId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
