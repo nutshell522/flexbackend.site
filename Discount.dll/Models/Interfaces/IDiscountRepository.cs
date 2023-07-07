@@ -18,7 +18,8 @@ namespace Discount.dll.Models.Interfaces
 		bool ExistsDiscountName(string discountName);
 		bool ExistsDiscountName(string discountName, int id);
 		bool ExistsStartDate(DateTime startDate, int id);
-		(bool exists, int smallerNum, int largerNum) ExistsOrderby(int OrderBy);
+        bool AlreadyStarted(int id);
+        (bool exists, int smallerNum, int largerNum) ExistsOrderby(int OrderBy);
 		(bool exists, int smallerNum, int largerNum) ExistsOrderby(int OrderBy, int id);
 	}
 }

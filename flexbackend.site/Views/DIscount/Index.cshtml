@@ -165,8 +165,13 @@
                         {
                             data: null,
                             render: function (data) {
+                                if (data.Status == "已過期") {
+                                    return `<div class="manage-btn-container d-flex justify-content-around">
+                                                    <a href="#" class="btn-del" data-id="${data.DiscountId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
+                                                </div>`;
+                                }
                                 return `<div class="manage-btn-container d-flex justify-content-around">
-                                                    <a href="CreateOrEdit?id=${data.DiscountId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                                                    <a href="#" class="btn-edit" data-id="${data.DiscountId}"><i class="bi bi-pencil-square"></i></a>
                                                     <a href="#" class="btn-del" data-id="${data.DiscountId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
                                                 </div>`;
                             },
@@ -187,7 +192,20 @@
                     dom: '1Brtip',
                 });
             }
-
+            $(document).on("click", ".btn-edit", function () {
+                editDiscount($(this).data("id"));
+            });
+            function editDiscount(discountId) {
+                $.ajax({
+                    url: '/Discount/CreateOrEdit?id=' + discountId,
+                    type: 'GET',
+                    success: function (response) {
+                        window.location.href = '/Discount/CreateOrEdit?id=' + discountId;
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            }
 
             $(document).on("click", ".btn-del", function () {
                 showDeleteConfirmation($(this).data("id"), $(this).data("name"));

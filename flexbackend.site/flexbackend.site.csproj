@@ -164,7 +164,6 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\CustomizedShoesPoesController.cs" />
     <Compile Include="Controllers\Customized_materialsController.cs" />
-    <Compile Include="Controllers\DIscountController.cs" />
     <Compile Include="Controllers\DiscountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\logistics_companiesController.cs" />

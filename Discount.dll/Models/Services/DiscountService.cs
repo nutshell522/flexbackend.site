@@ -117,7 +117,9 @@ namespace Discount.dll.Models.Services
 			{
 				return Result.Fail("開始日期已不可更動");
 			}
-			if (dto.StartDate < DateTime.Today)
+			var alreadyStarted = _repo.AlreadyStarted(dto.DiscountId);
+
+            if (!alreadyStarted && dto.StartDate < DateTime.Today)
 			{
 				return Result.Fail("開始日期不可小於今天");
 			}

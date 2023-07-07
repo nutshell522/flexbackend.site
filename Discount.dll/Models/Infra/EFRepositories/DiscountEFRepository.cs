@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Runtime.Remoting.Contexts;
 using System.Security.Principal;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Discount.dll.Models.Infra.EFRepositories
 {
@@ -21,7 +22,12 @@ namespace Discount.dll.Models.Infra.EFRepositories
             _db = new AppDbContext();
         }
 
-		public int Create(DiscountCreateOrEditDto dto)
+        public bool AlreadyStarted(int id)
+        {
+            return _db.Discounts.Any(m => m.DiscountId == id && m.StartDate <= DateTime.Today);
+        }
+
+        public int Create(DiscountCreateOrEditDto dto)
 		{
 			var discount = new EFModels.EFModels.Discount
 			{
@@ -176,8 +182,6 @@ namespace Discount.dll.Models.Infra.EFRepositories
 		{
 			var discount = _db.Discounts.Find(dto.DiscountId);
 
-
-			// 更新折扣的属性
 			discount.DiscountName = dto.DiscountName;
 			discount.DiscountDescription = dto.DiscountDescription;
 			discount.DiscountType = dto.DiscountType;
