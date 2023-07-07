@@ -170,12 +170,8 @@
 [   ]待修正 Speaker Create、Edit 的電話不能重複，如果輸入重複電話號碼，會死在html
 [   ]待修正 Activity Create、Edit的邏輯驗證，錯誤訊息沒辦法一次一起出來
 [   ]待修正 Activity Create、 Edit 照片的驗證，錯誤訊息不會出現
-
 [ v ]待修正 Activity 已上架的活動只能編輯敘述
 [ v ]待修正 Activity 未上架的活動 編輯時間的時候 用萬年曆dateTimePicker和datePicker會出 大 事!!!
-
-
-
 7/7 【OneToOneReservation Detail】【Dapper】
 [ V ]OneToOneReservationDetailDapper Dto
 [ V ]OneToOneReservationDetailDapper VM
