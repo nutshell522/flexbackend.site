@@ -18,18 +18,21 @@ namespace Flex_Activity.dll.Models.ViewModels
         public string SpeakerName { get; set; }
 
         [Display(Name = "連絡電話")]
-        [StringLength(10)]
-        public string SpeakerPhone { get; set; }
+        [StringLength(10, MinimumLength =10, ErrorMessage ="電話長度錯誤")]
+		[Required]
+		public string SpeakerPhone { get; set; }
 
         [Display(Name = "專長領域")]
-        public int fk_SpeakerFieldId { get; set; }
+		[Range(1, 999, ErrorMessage = "{0}必填")]
+		public int fk_SpeakerFieldId { get; set; }
 
         [Display(Name = "講師照片")]
         [StringLength(300)]
         public string SpeakerImg { get; set; }
 
         [Display(Name = "駐點分店")]
-        public int? fk_SpeakerBranchId { get; set; }
+		[Range(1, 999, ErrorMessage = "{0}必填")]
+		public int? fk_SpeakerBranchId { get; set; }
 
         [Display(Name ="講師簡介")]
         [StringLength(500)]

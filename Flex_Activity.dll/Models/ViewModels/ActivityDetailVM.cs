@@ -17,7 +17,7 @@ namespace Flex_Activity.dll.Models.ViewModels
         public string ActivityName { get; set; }
 
         [Display(Name = "活動類別")]
-        public int fk_ActivityCategoryId { get; set; }
+        public string ActivityCategoryName { get; set; }
 
 
 
@@ -25,7 +25,7 @@ namespace Flex_Activity.dll.Models.ViewModels
         public DateTime ActivityDate { get; set; }
 
         [Display(Name = "活動講者")]
-        public int fk_SpeakerId { get; set; }
+        public string SpeakerName { get; set; }
 
 
         [Display(Name = "活動地點")]     

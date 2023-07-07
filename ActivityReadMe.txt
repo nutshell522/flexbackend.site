@@ -48,13 +48,14 @@
 [ v ] 把ViewBag的List寫成副程式，讓Action可以叫用它
 
 
-***【Activity的搜尋功能沒辦法記住歷史查詢過的字，待修正】***
+
 [ v ]Activity的搜尋完成，修正好記住歷史資訊的部份
 
 	Allen錄影檔看到20230609 整天結束
 
 [ v ]Activity的刪除
 [ v ]Activity的查看資訊
+
 
 [ v ]Speaker的Index
 	[ v ]SpeakerDto
@@ -68,15 +69,15 @@
 
     Allen錄影檔看到20230616 整天結束
 
-[ Working On ]Speaker的Create
+[ V ]Speaker的Create
 	[ V ]Speaker Create的VM
 	[ V ]Speaker Create的Dto
 	[ V ]Speaker Create 的 VM 轉 Dto擴充方法、Dto 轉 Entity擴充方法
-	[ v ]Speaker的 ISpeakerRepository
-	[ ]Speaker的 SpeakerEFRepository
-	[ ]Speaker的 SpeakerServices
-	[ ]Speaker Create 的 Get Action
-	[ ]Speaker Create 的 Post Action
+	[ V ]Speaker的 ISpeakerRepository
+	[ V ]Speaker的 SpeakerEFRepository
+	[ V ]Speaker的 SpeakerServices
+	[ V ]Speaker Create 的 Get Action
+	[ V ]Speaker Create 的 Post Action
 
 	Allen錄影檔看到20230619 9:03
 
@@ -85,4 +86,113 @@
 
 
 
-	***【Speaker 的 Create沒有依照VM的驗證規則去驗證!!! 待修正】***
+	
+	Speaker的Create完成
+	已修正Speaker Create驗證規則
+	
+[ V ]Speaker 的 Edit
+	[ V ]Speaker Edit 的 VM
+	[ V ]Speaker Edit 的 Dto
+	[ V ]Speaker Edit 的 VM 轉 Dto擴充方法、Dto 轉 Entity擴充方法
+	[ V  ]Speaker Edit 的 Entity 轉 Dto 擴充方法、 Dto 轉 VM 擴充方法 
+	[ V ]Speaker的 ISpeakerRepository
+	[ V ]Speaker的 SpeakerEFRepository
+	[ V ]Speaker的 SpeakerServices
+	[ V ]Speaker Edit 的 Get Action
+	[ V ]Speaker Edit 的 Post Action
+
+	Speaker的Edit完成
+	***【待邏輯驗證加入並修正】***
+
+[ * ]Speaker 的 搜尋
+	[ v ]Speaker Index 的 VM
+	[ v ]Speaker Index 的 criteria
+	[ v ]Speaker Index 的 Action
+
+*****【Speaker的Edit無法記住之前輸入的值，待修正】*****
+
+[ v ]Speaker 的 查看詳細資訊
+	[ v ]Speaker Detail 的 Dto
+	[ v ]Speaker Detail 的 VM
+	[ v ]Speaker Detail 的 entity 轉 Dto、Dto 轉 VM
+	[ v ]Speaker Detail的 Action (GET)
+
+	【Speaker 的 查看詳細資訊 完成】
+
+[ v ]Speaker 的 刪除
+	[ v ]Speaker Delete 的 Action (GET) (就等於Speaker的查看詳細資訊Details)
+	[ v ]Speaker Delete 的 Action (POST)
+
+	【Speaker 的 刪除 完成】
+
+[ v ]一對一預約 Index
+	[ v ]Dto
+	[ v ]VM
+	[ v ]Dto 轉 VM 的 擴充方法
+	[ v ]IRepository
+	[ v ]Infra下面建立DapperRepositories資料夾、DapperRepository
+	[ v ]Services
+	[ v ]Controller的Action
+
+	【一對一預約 Index 完成】
+
+
+
+[ v ]一對一預約 講師預約紀錄 ReservationList
+	[ v ] ReservationList Dto
+	[ v ] ReservationList VM
+	[ v ]Dto 轉 VM 的 擴充方法
+	[ v ]IRepository
+	[ v ]DapperRepository
+	[ v ]Services
+	[ v ]Controller的Action
+
+	【一對一預約 講師預約紀錄 ReservationList 完成】
+
+
+[ * ]一對一預約 刪除 (未完成的可以刪除) 【Dapper】
+	[ V ]IRepository
+	[ V ]DapperRepository
+	[ V ]Services
+	[ v ]Controller的Action
+
+	***【刪除後跳不回去ReservationList頁面，已修正】***
+
+[ v ]修正 Activity Create 日期的驗證bug
+[ v ]修正 Reservation刪除之後可以跳回去ReservationList頁面
+[  待修正   ]新增 Speaker Create、Edit 的電話不能重複
+
+
+
+***[待修正】Activity Create、Edit 的時間日期、圖片
+
+7/6
+[   ]待修正 Speaker Create、Edit 的電話不能重複，如果輸入重複電話號碼，會死在html
+[   ]待修正 Activity Create、Edit的邏輯驗證，錯誤訊息沒辦法一次一起出來
+[   ]待修正 Activity Create、 Edit 照片的驗證，錯誤訊息不會出現
+[ v ]待修正 Activity 已上架的活動只能編輯敘述
+[ v ]待修正 Activity 未上架的活動 編輯時間的時候 用萬年曆dateTimePicker和datePicker會出 大 事!!!
+7/7 【OneToOneReservation Detail】【Dapper】
+[ V ]OneToOneReservationDetailDapper Dto
+[ V ]OneToOneReservationDetailDapper VM
+[ V ]OneToOneReservationDetail擴充方法
+[ V ]OneToOneReservationDetail SQL語法
+[ V ] IReservationRepository
+[ V ] DapperReservationRepository
+[ V ]去上一頁的html把要傳入的參數打開
+[ V ] Services
+[ V ] Controller
+[ V ]改html
+
+7/7-2 【OneToOneReservation Edit】 【Dapper】
+[  ]OneToOneReservationEditlDapper Dto
+[  ]OneToOneReservationEditlDapper VM
+[  ]OneToOneReservationEdit擴充方法
+[  ]OneToOneReservationEdit SQL語法
+[  ] IReservationRepository
+[  ] DapperReservationRepository
+[  ]去上一頁的html把要傳入的參數打開
+[  ] Services
+[  ] Controller
+[  ]改html
+

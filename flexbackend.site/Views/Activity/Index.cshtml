@@ -175,7 +175,9 @@
                         @Html.DisplayFor(modelItem => item.ActivityBookEndTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ActivityStatusDescription)
+                        <span class="@(item.ActivityStatusDescription=="已上架"?"status-success":(item.ActivityStatusDescription=="已下架"?"status-dark":"status-primary"))">
+                            @Html.DisplayFor(modelItem => item.ActivityStatusDescription)
+                        </span>
                     </td>
                     <td>
                         <div class="manage-btn-container">

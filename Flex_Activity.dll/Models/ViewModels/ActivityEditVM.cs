@@ -19,10 +19,13 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityName { get; set; }
 
 		[Display(Name = "活動類別")]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_ActivityCategoryId { get; set; }
 
 
 		[Display(Name = "活動日期")]
+		[DataType(DataType.DateTime)]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
 		public DateTime ActivityDate { get; set; }
 
 		[Display(Name = "活動地點")]
@@ -37,6 +40,7 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public DateTime ActivityBookEndTime { get; set; }
 
 		[Display(Name = "活動講者")]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_SpeakerId { get; set; }
 
 		[Display(Name = "課程圖片")]

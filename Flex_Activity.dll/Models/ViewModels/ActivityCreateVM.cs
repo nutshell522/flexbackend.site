@@ -1,4 +1,5 @@
 ﻿using EFModels.EFModels;
+using Flex_Activity.dll.Infra;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,14 +21,19 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityName { get; set; }
 
 		[Display(Name = "活動類別")]
+		[Required]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_ActivityCategoryId { get; set; }
 
 
 
 		[Display(Name = "活動日期")]
+		[Required]
 		public DateTime ActivityDate { get; set; }
 
 		[Display(Name = "活動講者")]
+		[Required]
+		[Range(1, 999, ErrorMessage = "{0}必填")]
 		public int fk_SpeakerId { get; set; }
 
 
@@ -37,30 +43,37 @@ namespace Flex_Activity.dll.Models.ViewModels
 		public string ActivityPlace { get; set; }
 
 		[Display(Name = "報名時間(起)")]
+		[Required]
 		public DateTime ActivityBookStartTime { get; set; }
 
 		[Display(Name = "報名時間(迄)")]
+		[Required]
 		public DateTime ActivityBookEndTime { get; set; }
 
 
-		[Display(Name = "課程圖片")]
-		[Required]
-		[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
+		[Display(Name = "活動照片")]
+		
+		//[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
 		[StringLength(300)]
 		public string ActivityImage { get; set; }
 
 
 		[Display(Name = "參加年齡")]
+		[Required]
+		[Range(1, 130, ErrorMessage = "{0}輸入錯誤")]
 		//public byte ActivityAge { get; set; }
 		public int ActivityAge { get; set; }
 
 		[Display(Name = "活動特價")]
+		[Required]
 		public int ActivitySalePrice { get; set; }
 
 		[Display(Name = "活動原價")]
+		[Required]
 		public int ActivityOriginalPrice { get; set; }
 
 		[Display(Name = "活動描述")]
+		[Required]
 		[StringLength(300)]
 		public string ActivityDescription { get; set; }
 
