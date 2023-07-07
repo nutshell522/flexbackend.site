@@ -212,6 +212,12 @@
                     "order": [[1, 'asc']]
                 }
             );
+        table.on('draw.dt', function () {
+            $('.status-switch').off('change'); // 移除之前的事件处理程序
+            $('.status-switch').on('change', function () {
+                // AJAX 请求代码
+            });
+        });
 
 
 
