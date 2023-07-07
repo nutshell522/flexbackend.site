@@ -15,6 +15,10 @@ using System.Web.UI.WebControls;
 using EFModels.EFModels;
 using System.Web.Security;
 using Members.dll.Models.ViewsModels.Staff;
+using flexbackend.site.Filters;
+using static flexbackend.site.Filters.AuthorizeFilter;
+using System.Net;
+using System.Data.Entity;
 
 namespace flexbackend.site.Controllers
 {
@@ -28,26 +32,164 @@ namespace flexbackend.site.Controllers
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
 		}
+		private AppDbContext db = new AppDbContext();
 
-		//忘記密碼
-		public ActionResult ForgetPassword()
+		/// <summary>
+		/// 中級的員工權限才可以編輯員工資料
+		/// </summary>
+		/// <param name="staffId"></param>
+		/// <returns></returns>
+		//[AuthorizeFilter(UserRole.IntermediatePermission)]
+		public ActionResult EditStaff(int staffId)
+		{
+			if (staffId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			StaffService service = GetStaffRepository();
+			var staff = service.GetByStaffId(staffId).ToStaffEditVM();
+
+			//PrepareCategoryDataSource(staff.fk_PermissionsId);
+			PrepareCategoryDataSource(staff.fk_DepartmentId);
+			//PrepareCategoryDataSource(staff.fk_TitleId);
+
+			return View(staff);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		//[AuthorizeFilter(UserRole.IntermediatePermission)]
+		public ActionResult EditStaff(EditStaffVM vm)
+		{
+			PrepareCategoryDataSource(vm.fk_DepartmentId);
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ResetStaff(vm);
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+			//PrepareCategoryDataSource(vm.fk_PermissionsId);
+			//PrepareCategoryDataSource(vm.fk_TitleId);
+			//PrepareCategoryDataSource(vm.GenderInt);
+
+			return RedirectToAction("StaffList");
+
+		}
+
+		private void PrepareCategoryDataSource(int? id)
+		{
+			var dipartments = db.Departments.ToList().Prepend(new Department()).ToList();
+			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
+			ViewBag.DepartmentId = new SelectList(dipartments, "DepartmentId", "DepartmentName", id);
+			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
+			List<SelectListItem> gender = new List<SelectListItem>
+			{
+			new SelectListItem { Value = "true" , Text = "男" },
+			new SelectListItem { Value = "false" , Text = "女" },
+			};
+			ViewBag.Gender = gender;
+		}
+
+		private Result ResetStaff(EditStaffVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			service.ResetStaff(vm.ToStaffEditDto());
+			return Result.Success();
+		}
+
+		//檢視某筆員工
+		public ActionResult GetStaffDetail(int staffId)
+		{
+			if (staffId == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			StaffService service = GetStaffRepository();
+			return View(service.GetStaffDetail(staffId).ToStaffDetailVM());
+		}
+
+		//[AuthorizeFilter(UserRole.AdvancedPermission)]
+		public ActionResult DeleteStaff(int staffId)
+		{
+			//如果staffId為空，返回404錯誤碼
+			if (staffId == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			StaffService service = GetStaffRepository();
+			service.DeleteStaff(staffId);
+			return RedirectToAction("StaffList");
+		}
+
+		//[HttpPost,ActionName("DeleteStaff")]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult DeleteStaff2(int staffId)
+		//{
+		//	var db = new AppDbContext();
+		//	//List<StaffsIndexVM> staffsIndexVM = new List<StaffsIndexVM>();
+		//	var staff = db.Staffs.FirstOrDefault(s => s.StaffId == staffId);
+
+		//	//for (int i = 0; i < staff) ; i++)
+		//	//{
+		//	//	staffsIndexVM.Add(staffsIndexVM[staffId]);
+		//	//}
+
+		//	StaffService service = GetStaffRepository();
+		//	service.DeleteStaff(staffId);
+
+		//	return new EmptyResult();
+		//}
+
+		public ActionResult EditPassword()
 		{
 			return View();
 		}
 		[HttpPost]
-		public ActionResult ForgetPassword(ForgetPasswordVM vm)
+		[ValidateAntiForgeryToken]
+		//[Authorize]
+		public ActionResult EditPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
-			Result result = ResetPassword();
+			Result result = ResetPassword(vm);
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+			return RedirectToAction("Login");
+		}
+
+		public ActionResult ForgetPassword()
+		{
 			return View();
 		}
 
-		private Result ResetPassword()
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
-			throw new NotImplementedException();
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ResetPassword(vm);
+
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+			return RedirectToAction("Login");
 		}
 
-		//Logout
+		private Result ResetPassword(ForgetPasswordVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			return service.ResetPassword(vm.ToForgetPasswordDto());
+		}
+
+		public ActionResult NoPermission()
+		{
+			return View();
+		}
+
 		public ActionResult Logout()
 		{
 			Session.Abandon();
@@ -55,9 +197,11 @@ namespace flexbackend.site.Controllers
 			return Redirect("/Staffs/Login");
 		}
 
-		//Login
 		public ActionResult Login()
 		{
+			//Session["UserRole"] = "GeneralPermission";
+			Session["UserRole"] = "IntermediatePermission";
+			//Session["UserRole"] = "AdvancedPermission";
 			return View();
 		}
 
@@ -74,7 +218,7 @@ namespace flexbackend.site.Controllers
 			if (result.IsSuccess == false)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return View(vm);
+				return RedirectToAction("Home");
 			}
 
 			//是否記住登入成功的會員
@@ -135,15 +279,16 @@ namespace flexbackend.site.Controllers
 				: Result.Fail("帳號或密碼有誤");
 		}
 
-
 		//Create
 		public ActionResult CreateStaff()
 		{
+			PrepareCategoryDataSource(null);
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken] //防止跨網站偽造請求的攻擊
+		[Authorize]
 		public ActionResult CreateStaff(StaffsCreateVM vm)
 		{
 			Session["Account"] = "Account";
@@ -161,7 +306,7 @@ namespace flexbackend.site.Controllers
 			{
 				//通過驗證，將資料存到db
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return View(vm);
+				return RedirectToAction("StaffList");
 			}
 		}
 
@@ -169,11 +314,11 @@ namespace flexbackend.site.Controllers
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			dto.Mobile = "0921111111";
+			dto.Mobile = "0921133444";
 			//dto.Account = Session["Account"].ToString();
 			//dto.Password = Session["Password"].ToString();
-			dto.Account = "Tina";
-			dto.Password = "tina";
+			dto.Account = "444";
+			dto.Password = "444";
 			dto.fk_PermissionsId = 3;
 			dto.fk_TitleId = 2;
 			dto.fk_DepartmentId = 3;
@@ -182,11 +327,28 @@ namespace flexbackend.site.Controllers
 
 		//Read
 		[Authorize]
-		public ActionResult StaffList()
+		public ActionResult StaffList(StaffCriteria criteria)
 		{
-			StaffService service = GetStaffRepository();
-			return View(service.GetStaffs());//return View (model)
-		}
+			PrepareCategoryDataSource(criteria.DepartmentId);
+			ViewBag.Criteria = criteria;
+			//查詢,第一次進入網頁 criteria 是沒有值
 
+			var query = db.Staffs.Include(d => d.Department);
+			query.Select(d => d.Department.DepartmentName);
+
+			if (string.IsNullOrEmpty(criteria.Name) == false)
+			{
+				query = query.Where(d => d.Name.Contains(criteria.Name));
+			}
+			if (criteria.DepartmentId != null && criteria.DepartmentId.Value > 0)
+			{
+				query = query.Where(d => d.fk_DepartmentId == criteria.DepartmentId.Value);
+			}
+
+			var result = query.ToList().Select(d => d.ToStaffsIndexDto().ToStaffsIndexVM());
+
+			StaffService service = GetStaffRepository();
+			return View(result);//return View (model)
+		}
 	}
 }
