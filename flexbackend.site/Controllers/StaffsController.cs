@@ -19,6 +19,7 @@ using flexbackend.site.Filters;
 using static flexbackend.site.Filters.AuthorizeFilter;
 using System.Net;
 using System.Data.Entity;
+using System.Collections;
 
 namespace flexbackend.site.Controllers
 {
@@ -39,7 +40,7 @@ namespace flexbackend.site.Controllers
 		/// </summary>
 		/// <param name="staffId"></param>
 		/// <returns></returns>
-		//[AuthorizeFilter(UserRole.IntermediatePermission)]
+		[AuthorizeFilter(UserRole.IntermediatePermission)]
 		public ActionResult EditStaff(int staffId)
 		{
 			if (staffId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -56,7 +57,7 @@ namespace flexbackend.site.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		//[AuthorizeFilter(UserRole.IntermediatePermission)]
+		[AuthorizeFilter(UserRole.IntermediatePermission)]
 		public ActionResult EditStaff(EditStaffVM vm)
 		{
 			PrepareCategoryDataSource(vm.fk_DepartmentId);
@@ -77,9 +78,9 @@ namespace flexbackend.site.Controllers
 
 		private void PrepareCategoryDataSource(int? id)
 		{
-			var dipartments = db.Departments.ToList().Prepend(new Department()).ToList();
+			//var dipartments = db.Departments.ToList().Prepend(new Department()).ToList();
 			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
-			ViewBag.DepartmentId = new SelectList(dipartments, "DepartmentId", "DepartmentName", id);
+			ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", id);
 			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
 			List<SelectListItem> gender = new List<SelectListItem>
 			{
@@ -107,7 +108,7 @@ namespace flexbackend.site.Controllers
 			return View(service.GetStaffDetail(staffId).ToStaffDetailVM());
 		}
 
-		//[AuthorizeFilter(UserRole.AdvancedPermission)]
+		[AuthorizeFilter(UserRole.AdvancedPermission)]
 		public ActionResult DeleteStaff(int staffId)
 		{
 			//如果staffId為空，返回404錯誤碼
@@ -199,9 +200,6 @@ namespace flexbackend.site.Controllers
 
 		public ActionResult Login()
 		{
-			//Session["UserRole"] = "GeneralPermission";
-			Session["UserRole"] = "IntermediatePermission";
-			//Session["UserRole"] = "AdvancedPermission";
 			return View();
 		}
 
@@ -218,7 +216,7 @@ namespace flexbackend.site.Controllers
 			if (result.IsSuccess == false)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return RedirectToAction("Home");
+				return View(vm);
 			}
 
 			//是否記住登入成功的會員
@@ -272,6 +270,7 @@ namespace flexbackend.site.Controllers
 			//var hashPrassword = HashUtility.ToHA256(vm.Password, salt);
 
 			string password = vm.Password;
+			Session["UserRole"] = staff.fk_PermissionsId;
 
 			//檢查密碼
 			return string.CompareOrdinal(staff.Password, password) == 0
@@ -297,6 +296,7 @@ namespace flexbackend.site.Controllers
 			//不通過驗證，再次返回 StaffsCreateVM 
 			if (ModelState.IsValid == false) return View(vm);
 
+			PrepareCategoryDataSource(vm.fk_DepartmentId);
 			Result result = Create(vm);
 			if (result.IsSuccess)
 			{
@@ -306,22 +306,18 @@ namespace flexbackend.site.Controllers
 			{
 				//通過驗證，將資料存到db
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return RedirectToAction("StaffList");
 			}
+				return RedirectToAction("StaffList");
 		}
 
 		private Result Create(StaffsCreateVM vm)
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			dto.Mobile = "0921133444";
 			//dto.Account = Session["Account"].ToString();
 			//dto.Password = Session["Password"].ToString();
-			dto.Account = "444";
-			dto.Password = "444";
-			dto.fk_PermissionsId = 3;
-			dto.fk_TitleId = 2;
-			dto.fk_DepartmentId = 3;
+			//如果帳號未填就給他abc
+			
 			return service.CreateStaff(dto);
 		}
 

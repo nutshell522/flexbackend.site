@@ -13,6 +13,12 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Required]
 		public string Account { get; set; }
 
+		[Display(Name = "舊密碼")]
+		[Required]
+		[DataType(DataType.Password)]
+		[StringLength(10)]
+		public string OldPassword { get; set; }
+
 		[Display(Name = "新設密碼")]
 		[Required]
 		[DataType(DataType.Password)]

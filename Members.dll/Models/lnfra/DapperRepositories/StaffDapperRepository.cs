@@ -41,8 +41,8 @@ namespace Members.dll.Models.lnfra.DapperRepositories
 			{
 				conn.Open();
 
-				string sql = @"INSERT INTO Staffs ([Name],Birthday,Gender,Age,Email,Mobile,Account,Password,fk_PermissionsId,fk_TitleId,fk_DepartmentId)
-VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Mobile,@Account,@Password,@fk_PermissionsId,@fk_TitleId,@fk_DepartmentId);";
+				string sql = @"INSERT INTO Staffs ([Name],Birthday,Gender,Age,Email,Account,Password,fk_PermissionsId,fk_TitleId,fk_DepartmentId)
+VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Account,@Password,@fk_PermissionsId,@fk_TitleId,@fk_DepartmentId);";
 				conn.Execute(sql, dto);
 			}
 

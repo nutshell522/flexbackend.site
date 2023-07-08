@@ -10,9 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Helpers;
+using System.Xml.Linq;
 
 namespace Members.dll.Models.Services
 {
@@ -45,7 +48,7 @@ namespace Members.dll.Models.Services
 		}
 
 		//Login 沒有寫到三層式
-		public Result Login(LoginVM vm)
+		public Result Login()
 		{
 			//判斷帳號、密碼是否存在
 			//if(vm.Account==Staff.)
@@ -57,10 +60,41 @@ namespace Members.dll.Models.Services
 		public Result CreateStaff(StaffsCreateDto dto)
 		{
 			//判斷收到的資料是否正確
-			//計算年齡，目前年分-出生年份
-			int age = DateTime.Today.Year - dto.Birthday.Value.Year;
-			dto.Age = (byte)age;
+			string account = dto.Account;
+			string password = dto.Password;
+			if (account == null && password == null)
+			{
+				account = dto.Name;
+				password = "abc";
+			}
 
+			//計算年齡，目前年分-出生年份.
+			bool age = dto.Age.HasValue;
+			int newStaffAge;
+
+			if (age == false)
+			{
+				newStaffAge = DateTime.Today.Year - dto.Birthday.Value.Year;
+			}
+			else
+			{
+				newStaffAge = DateTime.Today.Year - dto.Birthday.Value.Year;
+			}
+			dto.Age = (byte)newStaffAge;
+
+			dto = new StaffsCreateDto
+			{
+				Name = dto.Name,
+				Birthday = dto.Birthday.Value,
+				Gender = dto.Gender,
+				Age = (byte)newStaffAge,
+				Email = dto.Email,
+				Account = account,
+				Password = password,
+				fk_PermissionsId = dto.fk_PermissionsId,
+				fk_TitleId = dto.fk_TitleId,
+				fk_DepartmentId = dto.fk_DepartmentId,
+			};
 			//存到db
 			_repo.CreateStaff(dto);
 
@@ -94,7 +128,7 @@ namespace Members.dll.Models.Services
 			return staffDetailDto;
 		}
 
-		public  EditStaffDto GetByStaffId(int staffId)
+		public EditStaffDto GetByStaffId(int staffId)
 		{
 			//如果取得會員生日
 			//將格式轉換
@@ -110,12 +144,12 @@ namespace Members.dll.Models.Services
 				return Result.Fail("找不到員工");
 			}
 
-			 _repo.EditStaff(dto);
+			_repo.EditStaff(dto);
 			return Result.Success();
 		}
 
-	
 
-		
+
+
 	}
 }
