@@ -2,6 +2,7 @@
 using Orders.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -326,8 +327,11 @@ namespace flexbackend.site.Controllers
                 var db = new AppDbContext();
                 var orderItems = GetOrderItemsIndex(orderId);
                 int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
-                var order = GetOrderById(orderId);
+                int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+                var order = db.orders.AsNoTracking().FirstOrDefault(o => o.Id == orderId); ;
                 order.total_price = totalDiscountSubtotal;
+                order.total_quantity = totalquantity;
+                db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
 
                 TempData.Keep("fk_typeId");
@@ -368,7 +372,8 @@ namespace flexbackend.site.Controllers
 
 		public ActionResult EditItems(int id)
 		{
-			var order = GetOrderItemsById(id);
+            TempData.Keep("OrderId");
+            var order = GetOrderItemsById(id);
 
 			if (order == null)
 			{
@@ -396,7 +401,8 @@ namespace flexbackend.site.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult EditItems(OrderItemsVM vm)
 		{
-			if (ModelState.IsValid == false)
+            int orderId = (int)TempData["OrderId"];
+            if (ModelState.IsValid == false)
 			{
 				return View(vm);
 			}
@@ -405,7 +411,15 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
-              
+                var db = new AppDbContext();
+                var orderItems = GetOrderItemsIndex(orderId);
+                int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+                int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+                var order = db.orders.AsNoTracking().FirstOrDefault(o => o.Id == orderId); ;
+                order.total_price = totalDiscountSubtotal;
+                order.total_quantity = totalquantity;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
 
                 TempData.Keep("fk_typeId");
 				
