@@ -175,26 +175,43 @@
 
 
 7/7 OneToOneReservation DetailDapper
-[ V ]OneToOneReservationDetailDapper Dto
-[ V ]OneToOneReservationDetailDapper VM
-[ V ]OneToOneReservationDetail耎よ猭
-[ V ]OneToOneReservationDetail SQL粂猭
-[ V ] IReservationRepository
-[ V ] DapperReservationRepository
-[ V ]htmlр璶肚把计ゴ秨
-[ V ] Services
-[ V ] Controller
-[ V ]эhtml
+	[ V ]OneToOneReservationDetailDapper Dto
+	[ V ]OneToOneReservationDetailDapper VM
+	[ V ]OneToOneReservationDetail耎よ猭
+	[ V ]OneToOneReservationDetail SQL粂猭
+	[ V ] IReservationRepository
+	[ V ] DapperReservationRepository
+	[ V ]htmlр璶肚把计ゴ秨
+	[ V ] Services
+	[ V ] Controller
+	[ V ]эhtml
 
-7/7-2 OneToOneReservation Edit Dapper
-[ v ]OneToOneReservationEditlDapper Dto
-[ v ]OneToOneReservationEditlDapper VM
-[ v ]OneToOneReservationEdit耎よ猭
-[ v ]OneToOneReservationEdit SQL粂猭
-[ v ] IReservationRepository
-[ v ] DapperReservationRepository
-[ v ]htmlр璶肚把计ゴ秨
-[ *** ] Services
-[  ] Controller
-[  ]эhtml
+7/7-2 ~ 7/8 OneToOneReservation Edit Dapper
+	[ v ]OneToOneReservationEditlDapper Dto
+	[ v ]OneToOneReservationEditlDapper VM
+	[ v ]OneToOneReservationEdit耎よ猭
+	[ v ]OneToOneReservationEdit SQL粂猭
+	[ v ] IReservationRepository
+	[ v ] DapperReservationRepository
+	[ v ]htmlр璶肚把计ゴ秨
+	[ *** ] Services
+	[ v ] Controller
+	[ v ]эhtml
 
+[ ***  ]タ OneToOneReservation Edit Service糷呸胯喷靡
+
+
+[ ]OneToOneReservation Delete Dapper
+	[ ]OneToOneReservation Delete VM
+	[ ]OneToOneReservation Delete Dto
+	[ ]OneToOneReservatoin Delete 耎よ猭
+	[ ]OneToOneReservation Delete SQL粂猭
+	[ ] IReservationRepository
+	[ ] DapperReservationRepository
+	[ ]htmlр璶肚把计ゴ秨
+	[ ]Services
+	[ ]Controller
+	[ ]эhtml
+
+
+[ ]Speaker  埃Ч到

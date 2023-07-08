@@ -14,11 +14,13 @@ namespace Flex_Activity.dll.Models.ViewModels.DapperVM
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
 		public DateTime ReservationStartTime { get; set; }
 
-		[Display(Name ="預約時間(迄)")]
-		[DataType(DataType.DateTime)]
-		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
-		public DateTime ReservationEndTime { get; set;}
+		//[Display(Name ="預約時間(迄)")]
+		//[DataType(DataType.DateTime)]
+		//[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+		//public DateTime ReservationEndTime { get; set;}
 
+		public int fk_ReservationSpeakerId { get; set; }
 
+		public int MemberId { get; set; }
 	}
 }

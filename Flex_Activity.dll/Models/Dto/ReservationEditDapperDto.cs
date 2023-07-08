@@ -13,8 +13,8 @@ namespace Flex_Activity.dll.Models.Dto
 		[Display(Name = "預約時間(起)")]
 		public DateTime ReservationStartTime { get; set; }
 
-		[Display(Name = "預約時間(迄)")]
-		public DateTime ReservationEndTime { get; set; }
+		//[Display(Name = "預約時間(迄)")]
+		//public DateTime ReservationEndTime { get; set; }
 
 		public int fk_ReservationSpeakerId { get; set; }
 

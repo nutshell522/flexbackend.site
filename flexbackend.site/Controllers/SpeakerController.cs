@@ -73,9 +73,11 @@ namespace flexbackend.site.Controllers
             }
             #endregion
 
-            var speakers = query.ToList()
+            var speakers = query.Where(s=>s.SpeakerVisible == true)
+                                .ToList()
                                 .Select(s => s.ToIndexDto())
                                 .Select(dto => dto.ToIndexVM());
+
             return View(speakers);      
             
 		}
@@ -227,9 +229,8 @@ namespace flexbackend.site.Controllers
 
 			//}
 
-
-			Speaker speaker = db.Speakers.Find(id);
-            db.Speakers.Remove(speaker);
+            Speaker speaker = db.Speakers.Find(id);
+            speaker.SpeakerVisible = false;
             db.SaveChanges();
             return RedirectToAction("Index");   
         }

@@ -80,7 +80,7 @@ namespace Flex_Activity.dll.Models.Exts
 		{
 			return new ReservationEditDapperVM
 			{
-				ReservationEndTime = dto.ReservationEndTime,
+				//ReservationEndTime = dto.ReservationEndTime,
 				ReservationStartTime = dto.ReservationStartTime
 			};
 		}
@@ -90,7 +90,7 @@ namespace Flex_Activity.dll.Models.Exts
 			return new ReservationEditDapperDto
 			{
 				ReservationStartTime = entity.ReservationStartTime,
-				ReservationEndTime = entity.ReservationEndTime
+				//ReservationEndTime = entity.ReservationEndTime
 			};
 		}
 
@@ -99,17 +99,23 @@ namespace Flex_Activity.dll.Models.Exts
 			return new ReservationEditDapperDto
 			{
 				ReservationStartTime = vm.ReservationStartTime,
-				ReservationEndTime = vm.ReservationEndTime
-			};
+				//ReservationEndTime = vm.ReservationEndTime
+				fk_ReservationSpeakerId = vm.fk_ReservationSpeakerId,
+
+				 MemberId = vm.MemberId
+	};
 		}
 
-		public static OneToOneReservation ToEditEntity (this ReservationEditDapperDto dto)
-		{
-			return new OneToOneReservation
-			{
-				ReservationStartTime = dto.ReservationStartTime,
-				ReservationEndTime = dto.ReservationEndTime
-			};
-		}
+		//public static OneToOneReservation ToEditEntity (this ReservationEditDapperDto dto)
+		//{
+		//	return new OneToOneReservation
+		//	{
+		//		ReservationStartTime = dto.ReservationStartTime,
+		//		//ReservationEndTime = dto.ReservationEndTime
+		//		fk_ReservationSpeakerId = dto.fk_ReservationSpeakerId,
+
+			
+		//	};
+		//}
 	}
 }

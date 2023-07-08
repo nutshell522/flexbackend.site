@@ -82,8 +82,8 @@ WHERE fk_ReservationSpeakerId = @speakerId AND MemberId = @MemberId";
 		public void Update(ReservationEditDapperDto dto)
 		{
 			string sql = @"UPDATE OneToOneReservations
-SET ReservationStartTime = '@ReservationStartTime',
-    ReservationEndTime = DATEADD(HOUR, 2, '2023-06-21 07:00:00')
+SET ReservationStartTime = CONVERT(datetime, @ReservationStartTime),
+    ReservationEndTime = DATEADD(HOUR, 2, @ReservationStartTime)
 WHERE ReservationStartTime IN (
     SELECT ReservationStartTime
     FROM OneToOneReservations
@@ -106,7 +106,7 @@ WHERE ReservationStartTime IN (
 
 		public IEnumerable<ReservationEditDapperDto> GetOneEditInfo(int speakerId, int MemberId)
 		{
-			string sql = @" SELECT ReservationStartTime, ReservationEndTime
+			string sql = @" SELECT ReservationStartTime, fk_ReservationSpeakerId, MemberId
     FROM OneToOneReservations
     JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
     JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId
