@@ -103,7 +103,7 @@ namespace Flex.Products.dll.Service
 		}
 
 		//判斷產品識別碼是否已存在
-		public bool ExisProductID(string ProductId)
+		private bool ExisProductID(string ProductId)
 		{
 			return _db.Products.Any(p => p.ProductId == ProductId);
 		}

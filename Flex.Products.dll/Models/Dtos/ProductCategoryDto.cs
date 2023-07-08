@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Flex.Products.dll.Models.Dtos
 {
-	public class ProductSubCategoryDto
+	public class ProductCategoryDto
 	{
-		public int ProductSubCategoryId { get; set; }
-		public string ProductSubCategoryName { get; set; }
-		public int fk_ProductCategoryId { get; set; }
+		public int ProductCategoryId { get; set; }
 		public string ProductCategoryName { get; set; }
 		public int fk_SalesCategoryId { get; set; }
 		public string SalesCategoryName { get; set; }
-		public string SubCategoryPath { get; set; }
+		public string CategoryPath { get; set; }
 	}
 }

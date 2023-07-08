@@ -57,11 +57,16 @@
   <ItemGroup>
     <Compile Include="Exts\CategoryExts.cs" />
     <Compile Include="Exts\IndexSearchCriteria.cs" />
+    <Compile Include="Infra\DapperRepository\ProductCategoryDPRepository.cs" />
+    <Compile Include="Infra\DapperRepository\ProductSubCategoryDPRepository.cs" />
     <Compile Include="Infra\DapperRepository\SalesCategotyDPRepository.cs" />
     <Compile Include="Infra\EFRepository\ColorRepository.cs" />
     <Compile Include="Infra\EFRepository\SizeRepository.cs" />
-    <Compile Include="Interface\ICategoryRepository.cs" />
+    <Compile Include="Interface\IProductCategoryRepository.cs" />
+    <Compile Include="Interface\IProductSubCategoryRepository.cs" />
+    <Compile Include="Interface\ISalesCategoryRepository.cs" />
     <Compile Include="Models\Dtos\ColorDto.cs" />
+    <Compile Include="Models\Dtos\ProductCategoryDto.cs" />
     <Compile Include="Models\Dtos\ProductDto.cs" />
     <Compile Include="Infra\EFRepository\ProductEFRepository.cs" />
     <Compile Include="Infra\EFRepository\ProductSubCategoryRepository.cs" />
@@ -73,17 +78,25 @@
     <Compile Include="Models\Dtos\ProductSubCategoryDto.cs" />
     <Compile Include="Models\Dtos\SalesCategoryDto.cs" />
     <Compile Include="Models\Dtos\SizeDto.cs" />
+    <Compile Include="Models\ViewModel\ProductCategoryCreateVM.cs" />
+    <Compile Include="Models\ViewModel\ProductCategoryEditVM.cs" />
+    <Compile Include="Models\ViewModel\ProductCategoryIndexVM.cs" />
     <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />
+    <Compile Include="Models\ViewModel\ProductSubCategoryCreateVM.cs" />
+    <Compile Include="Models\ViewModel\ProductSubCategoryEditVM.cs" />
+    <Compile Include="Models\ViewModel\ProductSubCategoryIndexVM.cs" />
     <Compile Include="Models\ViewModel\SalesCategoryCreateVM.cs" />
     <Compile Include="Models\ViewModel\SalesCategoryEditVM.cs" />
     <Compile Include="Models\ViewModel\SalesCategoryIndexVM.cs" />
     <Compile Include="Service\CategoryService.cs" />
+    <Compile Include="Service\ProductCategoryService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Models\ViewModel\ProductCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductEditImgVM.cs" />
     <Compile Include="Models\ViewModel\ProductEditVM.cs" />
     <Compile Include="Models\ViewModel\ProductIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\ProductSubCategoryService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

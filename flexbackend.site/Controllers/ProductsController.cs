@@ -311,7 +311,6 @@ namespace flexbackend.site.Controllers
                 new ProductSubCategoryRepository()
                 .GetProductSubCategory()
                 .Prepend(new ProductSubCategoryDto { ProductSubCategoryId=0,SubCategoryPath="請選擇分類"}), "ProductSubCategoryId", "SubCategoryPath", ProductSubCategoryId);
-
 		}
 
 		private void PrepareColorDataSource(int? ColorId)

@@ -6,11 +6,12 @@
 
 @section Styles {
     <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
-    
+
     <style>
-        table{
-            width:100%;
+        table {
+            width: 100%;
         }
+
         thead {
             background-color: #0B284A;
             color: white;
@@ -18,7 +19,7 @@
     </style>
 }
 <h2>銷售分類管理</h2>
-
+@Html.AntiForgeryToken()
 
 <div class="search-bar-container mb-4 d-flex">
     <div class="me-auto"></div>
@@ -102,10 +103,14 @@
             event.preventDefault();
 
             if (confirm("確定要刪除分類嗎?")) {
+                var data = {
+                    salesCategoryId: salesCategoryId,
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                };
                 $.ajax({
-                    url: '@Url.Action("Delete", "ProductCategories")',
+                    url: '@Url.Action("DeleteSalesCategory", "ProductCategories")',
                     type: 'POST',
-                    data: { salesCategoryId: salesCategoryId },
+                    data: data,
                     success: function (result) {
                         if (result.success) {
                             alert("刪除成功");

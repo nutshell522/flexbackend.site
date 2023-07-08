@@ -14,15 +14,15 @@ namespace Flex.Products.dll.Service
 {
 	public class CategoryService
 	{
-		private ICategoryRepository _repo;
+		private ISalesCategoryRepository _repo;
 		private AppDbContext _db;
-		public CategoryService(ICategoryRepository repo)
+		public CategoryService(ISalesCategoryRepository repo)
 		{
 			_repo = repo;
 			_db = new AppDbContext();
 		}
 
-		public IEnumerable<SalesCategoryDto> Search()
+		public IEnumerable<SalesCategoryDto> SearchSalesCategory()
 		{
 			var salseCategory = _repo.Search();
 			return salseCategory;
@@ -35,7 +35,7 @@ namespace Flex.Products.dll.Service
 			{
 				return Result.Fail("分類名稱已存在，請確認");
 			}
-			_repo.CreateSalesCategory(dto);
+			_repo.CreateCategory(dto);
 			return Result.Success();
 		}
 
@@ -49,7 +49,7 @@ namespace Flex.Products.dll.Service
 				return Result.Fail("分類名稱已存在，請確認");
 			}
 
-			_repo.EditSalesCategory(dto);
+			_repo.EditCategory(dto);
 			return Result.Success();
 
 
@@ -57,7 +57,7 @@ namespace Flex.Products.dll.Service
 
 		public SalesCategoryDto GetSalesCategoryById(int salesCategoryId)
 		{
-			var result = _repo.GetSalesCategoryById(salesCategoryId);
+			var result = _repo.GetCategoryById(salesCategoryId);
 
 			return result;
 		}
@@ -67,7 +67,7 @@ namespace Flex.Products.dll.Service
 
 			try
 			{
-				_repo.DeleteSalesCategory(salesCategoryId);
+				_repo.DeleteCategory(salesCategoryId);
 				return Result.Success();
 			}
 			catch (Exception ex)
@@ -78,7 +78,7 @@ namespace Flex.Products.dll.Service
 			}
 		}
 
-		public bool ExisSalesCategoryName(string salesCatogoryName)
+		private bool ExisSalesCategoryName(string salesCatogoryName)
 		{
 			return _db.SalesCategories.Any(s => s.SalesCategoryName == salesCatogoryName);
 		}
