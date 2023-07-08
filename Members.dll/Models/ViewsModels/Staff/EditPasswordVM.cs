@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace Members.dll.Models.ViewsModels.Staff
 {
-	public class ForgetPasswordVM
+	public class EditPasswordVM
 	{
 		[Display(Name = "帳號")]
 		[Required]
 		public string Account { get; set; }
+
+		[Display(Name = "舊密碼")]
+		[Required]
+		[DataType(DataType.Password)]
+		[StringLength(10)]
+		public string OldPassword { get; set; }
 
 		[Display(Name = "新設密碼")]
 		[Required]

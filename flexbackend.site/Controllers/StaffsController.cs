@@ -108,6 +108,7 @@ namespace flexbackend.site.Controllers
 			return View(service.GetStaffDetail(staffId).ToStaffDetailVM());
 		}
 
+		
 		[AuthorizeFilter(UserRole.AdvancedPermission)]
 		public ActionResult DeleteStaff(int staffId)
 		{
@@ -122,36 +123,19 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("StaffList");
 		}
 
-		//[HttpPost,ActionName("DeleteStaff")]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult DeleteStaff2(int staffId)
-		//{
-		//	var db = new AppDbContext();
-		//	//List<StaffsIndexVM> staffsIndexVM = new List<StaffsIndexVM>();
-		//	var staff = db.Staffs.FirstOrDefault(s => s.StaffId == staffId);
-
-		//	//for (int i = 0; i < staff) ; i++)
-		//	//{
-		//	//	staffsIndexVM.Add(staffsIndexVM[staffId]);
-		//	//}
-
-		//	StaffService service = GetStaffRepository();
-		//	service.DeleteStaff(staffId);
-
-		//	return new EmptyResult();
-		//}
 
 		public ActionResult EditPassword()
 		{
 			return View();
 		}
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		//[Authorize]
-		public ActionResult EditPassword(ForgetPasswordVM vm)
+		public ActionResult EditPassword(EditPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
-			Result result = ResetPassword(vm);
+			Result result = UpdatePassword(vm);
+
 			if (result.IsSuccess == false)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
@@ -160,6 +144,7 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("Login");
 		}
 
+		
 		public ActionResult ForgetPassword()
 		{
 			return View();
@@ -184,6 +169,12 @@ namespace flexbackend.site.Controllers
 		{
 			StaffService service = GetStaffRepository();
 			return service.ResetPassword(vm.ToForgetPasswordDto());
+		}
+
+		private Result UpdatePassword(EditPasswordVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			return service.UpdatePassword(vm.ToEditPasswordDto());
 		}
 
 		public ActionResult NoPermission()

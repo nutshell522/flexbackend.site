@@ -16,6 +16,9 @@
     @RenderSection("styles", required: false)
     @{
         var userName = User.Identity.Name;
+        var db = new EFModels.EFModels.AppDbContext();
+        var user = db.Staffs.FirstOrDefault(s => s.Account== userName);
+        string fullName = user.Name;
     }
 
 </head>
@@ -34,7 +37,7 @@
             <div href="javascript:;" class="d-block mt-title">
                 <div class="d-none d-md-flex logo-countainer align-items-end justify-content-center"><span id="logo-container1"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span><span class="fs-5">後台管理系統</span></div>
                 <h2 class="hello d-block d-md-none">
-                    <span class="name">@userName</span><span>, 您好</span>
+                    <span class="name">@fullName</span><span>, 您好</span>
                 </h2>
             </div>
         </div>
@@ -186,7 +189,7 @@
                     </label>
                 </div>
                 <div class="hello d-none d-md-block">
-                    <span class="name">@userName</span><span>,您好</span>
+                    <span class="name">@fullName</span><span>,您好</span>
                 </div>
                 <a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>
             </div>
@@ -217,7 +220,7 @@
                                 <li>
                                     <div class="sender-name-area">
                                         <div>
-                                            <span class="sender-name">@userName</span><span>:</span>
+                                            <span class="sender-name">@fullName</span><span>:</span>
                                         </div>
                                         <span class="message-update-time">21分鐘前</span>
                                     </div>

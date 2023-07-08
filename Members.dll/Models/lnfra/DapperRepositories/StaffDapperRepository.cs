@@ -146,5 +146,16 @@ WHERE StaffId=@staffId;";
 				conn.Execute(sql, parameters);
 			}
 		}
+
+		public void UpdatePassword(string newpassword, string account)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				string sql = @"update Staffs set [Password] = @Password where Account = @Account;";
+				conn.Execute(sql, new { Password = newpassword, Account = account });
+			}
+		}
 	}
 }

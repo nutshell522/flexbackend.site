@@ -60,13 +60,12 @@
             font-weight: 100;
         }
 
-        #loginImg {           
+        #loginImg {
             background-repeat: no-repeat;
             height: 50px;
             object-fit: contain;
             z-index: -1;
         }
-
     </style>
 
 }
@@ -75,7 +74,7 @@
 @using (Html.BeginForm())
 {
     @*@Html.AntiForgeryToken()*@ //這個拿掉就可以更換成_LayoutLogin
-    <div id="loginImg" >
+    <div id="loginImg">
         <img alt="" src="~/Public/Img/FlexLogo.png" />
     </div>
     <div id="login-container">
@@ -109,3 +108,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+

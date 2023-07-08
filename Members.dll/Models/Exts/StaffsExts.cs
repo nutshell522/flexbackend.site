@@ -25,6 +25,17 @@ namespace Members.dll.Models.Exts
 			};
 		}
 
+		public static EditPasswordDto ToEditPasswordDto(this EditPasswordVM vm)
+		{
+			return new EditPasswordDto
+			{
+				Account = vm.Account,
+				OldPassword = vm.OldPassword,
+				NewPassword = vm.NewPassword,
+				ConfirmPassword = vm.ConfirmPassword
+			};
+		}
+
 		public static StaffsCreateDto ToStaffsCreateDto(this StaffsCreateVM vm)
 		{
 			return new StaffsCreateDto()

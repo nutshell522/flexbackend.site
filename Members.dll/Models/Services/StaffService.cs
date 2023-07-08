@@ -27,6 +27,29 @@ namespace Members.dll.Models.Services
 		{
 			_repo = repo;
 		}
+		public Result UpdatePassword(EditPasswordDto dto)
+		{
+			var db = new AppDbContext();
+			var staffAccount = db.Staffs.ToList().Select(s => s.Account);
+			var staffPassword = db.Staffs.ToList().Select(s => s.Password);
+			string newpassword = dto.NewPassword;
+			string oldpassword = dto.OldPassword;
+
+			//判斷帳號是否存在、舊密碼是否相同
+			if (!staffAccount.Contains(dto.Account))
+			{
+				return Result.Fail("帳號或密碼錯誤");
+			}
+			else if (!staffPassword.Contains(oldpassword))
+			{
+				return Result.Fail("帳號或密碼錯誤");
+			}
+			else
+			{
+				_repo.SaveNewPassword(newpassword, dto.Account);
+				return Result.Success();
+			}
+		}
 
 		//忘記密碼
 		public Result ResetPassword(ForgetPasswordDto dto)
@@ -147,8 +170,6 @@ namespace Members.dll.Models.Services
 			_repo.EditStaff(dto);
 			return Result.Success();
 		}
-
-
 
 
 	}

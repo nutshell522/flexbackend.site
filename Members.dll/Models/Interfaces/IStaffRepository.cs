@@ -21,5 +21,6 @@ namespace Members.dll.Models.Interfaces
 		StaffDetailDto StaffDetail(int staffId);
 		EditStaffDto GetByStaffId(int staffId);
 		void EditStaff(EditStaffDto dto);
+		void UpdatePassword(string newpassword, string account);
 	}
 }

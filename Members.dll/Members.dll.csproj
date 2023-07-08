@@ -79,6 +79,7 @@
     <Compile Include="Models\Dtos\Member\MembersEditDto.cs" />
     <Compile Include="Models\Dtos\Member\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
+    <Compile Include="Models\Dtos\Staff\EditPasswordDto.cs" />
     <Compile Include="Models\Dtos\Staff\EditStaffDto.cs" />
     <Compile Include="Models\Dtos\Staff\ForgetPasswordDto.cs" />
     <Compile Include="Models\Dtos\Staff\StaffDetailDto.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Models\ViewsModels\Member\MemberCreateVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberDetailVM.cs" />
     <Compile Include="Models\ViewsModels\PointHistories\IndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\EditPasswordVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\StaffCriteria.cs" />
     <Compile Include="Models\ViewsModels\Staff\EditStaffVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\ForgetPasswordVM.cs" />
