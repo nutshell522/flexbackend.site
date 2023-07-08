@@ -113,8 +113,12 @@ namespace flexbackend.site.Controllers
 		private (bool IsSuccess, string ErrorMessage) CreateOrders(OrdersIndexVM vm)
 		{
 			var db = new AppDbContext();
-
-			var order = new order
+            int memberId = db.Members.FirstOrDefault()?.MemberId ?? 0;
+            if (vm.Id != memberId)
+            {
+                return (false, "無此會員編號");
+            }
+            var order = new order
 			{
 				Id = vm.Id,
 				ordertime = DateTime.Now,
@@ -148,15 +152,13 @@ namespace flexbackend.site.Controllers
 			{
 				return HttpNotFound(); // 可以根據你的需求返回一個適當的錯誤頁面或訊息
 			}
-            var orderItems = GetOrderItemsIndex(order.Id);
-            int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
-            int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+           
             var vm = new OrdersIndexVM
 			{
 				Id = order.Id,
 				ordertime = order.ordertime,
 				fk_member_Id = order.fk_member_Id,
-				total_quantity = totalquantity,
+				total_quantity = order.total_quantity,
 				logistics_company_Id = order.logistics_company_Id,
 				order_status_Id = order.order_status_Id,
 				pay_method_Id = order.pay_method_Id,
@@ -170,7 +172,7 @@ namespace flexbackend.site.Controllers
 				recipient_address = order.recipient_address,
 				order_description = order.order_description,
 				close = (bool)order.close,
-				total_price = totalDiscountSubtotal,
+				total_price = order.total_price,
 			};
 
 			return View(vm);
@@ -205,8 +207,10 @@ namespace flexbackend.site.Controllers
 			var db = new AppDbContext();
 
 			var order = db.orders.FirstOrDefault(o => o.Id == vm.Id);
-
-			if (order == null)
+            var orderItems = GetOrderItemsIndex(order.Id);
+            int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+            int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+            if (order == null)
 			{
 				return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
 			}
@@ -214,7 +218,7 @@ namespace flexbackend.site.Controllers
 			// 更新訂單的相關屬性
 			//order.ordertime = vm.ordertime;
 			order.fk_member_Id = vm.fk_member_Id;
-			order.total_quantity = vm.total_quantity;
+			order.total_quantity = totalquantity;
 			order.logistics_company_Id = vm.logistics_company_Id;
 			order.order_status_Id = vm.order_status_Id;
 			order.pay_method_Id = vm.pay_method_Id;
@@ -228,7 +232,7 @@ namespace flexbackend.site.Controllers
 			order.recipient_address = vm.recipient_address;
 			order.order_description = vm.order_description;
 			order.close = vm.close;
-			order.total_price = vm.total_price;
+			order.total_price = totalDiscountSubtotal;
 
 			db.SaveChanges();
 
@@ -319,9 +323,17 @@ namespace flexbackend.site.Controllers
 
             if (result.IsSuccess)
             {
-				TempData.Keep("fk_typeId");
-				int orderItemId = result.OrderItemId;
-                return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
+                var db = new AppDbContext();
+                var orderItems = GetOrderItemsIndex(orderId);
+                int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+                var order = GetOrderById(orderId);
+                order.total_price = totalDiscountSubtotal;
+                db.SaveChanges();
+
+                TempData.Keep("fk_typeId");
+                    int orderItemId = result.OrderItemId;
+                    return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
+                
             }
             else
             {
@@ -349,7 +361,7 @@ namespace flexbackend.site.Controllers
 
 			db.orderItems.Add(orderitems);
 			db.SaveChanges();
-
+         ;
             return (true, "", orderitems.order_Id);
 
         }
@@ -393,7 +405,9 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
-				TempData.Keep("fk_typeId");
+              
+
+                TempData.Keep("fk_typeId");
 				
 				int orderItemId = result.OrderItemId;
 				return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
@@ -410,15 +424,14 @@ namespace flexbackend.site.Controllers
 
 			var order = db.orderItems.FirstOrDefault(o => o.Id == vm.Id);
 
-			//if (order == null)
-			//{
-			//	return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
-			//}
+            //if (order == null)
+            //{
+            //	return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
+            //}
 
-			// 更新訂單的相關屬性
-			
-			
-				 order.Id = vm.Id;
+            // 更新訂單的相關屬性
+           
+            order.Id = vm.Id;
 			order.order_Id = vm.order_Id;
 				 order.product_name = vm.product_name;
 				 order.fk_typeId = vm.fk_typeId;
