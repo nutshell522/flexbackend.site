@@ -9,10 +9,10 @@ namespace Flex_Activity.dll.Interface
 {
     public interface ISpeakerRepository
     {
-        IEnumerable<SpeakerIndexDto> Search();
+        IEnumerable<SpeakerDetailDto> Search();
 
-        void CreateSpeaker(SpeakerCreateDto dto);
-        
-        void EditSpeaker (SpeakerEditDto dto);
+        void CreateSpeaker(SpeakerDetailDto dto);
+
+        void EditSpeaker(SpeakerDetailDto dto);
     }
 }

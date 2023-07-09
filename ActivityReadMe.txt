@@ -215,3 +215,15 @@
 
 
 [ ]Speaker 的 刪除待完善
+
+【把講師改成dataTable和Ajax和CRUD同一頁】
+[ v ]Speaker Index修改
+[ v ]Speaker Create修改
+[ v ]Speaker Edit資訊修改
+[ v ]Speaker Index讓它顯示圖片
+
+資料庫的照片路徑要改：/Public/Img/講師大頭貼/Allen.jpg
+
+[ ]Speaker Edit照片修改
+[ ]Speaker Delete修改
+[ ]Database修改

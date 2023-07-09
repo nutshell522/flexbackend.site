@@ -21,81 +21,129 @@ namespace flexbackend.site.Controllers
         private ISpeakerRepository _repo = new SpeakerEFRepository();
 
 
-		//public ActionResult Index()
-		//{
-		//	//呼叫 GetSpeakers() 方法，並將回傳的演講者資料集合傳遞給視圖（View）
-		//	IEnumerable<SpeakerIndexVM> speakers = GetSpeakers();
-		//	return View(speakers);
-		//}
 
-		////用來取得演講者的資料
-		//private IEnumerable<SpeakerIndexVM> GetSpeakers()
-		//{
-		//	//建立一個資料庫儲存庫（Repository）的實例
-		//	ISpeakerRepository repo = new SpeakerEFRepository();
+        //public ActionResult Index()
+        //{
+        //	//呼叫 GetSpeakers() 方法，並將回傳的演講者資料集合傳遞給視圖（View）
+        //	IEnumerable<SpeakerIndexVM> speakers = GetSpeakers();
+        //	return View(speakers);
+        //}
 
-		//	SpeakerServices service = new SpeakerServices(repo);
-		//	return service.Search()
-		//		.Select(dto => new SpeakerIndexVM
-		//		{
-		//			SpeakerId = dto.SpeakerId,
-		//			SpeakerName = dto.SpeakerName,
-		//			FieldName = dto.FieldName
-		//		});
-		//}
-		// GET: Speaker Index
-		public ActionResult Index(SpeakerSearchCriteria criteria)
+        ////用來取得演講者的資料
+        //private IEnumerable<SpeakerIndexVM> GetSpeakers()
+        //{
+        //	//建立一個資料庫儲存庫（Repository）的實例
+        //	ISpeakerRepository repo = new SpeakerEFRepository();
+
+        //	SpeakerServices service = new SpeakerServices(repo);
+        //	return service.Search()
+        //		.Select(dto => new SpeakerIndexVM
+        //		{
+        //			SpeakerId = dto.SpeakerId,
+        //			SpeakerName = dto.SpeakerName,
+        //			FieldName = dto.FieldName
+        //		});
+        //}
+        // GET: Speaker Index
+        public ActionResult Index(SpeakerSearchCriteria criteria)
         {
             //criteria=篩選條件的意思
             //檢查 criteria 是否為 null，如果是，則將其初始化為一個新的 SpeakerSearchCriteria 物件
-            if(criteria == null)
+            if (criteria == null)
             {
                 criteria = new SpeakerSearchCriteria();
             }
 
-			ViewBag.Criteria = criteria;
-			PrepareSpeakerFieldDataSource(criteria.FieldId);
-          
+            ViewBag.Criteria = criteria;
+            PrepareSpeakerFieldDataSource(criteria.FieldId);
+            PrepareBranchDataSource(criteria.BranchId);
 
-           
+
+
+
 
             var query = db.Speakers.Include(s => s.SpeakerField);
-           
 
-			#region Where
-            if(string.IsNullOrEmpty(criteria.SpeakerName) == false)
+
+            #region Where
+            if (string.IsNullOrEmpty(criteria.SpeakerName) == false)
             {
-                query = query.Where(s =>s.SpeakerName.Contains(criteria.SpeakerName));
+                query = query.Where(s => s.SpeakerName.Contains(criteria.SpeakerName));
             }
-            if (criteria.FieldId !=null && criteria.FieldId.Value > 0)
+            if (criteria.FieldId != null && criteria.FieldId.Value > 0)
             {
-                query = query.Where(s=>s.fk_SpeakerFieldId == criteria.FieldId.Value);
+                query = query.Where(s => s.fk_SpeakerFieldId == criteria.FieldId.Value);
             }
             #endregion
 
-            var speakers = query.Where(s=>s.SpeakerVisible == true)
+            var speakers = query.Where(s => s.SpeakerVisible == true)
                                 .ToList()
-                                .Select(s => s.ToIndexDto())
-                                .Select(dto => dto.ToIndexVM());
+                                .Select(s => s.ToDetailDto())
+                                .Select(dto => dto.ToDetailVM());
 
-            return View(speakers);      
-            
-		}
+            return View(speakers);
+            //return Json(speakers);
+        }
 
-	
+        //查詢全部講師
+        //[Route("api/ReportingCenter/GetReportList")]
+        //[HttpGet]
+        public ActionResult Indexajax(SpeakerSearchCriteria criteria)
+        {
+            //criteria=篩選條件的意思
+            //檢查 criteria 是否為 null，如果是，則將其初始化為一個新的 SpeakerSearchCriteria 物件
+            if (criteria == null)
+            {
+                criteria = new SpeakerSearchCriteria();
+            }
 
+            ViewBag.Criteria = criteria;
+            PrepareSpeakerFieldDataSource(criteria.FieldId);
+
+
+
+
+            var query = db.Speakers.Include(s => s.SpeakerField);
+
+
+            #region Where
+            if (string.IsNullOrEmpty(criteria.SpeakerName) == false)
+            {
+                query = query.Where(s => s.SpeakerName.Contains(criteria.SpeakerName));
+            }
+            if (criteria.FieldId != null && criteria.FieldId.Value > 0)
+            {
+                query = query.Where(s => s.fk_SpeakerFieldId == criteria.FieldId.Value);
+            }
+            #endregion
+
+            var speakers = query.Where(s => s.SpeakerVisible == true)
+                                .ToList()
+                                .Select(s => s.ToDetailDto())
+                                .Select(dto => dto.ToDetailVM());
+
+            return Json(speakers, JsonRequestBehavior.AllowGet);
+            //return Json(speakers);
+        }
+
+
+
+
+
+        //新增講師(得到下拉式選單)
         //Get：Create
         public ActionResult Create()
         {
             PrepareSpeakerFieldDataSource(null);
             PrepareBranchDataSource(null);
-            var vm = new SpeakerCreateVM();
+            var vm = new SpeakerDetailVM();
             return View(vm);
         }
 
+        //新增講師
         //Post：Create
         [HttpPost]
-        public ActionResult Create(SpeakerCreateVM vm, HttpPostedFileBase fileTeacher)
+        public ActionResult Create(SpeakerDetailVM vm, HttpPostedFileBase fileTeacher)
         {
             if (ModelState.IsValid) //若通過欄位驗證
             {
@@ -109,11 +157,11 @@ namespace flexbackend.site.Controllers
                 vm.SpeakerImg = fileName;
 
                 //將vm轉為Dto
-                SpeakerCreateDto speakerDto = vm.ToCreatDto();
+                SpeakerDetailDto speakerDto = vm.ToDetailDto();
 
-				//將Dto傳入Service進行邏輯驗證
-				//SpeakerServices()需要一個型別是ISpeakerRepository的參數
-				var service = new SpeakerServices(_repo);
+                //將Dto傳入Service進行邏輯驗證
+                //SpeakerServices()需要一個型別是ISpeakerRepository的參數
+                var service = new SpeakerServices(_repo);
                 var result = service.CreateSpeaker(speakerDto);
                 if (result.IsSucces)
                 {
@@ -128,11 +176,14 @@ namespace flexbackend.site.Controllers
             return View(vm);
         }
 
+        //編輯講師(得到下拉式選單)
         //Get：Edit
-        public ActionResult Edit (int? id)
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
         {
-			//（Bad Request）HTTP 400 錯誤狀態碼，表示客戶端的請求無效
-			if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            //（Bad Request）HTTP 400 錯誤狀態碼，表示客戶端的請求無效
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
             Speaker speaker = db.Speakers.Find(id);
 
@@ -141,23 +192,24 @@ namespace flexbackend.site.Controllers
                 return HttpNotFound();
             }
 
-            SpeakerEditVM vm = (speaker.ToEditDto()).ToEditVM();
+            SpeakerDetailVM vm = (speaker.ToDetailDto()).ToDetailVM();
             PrepareSpeakerFieldDataSource(vm.fk_SpeakerFieldId);
             PrepareBranchDataSource(vm.fk_SpeakerBranchId);
 
-            return View(vm);
+            return Json(vm, JsonRequestBehavior.AllowGet);
 
-		}
+        }
 
+        //編輯講師
         [HttpPost]
-        public ActionResult Edit (SpeakerEditVM vm)
+        public ActionResult Edit(SpeakerDetailVM vm)
         {
             PrepareSpeakerFieldDataSource(vm.fk_SpeakerFieldId);
             PrepareBranchDataSource(vm.fk_SpeakerBranchId);
 
             if (ModelState.IsValid)
             {
-                SpeakerEditDto dto = vm.ToEditDto();
+                SpeakerDetailDto dto = vm.ToDetailDto();
                 var service = new SpeakerServices(_repo);
                 Result result = service.EditSpeaker(dto);
 
@@ -169,14 +221,15 @@ namespace flexbackend.site.Controllers
                 {
                     return View(vm);
                 }
-                
+
             }
 
             return View(vm);
 
-		}
+        }
 
-        public ActionResult Details (int? id)
+        //查看講師細節
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -192,49 +245,55 @@ namespace flexbackend.site.Controllers
             return View(vm);
         }
 
-		public ActionResult Delete(int? id)
-		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-			Speaker speaker = db.Speakers.Find(id);
-			if (speaker == null)
-			{
-				return HttpNotFound();
-			}
-			SpeakerDetailDto dto = speaker.ToDetailDto();
-			SpeakerDetailVM vm = dto.ToDetailVM();
-			return View(vm);
-		}
+
+        //刪除講師(得到講師資訊)
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Speaker speaker = db.Speakers.Find(id);
+            if (speaker == null)
+            {
+                return HttpNotFound();
+            }
+            SpeakerDetailDto dto = speaker.ToDetailDto();
+            SpeakerDetailVM vm = dto.ToDetailVM();
+            return View(vm);
+        }
 
 
+        //刪除講師(確認刪除)
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)
         {
-			//DateTime today = DateTime.Today;
-			//bool hasUnfinishedActivities = db.Activities.Any(a => a.fk_SpeakerId == id &&  a.ActivityDate >= today);
-   //         bool hasReservationInfo = db.OneToOneReservations.Any(o => o.fk_ReservationSpeakerId == id); ;
+            //DateTime today = DateTime.Today;
+            //bool hasUnfinishedActivities = db.Activities.Any(a => a.fk_SpeakerId == id &&  a.ActivityDate >= today);
+            //         bool hasReservationInfo = db.OneToOneReservations.Any(o => o.fk_ReservationSpeakerId == id); ;
 
-			//bool hasUnfinishedReservations = db.OneToOneReservations.Any(o => o.fk_ReservationSpeakerId == id && o.ReservationEndTime >= today);
+            //bool hasUnfinishedReservations = db.OneToOneReservations.Any(o => o.fk_ReservationSpeakerId == id && o.ReservationEndTime >= today);
 
-   //         if (hasUnfinishedActivities || hasUnfinishedReservations)
-   //         {
-			//	string alertMessage = "無法刪除，講師有未完成的活動。";
-			//	string script = $"alert('{alertMessage}');";
-			//	script += "window.location.href='/Speaker/Index';"; // 返回到 Index 頁面
-			//	return Content("<script>" + script + "</script>");
+            //         if (hasUnfinishedActivities || hasUnfinishedReservations)
+            //         {
+            //	string alertMessage = "無法刪除，講師有未完成的活動。";
+            //	string script = $"alert('{alertMessage}');";
+            //	script += "window.location.href='/Speaker/Index';"; // 返回到 Index 頁面
+            //	return Content("<script>" + script + "</script>");
 
-			//}
+            //}
 
             Speaker speaker = db.Speakers.Find(id);
             speaker.SpeakerVisible = false;
             db.SaveChanges();
-            return RedirectToAction("Index");   
+            return RedirectToAction("Index");
         }
-		private string SaveUploadedFile(string path, HttpPostedFileBase fileTeacher)
+
+
+        //存取檔案方法
+        private string SaveUploadedFile(string path, HttpPostedFileBase fileTeacher)
         {
             //如果沒有上傳檔案或檔案是空的，就不處理，傳回string.empty
             if (fileTeacher == null || fileTeacher.ContentLength == 0) return string.Empty;
@@ -257,15 +316,18 @@ namespace flexbackend.site.Controllers
             return newFileName;
         }
 
+        //準備講師領域的下拉式選單方法
         private void PrepareSpeakerFieldDataSource(int? speakerFieldId)
         {
-   			var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField { FieldId = 0, FieldName = "領域分類" });
-			ViewBag.fk_SpeakerFieldId = new SelectList(fields, "FieldId", "FieldName", speakerFieldId);
+            var fields = db.SpeakerFields.ToList().Prepend(new SpeakerField { FieldId = 0, FieldName = "領域分類" });
+            ViewBag.fk_SpeakerFieldId = new SelectList(fields, "FieldId", "FieldName", speakerFieldId);
 
-		}
-		private void PrepareBranchDataSource(int? branchId)
+        }
+
+        //準備分店的下拉式選單方法
+        private void PrepareBranchDataSource(int? branchId)
         {
-            var branches = db.Branches.ToList().Prepend(new Branch { BranchId=0, BranchName="選擇分店"});
+            var branches = db.Branches.ToList().Prepend(new Branch { BranchId = 0, BranchName = "選擇分店" });
             ViewBag.fk_SpeakerBranchId = new SelectList(branches, "BranchId", "BranchName", branchId);
         }
     }

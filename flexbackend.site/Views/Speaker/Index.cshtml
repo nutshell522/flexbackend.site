@@ -1,11 +1,15 @@
-﻿@model IEnumerable<Flex_Activity.dll.Models.ViewModels.SpeakerIndexVM>
+﻿@model IEnumerable<Flex_Activity.dll.Models.ViewModels.SpeakerDetailVM>
 
 @{
     ViewBag.Title = "Index";
 
     var fields = ViewBag.fk_SpeakerFieldId as SelectList;
+    var branches = ViewBag.fk_SpeakerBranchId as SelectList;
     var criteria = ViewBag.Criteria as Flex_Activity.dll.Models.ViewModels.SpeakerSearchCriteria;
     string id_fieldId = criteria.FieldId.HasValue ? criteria.FieldId.Value.ToString() : "";
+}
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 }
 
 <h2>講師管理</h2>
@@ -55,22 +59,20 @@
         </div>
     </div>
     <div class="right">
-        <a href="@Url.Action("Create")" class="btn btn-primary">
+        <a class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#speakerCreate">
             <i class="bi bi-plus-lg"></i> 新增
         </a>
     </div>
 </form>
 
+
+
+
 <div class="table-container">
-    <table>
+    <table id="speakerTable" class="display">
         <thead>
             <tr>
-                @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
-                @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                    th-col-0 至 th-col-20
-                    超過100%資料不會溢出 也不會換行
-                    如有細緻設定需求，可自己寫css設定寬度
-                *@
+
                 <th class="th-col-0 sticky">
                     <label class="form-check-label">
                         <input class="form-check-input check-all" type="checkbox">
@@ -80,63 +82,249 @@
                     @Html.DisplayNameFor(model => model.SpeakerId)
                 </th>
 
-                <th class="th-col-7">
+                <th class="th-col-8">
                     @Html.DisplayNameFor(model => model.SpeakerName)
+
                 </th>
 
                 <th class="th-col-8">
-                    @Html.DisplayNameFor(model => model.FieldName)
+                    @Html.DisplayNameFor(model => model.SpeakerImg)
+
                 </th>
-                <th >管理</th>
+
+
+
+
+
+                <th class="th-col-8">
+                    @Html.DisplayNameFor(model => model.FieldName)
+
+                </th>
+                <th lass="th-col-4">管理</th>
             </tr>
         </thead>
-        <tbody>
-            @* 如有照片要放
-                格式:
-                <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
-            *@
-            @*  顯示資料內有定義了狀態框，
-                如有需展示狀態顏色，請在td內增加一個span，且定義class
-                有提供四種顏色:
-                    綠色 : status-success
-                    灰色 : status-dark
-                    紅色 : status-danger
-                    藍色 : status-primary
-                可依自己需求使用
+        <tbody id="speakerBody">
 
-                格式: <td class="text-center"><span class="status-success}">進行中</span></td>
-            *@
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-                    <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SpeakerId)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SpeakerName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FieldName)
-                    </td>
-                    <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new {id=item.SpeakerId })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {id=item.SpeakerId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {id=item.SpeakerId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
-
-                        </div>
-                    </td>
-                </tr>
-            }
+           
         </tbody>
     </table>
 </div>
+
+
+
+<!-- 新增的Modal -->
+<div class="modal fade" id="speakerCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">新增講師</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="createSpeaker">
+                    @Html.AntiForgeryToken()
+
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="mb-3">
+                        <label for="SpeakerName" class="form-label">姓名</label>
+                        <input type="text" id="SpeakerName" name="SpeakerName" class="form-control" aria-describedby="passwordHelpBlock">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師姓名
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="SpeakerPhone" class="form-label">講師電話</label>
+                        <input type="text" id="SpeakerPhone" name="SpeakerPhone" class="form-control" aria-describedby="passwordHelpBlock">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師電話
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="SpeakerField" class="form-label">專攻領域</label>
+                        <select id="fk_SpeakerFieldId" name="fk_SpeakerFieldId" class="form-select" aria-describedby="passwordHelpBlock">
+                            @foreach (var item in fields as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <div id="passwordHelpBlock" class="form-text">
+                            請選擇講師領域
+                        </div>
+                    </div>
+                    <hr />
+
+
+                    <div class="mb-3">
+                        <label for="SpeakerImg" class="form-label">講師照片</label>
+                        <input type="file" id="SpeakerImg" name="fileTeacher" class="form-control" aria-describedby="passwordHelpBlock" accept=".jpg, .jpeg, .png, .gif">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師照片
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="fk_SpeakerBranchId" class="form-label">駐點分店</label>
+                        <select id="fk_SpeakerBranchId" name="fk_SpeakerBranchId" class="form-select" aria-describedby="passwordHelpBlock">
+                            @foreach (var item in branches as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <div id="passwordHelpBlock" class="form-text">
+                            請選擇講師駐點分店
+                        </div>
+                    </div>
+                    <hr />
+
+
+
+                    <div class="mb-3">
+                        <label for="SpeakerDescription" class="form-label">講師簡介</label>
+                        <input type="text" id="SpeakerDescription" name="SpeakerDescription" class="form-control" aria-describedby="passwordHelpBlock">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師簡介
+                        </div>
+                    </div>
+                    <hr />
+                    <button type="button" class="btn btn-danger" onclick="insert()">一鍵輸入</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="create()">新增</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel">取消</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 編輯的Modal -->
+<div class="modal fade" id="speakerEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">編輯講師資訊</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="editSpeaker">
+                    @Html.AntiForgeryToken()
+
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mb-3">
+                        <label for="SpeakerId" class="form-label">講師編號</label>
+                        <input type="text" id="EditSpeakerId" name="SpeakerId" class="form-control" aria-describedby="passwordHelpBlock" readonly>                                           
+                    </div>
+
+
+
+
+                    <div class="mb-3">
+                        <label for="SpeakerName" class="form-label">姓名</label>
+                        <input type="text" id="EditSpeakerName" name="SpeakerName" class="form-control" aria-describedby="passwordHelpBlock">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師姓名
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="SpeakerPhone" class="form-label">講師電話</label>
+                        <input type="text" id="EditSpeakerPhone" name="SpeakerPhone" class="form-control" aria-describedby="passwordHelpBlock">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師電話
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="SpeakerField" class="form-label">專攻領域</label>
+                        <select id="Editfk_SpeakerFieldId" name="fk_SpeakerFieldId" class="form-select" aria-describedby="passwordHelpBlock">
+                            @foreach (var item in fields as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <div id="passwordHelpBlock" class="form-text">
+                            請選擇講師領域
+                        </div>
+                    </div>
+                    <hr />
+
+
+
+
+                    <div class="mb-3">
+                        <label for="fk_SpeakerBranchId" class="form-label">駐點分店</label>
+                        <select id="Editfk_SpeakerBranchId" name="fk_SpeakerBranchId" class="form-select" aria-describedby="passwordHelpBlock">
+                            @foreach (var item in branches as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <div id="passwordHelpBlock" class="form-text">
+                            請選擇講師駐點分店
+                        </div>
+                    </div>
+                    <hr />
+
+
+
+                    <div class="mb-3">
+                        <label for="SpeakerDescription" class="form-label">講師簡介</label>
+                        <input type="text" id="EditSpeakerDescription" name="SpeakerDescription" class="form-control" aria-describedby="passwordHelpBlock">
+                        @Html.ValidationMessage("SpeakerName", "", new { @class = "text-danger" })
+                        <div id="passwordHelpBlock" class="form-text">
+                            請填入講師簡介
+                        </div>
+                    </div>
+                    <hr />
+                    <button type="button" class="btn btn-danger" onclick="insert()">一鍵輸入</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="Edit()">完成</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelEdit">取消</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 @section Scripts{
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="~/Scripts/ActivityBackSource/speakerIndes.js"></script>
+
     <script>
+        let table = new DataTable('#speakerTable', {
+            searching: false
+        });
         window.onload = function () {
             // 替排序按鈕寫入排序箭頭出現事件
             document.querySelectorAll(".sort-btn").forEach(item => {
@@ -187,5 +375,6 @@
                 });
             }
         };
+
     </script>
 }
