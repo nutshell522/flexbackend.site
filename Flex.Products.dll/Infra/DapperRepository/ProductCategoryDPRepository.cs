@@ -82,7 +82,8 @@ where ProductCategoryId=@ProductCategoryId;";
 
 		public List<ProductCategoryDto> GetProductCategory()
 		{
-			string sql = @"select ProductCategoryId,CategoryPath from ProductCategories";
+			string sql = @"select ProductCategoryId,CategoryPath,ProductCategoryName,SalesCategoryName from ProductCategories
+join SalesCategories on SalesCategoryId=fk_SalesCategoryId";
 
 			var result=new SqlConnection(_connStr).Query<ProductCategoryDto>(sql).ToList();
 

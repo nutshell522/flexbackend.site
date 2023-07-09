@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using EFModels.EFModels;
+using Flex.Products.dll.Exts;
 using Flex.Products.dll.Interface;
 using Flex.Products.dll.Models.Dtos;
 using System;
@@ -78,6 +79,16 @@ join ProductCategories AS P on P.ProductCategoryId=PS.fk_ProductCategoryId
 Join SalesCategories AS S on S.SalesCategoryId=P.fk_SalesCategoryId";
 
 			var result = new SqlConnection(_connStr).Query<ProductSubCategoryDto>(sql).ToList();
+			return result;
+		}
+
+		public List<ProductSubCategoryDto> GetProductSubCategory()
+		{
+			string sql = @"select ProductSubCategoryId,ProductSubCategoryName,ProductCategoryName,SalesCategoryName,SubCategoryPath from ProductSubCategories
+join ProductCategories on ProductCategoryId=fk_ProductCategoryId
+join SalesCategories on SalesCategoryId=fk_SalesCategoryId";
+
+			var result=new SqlConnection(_connStr).Query<ProductSubCategoryDto>(sql).ToList();
 			return result;
 		}
 	}

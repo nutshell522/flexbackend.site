@@ -13,6 +13,7 @@ using System.Web.Services.Description;
 using Antlr.Runtime.Tree;
 using EFModels.EFModels;
 using Flex.Products.dll.Exts;
+using Flex.Products.dll.Infra.DapperRepository;
 using Flex.Products.dll.Infra.EFRepository;
 using Flex.Products.dll.Interface;
 using Flex.Products.dll.Models.Dtos;
@@ -308,9 +309,9 @@ namespace flexbackend.site.Controllers
         private void PrepareProductSubCategoryDataSource(int? ProductSubCategoryId)
         {
             ViewBag.ProductSubCategoryId = new SelectList(
-                new ProductSubCategoryRepository()
+                new ProductSubCategoryDPRepository()
                 .GetProductSubCategory()
-                .Prepend(new ProductSubCategoryDto { ProductSubCategoryId=0,SubCategoryPath="請選擇分類"}), "ProductSubCategoryId", "SubCategoryPath", ProductSubCategoryId);
+                .Prepend(new ProductSubCategoryDto { ProductSubCategoryId=0, SalesCategoryName = "請選擇分類"}), "ProductSubCategoryId", "SubCategoryPath", ProductSubCategoryId);
 		}
 
 		private void PrepareColorDataSource(int? ColorId)

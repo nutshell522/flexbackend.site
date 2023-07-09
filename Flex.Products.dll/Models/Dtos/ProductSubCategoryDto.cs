@@ -14,6 +14,9 @@ namespace Flex.Products.dll.Models.Dtos
 		public string ProductCategoryName { get; set; }
 		public int fk_SalesCategoryId { get; set; }
 		public string SalesCategoryName { get; set; }
-		public string SubCategoryPath { get; set; }
+		public string SubCategoryPath { get
+			{
+				return $"{SalesCategoryName}/{ProductCategoryName}/{ProductSubCategoryName}";
+			} set { } }
 	}
 }

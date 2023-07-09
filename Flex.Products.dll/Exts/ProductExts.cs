@@ -19,7 +19,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 			{
 				ProductId = dto.ProductId,
 				ProductName = dto.ProductName,
-				SubCategoryPath = dto.ProductSubCategory.SubCategoryPath,
+				SubCategoryPath = dto.ProductSubCategory,//dto.ProductSubCategory.SubCategoryPath,
 				SalesPrice = dto.SalesPrice,
 				//StartTime = dto.StartTime,
 				//EndTime = dto.EndTime,
@@ -46,7 +46,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				LogOut = entity.LogOut,
 				Tag = entity.Tag,
 				//fk_ProductSubCategoryId = entity.fk_ProductSubCategoryId,
-				ProductSubCategory = entity.ProductSubCategory,
+				ProductSubCategory = $"{entity.ProductSubCategory.ProductCategory.SalesCategory.SalesCategoryName}/{entity.ProductSubCategory.ProductCategory.ProductCategoryName}/{entity.ProductSubCategory.ProductSubCategoryName}",
 				ProductGroups = entity.ProductGroups.Select(x => new ProductGroupsDto
 				{
 					ColorId = x.ColorCategory.ColorId,

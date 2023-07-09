@@ -35,7 +35,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 		{
 			criteria=criteria ?? new IndexSearchCriteria();
 
-			var query = _db.Products.Include(p => p.ProductSubCategory).Include(p => p.ProductGroups);
+			var query = _db.Products.Include(p => p.ProductSubCategory.ProductCategory.SalesCategory).Include(p => p.ProductGroups);
 
 			#region 搜尋條件
 			if (criteria.Name != null)

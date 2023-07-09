@@ -289,8 +289,9 @@ namespace flexbackend.site.Controllers
 			ViewBag.ProductCategory = new SelectList(
 				new ProductCategoryDPRepository()
 				.GetProductCategory()
-				.Prepend(new ProductCategoryDto { ProductCategoryId = 0, CategoryPath = "請選擇分類" }),
+				.Prepend(new ProductCategoryDto { ProductCategoryId = 0, SalesCategoryName = "請選擇分類" }),
 				"ProductCategoryId", "CategoryPath", productSubCategoryId);
+
 		}
 	}
 
