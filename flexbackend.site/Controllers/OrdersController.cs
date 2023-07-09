@@ -481,6 +481,161 @@ namespace flexbackend.site.Controllers
 
 			return Json(new { success = true });
 		}
-	}
+        public ActionResult UpdateOrderStatus(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 2; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus1(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 3; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus2(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 4; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus3(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 5; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus4(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 6; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus5(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 7; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus6(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 8; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+    }
 	
 }
