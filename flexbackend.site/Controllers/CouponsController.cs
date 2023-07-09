@@ -6,105 +6,52 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Discount.dll.Models.Dtos;
+using Discount.dll.Models.Infra.EFRepositories;
+using Discount.dll.Models.Interfaces;
+using Discount.dll.Models.Services;
+using Discount.dll.Models.ViewModels;
 using EFModels.EFModels;
+using Flex.Products.dll.Interface;
 
 namespace flexbackend.site.Controllers
 {
     public class CouponsController : Controller
     {
         private AppDbContext db = new AppDbContext();
+        private ICouponRepository _repo;
+        private CouponService _service;
+        public CouponsController()
+        {
+            _repo = new CouponEFRepository();
+            _service = new CouponService(_repo);
+        }
 
         // GET: Coupons
         public ActionResult Index()
         {
-            var coupons = db.Coupons.Include(c => c.CouponCategory).Include(c => c.ProjectTag);
-            return View(coupons.ToList());
+            return View();
         }
         [HttpPost]
         public ActionResult GetDatas(bool searchExpired = false, string searchDiscountName = null)
         {
-            var coupons = db.Coupons.Include(c => c.CouponCategory).Include(c => c.ProjectTag);
+            IEnumerable<CouponIndexVM> vm = _service.GetCoupons(searchExpired, searchDiscountName).Select(x=>x.ToViewModel());
 
-            if (!searchExpired)
-            {
-                DateTime today = DateTime.Today;
-                coupons = coupons.Where(c => c.EndDate > today || c.EndDate == null);
-            }
-
-            if (!string.IsNullOrEmpty(searchDiscountName))
-            {
-                coupons = coupons.Where(c => c.CouponName.Contains(searchDiscountName));
-            }
-
-            var data = coupons.Select(c => new
-            {
-                CouponCategoryId = c.fk_CouponCategoryId,
-                CouponId = c.CouponId,
-                CouponCategoryName = c.CouponCategory.CouponCategoryName,
-                CouponName = c.CouponName,
-                StartDate = c.StartDate,
-                EndType = c.EndType,
-                EndDays = c.EndDays,
-                EndDate = c.EndDate,
-                MinimumPurchaseAmount = c.MinimumPurchaseAmount,
-                PersonMaxUsage = c.PersonMaxUsage,
-                DiscountType = c.DiscountType,
-                DiscountValue = c.DiscountValue,
-                // 其他屬性...
-            }).ToList();
-
-            return Json(data);
+            return Json(vm);
         }
         [HttpPost]
         public ActionResult GetDataById(int couponId)
         {
-            var coupon = db.Coupons
-                            .Where(c => c.CouponId == couponId)
-                            .Include(c => c.CouponCategory)
-                            .Include(c => c.ProjectTag)
-                            .Select(c => new
-                            {
-                                CouponCategoryId = c.fk_CouponCategoryId,
-                                CouponCategoryName = c.CouponCategory.CouponCategoryName,
-                                CouponName = c.CouponName,
-                                StartDate = c.StartDate,
-                                EndType = c.EndType,
-                                EndDays = c.EndDays,
-                                EndDate = c.EndDate,
-                                MinimumPurchaseAmount = c.MinimumPurchaseAmount,
-                                PersonMaxUsage = c.PersonMaxUsage,
-                                DiscountType = c.DiscountType,
-                                DiscountValue = c.DiscountValue,
-                                RequirementType = c.RequirementType,
-                                Requirement = c.Requirement,
-                                RequiredProjectTagID = c.fk_RequiredProjectTagID,
-                                ProjectTagName = c.ProjectTag.ProjectTagName
-                            })
-                            .FirstOrDefault();
+            var coupon = _service.GetCouponById(couponId).ToViewModel();
 
             return Json(coupon);
-        }
-
-        // GET: Coupons/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Coupon coupon = db.Coupons.Find(id);
-            if (coupon == null)
-            {
-                return HttpNotFound();
-            }
-            return View(coupon);
         }
 
         // GET: Coupons/Create
         public ActionResult Create()
         {
-            ViewBag.fk_CouponCategoryId = new SelectList(db.CouponCategories.Where(c => c.CouponCategoryId != 5), "CouponCategoryId", "CouponCategoryName");
-            ViewBag.fk_RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName");
+            ViewBag.CouponCategoryId = new SelectList(db.CouponCategories.Where(c => c.CouponCategoryId != 5), "CouponCategoryId", "CouponCategoryName");
+            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName");
             List<SelectListItem> discountType = new List<SelectListItem>
             {
                 new SelectListItem { Value = "0" , Text = "金額" },
@@ -127,19 +74,19 @@ namespace flexbackend.site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CouponId,fk_CouponCategoryId,CouponName,CouponCode,MinimumPurchaseAmount,DiscountType,DiscountValue,StartDate,EndType,EndDays,EndDate,PersonMaxUsage,RequirementType,Requirement,fk_RequiredProjectTagID")] Coupon coupon)
+        public ActionResult Create(CouponCreateVM coupon)
         {
             if (ModelState.IsValid)
             {
                 // 模型驗證通過，執行相應的操作
-                db.Coupons.Add(coupon);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = _service.Create(coupon.ToDto());
+                return Json(result.result);
             }
 
             // 模型驗證失敗，繼續顯示 Create 視圖並傳遞驗證錯誤訊息
-            ViewBag.fk_CouponCategoryId = new SelectList(db.CouponCategories, "CouponCategoryId", "CouponCategoryName", coupon.fk_CouponCategoryId);
-            ViewBag.fk_RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName", coupon.fk_RequiredProjectTagID);
+            ViewBag.ValidationErrors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            ViewBag.CouponCategoryId = new SelectList(db.CouponCategories, "CouponCategoryId", "CouponCategoryName", coupon.CouponCategoryId);
+            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
 
             // 重新設置 ViewBag.DiscountType
             List<SelectListItem> discountType = new List<SelectListItem>
@@ -155,6 +102,8 @@ namespace flexbackend.site.Controllers
                 new SelectListItem { Value = "0" , Text = "依照購買價格" },
                 new SelectListItem { Value = "1" , Text = "依照商品件數" },
             };
+            ViewBag.DiscountType = new SelectList(discountType, "Value", "Text");
+            ViewBag.ConditionType = new SelectList(conditionType, "Value", "Text");
             ViewBag.DiscountType = new SelectList(discountType, "Value", "Text", coupon.DiscountType);
             ViewBag.RequirementType = new SelectList(conditionType, "Value", "Text", coupon.RequirementType);
 
@@ -163,7 +112,7 @@ namespace flexbackend.site.Controllers
             // 將錯誤訊息傳遞給 View
             ViewBag.ValidationErrors = errors;
 
-            return View(coupon);
+            return Json(errors);
         }
 
         // GET: Coupons/Edit/5
@@ -173,14 +122,14 @@ namespace flexbackend.site.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Coupon coupon = db.Coupons.Find(id);
+            CouponEditVM coupon = _service.GetCouponById(id.Value).ToViewModel();
             if (coupon == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.fk_CouponCategoryId = new SelectList(db.CouponCategories.Where(c => c.CouponCategoryId != 5), "CouponCategoryId", "CouponCategoryName", coupon.fk_CouponCategoryId);
-            ViewBag.fk_RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName", coupon.fk_RequiredProjectTagID);
+            ViewBag.CouponCategoryId = new SelectList(db.CouponCategories.Where(c => c.CouponCategoryId != 5), "CouponCategoryId", "CouponCategoryName", coupon.CouponCategoryId);
+            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
             List<SelectListItem> discountType = new List<SelectListItem>
             {
                 new SelectListItem { Value = "0" , Text = "金額" },
@@ -203,17 +152,34 @@ namespace flexbackend.site.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CouponId,fk_CouponCategoryId,CouponName,CouponCode,MinimumPurchaseAmount,DiscountType,DiscountValue,StartDate,EndType,EndDays,EndDate,PersonMaxUsage,RequirementType,Requirement,fk_RequiredProjectTagID")] Coupon coupon)
+        public ActionResult Edit(CouponEditVM coupon)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(coupon).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(_service.Update(coupon.ToDto()));
             }
-            ViewBag.fk_CouponCategoryId = new SelectList(db.CouponCategories, "CouponCategoryId", "CouponCategoryName", coupon.fk_CouponCategoryId);
-            ViewBag.fk_RequiredProjectTagID = new SelectList(db.ProjectTags, "ProjectTagId", "ProjectTagName", coupon.fk_RequiredProjectTagID);
-            return View(coupon);
+            ViewBag.CouponCategoryId = new SelectList(db.CouponCategories, "CouponCategoryId", "CouponCategoryName", coupon.CouponCategoryId);
+            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags, "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
+            List<SelectListItem> discountType = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0" , Text = "金額" },
+                new SelectListItem { Value = "1" , Text = "百分比" },
+                new SelectListItem { Value = "2" , Text = "免運費" },
+            };
+
+            List<SelectListItem> conditionType = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0" , Text = "依照購買價格" },
+                new SelectListItem { Value = "1" , Text = "依照商品件數" },
+            };
+            ViewBag.DiscountType = new SelectList(discountType, "Value", "Text", coupon.DiscountType);
+            ViewBag.RequirementType = new SelectList(conditionType, "Value", "Text", coupon.RequirementType);
+            // 取得驗證錯誤訊息
+            IEnumerable<ModelError> errors = ModelState.Values.SelectMany(v => v.Errors);
+            // 將錯誤訊息傳遞給 View
+            ViewBag.ValidationErrors = errors;
+
+            return Json(errors);
         }
 
         // GET: Coupons/Delete/5
@@ -235,9 +201,7 @@ namespace flexbackend.site.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            Coupon coupon = db.Coupons.Find(id);
-            db.Coupons.Remove(coupon);
-            db.SaveChanges();
+            _service.Delete(id);
             return Content("Resource deleted successfully.");
         }
 

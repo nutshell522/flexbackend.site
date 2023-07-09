@@ -323,7 +323,6 @@ table .btn-del {
     height: var(--btn-height);
     border-radius: 5px;
     transition: .15s;
-    float: left;
 }
 
 table .btn-shop {
@@ -393,7 +392,7 @@ table .btn-del::before {
     font-size: 14px;
     position: absolute;
     white-space: nowrap;
-    top: -45px;
+    top: -30px;
     left: -25px;
     padding: 3px 7px;
     background-color: rgba(0, 0, 0, 0);

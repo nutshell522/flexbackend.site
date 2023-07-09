@@ -57,9 +57,13 @@ namespace Discount.dll.Models.Services
 			{
 				return (0, Result.Fail("折扣錯誤，請更新資訊"));
 			}
+            if (dto.DiscountType == 1 && dto.DiscountValue > 100)
+            {
+                return (0, Result.Fail("百分比折扣不得大於100，請更新資訊"));
+            }
 
-			// 驗證開始日期
-			if (dto.StartDate < DateTime.Today)
+            // 驗證開始日期
+            if (dto.StartDate < DateTime.Today)
 			{
 				return (0, Result.Fail("開始日期不可小於今天"));
 			}
@@ -110,9 +114,13 @@ namespace Discount.dll.Models.Services
 			{
 				return Result.Fail("折扣錯誤，請更新資訊");
 			}
+            if (dto.DiscountType == 1 && dto.DiscountValue > 100)
+            {
+                return Result.Fail("百分比折扣不得大於100，請更新資訊");
+            }
 
-			// 驗證開始日期
-			var existsStartDate = !_repo.ExistsStartDate(dto.StartDate,dto.DiscountId);
+            // 驗證開始日期
+            var existsStartDate = !_repo.ExistsStartDate(dto.StartDate,dto.DiscountId);
 			if (dto.StartDate<DateTime.Today && existsStartDate)
 			{
 				return Result.Fail("開始日期已不可更動");
@@ -132,6 +140,5 @@ namespace Discount.dll.Models.Services
 			_repo.Update(dto);
 			return Result.Success();
 		}
-
 	}
 }

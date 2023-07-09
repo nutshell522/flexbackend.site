@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Dtos\CouponCreateDto.cs" />
+    <Compile Include="Models\Dtos\CouponEditDto.cs" />
+    <Compile Include="Models\Dtos\CouponIndexDto.cs" />
     <Compile Include="Models\Dtos\DiscountCreateOrEditDto.cs" />
     <Compile Include="Models\Dtos\DiscountIndexDto.cs" />
     <Compile Include="Models\Dtos\ProductInTagDto.cs" />
@@ -62,12 +65,18 @@
     <Compile Include="Models\Dtos\ProjectTagIndexDto.cs" />
     <Compile Include="Models\Dtos\ProjectTagItemDto.cs" />
     <Compile Include="Models\Infra\DapperRepositories\ProjectTagDapperRepository.cs" />
+    <Compile Include="Models\Infra\EFRepositories\CouponEFRepository.cs" />
     <Compile Include="Models\Infra\EFRepositories\DiscountEFRepository.cs" />
     <Compile Include="Models\Infra\Result.cs" />
+    <Compile Include="Models\Interfaces\ICouponRepository.cs" />
     <Compile Include="Models\Interfaces\IDiscountRepository.cs" />
     <Compile Include="Models\Interfaces\IProjectTagRepository.cs" />
+    <Compile Include="Models\Services\CouponService.cs" />
     <Compile Include="Models\Services\DiscountService.cs" />
     <Compile Include="Models\Services\ProjectTagService.cs" />
+    <Compile Include="Models\ViewModels\CouponCreateVM.cs" />
+    <Compile Include="Models\ViewModels\CouponEditVM.cs" />
+    <Compile Include="Models\ViewModels\CouponIndexVM.cs" />
     <Compile Include="Models\ViewModels\DiscountCreateOrEditVM.cs" />
     <Compile Include="Models\ViewModels\DiscountIndexVM.cs" />
     <Compile Include="Models\ViewModels\ProductInTagVM.cs" />

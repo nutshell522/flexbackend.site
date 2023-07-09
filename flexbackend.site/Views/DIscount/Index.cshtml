@@ -76,25 +76,6 @@
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script>
         $(function () {
-            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                "numeric-or-empty-pre": function (data) {
-                    if (data === '--') {
-                        return -Infinity;
-                    } else if ($.isNumeric(data)) {
-                        return parseFloat(data);
-                    } else {
-                        return null;
-                    }
-                },
-
-                "numeric-or-empty-asc": function (a, b) {                //正序排序引用方法
-                    return ((a === null || isNaN(a)) ? -Infinity : parseFloat(a)) - ((b === null || isNaN(b)) ? -Infinity : parseFloat(b));
-                },
-
-                "numeric-or-empty-desc": function (a, b) {                //倒序排序引用方法
-                    return ((b === null || isNaN(b)) ? -Infinity : parseFloat(b)) - ((a === null || isNaN(a)) ? -Infinity : parseFloat(a));
-                }
-            });
 
 
             const searchBar = $(".search-bar");
@@ -151,15 +132,6 @@
                             data: null,
                             render: function (data) {
                                 return `<div class="text-end">${data.OrderByStr}</div>`;
-                            },
-                            orderable: true,
-                            orderData: [8],
-                            orderDataType: 'numeric-or-empty',
-                            type: 'numeric-or-empty',
-                            createdCell: function (td, cellData, rowData, row, col) {
-                                if (cellData === '') {
-                                    $(td).html('--');
-                                }
                             }
                         },
                         {
@@ -180,7 +152,9 @@
                     ]
                     ,
                     order: [
+                        [7, "desc"],
                         [8, "asc"]
+
                     ],
                     language: {
                         paginate: {

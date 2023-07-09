@@ -16,7 +16,8 @@ namespace Discount.dll.Models.ViewModels
 		[Required]
 		public string DiscountName { get; set; }
 		[Display(Name = "折扣描述")]
-		public string DiscountDescription { get; set; }
+        [Required]
+        public string DiscountDescription { get; set; }
 		[Display(Name = "對應商品")]
 		public int? ProjectTagId { get; set; }
 		public string ProjectTagName { get; set; }
@@ -41,7 +42,8 @@ namespace Discount.dll.Models.ViewModels
 		public DateTime? EndDate { get; set; }
 
 		[Display(Name = "優先度")]
-		public int? OrderBy { get; set; }
+        [Required]
+        public int? OrderBy { get; set; }
 	}
 
 	public static class DiscountCreateOrEditVMExts

@@ -108,7 +108,6 @@ namespace Discount.dll.Models.Infra.EFRepositories
 
 				return (exists, Math.Max(0, smallerNumber), largerNumber);
 			}
-
 			return (exists, 0, 0);
 		}
 

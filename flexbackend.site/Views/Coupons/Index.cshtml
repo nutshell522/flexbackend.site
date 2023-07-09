@@ -1,6 +1,4 @@
-﻿@model IEnumerable<EFModels.EFModels.Coupon>
-
-@{
+﻿@{
     ViewBag.Title = "優惠券管理";
 }
 @section Styles{
@@ -65,8 +63,8 @@
             <th>
                 每人使用
             </th>
-            <th>狀態</th>
-            <th>管理</th>
+            <th class="text-center">狀態</th>
+            <th class="text-center">管理</th>
         </tr>
     </thead>
 </table>
@@ -77,21 +75,21 @@
         </div>
         <div id="detail">
             <div class="mb-5">
-                <h2 class="fw-bold" id="CouponName">優惠券名稱</h2>
+                <h2 class="fw-bold" id="CouponName"></h2>
             </div>
             <div class="row row-cols-2 mt-4 fs-5 px-3">
-                <div>優惠券類型: <span id="CouponType" class="ms-3">生日券</span></div>
+                <div>優惠券類型: <span id="CouponType" class="ms-3"></span></div>
                 <div>每人可使用次數: <span id="UseLimit" class="ms-3"></span></div>
             </div>
             <div class="row row-cols-2 mt-4 fs-5 px-3">
-                <div>開始日期: <span id="Start" class="ms-3">此處日期</span></div>
-                <div>結束日期: <span id="End" class="ms-3">結束日期</span></div>
+                <div>開始日期: <span id="Start" class="ms-3"></span></div>
+                <div>結束日期: <span id="End" class="ms-3"></span></div>
             </div>
             <div class="row row-cols-2 mt-4 fs-5 px-3">
-                <div>折扣條件: <span id="Condtion" class="ms-3">?元</span></div>
-                <div>折扣類型: <span id="Discount" class="ms-3">?元折扣</span></div>
+                <div>折扣條件: <span id="Condtion" class="ms-3"></span></div>
+                <div>折扣類型: <span id="Discount" class="ms-3"></span></div>
             </div>
-            <div class="mt-4 fs-5 px-3">獲得條件: <span id="GetBy" class="ms-3">否</span></div>
+            <div class="mt-4 fs-5 px-3">獲得條件: <span id="GetBy" class="ms-3"></span></div>
         </div>
     </div>
 </div>
@@ -124,60 +122,35 @@
                             orderable: false
                         },
                         {
-                            data: null,
-                            render: function (data) {
-                                return convertTimestampToDate(data.StartDate).format('yyyy/MM/dd') + " 00:00"
-                            }
+                            data: "StartDateStr"
                         },
                         {
-                            data: null,
-                            render: function (data) {
-                                return `${data.CouponCategoryId == 1 ? (data.EndDate == null ? "無期限" : convertTimestampToDate(data.EndDate).format('yyyy/MM/dd') + " 23:59") : data.EndDays + "天"}`;
-                            }
+                            data: "EndDateStr"
                         },
                         {
-                            data: null,
-                            render: function (data) {
-                                return `${data.MinimumPurchaseAmount}元`;
-                            },
+                            data: "MinimumPurchaseAmountStr",
+                            orderable: false
+                        },
+                        {
+                            data: "DiscountValueStr",
+                            orderable: false
+                        },
+                        {
+                            data: "PersonMaxUsageStr",
                             orderable: false
                         },
                         {
                             data: null,
                             render: function (data) {
-                                switch (data.DiscountType) {
-                                    case 0:
-                                        return data.DiscountValue + "元"
-                                    case 1:
-                                        return data.DiscountValue + "%"
-                                    case 2:
-                                        return "免運費"
-                                    default:
-                                        return ""
+                                console.log(data);
+                                if (data.StatusStr =="未開始") {
+                                    return `<div class="text-center status-primary">${data.StatusStr}</div >`;
                                 }
-                            },
-                            orderable: false
-                        },
-                        {
-                            data: null,
-                            render: function (data) {
-                                return `${data.PersonMaxUsage}次`;
-                            },
-                            orderable: false
-                        },
-                        {
-                            data: null,
-                            render: function (data) {
-                                let today = new Date();
-                                today.setHours(0, 0, 0, 0);
-                                if (convertTimestampToDate(data.StartDate) > today) {
-                                    return `<div class="text-center status-primary">未開始</div >`;
+                                else if (data.StatusStr == "進行中") {
+                                    return `<div class="text-center status-success">${data.StatusStr}</div >`;
                                 }
-                                else if (convertTimestampToDate(data.StartDate) < today && (data.CouponCategoryId != 1 || data.EndDate == null || convertTimestampToDate(data.EndDate) >= today)) {
-                                    return `<div class="text-center status-success">進行中</div >`;
-                                }
-                                else if (convertTimestampToDate(data.EndDate) < today) {
-                                    return `<div class="text-center status-dark">已過期</div >`;
+                                else if (data.StatusStr == "已結束") {
+                                    return `<div class="text-center status-dark">${data.StatusStr}</div >`;
                                 }
                                 return "";
                             }
@@ -185,18 +158,17 @@
                         {
                             data: null,
                             render: function (data) {
-                                let today = new Date();
-                                today.setHours(0, 0, 0, 0);
-                                if (data.EndDate != null && new Date(data.EndDate) < today) {
+                                if (data.StatusStr == "已結束") {
                                     return `<div class="manage-btn-container d-flex justify-content-around">
-                                                                                        <a href="#" class="btn-del" data-id="${data.DiscountId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
-                                                                                    </div>`;
+                                                <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
+                                                <a href="#" class="btn-del" data-id="${data.CouponId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
+                                            </div>`;
                                 }
                                 return `<div class="manage-btn-container d-flex justify-content-around">
-                                                                        <a href="javascript:;" class="btn-edit" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
-                                                                        <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
-                                                                        <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
-                                                                    </div>`;
+                                            <a href="javascript:;" class="btn-edit" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
+                                            <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
+                                        </div>`;
                             },
                             orderable: false
                         }
@@ -285,24 +257,11 @@
                 }).done(data => {
                     CouponName.text(data.CouponName);
                     CouponCategoryName.text(data.CouponCategoryName);
-                    PersonMaxUsage.text(data.PersonMaxUsage + "次");
-                    StartDate.text(convertTimestampToDate(data.StartDate).format('yyyy/MM/dd') + " 00:00");
-                    EndDate.text(`${data.EndType == 0 ? (data.EndDate == null ? "無期限" : convertTimestampToDate(data.EndDate).format('yyyy/MM/dd') + " 23:59") : data.EndDays + "天"}`);
-                    MinimumPurchaseAmount.text(`消費   ${data.MinimumPurchaseAmount}  元`);
-                    let DiscountStr = "";
-                    switch (data.DiscountType) {
-                        case 0:
-                            DiscountStr = data.DiscountValue + "元";
-                            break;
-                        case 1:
-                            DiscountStr = data.DiscountValue + "%";
-                            break;
-                        case 2:
-                            DiscountStr = "免運費";
-                            break;
-                    }
-                    DiscountValue.text(DiscountStr);
-
+                    PersonMaxUsage.text(data.PersonMaxUsageStr);
+                    StartDate.text(data.StartDateStr);
+                    EndDate.text(data.EndDateStr);
+                    MinimumPurchaseAmount.text(`消費   ${data.MinimumPurchaseAmountStr}`);
+                    DiscountValue.text(data.DiscountValueStr);
                     let RequirementStr = "";
 
                     if (data.CouponCategoryId == 5) {
