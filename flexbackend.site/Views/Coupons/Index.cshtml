@@ -16,6 +16,7 @@
         .align-right {
             text-align: right;
         }
+        
     </style>
     <link href="~/Content/CouponDetail.css" rel="stylesheet" />
 }
@@ -58,28 +59,28 @@
         </tr>
     </thead>
 </table>
-<div id="detail-bg" class="d-none">
+<div id="detail-bg" class="hide">
     <div id="detail-area">
         <div class="close-btn d-flex">
             <i class="bi bi-x "></i>
         </div>
-        <div id="detail">
+        <div id="detail" class="h-100 w-100 gray-scroll">
             <div class="mb-5">
                 <h2 class="fw-bold" id="CouponName"></h2>
             </div>
-            <div class="row row-cols-2 mt-4 fs-5 px-3">
-                <div>優惠券類型: <span id="CouponType" class="ms-3"></span></div>
-                <div>每人可使用次數: <span id="UseLimit" class="ms-3"></span></div>
+            <div class="row row-cols-1 row-cols-xl-2 mt-4 fs-5 px-3">
+                <div class="mb-4">優惠券類型: <span id="CouponType" class="ms-3"></span></div>
+                <div class="mb-4">每人可使用次數: <span id="UseLimit" class="ms-3"></span></div>
             </div>
-            <div class="row row-cols-2 mt-4 fs-5 px-3">
-                <div>開始日期: <span id="Start" class="ms-3"></span></div>
-                <div>結束日期: <span id="End" class="ms-3"></span></div>
+            <div class="row row-cols-1 row-cols-xl-2 fs-5 px-3">
+                <div class="mb-4">開始日期: <span id="Start" class="ms-3"></span></div>
+                <div class="mb-4">結束日期: <span id="End" class="ms-3"></span></div>
             </div>
-            <div class="row row-cols-2 mt-4 fs-5 px-3">
-                <div>折扣條件: <span id="Condtion" class="ms-3"></span></div>
-                <div>折扣類型: <span id="Discount" class="ms-3"></span></div>
+            <div class="row row-cols-1 row-cols-xl-2 fs-5 px-3">
+                <div class="mb-4">折扣條件: <span id="Condtion" class="ms-3"></span></div>
+                <div class="mb-4">折扣類型: <span id="Discount" class="ms-3"></span></div>
             </div>
-            <div class="mt-4 fs-5 px-3">獲得條件: <span id="GetBy" class="ms-3"></span></div>
+            <div class="fs-5 px-3">獲得條件: <span id="GetBy" class="ms-3"></span></div>
         </div>
     </div>
 </div>
@@ -196,7 +197,7 @@
                 getDataById($(this).data("id"));
             })
             detailBg.on("click", function () {
-                detailBg.addClass("d-none");
+                detailBg.addClass("hide");
             })
 
             $(document).on("click", ".btn-edit", function () {
@@ -278,7 +279,7 @@
                         RequirementStr += "無";
                     }
                     Requirement.text(RequirementStr);
-                    detailBg.removeClass("d-none");
+                    detailBg.removeClass("hide");
                 }).fail(err => {
                     console.error(err);
                     alert("請求資料時發生錯誤。");

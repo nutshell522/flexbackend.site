@@ -2433,7 +2433,6 @@
     <Content Include="Views\Speaker\Details.cshtml" />
     <Content Include="Views\Speaker\Edit.cshtml" />
     <Content Include="Views\Coupons\Create.cshtml" />
-    <Content Include="Views\Coupons\Delete.cshtml" />
     <Content Include="Views\Coupons\Edit.cshtml" />
     <Content Include="Views\Coupons\Index.cshtml" />
     <Content Include="Views\Orders\ConfirmCreate.cshtml" />
