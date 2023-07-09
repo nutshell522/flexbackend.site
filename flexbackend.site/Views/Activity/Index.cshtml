@@ -10,6 +10,12 @@
     string id_categoryId = criteria.CategoryId.HasValue ? criteria.CategoryId.Value.ToString() : "";
 
 }
+@section Styles{
+
+   
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+}
 <style>
     .disabled-btn {
         pointer-events: none;
@@ -92,14 +98,32 @@
 </form>
 
 <div class="table-container">
-    <table>
+    @*<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+        </tr>
+    </tbody>
+    </table>*@
+    <table id="myTable" class="display">
         <thead>
             <tr>
                 @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
                 @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                    th-col-0 至 th-col-20
-                    超過100%資料不會溢出 也不會換行
-                    如有細緻設定需求，可自己寫css設定寬度
+                th-col-0 至 th-col-20
+                超過100%資料不會溢出 也不會換行
+                如有細緻設定需求，可自己寫css設定寬度
                 *@
                 <th class="th-col-0 sticky">
                     <label class="form-check-label">
@@ -201,6 +225,7 @@
     </table>
 </div>
 @section Scripts{
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script>
         window.onload = function () {
             // 替排序按鈕寫入排序箭頭出現事件
@@ -252,5 +277,8 @@
                 });
             }
         };
+
+        let table = new DataTable('#myTable');
+
     </script>
 }
