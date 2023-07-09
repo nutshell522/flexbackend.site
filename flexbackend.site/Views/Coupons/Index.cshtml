@@ -1,0 +1,411 @@
+﻿@model IEnumerable<EFModels.EFModels.Coupon>
+
+@{
+    ViewBag.Title = "優惠券管理";
+}
+@section Styles{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <style>
+        thead {
+            background-color: #0B284A;
+            color: white;
+        }
+
+        #couponTable tr {
+            border: #ddf;
+        }
+    </style>
+    <link href="~/Content/CouponDetail.css" rel="stylesheet" />
+}
+<h2>優惠券管理</h2>
+
+<div class="search-bar-container mb-4 d-flex">
+    <div class="left w-75 d-flex justify-content-start me-auto">
+        <div class="w-25">
+            <div class="input-group d-flex">
+                <input class="form-control search-bar" type="text" placeholder="以折扣名稱搜尋...">
+            </div>
+        </div>
+        <div><a href="javascript:;" id="clear-input">清空</a></div>
+        <span>
+            <label class="form-check-label get-complete" for="get-complete-checkbox">
+                <input type="checkbox" class="form-check-input get-complete" id="get-complete-checkbox" />
+                搜尋已過期優惠券
+            </label>
+        </span>
+    </div>
+
+    <div class="right">
+        <a href="@Url.Action("Create")" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> 新增
+        </a>
+    </div>
+</div>
+<table id="couponTable" class="w-100">
+    <thead>
+        <tr>
+            <th>
+                優惠券類型
+            </th>
+            <th>
+                優惠券名稱
+            </th>
+            <th>
+                起始時間
+            </th>
+            <th>
+                結束時間
+            </th>
+            <th>
+                優惠條件
+            </th>
+            <th>
+                折扣
+            </th>
+            <th>
+                每人使用
+            </th>
+            <th>狀態</th>
+            <th>管理</th>
+        </tr>
+    </thead>
+</table>
+<div id="detail-bg" class="d-none">
+    <div id="detail-area">
+        <div class="close-btn d-flex">
+            <i class="bi bi-x "></i>
+        </div>
+        <div id="detail">
+            <div class="mb-5">
+                <h2 class="fw-bold" id="CouponName">優惠券名稱</h2>
+            </div>
+            <div class="row row-cols-2 mt-4 fs-5 px-3">
+                <div>優惠券類型: <span id="CouponType" class="ms-3">生日券</span></div>
+                <div>每人可使用次數: <span id="UseLimit" class="ms-3"></span></div>
+            </div>
+            <div class="row row-cols-2 mt-4 fs-5 px-3">
+                <div>開始日期: <span id="Start" class="ms-3">此處日期</span></div>
+                <div>結束日期: <span id="End" class="ms-3">結束日期</span></div>
+            </div>
+            <div class="row row-cols-2 mt-4 fs-5 px-3">
+                <div>折扣條件: <span id="Condtion" class="ms-3">?元</span></div>
+                <div>折扣類型: <span id="Discount" class="ms-3">?元折扣</span></div>
+            </div>
+            <div class="mt-4 fs-5 px-3">獲得條件: <span id="GetBy" class="ms-3">否</span></div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script>
+        $(function () {
+            const searchBar = $(".search-bar");
+            const searchExpiredInput = $("#get-complete-checkbox");
+            getDatas();
+            function getDatas() {
+                $("#couponTable").DataTable({
+                    ajax: {
+                        type: "POST",
+                        url: `/Coupons/GetDatas`,
+                        data: {
+                            searchExpired: searchExpiredInput.prop("checked"),
+                            searchDiscountName: searchBar.val()
+                        },
+                        dataSrc: function (data) {
+                            return data;
+                        },
+                    },
+                    columns: [
+                        {
+                            data: "CouponCategoryName"
+                        },
+                        {
+                            data: "CouponName",
+                            orderable: false
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                return convertTimestampToDate(data.StartDate).format('yyyy/MM/dd') + " 00:00"
+                            }
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                return `${data.CouponCategoryId == 1 ? (data.EndDate == null ? "無期限" : convertTimestampToDate(data.EndDate).format('yyyy/MM/dd') + " 23:59") : data.EndDays + "天"}`;
+                            }
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                return `${data.MinimumPurchaseAmount}元`;
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                switch (data.DiscountType) {
+                                    case 0:
+                                        return data.DiscountValue + "元"
+                                    case 1:
+                                        return data.DiscountValue + "%"
+                                    case 2:
+                                        return "免運費"
+                                    default:
+                                        return ""
+                                }
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                return `${data.PersonMaxUsage}次`;
+                            },
+                            orderable: false
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                let today = new Date();
+                                today.setHours(0, 0, 0, 0);
+                                if (convertTimestampToDate(data.StartDate) > today) {
+                                    return `<div class="text-center status-primary">未開始</div >`;
+                                }
+                                else if (convertTimestampToDate(data.StartDate) < today && (data.CouponCategoryId != 1 || data.EndDate == null || convertTimestampToDate(data.EndDate) >= today)) {
+                                    return `<div class="text-center status-success">進行中</div >`;
+                                }
+                                else if (convertTimestampToDate(data.EndDate) < today) {
+                                    return `<div class="text-center status-dark">已過期</div >`;
+                                }
+                                return "";
+                            }
+                        },
+                        {
+                            data: null,
+                            render: function (data) {
+                                let today = new Date();
+                                today.setHours(0, 0, 0, 0);
+                                if (data.EndDate != null && new Date(data.EndDate) < today) {
+                                    return `<div class="manage-btn-container d-flex justify-content-around">
+                                                                                        <a href="#" class="btn-del" data-id="${data.DiscountId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
+                                                                                    </div>`;
+                                }
+                                return `<div class="manage-btn-container d-flex justify-content-around">
+                                                                        <a href="javascript:;" class="btn-edit" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
+                                                                        <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
+                                                                        <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
+                                                                    </div>`;
+                            },
+                            orderable: false
+                        }
+                    ]
+                    ,
+                    order: [
+                        [7, "desc"]
+                    ],
+                    language: {
+                        paginate: {
+                            previous: '<i class="bi bi-chevron-left"></i>',
+                            next: '<i class="bi bi-chevron-right"></i>'
+                        },
+                        info: "第 _START_ 到 _END_ 筆，總共 _TOTAL_ 筆",
+                    },
+                    dom: '1Brtip',
+                });
+            }
+
+            const CouponName = $("#CouponName");
+            const CouponCategoryName = $("#CouponType");
+            const PersonMaxUsage = $("#UseLimit");
+            const StartDate = $("#Start");
+            const EndDate = $("#End");
+            const MinimumPurchaseAmount = $("#Condtion");
+            const DiscountValue = $("#Discount");
+            const Requirement = $("#GetBy");
+            const detailBg = $("#detail-bg");
+
+            $(document).on("click", ".btn-view", function () {
+                getDataById($(this).data("id"));
+            })
+            detailBg.on("click", function () {
+                detailBg.addClass("d-none");
+            })
+
+            $(document).on("click", ".btn-edit", function () {
+                editDiscount($(this).data("id"));
+            });
+            function editDiscount(discountId) {
+                $.ajax({
+                    url: '/Coupons/Edit?id=' + discountId,
+                    type: 'GET',
+                    success: function (response) {
+                        window.location.href = '/Coupons/Edit?id=' + discountId;
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            }
+
+            $(document).on("click", ".btn-del", function () {
+                
+                showDeleteConfirmation($(this).data("id"), $(this).data("name"));
+            });
+
+            function showDeleteConfirmation(discountId, name) {
+                var confirmed = confirm(`是否確定刪除，優惠券 ${name} ?`);
+                if (confirmed) {
+                    deleteDiscount(discountId);
+                }
+            }
+            function deleteDiscount(discountId) {
+                $.ajax({
+                    url: '/Coupons/Delete/' + discountId,
+                    type: 'DELETE',
+                    success: function (response) {
+                        alert("刪除資料成功.");
+                        $("#couponTable").DataTable().destroy();
+                        getDatas();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert("Failed to delete resource.");
+                    }
+                });
+            }
+
+            function getDataById(id) {
+                $.ajax({
+                    type: "POST",
+                    url: `/Coupons/GetDataById`,
+                    data: {
+                        couponId: id
+                    }
+                }).done(data => {
+                    CouponName.text(data.CouponName);
+                    CouponCategoryName.text(data.CouponCategoryName);
+                    PersonMaxUsage.text(data.PersonMaxUsage + "次");
+                    StartDate.text(convertTimestampToDate(data.StartDate).format('yyyy/MM/dd') + " 00:00");
+                    EndDate.text(`${data.EndType == 0 ? (data.EndDate == null ? "無期限" : convertTimestampToDate(data.EndDate).format('yyyy/MM/dd') + " 23:59") : data.EndDays + "天"}`);
+                    MinimumPurchaseAmount.text(`消費   ${data.MinimumPurchaseAmount}  元`);
+                    let DiscountStr = "";
+                    switch (data.DiscountType) {
+                        case 0:
+                            DiscountStr = data.DiscountValue + "元";
+                            break;
+                        case 1:
+                            DiscountStr = data.DiscountValue + "%";
+                            break;
+                        case 2:
+                            DiscountStr = "免運費";
+                            break;
+                    }
+                    DiscountValue.text(DiscountStr);
+
+                    let RequirementStr = "";
+
+                    if (data.CouponCategoryId == 5) {
+                        RequirementStr += `會員等級滿 `;
+                    } else if (data.CouponCategoryId == 4) {
+                        RequirementStr += `於`;
+                        if (data.RequiredProjectTagID == null || data.RequiredProjectTagID === 0) {
+                            RequirementStr += ` 全部商品 `;
+                        } else {
+                            RequirementStr += ` ${data.ProjectTagName} `;
+                        }
+                        RequirementStr += `消費`;
+
+                        if (data.RequirementType === 0) {
+                            RequirementStr += ` 滿${data.Requirement}元`;
+                        } else if (data.RequirementType === 1) {
+                            RequirementStr += ` 滿${data.Requirement}件`;
+                        }
+                    } else {
+                        RequirementStr += "無";
+                    }
+                    Requirement.text(RequirementStr);
+                    detailBg.removeClass("d-none");
+                }).fail(err => {
+                    console.error(err);
+                    alert("請求資料時發生錯誤。");
+                });
+            }
+
+            $("#get-complete-checkbox").click(function () {
+                $("#couponTable").DataTable().destroy();
+                getDatas();
+            });
+
+            $("#clear-input").click(function () {
+                searchBar.val("");
+                $("#couponTable").DataTable().destroy();
+                getDatas();
+
+            });
+
+            searchBar.change(function () {
+                $("#couponTable").DataTable().destroy();
+                getDatas();
+            });
+
+            // 擴展 Date 對象的格式化方法
+            Date.prototype.format = function (formatString) {
+                const date = this;
+
+                const replacements = {
+                    'yyyy': date.getFullYear(),
+                    'MM': padZero(date.getMonth() + 1),
+                    'dd': padZero(date.getDate()),
+                    'HH': padZero(date.getHours()),
+                    'mm': padZero(date.getMinutes()),
+                    'ss': padZero(date.getSeconds())
+                };
+
+                const regex = /yyyy|MM|dd|HH|mm|ss/g;
+
+                return formatString.replace(regex, match => replacements[match]);
+            };
+
+            // 補零函數，用於確保數字始終是兩位數
+            function padZero(number) {
+                return String(number).padStart(2, '0');
+            }
+
+            function convertTimestampToDate(timestampString) {
+                const timestampRegex = /\/Date\((\d+)\)\//;
+                const match = timestampString.match(timestampRegex);
+                if (match && match[1]) {
+                    const timestamp = parseInt(match[1]);
+                    return new Date(timestamp);
+                }
+                return null;
+            }
+            $("table tr").each(function () {
+                let items = $(this).find(".sticky");
+                let leftInstance = 0;
+                for (let i = 0; i < items.length; i++) {
+                    $(items[i]).css({
+                        'left': leftInstance + 'px'
+                    });
+                    leftInstance += $(items[i]).outerWidth(true);
+                }
+            });
+
+            $(".check-all").on('change', function () {
+                $(this).closest('table').find('input[type="checkbox"].check-item').prop('checked', $(this).is(':checked'));
+            })
+            $("table").on('change', 'input[type="checkbox"].check-item', function () {
+                var tableContainer = $(this).closest('table');
+                var checkboxes = tableContainer.find('input[type="checkbox"].check-item');
+                var checkAll = tableContainer.find('.check-all');
+
+                if (checkboxes.length === checkboxes.filter(':checked').length) {
+                    checkAll.prop('checked', true);
+                } else {
+                    checkAll.prop('checked', false);
+                }
+            });
+        })
+    </script>
+}

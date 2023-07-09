@@ -38,7 +38,7 @@
 
         <!-- 列表 -->
         <ul class="p-0 gray-sm-scroll sidebar-main">
-            <li>
+            @*<li>
                 <a href="@Url.Action("Index", "Home", new { area = "" })">
                     <div><i class="bi bi-house-door-fill"></i><span>首頁</span></div>
                 </a>
@@ -47,7 +47,7 @@
                 <a href="@Url.Action("About", "Home", new { area = "" })">
                     <div><i class="bi bi-chat-dots-fill"></i><span>訊息中心</span></div>
                 </a>
-            </li>
+            </li>*@
 
             <li>
                 <a href="javascript:;" class="collapse-btn" id="product-btn" data-id="#product-item">
@@ -99,8 +99,8 @@
                 </a>
                 <ul class="collapse-item hide" id="discount-item">
                     <li><a href="@Url.Action("Index", "DIscount", new { area = "" })">折扣活動</a></li>
-                    <li><a href="javascript:;">優惠券</a></li>
-                    <li><a href="javascript:;">優惠券報表</a></li>
+                    <li><a href="@Url.Action("Index", "Coupons", new { area = "" })">優惠券</a></li>
+                    @*<li><a href="javascript:;">優惠券報表</a></li>*@
                 </ul>
             </li>
             <li>
@@ -185,13 +185,15 @@
                 <div class="hello d-none d-md-block">
                     <span class="name">Jason</span><span>, 您好</span>
                 </div>
-                <a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>
+                @*<a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>*@
             </div>
 
             <!-- 標題 -->
             <span id="logo-container2" class="d-md-none"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span>
             <div class="header-right-wrapper">
-                <div id="notification-wrapper">
+
+                <!-- 訊息框，需要用時取消d-none -->
+                <div id="notification-wrapper" class="d-none">
 
                     <a href="javascript:;" class="bell">
 
@@ -232,7 +234,7 @@
         </header>
         <!-- 此區放入主要內容區域 -->
 
-        <main id="main-area" class="gray-scroll p-3">
+        <main id="main-area" class="gray-scroll p-3 position-relative">
             <div class="container">
                 @RenderBody()
             </div>

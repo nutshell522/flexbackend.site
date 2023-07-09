@@ -9,7 +9,7 @@
             color: white;
         }
 
-        .d-table tr {
+        .-table tr {
             border: #ddf;
         }
     </style>
@@ -224,7 +224,8 @@
                     type: 'DELETE',
                     success: function (response) {
                         alert("刪除資料成功.");
-                        dataTable.ajax.reload();
+                        $(".d-table").DataTable().destroy();
+                        getDatas();
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);

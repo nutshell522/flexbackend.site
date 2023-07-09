@@ -32,9 +32,5 @@ namespace EFModels.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Discount> Discounts { get; set; }
-
-        public virtual ProjectTag ProjectTags1 { get; set; }
-
-        public virtual ProjectTag ProjectTag1 { get; set; }
     }
 }

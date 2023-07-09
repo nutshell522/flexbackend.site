@@ -59,7 +59,7 @@ body {
     width: var(--sidebar-width);
     background-color: var(--sidebar-bg-color);
     position: fixed;
-    z-index: 200;
+    z-index: 800;
     padding: 10px;
 }
 

@@ -57,8 +57,8 @@ namespace flexbackend.site.Controllers
 
 			List<SelectListItem> conditionType = new List<SelectListItem>
 			{
-				new SelectListItem { Value = "0" , Text = "單價" },
-				new SelectListItem { Value = "1" , Text = "件數" },
+				new SelectListItem { Value = "0" , Text = "依照購買價格" },
+				new SelectListItem { Value = "1" , Text = "依照商品件數" },
 			};
 
 			ViewBag.ConditionType = conditionType;

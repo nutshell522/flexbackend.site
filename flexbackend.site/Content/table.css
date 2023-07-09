@@ -311,10 +311,10 @@ input[type="checkbox"],
             background-color: #e1e1e1;
         }
 
-.btn-shop,
-.btn-view,
-.btn-edit,
-.btn-del {
+table .btn-shop,
+table .btn-view,
+table .btn-edit,
+table .btn-del {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -326,73 +326,74 @@ input[type="checkbox"],
     float: left;
 }
 
-.btn-shop {
+table .btn-shop {
     color: var(--btn-shop-color);
     background: var(--btn-shop-bg-color);
     border: var(--btn-border) solid var(--btn-shop-border-color);
 }
 
-    .btn-shop:hover {
+    table .btn-shop:hover {
         background-color: var(--btn-shop-hover-bg-color);
         color: var(--btn-shop-hover-color);
     }
 
-.btn-view {
+table .btn-view {
     background: var(--btn-view-bg-color);
     border: var(--btn-border) solid var(--btn-view-border-color);
     color: var(--btn-view-color);
 }
 
-    .btn-view:hover {
+    table .btn-view:hover {
         background-color: var(--btn-view-hover-bg-color);
         color: var(--btn-view-hover-color);
     }
 
-.btn-edit {
+table .btn-edit {
     border: var(--btn-border) solid var(--btn-edit-border-color);
     color: var(--btn-edit-color);
     background: var(--btn-edit-bg-color);
 }
 
-    .btn-edit:hover {
+    table .btn-edit:hover {
         background-color: var(--btn-edit-hover-bg-color);
         color: var(--btn-edit-hover-color);
     }
 
-.btn-del {
+table .btn-del {
     background: var(--btn-del-bg-color);
     border: var(--btn-border) solid var(--btn-del-border-color);
     color: var(--btn-del-color);
 }
 
-    .btn-del:hover {
+    table .btn-del:hover {
         background-color: var(--btn-del-hover-bg-color);
         color: var(--btn-del-hover-color);
     }
 
-.btn-shop::before {
+table .btn-shop::before {
     content: "檢視商品頁面";
 }
 
-.btn-view::before {
+table .btn-view::before {
     content: "查看資訊";
 }
 
-.btn-edit::before {
+table .btn-edit::before {
     content: "編輯此筆";
 }
 
-.btn-del::before {
+table .btn-del::before {
     content: "刪除此筆";
 }
 
-.btn-shop::before,
-.btn-view::before,
-.btn-edit::before,
-.btn-del::before {
+table .btn-shop::before,
+table .btn-view::before,
+table .btn-edit::before,
+table .btn-del::before {
     font-size: 14px;
     position: absolute;
-    top: -35px;
+    white-space: nowrap;
+    top: -45px;
     left: -25px;
     padding: 3px 7px;
     background-color: rgba(0, 0, 0, 0);
@@ -402,10 +403,10 @@ input[type="checkbox"],
     transition: all .15s;
 }
 
-.btn-shop:hover::before,
-.btn-view:hover::before,
-.btn-edit:hover::before,
-.btn-del:hover::before {
+table .btn-shop:hover::before,
+table .btn-view:hover::before,
+table .btn-edit:hover::before,
+table .btn-del:hover::before {
     visibility: visible;
     background-color: #444;
     color: #D1E7DD;

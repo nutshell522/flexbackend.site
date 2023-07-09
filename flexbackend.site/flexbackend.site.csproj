@@ -162,6 +162,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\CouponsController.cs" />
     <Compile Include="Controllers\CustomizedShoesPoesController.cs" />
     <Compile Include="Controllers\Customized_materialsController.cs" />
     <Compile Include="Controllers\DiscountController.cs" />
@@ -2171,6 +2172,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CouponDetail.css" />
+    <Content Include="Content\datatables.min.css" />
     <Content Include="Content\IndexPageStyle.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\table.css" />
@@ -2428,6 +2431,11 @@
     <Content Include="Views\Speaker\Delete.cshtml" />
     <Content Include="Views\Speaker\Details.cshtml" />
     <Content Include="Views\Speaker\Edit.cshtml" />
+    <Content Include="Views\Coupons\Create.cshtml" />
+    <Content Include="Views\Coupons\Delete.cshtml" />
+    <Content Include="Views\Coupons\Edit.cshtml" />
+    <Content Include="Views\Coupons\Index.cshtml" />
+    <Content Include="Views\Orders\ConfirmCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
