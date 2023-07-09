@@ -97,9 +97,6 @@
             </div>
         </div>
 
-
-
-
         <div id="RequirementBox" class="border border-2 border-dark p-0">
             <div class="text-bg-dark py-2 px-4 fs-5">優惠券獲得條件設定</div>
             <div class="row row-cols-2 p-4">
@@ -122,9 +119,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
         <div class="my-4">
             <input id="save" type="button" value="新增" class="btn btn-primary" />
@@ -155,7 +149,7 @@
 
             EndDateInput.datepicker({ dateFormat: 'yy/mm/dd' });
             StartDateInput.datepicker({ dateFormat: 'yy/mm/dd' });
-
+            StartDateInput.val()
             dataChange();
 
             CouponCategoryIdInput.change(dataChange);

@@ -67,6 +67,10 @@ namespace Discount.dll.Models.Services
             {
                 return Result.Fail("百分比折扣不得大於100，請更新資訊");
             }
+            if (dto.DiscountType == 2)
+            {
+                dto.DiscountValue = 0;
+            }
 
             // 驗證開始日期
             var existsStartDate = !_repo.ExistsStartDate(dto.StartDate, dto.CouponId);
@@ -134,6 +138,10 @@ namespace Discount.dll.Models.Services
             if (dto.DiscountType == 1 && dto.DiscountValue > 100)
             {
                 return (0, Result.Fail("百分比折扣不得大於100，請更新資訊"));
+            }
+            if (dto.DiscountType == 2)
+            {
+                dto.DiscountValue = 0;
             }
 
             // 驗證開始日期

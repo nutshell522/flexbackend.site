@@ -12,6 +12,10 @@
         #couponTable tr {
             border: #ddf;
         }
+
+        .align-right {
+            text-align: right;
+        }
     </style>
     <link href="~/Content/CouponDetail.css" rel="stylesheet" />
 }
@@ -42,27 +46,13 @@
 <table id="couponTable" class="w-100">
     <thead>
         <tr>
-            <th>
-                優惠券類型
-            </th>
-            <th>
-                優惠券名稱
-            </th>
-            <th>
-                起始時間
-            </th>
-            <th>
-                結束時間
-            </th>
-            <th>
-                優惠條件
-            </th>
-            <th>
-                折扣
-            </th>
-            <th>
-                每人使用
-            </th>
+            <th>優惠券類型</th>
+            <th>優惠券名稱</th>
+            <th>起始時間</th>
+            <th>結束時間</th>
+            <th>優惠條件</th>
+            <th>折扣</th>
+            <th>每人使用</th>
             <th class="text-center">狀態</th>
             <th class="text-center">管理</th>
         </tr>
@@ -143,7 +133,7 @@
                             data: null,
                             render: function (data) {
                                 console.log(data);
-                                if (data.StatusStr =="未開始") {
+                                if (data.StatusStr == "未開始") {
                                     return `<div class="text-center status-primary">${data.StatusStr}</div >`;
                                 }
                                 else if (data.StatusStr == "進行中") {
@@ -160,15 +150,15 @@
                             render: function (data) {
                                 if (data.StatusStr == "已結束") {
                                     return `<div class="manage-btn-container d-flex justify-content-around">
-                                                <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
-                                                <a href="#" class="btn-del" data-id="${data.CouponId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
-                                            </div>`;
+                                                        <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
+                                                        <a href="#" class="btn-del" data-id="${data.CouponId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
+                                                    </div>`;
                                 }
                                 return `<div class="manage-btn-container d-flex justify-content-around">
-                                            <a href="javascript:;" class="btn-edit" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
-                                            <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
-                                            <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
-                                        </div>`;
+                                                    <a href="javascript:;" class="btn-edit" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
+                                                    <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
+                                                    <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
+                                                </div>`;
                             },
                             orderable: false
                         }
@@ -185,6 +175,10 @@
                         info: "第 _START_ 到 _END_ 筆，總共 _TOTAL_ 筆",
                     },
                     dom: '1Brtip',
+                    columnDefs: [
+                        { targets: [4, 5, 6], className: 'text-right align-right' },
+                        { targets: [7], className: 'd-flex justify-content-center' }
+                    ]
                 });
             }
 
@@ -221,7 +215,7 @@
             }
 
             $(document).on("click", ".btn-del", function () {
-                
+
                 showDeleteConfirmation($(this).data("id"), $(this).data("name"));
             });
 

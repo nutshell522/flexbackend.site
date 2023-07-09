@@ -12,6 +12,9 @@
         .-table tr {
             border: #ddf;
         }
+        .align-right {
+            text-align: right;
+        }
     </style>
 }
 <h2>折扣管理</h2>
@@ -164,6 +167,9 @@
                         info: "第 _START_ 到 _END_ 筆，總共 _TOTAL_ 筆",
                     },
                     dom: '1Brtip',
+                    columnDefs: [
+                        { targets: [3, 4], className: 'text-right align-right' }
+                    ]
                 });
             }
             $(document).on("click", ".btn-edit", function () {
@@ -225,8 +231,6 @@
                 getDatas();
             });
         })
-
-
        
     </script>
 }

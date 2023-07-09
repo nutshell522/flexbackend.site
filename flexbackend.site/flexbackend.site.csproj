@@ -2178,6 +2178,7 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\table.css" />
     <Content Include="Content\variables.css" />
+    <Content Include="Image\flexlogo.ico" />
     <Content Include="lib\datatables\css\dataTables.bootstrap.css" />
     <Content Include="lib\datatables\css\dataTables.bootstrap.min.css" />
     <Content Include="lib\datatables\css\dataTables.bootstrap4.css" />
