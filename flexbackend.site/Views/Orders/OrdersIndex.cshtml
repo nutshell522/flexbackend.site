@@ -18,6 +18,36 @@
         .unclosed .btn-edit {
             display: block;
         }
+        .status-start {
+            color: orange;
+        }
+
+        .status-pending {
+            color: blue;
+        }
+
+        .status-delivering {
+            color: mediumpurple;
+        }
+        .status-shipped {
+            color: brown;
+        }
+
+        .status-awaiting {
+            color: darkgoldenrod;
+        }
+
+        .status-completed {
+            color: forestgreen;
+        }
+        .status-cancelled {
+            color: dimgrey;
+        }
+
+        .status-returned {
+            color: red;
+        }
+
     </style>
 }
 
@@ -133,8 +163,39 @@
                         @Html.DisplayFor(modelItem => item.logistics_companys)
                     </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.order_status)
+                    <td class="th-col-1">
+                        @if (item.order_status_Id == 1)
+                        {
+                            <span class="status-start">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 2)
+                        {
+                            <span class="status-pending">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 3)
+                        {
+                            <span class="status-shipped">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 4)
+                        {
+                            <span class="status-delivering">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 5)
+                        {
+                            <span class="status-awaiting">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 6)
+                        {
+                            <span class="status-completed">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 7)
+                        {
+                            <span class="status-cancelled">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
+                        else if (item.order_status_Id == 8)
+                        {
+                            <span class="status-returned">@Html.DisplayFor(modelItem => item.order_status)</span>
+                        }
                     </td>
 
                     <td>
