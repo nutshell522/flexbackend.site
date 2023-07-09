@@ -47,10 +47,8 @@ namespace flexbackend.site.Controllers
 
 			StaffService service = GetStaffRepository();
 			var staff = service.GetByStaffId(staffId).ToStaffEditVM();
-
-			//PrepareCategoryDataSource(staff.fk_PermissionsId);
-			PrepareCategoryDataSource(staff.fk_DepartmentId);
-			//PrepareCategoryDataSource(staff.fk_TitleId);
+			
+			PrepareCategoryDataSource(0);
 
 			return View(staff);
 		}
@@ -68,20 +66,19 @@ namespace flexbackend.site.Controllers
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
 				return View(vm);
 			}
-			//PrepareCategoryDataSource(vm.fk_PermissionsId);
-			//PrepareCategoryDataSource(vm.fk_TitleId);
-			//PrepareCategoryDataSource(vm.GenderInt);
 
 			return RedirectToAction("StaffList");
-
 		}
 
 		private void PrepareCategoryDataSource(int? id)
 		{
-			//var dipartments = db.Departments.ToList().Prepend(new Department()).ToList();
+			var departmentList = db.Departments.ToList();
+			departmentList.Insert(0, new Department { DepartmentId = 0, DepartmentName = "請選擇" });
+
 			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
-			ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "DepartmentName", id);
+			ViewBag.DepartmentId = new SelectList(departmentList, "DepartmentId", "DepartmentName", id);
 			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
+
 			List<SelectListItem> gender = new List<SelectListItem>
 			{
 			new SelectListItem { Value = "true" , Text = "男" },

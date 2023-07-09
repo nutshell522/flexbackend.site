@@ -161,7 +161,12 @@ namespace Members.dll.Models.Services
 
 		public Result ResetStaff(EditStaffDto dto)
 		{
-			//todo編輯的商業邏輯
+			
+			if (dto.fk_DepartmentId == 0)
+			{
+				return Result.Fail("尚未選取同仁所屬部門");
+			}
+
 			if (dto == null)
 			{
 				return Result.Fail("找不到員工");

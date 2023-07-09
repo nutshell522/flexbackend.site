@@ -10,16 +10,24 @@ namespace Members.dll.Models.ViewsModels
 {
 	public class MemberEditVM
 	{
+		[Display(Name = "會員編號")]
 		public int MemberId { get; set; } 
 
 		[Display(Name="姓名")] 
 		[Required]
 		[StringLength(10)]
-		public string Name { get; set; } 
+		public string Name { get; set; }
 
 		[Display(Name = "性別")]
-		[Required]
 		public bool? Gender { get; set; }
+
+		public string GenderStr
+		{
+			get
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			}
+		}
 
 		[Display(Name = "手機")]
 		[Required]

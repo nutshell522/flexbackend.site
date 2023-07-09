@@ -15,6 +15,8 @@ using Members.dll.Models.Interfaces;
 using Members.dll.Models.lnfra.DapperRepositories;
 using Members.dll.Models.lnfra.EFRepositories;
 using Members.dll.Models.Exts;
+using static Discount.dll.Models.Services.ProjectTagService;
+using Members.dll.Models.ViewsModels.Staff;
 
 namespace flexbackend.site.Controllers
 {
@@ -23,7 +25,7 @@ namespace flexbackend.site.Controllers
 		private AppDbContext db = new AppDbContext();
 
 		// GET: Member
-		public ActionResult Index()
+		public ActionResult Index(MemberCriteria criteria)
 		{
 			var members = db.Members.Include(m => m.BlackList).Include(m => m.MembershipLevel);
 			var vms = members.ToList().Select(entity =>
@@ -39,7 +41,26 @@ namespace flexbackend.site.Controllers
 				 fk_BlackListId = entity.fk_BlackListId
 			 });
 
-			return View(vms);
+			PrepareCategoryDataSource(criteria.LevelId);
+			ViewBag.Criteria = criteria;
+			//查詢,第一次進入網頁 criteria 是沒有值
+
+			var query = db.Members.Include(m => m.MembershipLevel);
+			query.Select(m => m.MembershipLevel.LevelName);
+
+			if (string.IsNullOrEmpty(criteria.Name) == false)
+			{
+				query = query.Where(m => m.Name.Contains(criteria.Name));
+			}
+			if (criteria.LevelId != 0 && criteria.LevelId > 0)
+			{
+				query = query.Where(m => m.fk_LevelId == criteria.LevelId);
+			}
+
+			var result = query.ToList().Select(m => m.ToIndexDto().ToIndexVM());
+
+
+			return View(result);
 		}
 
 
@@ -85,7 +106,10 @@ namespace flexbackend.site.Controllers
 
 		private void PrepareCategoryDataSource(int? id)
 		{
-			ViewBag.LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", id);
+			var levelList = db.MembershipLevels.ToList();
+			levelList.Insert(0, new MembershipLevel { LevelId = 0, LevelName = "請選擇" });
+
+			ViewBag.LevelId = new SelectList(levelList, "LevelId", "LevelName", id);
 			List<SelectListItem> gender = new List<SelectListItem>
 			{
 			new SelectListItem { Value = "true" , Text = "男" },
@@ -117,12 +141,12 @@ namespace flexbackend.site.Controllers
 		// GET: Member/Edit/5
 
 		[Authorize]
-		public ActionResult Edit(int? memberId)
+		public ActionResult Edit(int memberId)
 		{
-			if (memberId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			if (memberId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			MemberService service = GetMemberRepository();
 			var member = service.GetMemberId(memberId).ToMembersEditVM();
-			if (memberId == null) return HttpNotFound();
+			if (memberId == 0) return HttpNotFound();
 			return View(member);
 		}
 
@@ -181,13 +205,13 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("Index");
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				db.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+		//protected override void Dispose(bool disposing)
+		//{
+		//	if (disposing)
+		//	{
+		//		db.Dispose();
+		//	}
+		//	base.Dispose(disposing);
+		//}
 	}
 }
