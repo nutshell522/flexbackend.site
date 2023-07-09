@@ -15,41 +15,19 @@ namespace Discount.dll.Models.ViewModels
         public string CouponCategoryName { get; set; }
         public DateTime StartDate { get; set; }
         public string StartDateStr
-        {
-            get
-            {
-                return StartDate.ToString("yyyy-MM-dd") + " 00:00";
-            }
-        }
+            => StartDate.ToString("yyyy-MM-dd") + " 00:00";
         public bool? EndType { get; set; }
         public int? EndDays { get; set; }
         public DateTime? EndDate { get; set; }
         public string EndDateStr
-        {
-            get
-            {
-                return CouponCategoryId == 1 ?
-                    (EndDate.HasValue ? EndDate.Value.ToString("yyyy-MM-dd") + " 23:59" : "無期限") :
-                    (EndDays.HasValue ? EndDays.Value.ToString() + " 天" : "無期限");
-            }
-        }
+            => CouponCategoryId == 1 ? (EndDate.HasValue ? EndDate.Value.ToString("yyyy-MM-dd") + " 23:59" : "無期限") : (EndDays.HasValue ? EndDays.Value.ToString() + " 天" : "無期限");
         public int MinimumPurchaseAmount { get; set; }
         public string MinimumPurchaseAmountStr
-        {
-            get
-            {
-                return MinimumPurchaseAmount.ToString() + "元";
-            }
-        }
+            => MinimumPurchaseAmount.ToString() + "元";
 
         public int? PersonMaxUsage { get; set; }
         public string PersonMaxUsageStr
-        {
-            get
-            {
-                return PersonMaxUsage.HasValue ? PersonMaxUsage.Value.ToString() + "次" : "無限次數";
-            }
-        }
+            => PersonMaxUsage.HasValue ? PersonMaxUsage.Value.ToString() + "次" : "無限次數";
         public int DiscountType { get; set; }
         public int DiscountValue { get; set; }
         public string DiscountValueStr
