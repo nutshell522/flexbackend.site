@@ -20,8 +20,8 @@ namespace Members.dll.Models.Exts
 			return new ForgetPasswordDto
 			{
 				Account = vm.Account,
-				NewPassword = vm.NewPassword,
-				ConfirmPassword = vm.ConfirmPassword
+				NewPassword = vm.Email,
+				//ConfirmPassword = vm.ConfirmPassword
 			};
 		}
 

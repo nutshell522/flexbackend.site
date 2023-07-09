@@ -18,7 +18,6 @@ namespace EFModels.EFModels
 
         public bool? Gender { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string Mobile { get; set; }
 
@@ -45,6 +44,9 @@ namespace EFModels.EFModels
         public int fk_TitleId { get; set; }
 
         public int fk_DepartmentId { get; set; }
+
+        [StringLength(255)]
+        public string ConfirmCode { get; set; }
 
         public virtual Department Department { get; set; }
 

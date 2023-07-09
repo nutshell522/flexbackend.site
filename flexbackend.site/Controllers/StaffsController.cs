@@ -152,15 +152,104 @@ namespace flexbackend.site.Controllers
 		public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
-			Result result = ResetPassword(vm);
 
-			if (result.IsSuccess == false)
+			// 生成email裡的連結
+			var urlTemplate = Request.Url.Scheme + "://" +  // 生成 http:.// 或 https://
+							 Request.Url.Authority + "/" + // 生成網域名稱或 ip
+							 "Members/ResetPassword?memberid={0}&confirmCode={1}"; // 生成網頁 url
+
+			Result result = ProcessResetPassword(vm.Account, vm.Email, urlTemplate);
+
+			if (!result.IsSuccess)
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
 				return View(vm);
 			}
+
+			
 			return RedirectToAction("Login");
 		}
+
+		public ActionResult ResetPassword()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult ResetPassword(ResetPasswordVM vm, int memberId, string confirmCode)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ProcessChangePassword(memberId, confirmCode, vm.Password);
+
+			if (!result.IsSuccess)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+
+			return View("ConfirmResetPassword");
+		}
+
+		private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
+		{
+			var db = new AppDbContext();
+
+			// 驗證 memberId, confirmCode是否正確
+			var staffInDb = db.Staffs.FirstOrDefault(s => s.StaffId == memberId && s.ConfirmCode == confirmCode);
+			if (staffInDb == null) return Result.Fail("找不到對應的會員記錄");
+
+			// 更新密碼,並將 confirmCode清空
+			var salt = HashUtility.GetSalt();
+			var encryptedPassword = HashUtility.ToSHA256(newPassword, salt);
+
+			staffInDb.Password = encryptedPassword;
+			staffInDb.ConfirmCode = null;
+
+			db.SaveChanges();
+
+			return Result.Success();
+		}
+
+
+		private Result ProcessResetPassword(string account, string email, string urlTemplate)
+		{
+			var db = new AppDbContext();
+			// 檢查account,email正確性
+			var staffInDb = db.Staffs.FirstOrDefault(s => s.Account == account);
+
+			if (staffInDb == null) return Result.Fail("帳號或 Email 錯誤"); // 故意不告知確切錯誤原因
+
+			if (string.Compare(email, staffInDb.Email, StringComparison.CurrentCultureIgnoreCase) != 0) return Result.Fail("帳號或 Email 錯誤");
+
+			// 檢查 IsConfirmed必需是true, 因為只有已啟用的帳號才能重設密碼
+			if (staffInDb.Account!= account) return Result.Fail("您還沒有啟用本帳號, 請先完成才能重設密碼");
+
+			// 更新記錄, 填入 confirmCode
+			var confirmCode = Guid.NewGuid().ToString("N");
+			staffInDb.ConfirmCode = confirmCode;
+			db.SaveChanges();
+
+			// 發email
+			var url = string.Format(urlTemplate, staffInDb.StaffId, confirmCode);
+			new EmailHelper().SendForgetPasswordEmail(url, staffInDb.Name, email);
+
+			return Result.Success();
+		}
+
+		[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult ForgetPassword(ForgetPasswordVM vm)
+		//{
+		//	if (ModelState.IsValid == false) return View(vm);
+		//	Result result = ResetPassword(vm);
+
+		//	if (result.IsSuccess == false)
+		//	{
+		//		ModelState.AddModelError(string.Empty, result.ErrorMessage);
+		//		return View(vm);
+		//	}
+		//	return RedirectToAction("Login");
+		//}
 
 		private Result ResetPassword(ForgetPasswordVM vm)
 		{

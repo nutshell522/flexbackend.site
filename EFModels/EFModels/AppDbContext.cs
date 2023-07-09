@@ -498,6 +498,10 @@ namespace EFModels.EFModels
 				.Property(e => e.Password)
 				.IsUnicode(false);
 
+			modelBuilder.Entity<Staff>()
+				.Property(e => e.ConfirmCode)
+				.IsUnicode(false);
+
 			modelBuilder.Entity<Type>()
 				.HasMany(e => e.CartItems)
 				.WithRequired(e => e.Type)
