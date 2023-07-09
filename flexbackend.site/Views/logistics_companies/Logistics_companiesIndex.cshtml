@@ -17,7 +17,7 @@
 
         .table-container table thead {
             background-color: #25650a;
-            color: white;
+            color: forestgreen;
         }
 
         .table-container table td,
@@ -26,7 +26,7 @@
         }
 </style>
 
-<h2>明細相關管理</h2>
+<h2>訂單相關管理</h2>
 
 <p>
 
@@ -53,10 +53,10 @@
         </a>
     </div>
 </div>
-<div class="table-container w-1000">
-    <table >
+<div class="table-container w-1000" s>
+    <table style="border: dotted; background-color:aquamarine" >
         <thead>
-            <tr >
+            <tr>
                 <th>物流名稱</th>
                 <th>電話</th>
                 <th>備註</th>
@@ -72,7 +72,7 @@
                     <td>@Html.DisplayFor(modelItem => company.logistics_description)</td>
                     <td @*class="text-center align-middle"*@>
                         <div @*class="d-flex"*@>
-                            <a href="@Url.Action("Edit", new {id=company.Id })" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>                                   
+                            <a href="@Url.Action("Edit", new {id=company.Id })" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -81,7 +81,7 @@
     </table>
 </div>
 <div class="table-container">
-    <table  style="font-size: 20px;">
+    <table style="font-size: 20px; border: dotted; background-color:aquamarine">
         <thead>
             <tr>
 
