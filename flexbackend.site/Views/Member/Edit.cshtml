@@ -51,7 +51,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "form-label" })
-            <input type="text" class="form-control" name="Birthday" id="Birthday" value="@(Model.Birthday.HasValue?Model.Birthday.Value.ToString("yyyy'/'MM'/'dd"):string.Empty)"disabled>
+            <input type="text" class="form-control" name="Birthday" id="Birthday" value="@(Model.Birthday.HasValue?Model.Birthday.Value.ToString("yyyy'/'MM'/'dd"):string.Empty)" disabled>
             @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
         </div>
 
@@ -68,9 +68,13 @@
             @Html.EditorFor(model => model.fk_BlackListId, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.fk_BlackListId, "", new { @class = "text-danger" })
         </div>
+        <div>
+            <button type="button" class="btn btn-success" onclick="blackLists()">編輯黑名單</button>
+            <div id="result"></div>
+        </div>
 
         <div class="mb-3">
-            <input type="submit" value="提交" class="btn btn-danger"onclick="confirmSubmit()"/>
+            <input type="submit" value="提交" class="btn btn-danger" onclick="confirmSubmit()" />
         </div>
     </div>
 }
@@ -81,11 +85,48 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>*@
+
     <script>
         function confirmSubmit() {
             if (confirm("確定要編輯會員資料嗎?")) {
                 $('form').submit(); // 提交表单
             }
         }
+
+        $(document).ready(function () {
+            $("#editButton").click(function () {
+                $.ajax({
+                    url: '/Controller/Action', // 替換成你的Controller和Action的路由
+                    type: 'GET',
+                    success: function (result) {
+                        $("#editDialog").html(result);
+                        $("#editDialog").dialog({
+                            modal: true,
+                            width: 400,
+                            height: 300
+                            // 可以設置其他對話框的選項
+                        });
+                    }
+                });
+            });
+        });
+
+        var bassAddress = "https://localhost:44349/";
+        function blackLists() {
+            //alert("blackLists")
+            $.ajax({
+                type: "POST",
+                url: `${bassAddress}/Member/EditBlack`,
+                data: {}
+            }).done(data => {
+                //alert(data);
+                $("#result").html(data)
+            }).fail(err => {
+                alert(err.statusText)
+            });
+        }
+
     </script>
 }

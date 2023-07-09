@@ -179,6 +179,17 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
+		[HttpPost]
+		public ActionResult EditBlack()
+		{
+			// 從資料表中取得資料
+			var data = db.BlackLists.Select(m=>m.Behavior).ToList();
+
+			// 傳遞資料給部分檢視
+			return PartialView("_BlackListsPartial", data); 
+		}
+
+
 		// GET: Member/Delete/5
 		public ActionResult Delete(int? id)
 		{
@@ -205,13 +216,13 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("Index");
 		}
 
-		//protected override void Dispose(bool disposing)
-		//{
-		//	if (disposing)
-		//	{
-		//		db.Dispose();
-		//	}
-		//	base.Dispose(disposing);
-		//}
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 	}
 }

@@ -48,5 +48,10 @@ namespace Members.dll.Models.ViewsModels
 
 		[Display(Name = "是否為黑名單")] 
 		public int? fk_BlackListId { get; set; }
+
+		//public int BlackListId { get; set; }
+
+		//public string Behavior { get; set; }
+
 	}
 }
