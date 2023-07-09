@@ -14,9 +14,26 @@ namespace flexbackend.site.Controllers
 		// GET: logistics_companies
 		public ActionResult Logistics_companiesIndex()
 		{
-			IEnumerable<logistics_companiesVM> companies = Getcompanies();
+			var viewModel = new CombineVM
+			{
+				PayMethods = GetpayMethods(),
+				Companies = Getcompanies()
+			};
+			return View(viewModel);
+		}
 
-			return View(companies);
+		private IEnumerable<PayMethodVM> GetpayMethods()
+		{
+			var db = new AppDbContext();
+
+			return db.pay_methods
+				.AsNoTracking()
+				.ToList()
+				.Select(p => new PayMethodVM
+				{
+					Id = p.Id,
+					pay_method = p.pay_method
+				});
 		}
 
 		private IEnumerable<logistics_companiesVM> Getcompanies()
@@ -26,13 +43,14 @@ namespace flexbackend.site.Controllers
 			return db.logistics_companies
 				.AsNoTracking()
 				.ToList()
-				.Select(p => new logistics_companiesVM
+				.Select(c => new logistics_companiesVM
 				{
-					Id = p.Id,
-					name = p.name,
-					tel = p.tel,
-					logistics_description = p.logistics_description,
+					Id = c.Id,
+					name = c.name,
+					tel = c.tel,
+					logistics_description = c.logistics_description
 				});
+
 		}
 
 		public ActionResult create()
@@ -109,7 +127,7 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
-				
+
 				return RedirectToAction("Logistics_companiesIndex");
 			}
 			else
@@ -147,5 +165,45 @@ namespace flexbackend.site.Controllers
 			var db = new AppDbContext();
 			return db.logistics_companies.FirstOrDefault(o => o.Id == id);
 		}
-	}
+
+		public ActionResult createPay()
+		{
+			return View();
+		}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult createPay(PayMethodVM vm)
+		{
+            if (ModelState.IsValid == false) return View(vm);
+
+            //建立新會員
+            (bool IsSuccess, string ErrorMessage) result = createPayMethod(vm);
+
+            if (result.IsSuccess)
+            {
+                //若成功,轉到ComfirmRegister頁
+                return RedirectToAction("Logistics_companiesIndex");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage);
+                return View(vm);
+            }
+        }
+
+        private (bool IsSuccess, string ErrorMessage) createPayMethod(PayMethodVM vm)
+        {
+            var db = new AppDbContext();
+
+            var createpay = new pay_methods
+            {
+                Id = vm.Id,
+                pay_method = vm.pay_method,
+            };
+            db.pay_methods.Add(createpay);
+            db.SaveChanges();
+
+            return (true, "");
+        }
+    }
 }
