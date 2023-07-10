@@ -87,8 +87,8 @@ function htmlMaker(data) {
                     <td>
                      <div class="manage-btn-container">
                             <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#speakerEdit" onclick="EditGetInfo(${data[i].SpeakerId})"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn-view"><i class="bi bi-clipboard-check"></i></button>
-                            <button class="btn-del" onclick="Delete( ${data[i].SpeakerId})"><i class="bi bi-trash-fill"></i></button>
+                            <button class="btn-view" data-bs-toggle="modal" data-bs-target="#speakerDetail" onclick="GetDetail(${data[i].SpeakerId})"><i class="bi bi-clipboard-check"></i></button>
+                            <button class="btn-del" onclick="Delete(${data[i].SpeakerId})"><i class="bi bi-trash-fill"></i></button>
 
                         </div>
                     </td>
@@ -167,12 +167,39 @@ function EditPhoto(){
 
 function Delete(SpeakerId) {
 
-    console.log(SpeakerId)
+  /*  console.log(SpeakerId)*/
     axios({
         url: '/Speaker/Delete',
+        method: 'post',
+        params: { "id": SpeakerId }
         
+    }).then(res => {
+        console.log(JSON.stringify(res.data));
+        Index();
     })
 
 }
+
+function GetDetail(SpeakerId) {
+    axios({
+        url: '/Speaker/Details',
+        method: 'get',
+        params: { 'id': SpeakerId }
+    }).then(res => { 
+        console.log(JSON.stringify(res.data));
+        $("#DetailSpeakerId").val(res.data.SpeakerId);
+        $("#DetailSpeakerName").val(res.data.SpeakerName);
+        $("#DetailSpeakerImg").attr('src', "/Public/Img/講師大頭貼/" + res.data.SpeakerImg);
+        $("#DetailSpeakerPhone").val(res.data.SpeakerPhone);
+        $("#DetailSpeakerField").val(res.data.FieldName);
+        $("#Detailfk_SpeakerBranchId").val(res.data.BranchName);
+        $("#DetailSpeakerDescription").val(res.data.SpeakerDescription);
+
+    }
+    )
+
+}
+
+
 
                      

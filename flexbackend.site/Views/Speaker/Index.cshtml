@@ -11,9 +11,22 @@
 @section Styles{
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
     <style>
-        .hidden{
-        display:none
+        .hidden {
+            display: none
         }
+
+        .disabled-select {
+            /*background-color: #ECF5FF;*/
+            pointer-events: none;
+            opacity: 0.9
+        }
+
+        .no-border {
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
     </style>
 }
 
@@ -357,6 +370,104 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- 查看詳細資料的Modal -->
+<div class="modal fade" id="speakerDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">講師資訊</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="SpeakerDetailForm">
+
+
+
+
+                    <div class="mb-3">
+                        <label for="DetailSpeakerId" class="form-label">講師編號</label>
+                        <input type="text" id="DetailSpeakerId" name="SpeakerId" class="form-control disabled-select no-border" readonly>
+                    </div>
+
+                    <hr />
+
+
+                    <div class="mb-3">
+                        <label for="DetailSpeakerName" class="form-label">姓名</label>
+                        <input type="text" id="DetailSpeakerName" name="SpeakerName" class="form-control no-border" readonly>
+                    </div>
+                    <hr />
+                    <div class="mb-3">
+                        <label for="DetailSpeakerImg" class="form-label">照片</label>
+                        <img id="DetailSpeakerImg" name="SpeakerImg" class="form-control no-border" readonly>
+                    </div>
+                    <hr />
+
+
+                    <div class="mb-3">
+                        <label for="DetailSpeakerPhone" class="form-label">講師電話</label>
+                        <input type="text" id="DetailSpeakerPhone" name="SpeakerPhone" class="form-control no-border" readonly>
+
+                    </div>
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="DetailSpeakerField" class="form-label">專攻領域</label>
+                        <input type="text" id="DetailSpeakerField" name="FieldName" class="form-control no-border" readonly>
+                    </div>
+                    @*<div class="mb-3">
+            <label for="DetailSpeakerField" class="form-label">專攻領域</label>
+            <select id="DetailSpeakerField" name="fk_SpeakerFieldId" class="form-select no-border" readonly>
+                @foreach (var item in fields as SelectList)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+
+        </div>*@
+                    <hr />
+
+
+                    <div class="mb-3">
+                        <label for="Detailfk_SpeakerBranchId" class="form-label">駐點分店</label>
+                        <input type="text" id="Detailfk_SpeakerBranchId" name="BranchName" class="form-control no-border" readonly>
+                    </div>
+
+
+
+                    <hr />
+
+                    <div class="mb-3">
+                        <label for="DetailSpeakerDescription" class="form-label">講師簡介</label>
+                        <textarea id="DetailSpeakerDescription" name="SpeakerDescription" class="form-control no-border" readonly style="height: 200px; resize: none;"></textarea>
+                    </div>
+
+
+
+
+                    @*<div class="mb-3">
+            <label for="DetailSpeakerDescription" class="form-label">講師簡介</label>
+            <input type="text" id="DetailSpeakerDescription" name="SpeakerDescription" class="form-control">
+        </div>*@
+                    <hr />
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="Edit()">完成</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelEdit">取消</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 

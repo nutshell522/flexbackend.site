@@ -290,6 +290,7 @@ namespace flexbackend.site.Controllers
 
 
         //查看講師細節
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -303,12 +304,12 @@ namespace flexbackend.site.Controllers
             }
             SpeakerDetailDto dto = speaker.ToDetailDto();
             SpeakerDetailVM vm = dto.ToDetailVM();
-            return View(vm);
-        }
+			return Json(vm, JsonRequestBehavior.AllowGet);
+		}
 
 
         //刪除講師(得到講師資訊)
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteGetInfo(int? id)
         {
             if (id == null)
             {
@@ -321,15 +322,16 @@ namespace flexbackend.site.Controllers
             }
             SpeakerDetailDto dto = speaker.ToDetailDto();
             SpeakerDetailVM vm = dto.ToDetailVM();
-            return View(vm);
-        }
+			return Json(vm, JsonRequestBehavior.AllowGet);
+		}
 
 
         //刪除講師(確認刪除)
+
+
+        //[ValidateAntiForgeryToken]
         [HttpPost]
-        [ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id)
+		public ActionResult Delete(int? id)
         {
             //DateTime today = DateTime.Today;
             //bool hasUnfinishedActivities = db.Activities.Any(a => a.fk_SpeakerId == id &&  a.ActivityDate >= today);

@@ -225,5 +225,6 @@
 資料庫的照片路徑要改：/Public/Img/講師大頭貼/Allen.jpg
 
 [ v ]Speaker Edit照片修改
-[ ]Speaker Delete修改
+[ V ]Speaker Delete修改
 [ ]Database修改
+[ ]Speaker Detail修改
