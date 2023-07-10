@@ -260,5 +260,29 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ImgPath = dto.ImgPath
 			};
 		}
+
+		public static ProductExcelReportVM ToExcelVM(this ProductExcelReportDto dto)
+		{
+			return new ProductExcelReportVM
+			{
+				ProductId = dto.ProductId,
+				ProductName = dto.ProductName,
+				ProductDescription = dto.ProductDescription,
+				ProductMaterial = dto.ProductMaterial,
+				ProductOrigin = dto.ProductOrigin,
+				SalesCategoryName = dto.SalesCategoryName,
+				ProductCategoryName = dto.ProductCategoryName,
+				ProductSubCategoryName = dto.ProductSubCategoryName,
+				UnitPrice = dto.UnitPrice,
+				SalesPrice = dto.SalesPrice,
+				ColorName = dto.ColorName,
+				SizeName = dto.SizeName,
+				Qty = dto.Qty,
+				StatusText = dto.StatusText,
+				Tag = dto.Tag,
+				CreateTime = dto.CreateTime,
+				EditTime = dto.EditTime,
+			};
+		}
 	}
 }

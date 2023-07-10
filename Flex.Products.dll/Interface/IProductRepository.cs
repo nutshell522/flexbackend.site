@@ -12,6 +12,8 @@ namespace Flex.Products.dll.Interface
 {
 	public interface IProductRepository
 	{
+		List<ProductExcelReportDto> ReportToExcel();
+
 		void CreateProduct(ProductDto dto);
 
 		List<ProductDto> Search(IndexSearchCriteria criteria);

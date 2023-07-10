@@ -31,8 +31,8 @@ namespace flexbackend.site.Controllers
         private AppDbContext db = new AppDbContext();
         private IProductRepository _repo=new ProductEFRepository();
 
-        // GET: Products
-        public ActionResult Index(IndexSearchCriteria criteria)
+		// GET: Products
+		public ActionResult Index(IndexSearchCriteria criteria)
         {
             criteria = criteria ?? new IndexSearchCriteria();
             PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
@@ -297,7 +297,29 @@ namespace flexbackend.site.Controllers
 			}
         }
 
-         protected override void Dispose(bool disposing)
+		public ActionResult ReportToExcel()
+		{
+            var productDPRepository = new ProductDPRepository();
+			var service = new ProductService(productDPRepository);
+			var products = service.ReportToExcel().Select(p => p.ToExcelVM()).ToList();
+
+			// 建立 xlxs 轉換物件
+			ExcelHelper helper = new ExcelHelper();
+			// 取得轉為 xlsx 的物件
+			var xlsx = helper.Export(products);
+
+			string filepath = Path.Combine(Path.GetTempPath(), $"{DateTime.Now:yyyyMMddHHmmss}.xlsx");
+			xlsx.SaveAs(filepath);
+
+			return File(filepath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", DateTime.Now.ToString("yyyyMMdd")+"Report.xlsx");
+		}
+
+		public ActionResult CreateforExcel()
+        {
+            return View();
+        }
+
+		protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

@@ -152,5 +152,10 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 			product.LogOut = true;
 			_db.SaveChanges();
 		}
+
+		public List<ProductExcelReportDto> ReportToExcel()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

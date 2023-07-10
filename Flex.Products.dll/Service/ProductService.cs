@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Flex.Products.dll.Exts;
+using Flex.Products.dll.Infra.DapperRepository;
 using Flex.Products.dll.Interface;
 using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.Exts;
@@ -100,6 +101,14 @@ namespace Flex.Products.dll.Service
 				string errorMessage = "删除失败："+ ex.Message;
 				return Result.Fail(errorMessage);
 			}
+		}
+
+		public IEnumerable<ProductExcelReportDto> ReportToExcel()
+		{
+			var repoDP=new ProductDPRepository();
+			var products = repoDP.ReportToExcel();
+			return products;
+
 		}
 
 		//判斷產品識別碼是否已存在
