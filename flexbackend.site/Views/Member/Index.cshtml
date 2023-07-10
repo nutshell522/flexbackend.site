@@ -67,13 +67,13 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.MemberId)
                 </th>
-                <th class="th-col-2">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.GenderStr)
                 </th>
-                <th class="th-col-4">
+                <th class="th-col-5">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th class="th-col-2">
@@ -88,7 +88,7 @@
                 <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.fk_BlackListId)
                 </th>
-                <th>管理</th>
+                <th class="text-center">管理</th>
             </tr>
         </thead>
         <tbody>
@@ -138,10 +138,10 @@
                         @Html.DisplayFor(modelItem => item.fk_BlackListIdStr)
                     </td>
                     <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new {memberId=item.MemberId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                        <div class="manage-btn-container d-flex justify-content-center">
+                            <a href="@Url.Action("Edit", new {memberId=item.MemberId})" class="btn-edit me-2"><i class="bi bi-pencil-square"></i></a>
                             <a href="@Url.Action("Details", new {memberId=item.MemberId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                            @*<a href="@Url.Action("Delete", new {memberId=item.MemberId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>*@
 
                         </div>
                     </td>

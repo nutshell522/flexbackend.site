@@ -157,7 +157,7 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.ActivityStatusDescription)
                 </th>
-                <th>管理</th>
+                <th class="text-center">管理</th>
             </tr>
         </thead>
         <tbody>
@@ -212,9 +212,9 @@
                         </span>
                     </td>
                     <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {id=item.ActivityId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                        <div class="manage-btn-container d-flex justify-content-center">
+                            <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("Details", new {id=item.ActivityId})" class="btn-view me-1"><i class="bi bi-clipboard-check"></i></a>
                             <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del @(item.ActivityStatusDescription=="已下架" ? "disabled-btn" : "")"><i class="bi bi-trash-fill"></i></a>
 
                         </div>

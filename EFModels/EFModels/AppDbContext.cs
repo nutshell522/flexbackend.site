@@ -167,7 +167,8 @@ namespace EFModels.EFModels
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesPictures)
 				.WithRequired(e => e.CustomizedShoesPo)
-				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
+				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesGroups)
