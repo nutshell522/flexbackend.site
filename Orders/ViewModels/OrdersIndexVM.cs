@@ -27,7 +27,7 @@ namespace Orders.ViewModels
 		public string logistics_companys { get; set; }
 		[Display(Name = "商品狀態ID")]
 		public int order_status_Id { get; set; }
-		[Display(Name = "商品狀態")]
+		[Display(Name = "訂單狀態")]
 		public string order_status { get; set; }
 		[Display(Name = "付款方式ID")]
 		public int pay_method_Id { get; set; }
@@ -51,7 +51,7 @@ namespace Orders.ViewModels
 		public string receiver { get; set; }
 		[Display(Name = "收件人地址")]
 		public string recipient_address { get; set; }
-		[Display(Name = "商品描述")]
+		[Display(Name = "訂單描述")]
 		public string order_description { get; set; }
 		//[Display(Name = "結單")]
 		//public int? close_Id { get; set; }
