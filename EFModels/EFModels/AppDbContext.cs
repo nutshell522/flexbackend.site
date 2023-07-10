@@ -12,6 +12,7 @@ namespace EFModels.EFModels
 		{
 		}
 
+		public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
 		public virtual DbSet<Activity> Activities { get; set; }
 		public virtual DbSet<ActivityCategory> ActivityCategories { get; set; }
 		public virtual DbSet<ActivityStatus> ActivityStatuses { get; set; }
@@ -127,12 +128,12 @@ namespace EFModels.EFModels
 			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.CustomizedOrders)
 				.WithOptional(e => e.Customized_materials)
-				.HasForeignKey(e => e.Customized_Eyelet);
+				.HasForeignKey(e => e.Customized_EdgeProtection);
 
 			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.CustomizedOrders1)
 				.WithOptional(e => e.Customized_materials1)
-				.HasForeignKey(e => e.Customized_EdgeProtection);
+				.HasForeignKey(e => e.Customized_Eyelet);
 
 			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.CustomizedOrders2)
@@ -142,12 +143,12 @@ namespace EFModels.EFModels
 			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.CustomizedOrders3)
 				.WithOptional(e => e.Customized_materials3)
-				.HasForeignKey(e => e.Customized_Tongue);
+				.HasForeignKey(e => e.Customized_Toe);
 
 			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.CustomizedOrders4)
 				.WithOptional(e => e.Customized_materials4)
-				.HasForeignKey(e => e.Customized_Toe);
+				.HasForeignKey(e => e.Customized_Tongue);
 
 			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.ShoesGroups)
@@ -170,15 +171,15 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.Customized_Shoes_Id);
 
 			modelBuilder.Entity<CustomizedShoesPo>()
-				.HasMany(e => e.ShoesPictures)
-				.WithOptional(e => e.CustomizedShoesPo)
-				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
-
-			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesGroups)
 				.WithRequired(e => e.CustomizedShoesPo)
 				.HasForeignKey(e => e.fk_ShoesMainId)
 				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<CustomizedShoesPo>()
+				.HasMany(e => e.ShoesPictures)
+				.WithOptional(e => e.CustomizedShoesPo)
+				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
 
 			modelBuilder.Entity<Department>()
 				.HasMany(e => e.Staffs)
@@ -240,6 +241,12 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Member>()
+				.HasMany(e => e.OneToOneReservations)
+				.WithRequired(e => e.Member)
+				.HasForeignKey(e => e.fk_BookerId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Member>()
 				.HasMany(e => e.orders)
 				.WithRequired(e => e.Member)
 				.HasForeignKey(e => e.fk_member_Id)
@@ -249,18 +256,6 @@ namespace EFModels.EFModels
 				.HasMany(e => e.PointHistories)
 				.WithOptional(e => e.Member)
 				.HasForeignKey(e => e.fk_MemberId);
-
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.OneToOneReservations)
-				.WithRequired(e => e.Member)
-				.HasForeignKey(e => e.fk_BookerId)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.orders1)
-				.WithRequired(e => e.Member1)
-				.HasForeignKey(e => e.fk_member_Id)
-				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Member>()
 				.HasMany(e => e.PointTradeIns)
@@ -337,8 +332,9 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<PointManage>()
-				.HasOptional(e => e.PointManage1)
-				.WithRequired(e => e.PointManage2);
+				.HasMany(e => e.PointManage1)
+				.WithRequired(e => e.PointManage2)
+				.HasForeignKey(e => e.PointManage2_PointManageId);
 
 			modelBuilder.Entity<PointTradeIn>()
 				.Property(e => e.GetPoints)
@@ -393,8 +389,13 @@ namespace EFModels.EFModels
 				.IsUnicode(false);
 
 			modelBuilder.Entity<ProjectTagItem>()
-				.HasOptional(e => e.ProjectTagItems1)
-				.WithRequired(e => e.ProjectTagItem1);
+				.Property(e => e.ProjectTagItem1_fk_ProductId)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<ProjectTagItem>()
+				.HasMany(e => e.ProjectTagItems1)
+				.WithRequired(e => e.ProjectTagItem1)
+				.HasForeignKey(e => new { e.ProjectTagItem1_fk_ProjectTagId, e.ProjectTagItem1_fk_ProductId });
 
 			modelBuilder.Entity<ProjectTag>()
 				.HasMany(e => e.Coupons)
@@ -407,8 +408,9 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_ProjectTagId);
 
 			modelBuilder.Entity<ProjectTag>()
-				.HasOptional(e => e.ProjectTags1)
-				.WithRequired(e => e.ProjectTag1);
+				.HasMany(e => e.ProjectTags1)
+				.WithRequired(e => e.ProjectTag1)
+				.HasForeignKey(e => e.ProjectTag1_ProjectTagId);
 
 			modelBuilder.Entity<ReservationStatus>()
 				.HasMany(e => e.OneToOneReservations)
@@ -521,7 +523,5 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_TypeId)
 				.WillCascadeOnDelete(false);
 		}
-
-       
-    }
+	}
 }

@@ -63,7 +63,9 @@ namespace Orders.ViewModels
 		
 		[Display(Name = "所選訂單ID")]
 		public int SelectedOrderId { get; set; }
-		
+
+		public bool IsDefault { get; set; }
+
 		public List<OrderItemsVM> orderItems { get; set; }
 		public List<OrdersIndexVM> Orders { get; set; }
 	}

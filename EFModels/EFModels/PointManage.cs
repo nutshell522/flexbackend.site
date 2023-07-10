@@ -9,6 +9,12 @@ namespace EFModels.EFModels
     [Table("PointManage")]
     public partial class PointManage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PointManage()
+        {
+            PointManage1 = new HashSet<PointManage>();
+        }
+
         public int PointManageId { get; set; }
 
         public bool GetOrDeduct { get; set; }
@@ -21,7 +27,10 @@ namespace EFModels.EFModels
 
         public DateTime? PointExpirationDate { get; set; }
 
-        public virtual PointManage PointManage1 { get; set; }
+        public int PointManage2_PointManageId { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PointManage> PointManage1 { get; set; }
 
         public virtual PointManage PointManage2 { get; set; }
 

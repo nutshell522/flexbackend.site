@@ -15,10 +15,9 @@ namespace EFModels.EFModels
             CouponSendings = new HashSet<CouponSending>();
             CustomizedOrders = new HashSet<CustomizedOrder>();
             MemberPoints = new HashSet<MemberPoint>();
+            OneToOneReservations = new HashSet<OneToOneReservation>();
             orders = new HashSet<order>();
             PointHistories = new HashSet<PointHistory>();
-            OneToOneReservations = new HashSet<OneToOneReservation>();
-            orders1 = new HashSet<order>();
             PointTradeIns = new HashSet<PointTradeIn>();
             ShoppingCarts = new HashSet<ShoppingCart>();
         }
@@ -84,16 +83,13 @@ namespace EFModels.EFModels
         public virtual MembershipLevel MembershipLevel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PointHistory> PointHistories { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OneToOneReservation> OneToOneReservations { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order> orders1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PointTradeIn> PointTradeIns { get; set; }

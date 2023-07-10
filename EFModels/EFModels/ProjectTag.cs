@@ -13,6 +13,7 @@ namespace EFModels.EFModels
         {
             Coupons = new HashSet<Coupon>();
             Discounts = new HashSet<Discount>();
+            ProjectTags1 = new HashSet<ProjectTag>();
         }
 
         public int ProjectTagId { get; set; }
@@ -27,13 +28,16 @@ namespace EFModels.EFModels
 
         public bool Status { get; set; }
 
+        public int ProjectTag1_ProjectTagId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Coupon> Coupons { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Discount> Discounts { get; set; }
 
-        public virtual ProjectTag ProjectTags1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectTag> ProjectTags1 { get; set; }
 
         public virtual ProjectTag ProjectTag1 { get; set; }
     }

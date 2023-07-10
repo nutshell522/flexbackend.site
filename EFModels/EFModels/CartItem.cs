@@ -8,6 +8,7 @@ namespace EFModels.EFModels
 
     public partial class CartItem
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CartItemId { get; set; }
 
         public int fk_CardId { get; set; }

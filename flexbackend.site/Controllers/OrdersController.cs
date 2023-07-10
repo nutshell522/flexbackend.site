@@ -88,13 +88,27 @@ namespace flexbackend.site.Controllers
 		{
 			TempData.Keep("LogisticsCompanies");
 			TempData.Keep("PayMethods");
-			return View();
+
+			return View(new OrdersIndexVM());
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(OrdersIndexVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
+			
+			if (vm.IsDefault)
+			{
+				var db = new AppDbContext();
+				var memberData = db.Members.FirstOrDefault(m => m.MemberId == vm.fk_member_Id);
+				if (memberData != null)
+				{
+					// 將會員資料填充到相關屬性中
+					vm.cellphone = memberData.Mobile;
+					vm.receiver = memberData.Name;
+					vm.recipient_address = memberData.CommonAddress;
+				}
+			}
 
 			(bool IsSuccess, string ErrorMessage) result = CreateOrders(vm);
 
@@ -107,6 +121,8 @@ namespace flexbackend.site.Controllers
 			else
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				TempData.Keep("LogisticsCompanies");
+				TempData.Keep("PayMethods");
 				return View(vm);
 			}
 
@@ -114,12 +130,12 @@ namespace flexbackend.site.Controllers
 		private (bool IsSuccess, string ErrorMessage) CreateOrders(OrdersIndexVM vm)
 		{
 			var db = new AppDbContext();
-            int memberId = db.Members.FirstOrDefault()?.MemberId ?? 0;
-            if (vm.Id != memberId)
-            {
-                return (false, "無此會員編號");
-            }
-            var order = new order
+			bool memberExists = db.Members.Any(m => m.MemberId == vm.fk_member_Id);
+			if (!memberExists)
+			{
+				return (false, "無此會員編號");
+			}
+			var order = new order
 			{
 				Id = vm.Id,
 				ordertime = DateTime.Now,
@@ -132,7 +148,7 @@ namespace flexbackend.site.Controllers
 				pay_status_Id = 1,
 				coupon_name = vm.coupon_name,
 				coupon_discount = vm.coupon_discount,
-				freight = 60,
+				freight = vm.logistics_company_Id == 1 ? 0 : 60,
 				cellphone = vm.cellphone,
 				receipt = vm.receipt,
 				receiver = vm.receiver,
@@ -636,6 +652,25 @@ namespace flexbackend.site.Controllers
             }
         }
 
-    }
+		public ActionResult GetMemberData(int memberId)
+		{
+			var db = new AppDbContext();
+			var memberData = db.Members.FirstOrDefault(m => m.MemberId == memberId);
+
+			if (memberData != null)
+			{
+				var data = new
+				{
+					cellphone = memberData.Mobile,
+					receiver = memberData.Name,
+					recipient_address = memberData.CommonAddress
+				};
+
+				return Json(new { success = true, data }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { success = false, message = "Member data not found." }, JsonRequestBehavior.AllowGet);
+		}
+	}
 	
 }
