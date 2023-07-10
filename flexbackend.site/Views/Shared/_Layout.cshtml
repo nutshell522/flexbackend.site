@@ -17,8 +17,10 @@
     @{
         var userName = User.Identity.Name;
         var db = new EFModels.EFModels.AppDbContext();
-        var user = db.Staffs.FirstOrDefault(s => s.Account== userName);
+        var user = db.Staffs.FirstOrDefault(s => s.Account == userName);
+
         string fullName = user.Name;
+
     }
 
 </head>
@@ -91,8 +93,8 @@
                 </a>
                 <ul class="collapse-item hide" id="members-item">
                     <li><a href="@Url.Action("Index", "Member", new { area = "" })">會員名單</a></li>
-                    <li><a href="@Url.Action("Index", "MembershipLevels", new { area = "" })">會員等級</a></li>
-                    <li><a href="@Url.Action("Index", "PointHistories", new { area = "" })">會員積分</a></li>
+                    @*<li><a href="@Url.Action("Index", "MembershipLevels", new { area = "" })">會員等級</a></li>*@
+                    @*<li><a href="@Url.Action("Index", "PointHistories", new { area = "" })">會員積分</a></li>*@
                 </ul>
             </li>
             <li>
@@ -139,8 +141,8 @@
                 </a>
                 <ul class="collapse-item hide" id="employee-item">
                     <li><a href="@Url.Action("StaffList", "Staffs", new { area = "" })">員工名單總覽</a></li>
-                    <li><a href="javascript:;">員工管理</a></li>
-                    <li><a href="javascript:;">員工權限管理</a></li>
+                    @*<li><a href="javascript:;">員工管理</a></li>
+                    <li><a href="javascript:;">員工權限管理</a></li>*@
                 </ul>
             </li>
         </ul>

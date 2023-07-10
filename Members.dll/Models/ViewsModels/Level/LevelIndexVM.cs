@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Members.dll.Models.ViewsModels.MembershipLevels
 {
-	public class PrivilegesIndexVM
+	public class LevelIndexVM
 	{
 		public int LevelId { get; set; }
-		public int PrivilegeId { get; set; }
-
+		//public int PrivilegeId { get; set; }
 
 		[Display(Name = "等級名稱")]
 		public string LevelName { get; set; }
@@ -22,8 +21,14 @@ namespace Members.dll.Models.ViewsModels.MembershipLevels
 		[Display(Name = "折扣")]
 		public int? Discount { get; set; }
 
-		[Display(Name = "享有福利")]
-		public string PrivilegeName { get; set; }
+		[Display(Name = "描述")]
+		public string Description { get; set; }
+
+		//[Display(Name = "享有福利")]
+		//public string PrivilegeName { get; set; }
+
+
+
 
 		//中介表格?
 	}

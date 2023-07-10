@@ -169,6 +169,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\logistics_companiesController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MembershipLevelsController.cs" />
     <Compile Include="Controllers\OneToOneReservationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductCategoriesController.cs" />
@@ -2428,11 +2429,18 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Member\_BlackListsPartial.cshtml" />
     <Content Include="Views\Staffs\ResetPassword.cshtml" />
+    <Content Include="Views\Staffs\ConfirmResetPassword.cshtml" />
+    <Content Include="Views\MembershipLevels\Create.cshtml" />
+    <Content Include="Views\MembershipLevels\Delete.cshtml" />
+    <Content Include="Views\MembershipLevels\Details.cshtml" />
+    <Content Include="Views\MembershipLevels\Edit.cshtml" />
+    <Content Include="Views\MembershipLevels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\FileContentIndex\merges\" />
     <Folder Include="CodeTemplates\.vs\CodeTemplates\v17\" />
+    <Folder Include="Files\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>

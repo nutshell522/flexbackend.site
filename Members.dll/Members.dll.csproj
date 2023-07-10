@@ -99,7 +99,7 @@
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberCriteria.cs" />
-    <Compile Include="Models\ViewsModels\privileges\PrivilegesIndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Level\LevelIndexVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberCreateVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberDetailVM.cs" />
     <Compile Include="Models\ViewsModels\PointHistories\IndexVM.cs" />

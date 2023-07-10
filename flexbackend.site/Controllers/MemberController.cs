@@ -108,8 +108,9 @@ namespace flexbackend.site.Controllers
 		{
 			var levelList = db.MembershipLevels.ToList();
 			levelList.Insert(0, new MembershipLevel { LevelId = 0, LevelName = "請選擇" });
-
 			ViewBag.LevelId = new SelectList(levelList, "LevelId", "LevelName", id);
+
+
 			List<SelectListItem> gender = new List<SelectListItem>
 			{
 			new SelectListItem { Value = "true" , Text = "男" },
@@ -146,6 +147,14 @@ namespace flexbackend.site.Controllers
 			if (memberId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			MemberService service = GetMemberRepository();
 			var member = service.GetMemberId(memberId).ToMembersEditVM();
+			ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior", member.fk_BlackListId);
+			ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", member.fk_LevelId);
+			List<SelectListItem> gender = new List<SelectListItem>
+			{
+			new SelectListItem { Value = "true" , Text = "男" },
+			new SelectListItem { Value = "false" , Text = "女" },
+			};
+			ViewBag.Gender = gender;
 			if (memberId == 0) return HttpNotFound();
 			return View(member);
 		}
@@ -162,9 +171,11 @@ namespace flexbackend.site.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(MemberEditVM vm)
+		
 		{
 			ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior", vm.fk_BlackListId);
 			ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", vm.fk_LevelId);
+			PrepareCategoryDataSource(vm.fk_BlackListId);
 			if (!ModelState.IsValid) return View(vm);
 
 			MemberService service = GetMemberRepository();
@@ -179,15 +190,15 @@ namespace flexbackend.site.Controllers
 			}
 		}
 
-		[HttpPost]
-		public ActionResult EditBlack()
-		{
-			// 從資料表中取得資料
-			var data = db.BlackLists.Select(m=>m.Behavior).ToList();
+		//[HttpPost]
+		//public ActionResult EditBlack()
+		//{
+		//	// 從資料表中取得資料
+		//	var data = db.BlackLists.Select(m=>m.Behavior).ToList();
 
-			// 傳遞資料給部分檢視
-			return PartialView("_BlackListsPartial", data); 
-		}
+		//	// 傳遞資料給部分檢視
+		//	return PartialView("_BlackListsPartial", data); 
+		//}
 
 
 		// GET: Member/Delete/5

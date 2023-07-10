@@ -87,9 +87,9 @@ namespace Members.dll.Models.Exts
 				fk_BlackListId=entity.fk_BlackListId
 			};
 		}
-		public static MembersEditDto ToMembersEditEntity(this MembersEditDto dto)
+		public static Member ToMembersEditEntity(this MembersEditDto dto)
 		{
-			return new MembersEditDto
+			return new Member
 			{
 				MemberId = dto.MemberId,
 				Name = dto.Name,

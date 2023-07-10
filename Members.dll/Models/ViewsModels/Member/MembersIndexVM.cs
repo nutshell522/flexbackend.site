@@ -44,7 +44,15 @@ namespace Members.dll.Models.ViewsModels
 		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
 		public DateTime? Registration { get; set; }
 
-		[Display(Name = "是否為黑名單")]
+		[Display(Name = "黑名單")]
 		public int? fk_BlackListId { get; set; }
+		public string fk_BlackListIdStr
+		{
+			get
+			{
+				return fk_BlackListId.HasValue && fk_BlackListId.Value < 0 ? "是" : "否";
+			}
+		}
+
 	}
 }

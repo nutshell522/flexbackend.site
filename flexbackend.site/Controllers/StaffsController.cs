@@ -156,7 +156,7 @@ namespace flexbackend.site.Controllers
 			// 生成email裡的連結
 			var urlTemplate = Request.Url.Scheme + "://" +  // 生成 http:.// 或 https://
 							 Request.Url.Authority + "/" + // 生成網域名稱或 ip
-							 "Members/ResetPassword?memberid={0}&confirmCode={1}"; // 生成網頁 url
+							 "Staffs/ResetPassword?staffId={0}&confirmCode={1}"; // 生成網頁 url
 
 			Result result = ProcessResetPassword(vm.Account, vm.Email, urlTemplate);
 
@@ -164,10 +164,8 @@ namespace flexbackend.site.Controllers
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
 				return View(vm);
-			}
-
-			
-			return RedirectToAction("Login");
+			}			
+			return RedirectToAction("ConfirmResetPassword");
 		}
 
 		public ActionResult ResetPassword()
@@ -176,10 +174,10 @@ namespace flexbackend.site.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ResetPassword(ResetPasswordVM vm, int memberId, string confirmCode)
+		public ActionResult ResetPassword(ResetPasswordVM vm, int staffId, string confirmCode)
 		{
 			if (ModelState.IsValid == false) return View(vm);
-			Result result = ProcessChangePassword(memberId, confirmCode, vm.Password);
+			Result result = ProcessChangePassword(staffId, confirmCode, vm.Password);
 
 			if (!result.IsSuccess)
 			{
@@ -187,7 +185,7 @@ namespace flexbackend.site.Controllers
 				return View(vm);
 			}
 
-			return View("ConfirmResetPassword");
+			return RedirectToAction("Login");
 		}
 
 		private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
@@ -200,9 +198,9 @@ namespace flexbackend.site.Controllers
 
 			// 更新密碼,並將 confirmCode清空
 			var salt = HashUtility.GetSalt();
-			var encryptedPassword = HashUtility.ToSHA256(newPassword, salt);
+			//var encryptedPassword = HashUtility.ToSHA256(newPassword, salt);
 
-			staffInDb.Password = encryptedPassword;
+			staffInDb.Password = newPassword;
 			staffInDb.ConfirmCode = null;
 
 			db.SaveChanges();
@@ -304,6 +302,11 @@ namespace flexbackend.site.Controllers
 			Response.Cookies.Add(processResult.cookie);
 
 			return Redirect(processResult.returnUrl);
+		}
+
+		public ActionResult ConfirmResetPassword()
+		{
+			return View();
 		}
 
 		private (string returnUrl, HttpCookie cookie) ProcessLogin(string account, bool rememberMe)
