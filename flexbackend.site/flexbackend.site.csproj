@@ -2465,6 +2465,8 @@
 		<Content Include="Views\Coupons\Index.cshtml" />
 		<Content Include="Views\Orders\ConfirmCreate.cshtml" />
 		<Content Include="Views\logistics_companies\createPay.cshtml" />
+		<Content Include="Views\asd.cshtml" />
+		<Content Include="Views\CustomizedShoesPoes\EditImg.cshtml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="App_Data\" />

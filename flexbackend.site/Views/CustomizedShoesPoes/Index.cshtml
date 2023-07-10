@@ -124,13 +124,16 @@
                 <td class="text-center align-middle">
                     @Html.DisplayFor(modelItem => item.ShoesColoeCategory)
                 </td>
-                <td class="text-center align-middle">
-                    @Html.DisplayFor(modelItem => item.StatusText)
+                <td>
+                    <span class="@(item.StatusText=="上架中"?"status-success":(item.StatusText=="已下架"?"status-dark":"status-primary"))">
+                        @Html.DisplayFor(modelItem => item.StatusText)
+                    </span>
                 </td>
                 <td class="text-center align-middle">
                     <div class="manage-btn-container">
                         <a href="@Url.Action("Edit", new { id = item.ShoesProductId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                         <a href="@Url.Action("Details", new { id = item.ShoesProductId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                        <a href="@Url.Action("EditImg", new {id=item.ShoesProductId })" class="btn-edit me-1"><i class="bi bi-image"></i></a>
                         <a href="@Url.Action("Delete", new { id = item.ShoesProductId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </td>
@@ -212,7 +215,7 @@
                             ${shoes.ShoesOrigin}
                         </td>
                         <td class="text-center align-middle">
-                            ${product.ShoesUnitPrice.toLocaleString()}
+                            ${shoes.ShoesUnitPrice.toLocaleString()}
                         </td>
                         <td class="text-center align-middle">
                             ${shoes.ShoesCategory}
@@ -221,13 +224,14 @@
                             ${shoes.ShoesColoeCategory}
                         </td>
                         <td class="text-center align-middle">
-                            ${product.StatusText}
+                            ${shoes.StatusText}
                         </td>
                         <td class="text-center align-middle">
                             <div class="manage-btn-container">
                                 <a href="/CustomizedShoesPoes/Edit?ShoesProductId=${shoes.ShoesProductId}" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                                 <a href="/CustomizedShoesPoes/Details?ShoesProductId=${shoes.ShoesProductId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                <a href="/CustomizedShoesPoes/Delete?ProductId=${shoes.ShoesProductId}" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                                <a href="/CustomizedShoesPoes/EditImg?ShoesProductId=${shoes.ShoesProductId}" class="btn-edit me-1"><i class="bi bi-image"></i></a>
+                                <a href="/CustomizedShoesPoes/Delete?ShoesProductId=${shoes.ShoesProductId}" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                             </div>
                         </td>
                     </tr>`;

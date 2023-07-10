@@ -12,7 +12,7 @@ namespace Customized_Shoes.dll.Models.ViewModels
 		public int OptionId { get; set; }
 
 		[Display(Name ="可選客製化名稱")]
-		[Required]
+		[Required(ErrorMessage = "{0}必填")]
 		[StringLength(50)]
 		public string OptinName { get; set; }
 	}

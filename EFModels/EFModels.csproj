@@ -59,14 +59,12 @@
     <Compile Include="EFModels\Activity.cs" />
     <Compile Include="EFModels\ActivityCategory.cs" />
     <Compile Include="EFModels\ActivityStatus.cs" />
-    <Compile Include="EFModels\AggregatedCounter.cs" />
     <Compile Include="EFModels\AlternateAddress.cs" />
     <Compile Include="EFModels\AppDbContext.cs" />
     <Compile Include="EFModels\BlackList.cs" />
     <Compile Include="EFModels\Branch.cs" />
     <Compile Include="EFModels\CartItem.cs" />
     <Compile Include="EFModels\ColorCategory.cs" />
-    <Compile Include="EFModels\Counter.cs" />
     <Compile Include="EFModels\Coupon.cs" />
     <Compile Include="EFModels\CouponCategory.cs" />
     <Compile Include="EFModels\CouponSending.cs" />
@@ -76,12 +74,7 @@
     <Compile Include="EFModels\C__MigrationHistory.cs" />
     <Compile Include="EFModels\Department.cs" />
     <Compile Include="EFModels\Discount.cs" />
-    <Compile Include="EFModels\Hash.cs" />
-    <Compile Include="EFModels\Job.cs" />
-    <Compile Include="EFModels\JobParameter.cs" />
-    <Compile Include="EFModels\JobQueue.cs" />
     <Compile Include="EFModels\JobTitle.cs" />
-    <Compile Include="EFModels\List.cs" />
     <Compile Include="EFModels\logistics_companies.cs" />
     <Compile Include="EFModels\Member.cs" />
     <Compile Include="EFModels\MemberPoint.cs" />
@@ -105,9 +98,6 @@
     <Compile Include="EFModels\ProjectTagItem.cs" />
     <Compile Include="EFModels\ReservationStatus.cs" />
     <Compile Include="EFModels\SalesCategory.cs" />
-    <Compile Include="EFModels\Schema.cs" />
-    <Compile Include="EFModels\Server.cs" />
-    <Compile Include="EFModels\Set.cs" />
     <Compile Include="EFModels\ShoesCategory.cs" />
     <Compile Include="EFModels\ShoesChoos.cs" />
     <Compile Include="EFModels\ShoesColorCategory.cs" />
@@ -119,7 +109,6 @@
     <Compile Include="EFModels\SpeakerField.cs" />
     <Compile Include="EFModels\Staff.cs" />
     <Compile Include="EFModels\StaffPermission.cs" />
-    <Compile Include="EFModels\State.cs" />
     <Compile Include="EFModels\Supplier.cs" />
     <Compile Include="EFModels\Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

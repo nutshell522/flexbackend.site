@@ -19,5 +19,9 @@ namespace Customized_Shoes.dll.Models.Interface
 		CustomizedShoesDto GetById(int ShoesId);
 
 		void EditShoes(CustomizedShoesDto dto);
+
+		List<ShoesImgDto> GetImgById(int ShoesId);
+
+		void SaveEditShoesImg(List<ShoesImgDto> dto);
 	}
 }

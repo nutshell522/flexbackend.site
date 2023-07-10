@@ -8,12 +8,6 @@ namespace EFModels.EFModels
 
     public partial class CustomizedOrder
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CustomizedOrder()
-        {
-            ShoesPictures = new HashSet<ShoesPicture>();
-        }
-
         [Key]
         public int Customized_Id { get; set; }
 

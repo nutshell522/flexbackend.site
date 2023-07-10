@@ -158,5 +158,51 @@ namespace Customized_Shoes.dll.Models.Exts
 				DataEditTime = dto.DataEditTime,
 			};
 		}
+
+		public static List<ShoesImgDto> ToEditImgDto(this List<ShoesPicture> entity)
+		{
+			var result = entity.Select(p => new ShoesImgDto
+			{
+				ShoesImgId = p.ShoesPicture_Id,
+				fk_ShoesProductId = p.fk_ShoesPictureProduct_Id,
+				ShoesPictureUrl = p.ShoesPictureUrl
+			}).ToList();
+			return result;
+		}
+
+		public static ShoesEditImgVM ToEditImgVM(this List<ShoesImgDto> dto, int ShoesId)
+		{
+			return new ShoesEditImgVM
+			{
+				ShoesProductId = ShoesId,
+				ShoesPictureUrl =dto,
+			};
+		}
+
+		public static List<ShoesImgDto> VMToEditImgDto(this ShoesEditImgVM vm)
+		{
+			var result = new List<ShoesImgDto>();
+
+			foreach (var p in vm.ShoesPictureUrl)
+			{
+				result.Add(new ShoesImgDto
+				{
+					ShoesImgId = p.ShoesImgId,
+					fk_ShoesProductId = p.fk_ShoesProductId,
+					ShoesPictureUrl = p.ShoesPictureUrl
+				});
+			}
+			return result;
+		}
+
+		public static ShoesPicture DtoToEditImgEntity(this ShoesImgDto dto)
+		{
+			return new ShoesPicture
+			{
+				ShoesPicture_Id = dto.ShoesImgId,
+				fk_ShoesPictureProduct_Id = dto.fk_ShoesProductId,
+				ShoesPictureUrl = dto.ShoesPictureUrl
+			};
+		}
 	}
 }
