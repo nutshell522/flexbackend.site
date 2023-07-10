@@ -13,8 +13,8 @@ namespace EFModels.EFModels
         public CustomizedShoesPo()
         {
             CustomizedOrders = new HashSet<CustomizedOrder>();
-            ShoesPictures = new HashSet<ShoesPicture>();
             ShoesGroups = new HashSet<ShoesGroup>();
+            ShoesPictures = new HashSet<ShoesPicture>();
         }
 
         [Key]
@@ -42,9 +42,9 @@ namespace EFModels.EFModels
 
         public int? fk_ShoesColorId { get; set; }
 
-        public DateTime DataCreateTime { get; set; }
+        public DateTime? DataCreateTime { get; set; }
 
-        public DateTime DataEditTime { get; set; }
+        public DateTime? DataEditTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomizedOrder> CustomizedOrders { get; set; }
@@ -54,9 +54,9 @@ namespace EFModels.EFModels
         public virtual ShoesColorCategory ShoesColorCategory { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoesPicture> ShoesPictures { get; set; }
+        public virtual ICollection<ShoesGroup> ShoesGroups { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoesGroup> ShoesGroups { get; set; }
+        public virtual ICollection<ShoesPicture> ShoesPictures { get; set; }
     }
 }

@@ -29,8 +29,8 @@ namespace EFModels.EFModels
 
         public virtual Member Member { get; set; }
 
-        public virtual Speaker Speaker { get; set; }
-
         public virtual ReservationStatus ReservationStatus { get; set; }
+
+        public virtual Speaker Speaker { get; set; }
     }
 }

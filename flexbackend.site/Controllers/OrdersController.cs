@@ -2,6 +2,7 @@
 using Orders.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -37,7 +38,8 @@ namespace flexbackend.site.Controllers
 			}
 			var orderStatuses = db.order_statuses.AsNoTracking().ToDictionary(os => os.Id, os => os.order_status);
 			TempData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
-			var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
+            ViewData["orderStatuses"] = orderStatuses ?? new Dictionary<int, string>();
+            var paymethods = db.pay_methods.AsNoTracking().ToDictionary(pd => pd.Id, pd => pd.pay_method);
 			TempData["PayMethods"] = paymethods ?? new Dictionary<int, string>();
 			var LogisticsCompanies = db.logistics_companies.AsNoTracking().ToDictionary(lc => lc.Id, lc => lc.name);
 			TempData["LogisticsCompanies"] = LogisticsCompanies ?? new Dictionary<int, string>();
@@ -45,46 +47,68 @@ namespace flexbackend.site.Controllers
 			TempData["paystatuses"] = paystatuses ?? new Dictionary<int, string>();
 
 			return orders.ToList()
-				.Select(p => new OrdersIndexVM
-				{
-					Id = p.Id,
-					ordertime = p.ordertime,
-					fk_member_Id = p.fk_member_Id,
-					total_quantity = p.total_quantity,
-					logistics_company_Id = p.logistics_company_Id,
-					logistics_companys = LogisticsCompanies.ContainsKey(p.logistics_company_Id) ? LogisticsCompanies[p.logistics_company_Id] : string.Empty,
-					order_status_Id = p.order_status_Id,
-					order_status = orderStatuses.ContainsKey(p.order_status_Id) ? orderStatuses[p.order_status_Id] : string.Empty,
-					pay_method_Id = p.pay_method_Id,
-					pay_method = paymethods.ContainsKey(p.pay_method_Id) ? paymethods[p.pay_method_Id] : string.Empty,
-					pay_status_Id = p.pay_status_Id,
-					pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? paystatuses[p.pay_status_Id] : string.Empty,
-					coupon_name = p.coupon_name,
-					coupon_discount = p.coupon_discount,
-					freight = p.freight,
-					cellphone = p.cellphone,
-					receipt = p.receipt,
-					receiver = p.receiver,
-					recipient_address = p.recipient_address,
-					order_description = p.order_description,
-					close = (bool)p.close,
-					total_price = p.total_price,
-					orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
-				});
+                .Select(p =>
+                {
+                    var orderItems = GetOrderItemsIndex(p.Id);
+                    int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+                    int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
 
-		}
+                    return new OrdersIndexVM
+                    {
+                        Id = p.Id,
+                        ordertime = p.ordertime,
+                        fk_member_Id = p.fk_member_Id,
+                        total_quantity = totalquantity,
+                        logistics_company_Id = p.logistics_company_Id,
+                        logistics_companys = LogisticsCompanies.ContainsKey(p.logistics_company_Id) ? LogisticsCompanies[p.logistics_company_Id] : string.Empty,
+                        order_status_Id = p.order_status_Id,
+                        order_status = orderStatuses.ContainsKey(p.order_status_Id) ? orderStatuses[p.order_status_Id] : string.Empty,
+                        pay_method_Id = p.pay_method_Id,
+                        pay_method = paymethods.ContainsKey(p.pay_method_Id) ? paymethods[p.pay_method_Id] : string.Empty,
+                        pay_status_Id = p.pay_status_Id,
+                        pay_status = paystatuses.ContainsKey(p.pay_status_Id) ? paystatuses[p.pay_status_Id] : string.Empty,
+                        coupon_name = p.coupon_name,
+                        coupon_discount = p.coupon_discount,
+                        freight = p.freight,
+                        cellphone = p.cellphone,
+                        receipt = p.receipt,
+                        receiver = p.receiver,
+                        recipient_address = p.recipient_address,
+                        order_description = p.order_description,
+                        close = (bool)p.close,
+                        total_price = totalDiscountSubtotal,
+                        orderItems = (List<OrderItemsVM>)GetOrderItemsIndex(p.Id)
+                    };
+                    
+                });
+         
+        }
 
 		public ActionResult Create()
 		{
 			TempData.Keep("LogisticsCompanies");
 			TempData.Keep("PayMethods");
-			return View();
+
+			return View(new OrdersIndexVM());
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(OrdersIndexVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
+			
+			if (vm.IsDefault)
+			{
+				var db = new AppDbContext();
+				var memberData = db.Members.FirstOrDefault(m => m.MemberId == vm.fk_member_Id);
+				if (memberData != null)
+				{
+					// 將會員資料填充到相關屬性中
+					vm.cellphone = memberData.Mobile;
+					vm.receiver = memberData.Name;
+					vm.recipient_address = memberData.CommonAddress;
+				}
+			}
 
 			(bool IsSuccess, string ErrorMessage) result = CreateOrders(vm);
 
@@ -97,6 +121,8 @@ namespace flexbackend.site.Controllers
 			else
 			{
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				TempData.Keep("LogisticsCompanies");
+				TempData.Keep("PayMethods");
 				return View(vm);
 			}
 
@@ -104,21 +130,25 @@ namespace flexbackend.site.Controllers
 		private (bool IsSuccess, string ErrorMessage) CreateOrders(OrdersIndexVM vm)
 		{
 			var db = new AppDbContext();
-
+			bool memberExists = db.Members.Any(m => m.MemberId == vm.fk_member_Id);
+			if (!memberExists)
+			{
+				return (false, "無此會員編號");
+			}
 			var order = new order
 			{
 				Id = vm.Id,
 				ordertime = DateTime.Now,
 				fk_member_Id = vm.fk_member_Id,
-				total_price = vm.total_price,
-				total_quantity = vm.total_quantity,
+				total_price = 0,
+				total_quantity = 0,
 				logistics_company_Id = vm.logistics_company_Id,
 				order_status_Id = 1,
 				pay_method_Id = vm.pay_method_Id,
 				pay_status_Id = 1,
 				coupon_name = vm.coupon_name,
 				coupon_discount = vm.coupon_discount,
-				freight = 60,
+				freight = vm.logistics_company_Id == 1 ? 0 : 60,
 				cellphone = vm.cellphone,
 				receipt = vm.receipt,
 				receiver = vm.receiver,
@@ -139,8 +169,8 @@ namespace flexbackend.site.Controllers
 			{
 				return HttpNotFound(); // 可以根據你的需求返回一個適當的錯誤頁面或訊息
 			}
-
-			var vm = new OrdersIndexVM
+           
+            var vm = new OrdersIndexVM
 			{
 				Id = order.Id,
 				ordertime = order.ordertime,
@@ -194,8 +224,10 @@ namespace flexbackend.site.Controllers
 			var db = new AppDbContext();
 
 			var order = db.orders.FirstOrDefault(o => o.Id == vm.Id);
-
-			if (order == null)
+            var orderItems = GetOrderItemsIndex(order.Id);
+            int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+            int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+            if (order == null)
 			{
 				return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
 			}
@@ -203,7 +235,7 @@ namespace flexbackend.site.Controllers
 			// 更新訂單的相關屬性
 			//order.ordertime = vm.ordertime;
 			order.fk_member_Id = vm.fk_member_Id;
-			order.total_quantity = vm.total_quantity;
+			order.total_quantity = totalquantity;
 			order.logistics_company_Id = vm.logistics_company_Id;
 			order.order_status_Id = vm.order_status_Id;
 			order.pay_method_Id = vm.pay_method_Id;
@@ -217,7 +249,7 @@ namespace flexbackend.site.Controllers
 			order.recipient_address = vm.recipient_address;
 			order.order_description = vm.order_description;
 			order.close = vm.close;
-			order.total_price = vm.total_price;
+			order.total_price = totalDiscountSubtotal;
 
 			db.SaveChanges();
 
@@ -308,9 +340,20 @@ namespace flexbackend.site.Controllers
 
             if (result.IsSuccess)
             {
-				TempData.Keep("fk_typeId");
-				int orderItemId = result.OrderItemId;
-                return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
+                var db = new AppDbContext();
+                var orderItems = GetOrderItemsIndex(orderId);
+                int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+                int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+                var order = db.orders.AsNoTracking().FirstOrDefault(o => o.Id == orderId); ;
+                order.total_price = totalDiscountSubtotal;
+                order.total_quantity = totalquantity;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+
+                TempData.Keep("fk_typeId");
+                    int orderItemId = result.OrderItemId;
+                    return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
+                
             }
             else
             {
@@ -338,14 +381,15 @@ namespace flexbackend.site.Controllers
 
 			db.orderItems.Add(orderitems);
 			db.SaveChanges();
-
+         ;
             return (true, "", orderitems.order_Id);
 
         }
 
 		public ActionResult EditItems(int id)
 		{
-			var order = GetOrderItemsById(id);
+            TempData.Keep("OrderId");
+            var order = GetOrderItemsById(id);
 
 			if (order == null)
 			{
@@ -373,7 +417,8 @@ namespace flexbackend.site.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult EditItems(OrderItemsVM vm)
 		{
-			if (ModelState.IsValid == false)
+            int orderId = (int)TempData["OrderId"];
+            if (ModelState.IsValid == false)
 			{
 				return View(vm);
 			}
@@ -382,7 +427,17 @@ namespace flexbackend.site.Controllers
 
 			if (result.IsSuccess)
 			{
-				TempData.Keep("fk_typeId");
+                var db = new AppDbContext();
+                var orderItems = GetOrderItemsIndex(orderId);
+                int totalDiscountSubtotal = (int)orderItems.Sum(oi => oi.discount_subtotal);
+                int totalquantity = (int)orderItems.Sum(oi => oi.quantity);
+                var order = db.orders.AsNoTracking().FirstOrDefault(o => o.Id == orderId); ;
+                order.total_price = totalDiscountSubtotal;
+                order.total_quantity = totalquantity;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+
+                TempData.Keep("fk_typeId");
 				
 				int orderItemId = result.OrderItemId;
 				return RedirectToAction("OrderItemsIndex", new { id = orderItemId });
@@ -399,15 +454,14 @@ namespace flexbackend.site.Controllers
 
 			var order = db.orderItems.FirstOrDefault(o => o.Id == vm.Id);
 
-			//if (order == null)
-			//{
-			//	return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
-			//}
+            //if (order == null)
+            //{
+            //	return (false, "找不到該訂單"); // 可以根據你的需求返回一個適當的錯誤訊息
+            //}
 
-			// 更新訂單的相關屬性
-			
-			
-				 order.Id = vm.Id;
+            // 更新訂單的相關屬性
+           
+            order.Id = vm.Id;
 			order.order_Id = vm.order_Id;
 				 order.product_name = vm.product_name;
 				 order.fk_typeId = vm.fk_typeId;
@@ -442,6 +496,180 @@ namespace flexbackend.site.Controllers
 			}
 
 			return Json(new { success = true });
+		}
+        public ActionResult UpdateOrderStatus(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 2; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus1(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 3; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus2(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 4; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus3(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 5; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus4(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 6; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus5(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 7; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        public ActionResult UpdateOrderStatus6(List<int> orderIds)
+        {
+            try
+            {
+                var db = new AppDbContext();
+                var orders = db.orders.Where(o => orderIds.Contains(o.Id));
+
+                foreach (var order in orders)
+                {
+                    order.order_status_Id = 8; // 修改為指定的狀態值 2
+                }
+
+                db.SaveChanges();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // 處理更新失敗的情況
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+		public ActionResult GetMemberData(int memberId)
+		{
+			var db = new AppDbContext();
+			var memberData = db.Members.FirstOrDefault(m => m.MemberId == memberId);
+
+			if (memberData != null)
+			{
+				var data = new
+				{
+					cellphone = memberData.Mobile,
+					receiver = memberData.Name,
+					recipient_address = memberData.CommonAddress
+				};
+
+				return Json(new { success = true, data }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { success = false, message = "Member data not found." }, JsonRequestBehavior.AllowGet);
 		}
 	}
 	

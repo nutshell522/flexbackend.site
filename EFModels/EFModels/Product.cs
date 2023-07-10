@@ -60,9 +60,9 @@ namespace EFModels.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductImg> ProductImgs { get; set; }
 
+        public virtual ProductSubCategory ProductSubCategory { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectTagItem> ProjectTagItems { get; set; }
-
-        public virtual ProductSubCategory ProductSubCategory { get; set; }
     }
 }

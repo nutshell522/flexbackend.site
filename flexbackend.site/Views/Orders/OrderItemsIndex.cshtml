@@ -45,11 +45,11 @@
                     超過100%資料不會溢出 也不會換行
                     如有細緻設定需求，可自己寫css設定寬度
                 *@
-                <th class="th-col-0 sticky">
+                @*<th class="th-col-0 sticky">
                     <label class="form-check-label">
                         <input class="form-check-input check-all" type="checkbox">
                     </label>
-                </th>
+                </th>*@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.order_Id)
                 </th>
@@ -102,7 +102,7 @@
             {
                 <tr>
                     @* 下方data-id后方栏位抓id，可方便勾选框抓数据 *@
-                    <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
+                    @*<td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.order_Id)
                     </td>

@@ -104,8 +104,8 @@ namespace Customized_Shoes.dll.Models.Exts
 				Status = entity.Status,
 				fk_ShoesCategoryId = entity.fk_ShoesCategoryId,
 				fk_ShoesColorId = entity.fk_ShoesColorId,
-				DataCreateTime = entity.DataCreateTime,
-				DataEditTime = entity.DataEditTime,				
+				DataCreateTime = (DateTime)entity.DataCreateTime,
+				DataEditTime = (DateTime)entity.DataEditTime,				
 			};				
 		}
 

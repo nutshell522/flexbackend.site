@@ -256,11 +256,7 @@ namespace EFModels.EFModels
                 .HasForeignKey(e => e.fk_BookerId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Member>()
-                .HasMany(e => e.orders1)
-                .WithRequired(e => e.Member1)
-                .HasForeignKey(e => e.fk_member_Id)
-                .WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<Member>()
                 .HasMany(e => e.PointTradeIns)
@@ -336,9 +332,6 @@ namespace EFModels.EFModels
                 .HasForeignKey(e => e.fk_PointHistoryId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<PointManage>()
-                .HasOptional(e => e.PointManage1)
-                .WithRequired(e => e.PointManage2);
 
             modelBuilder.Entity<PointTradeIn>()
                 .Property(e => e.GetPoints)
@@ -392,9 +385,6 @@ namespace EFModels.EFModels
                 .Property(e => e.fk_ProductId)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ProjectTagItem>()
-                .HasOptional(e => e.ProjectTagItems1)
-                .WithRequired(e => e.ProjectTagItem1);
 
             modelBuilder.Entity<ProjectTag>()
                 .HasMany(e => e.Coupons)
@@ -406,11 +396,12 @@ namespace EFModels.EFModels
                 .WithOptional(e => e.ProjectTag)
                 .HasForeignKey(e => e.fk_ProjectTagId);
 
-            modelBuilder.Entity<ReservationStatus>()
-                .HasMany(e => e.OneToOneReservations)
-                .WithRequired(e => e.ReservationStatus)
-                .HasForeignKey(e => e.fk_ReservationStatusId)
-                .WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<ReservationStatus>()
+				.HasMany(e => e.OneToOneReservations)
+				.WithRequired(e => e.ReservationStatus)
+				.HasForeignKey(e => e.fk_ReservationStatusId)
+				.WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SalesCategory>()
                 .HasMany(e => e.ProductCategories)
