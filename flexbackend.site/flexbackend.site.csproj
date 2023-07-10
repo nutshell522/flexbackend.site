@@ -2175,6 +2175,7 @@
     <Content Include="Content\CouponDetail.css" />
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\IndexPageStyle.css" />
+    <Content Include="Content\IndexStyleSheet.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\table.css" />
     <Content Include="Content\variables.css" />
