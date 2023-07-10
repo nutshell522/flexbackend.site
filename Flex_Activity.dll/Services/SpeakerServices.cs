@@ -51,9 +51,16 @@ namespace Flex_Activity.dll.Services
 
         }
 
+		public Result EditSpeakerImg(SpeakerDetailDto dto)
+		{
+			_repo.EditSpeakerImg(dto);
+			return Result.Success();
 
-        //判斷手機號碼是否已經存在
-        public bool HasPhone(string phone)
+		}
+
+
+		//判斷手機號碼是否已經存在
+		public bool HasPhone(string phone)
         {
             return _db.Speakers.Any(s => s.SpeakerPhone == phone);
             //return _db.Speakers.Any(s => s.SpeakerPhone == phone);

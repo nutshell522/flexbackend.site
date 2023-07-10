@@ -74,7 +74,11 @@ function htmlMaker(data) {
                     </td>
 
                     <td>
-                           <img src=" ${data[i].SpeakerImg}" />
+                    <div>
+                      
+                    <img width=300px  src=" /Public/Img/講師大頭貼/${data[i].SpeakerImg}" data-bs-toggle="modal" data-bs-target="#speakerImgEdit" onclick="EditGetPhoto( ${data[i].SpeakerId})"/>
+                   
+                    </div >
                     </td>
 
                     <td>
@@ -84,7 +88,7 @@ function htmlMaker(data) {
                      <div class="manage-btn-container">
                             <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#speakerEdit" onclick="EditGetInfo(${data[i].SpeakerId})"><i class="bi bi-pencil-square"></i></button>
                             <button class="btn-view"><i class="bi bi-clipboard-check"></i></button>
-                            <button class="btn-del"><i class="bi bi-trash-fill"></i></button>
+                            <button class="btn-del" onclick="Delete( ${data[i].SpeakerId})"><i class="bi bi-trash-fill"></i></button>
 
                         </div>
                     </td>
@@ -132,5 +136,43 @@ function Edit() {
         })
 }
 
+function EditGetPhoto(SpeakerId) {
+
+    console.log(SpeakerId)
+
+    axios({
+        url: '/Speaker/EditPhoto',
+        method: 'get',
+        params: {"id":SpeakerId}
+    }).then(res => {
+        console.log(JSON.stringify(res.data));
+        //$("#EditSpeakerImg").val(res.data.SpeakerImg)
+        $("#EditImgSpeakerId").val(res.data.SpeakerId)
+    })
+
+}
+
+
+function EditPhoto(){
+    let editSpeakerPhoto = document.querySelector("#editSpeakerImgForm");
+
+    var formData = new FormData(editSpeakerPhoto);
+
+    axios.post('/Speaker/EditPhoto', formData)
+        .then(res => {
+            Index();
+            $('#cancelEditImg').click();
+        })
+}
+
+function Delete(SpeakerId) {
+
+    console.log(SpeakerId)
+    axios({
+        url: '/Speaker/Delete',
+        
+    })
+
+}
 
                      

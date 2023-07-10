@@ -14,5 +14,9 @@ namespace Flex_Activity.dll.Interface
         void CreateSpeaker(SpeakerDetailDto dto);
 
         void EditSpeaker(SpeakerDetailDto dto);
-    }
+
+
+		void EditSpeakerImg(SpeakerDetailDto dto);
+
+	}
 }

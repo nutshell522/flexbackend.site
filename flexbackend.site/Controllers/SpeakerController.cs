@@ -228,6 +228,67 @@ namespace flexbackend.site.Controllers
 
         }
 
+
+
+        //編輯照片，得到原照片
+        [HttpGet]
+        public ActionResult EditPhoto(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            Speaker speaker = db.Speakers.Find(id);
+
+            if (speaker == null)
+            {
+                return HttpNotFound();
+            }
+
+            SpeakerDetailVM vm = (speaker.ToDetailDto()).ToDetailVM();
+            //var img = vm.SpeakerImg;
+            //var speakerId = vm.SpeakerId;
+
+
+            return Json( vm, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult EditPhoto(SpeakerDetailVM vm, HttpPostedFileBase fileTeacher)
+        {
+           
+                //存檔路徑
+                string path = Server.MapPath("~/Public/Img/講師大頭貼");
+
+                string fileName = SaveUploadedFile(path, fileTeacher);
+
+                //將檔名+路徑存入VM
+
+                vm.SpeakerImg = fileName;
+
+                SpeakerDetailDto speakerDto = vm.ToDetailDto();
+
+                var service = new SpeakerServices(_repo);
+                var result = service.EditSpeakerImg(speakerDto);
+
+                if (result.IsSucces)
+                {
+					return  RedirectToAction("Index");
+				}
+                else
+                {
+                    return View(vm);
+                }
+
+            
+
+            
+        }
+
+
+
+
+
         //查看講師細節
         public ActionResult Details(int? id)
         {

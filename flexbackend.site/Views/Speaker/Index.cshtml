@@ -10,6 +10,11 @@
 }
 @section Styles{
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <style>
+        .hidden{
+        display:none
+        }
+    </style>
 }
 
 <h2>講師管理</h2>
@@ -78,11 +83,11 @@
                         <input class="form-check-input check-all" type="checkbox">
                     </label>
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.SpeakerId)
                 </th>
 
-                <th class="th-col-8">
+                <th class="th-col-5">
                     @Html.DisplayNameFor(model => model.SpeakerName)
 
                 </th>
@@ -104,9 +109,6 @@
             </tr>
         </thead>
         <tbody id="speakerBody">
-
-
-           
         </tbody>
     </table>
 </div>
@@ -231,7 +233,7 @@
 
                     <div class="mb-3">
                         <label for="SpeakerId" class="form-label">講師編號</label>
-                        <input type="text" id="EditSpeakerId" name="SpeakerId" class="form-control" aria-describedby="passwordHelpBlock" readonly>                                           
+                        <input type="text" id="EditSpeakerId" name="SpeakerId" class="form-control" aria-describedby="passwordHelpBlock" readonly>
                     </div>
 
 
@@ -299,7 +301,7 @@
                         </div>
                     </div>
                     <hr />
-                    <button type="button" class="btn btn-danger" onclick="insert()">一鍵輸入</button>
+                    @*<button type="button" class="btn btn-danger" onclick="insert()">一鍵輸入</button>*@
 
                 </form>
             </div>
@@ -312,6 +314,50 @@
         </div>
     </div>
 </div>
+
+
+<!--編輯照片的Modal-->
+<div class="modal fade" id="speakerImgEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="editSpeakerImgForm">
+
+                    <div class="mb-3 hidden">
+                        <label for="EditImgSpeakerId" class="form-label">講師編號</label>
+                        <input type="text" id="EditImgSpeakerId" name="SpeakerId" class="form-control" aria-describedby="passwordHelpBlock">
+                    </div>
+
+
+
+
+
+
+                    <div class="mb-3">
+                        <label for="EditSpeakerImg" class="form-label"></label>
+                        <input type="file" id="EditSpeakerImg" name="fileTeacher" class="form-control" aria-describedby="passwordHelpBlock" accept=".jpg, .jpeg, .png, .gif">
+                        <div id="passwordHelpBlock" class="form-text">
+
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="EditPhoto()">完成</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelEditImg">取消</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 

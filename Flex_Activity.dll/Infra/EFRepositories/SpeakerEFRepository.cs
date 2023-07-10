@@ -46,6 +46,20 @@ namespace Flex_Activity.dll.Infra.EFRepositories
 
         }
 
+
+        public void EditSpeakerImg (SpeakerDetailDto dto)
+        {
+            Speaker speaker = _db.Speakers.Find(dto.SpeakerId);
+
+            speaker.SpeakerImg = dto.SpeakerImg;
+            speaker.SpeakerVisible = true;
+
+            var result = speaker;
+
+            _db.Entry(speaker).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
         public IEnumerable<SpeakerDetailDto> Search()
         {
             return _db.Speakers
