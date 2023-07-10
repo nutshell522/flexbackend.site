@@ -141,6 +141,9 @@ namespace flexbackend.site.Controllers
 				ColorCode = shoesColorCategory.ColorCode,
 			};
 
+			bool isCategoryInUse = IsCategoryInUse(id.Value);
+			ViewBag.IsCategoryInUse = isCategoryInUse;
+
 			return View(vm);
         }
 
@@ -163,5 +166,12 @@ namespace flexbackend.site.Controllers
             }
             base.Dispose(disposing);
         }
-    }
+
+		private bool IsCategoryInUse(int colorcategoryId)
+		{
+			// Check if the category is being used in any related entities
+			bool isCategoryInUse = db.CustomizedShoesPoes.Any(x => x.fk_ShoesColorId == colorcategoryId);
+			return isCategoryInUse;
+		}
+	}
 }
