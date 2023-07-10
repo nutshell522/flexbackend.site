@@ -11,7 +11,6 @@ namespace EFModels.EFModels
         [Key]
         public int ShoesPicture_Id { get; set; }
 
-        [Required]
         [StringLength(4000)]
         public string ShoesPictureUrl { get; set; }
 

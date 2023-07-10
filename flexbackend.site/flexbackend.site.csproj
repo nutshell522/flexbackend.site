@@ -199,6 +199,8 @@
 		<Compile Include="Controllers\SpeakerController.cs" />
 		<Compile Include="Controllers\SuppliersController.cs" />
 		<Compile Include="Filters\AuthorizeFilter.cs" />
+		<Compile Include="Controllers\MembershipLevelsController.cs" />
+		<Compile Include="Controllers\OneToOneReservationController.cs" />
 		<Compile Include="Global.asax.cs">
 			<DependentUpon>Global.asax</DependentUpon>
 		</Compile>
@@ -2467,6 +2469,14 @@
 		<Content Include="Views\logistics_companies\createPay.cshtml" />
 		<Content Include="Views\asd.cshtml" />
 		<Content Include="Views\CustomizedShoesPoes\EditImg.cshtml" />
+		<Content Include="Views\Member\_BlackListsPartial.cshtml" />
+		<Content Include="Views\Staffs\ResetPassword.cshtml" />
+		<Content Include="Views\Staffs\ConfirmResetPassword.cshtml" />
+		<Content Include="Views\MembershipLevels\Create.cshtml" />
+		<Content Include="Views\MembershipLevels\Delete.cshtml" />
+		<Content Include="Views\MembershipLevels\Details.cshtml" />
+		<Content Include="Views\MembershipLevels\Edit.cshtml" />
+		<Content Include="Views\MembershipLevels\Index.cshtml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="App_Data\" />

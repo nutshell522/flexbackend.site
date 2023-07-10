@@ -9,7 +9,7 @@ namespace Members.dll.Models.lnfra
 {
 	public static class HashUtility
 	{
-		public static string ToHA256(string plainText, string salt)
+		public static string ToSHA256(string plainText, string salt)
 		{
 			// ref https://docs.microsoft.com/zh-tw/dotnet/api/system.security.cryptography.sha256?view=net-6.0
 			using (var mySHA256 = SHA256.Create())

@@ -61,7 +61,7 @@ namespace flexbackend.site.Filters
 			{
 				// 從 Session 取得角色
 				//userRole = (UserRole)Enum.Parse(typeof(UserRole), httpContext.Session["UserRole"].ToString());
-				userRole = GetRole();
+				userRole = (UserRole)Convert.ToInt32(httpContext.Session["UserRole"].ToString());
 			}
 			else
 			{

@@ -50,6 +50,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -79,6 +80,7 @@
     <Compile Include="Models\Dtos\Member\MembersEditDto.cs" />
     <Compile Include="Models\Dtos\Member\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
+    <Compile Include="Models\Dtos\Staff\EditPasswordDto.cs" />
     <Compile Include="Models\Dtos\Staff\EditStaffDto.cs" />
     <Compile Include="Models\Dtos\Staff\ForgetPasswordDto.cs" />
     <Compile Include="Models\Dtos\Staff\StaffDetailDto.cs" />
@@ -91,12 +93,18 @@
     <Compile Include="Models\Interfaces\IStaffRepository.cs" />
     <Compile Include="Models\lnfra\DapperRepositories\StaffDapperRepository.cs" />
     <Compile Include="Models\lnfra\EFRepositories\MemberEFRepository.cs" />
+    <Compile Include="Models\lnfra\EmailHelper.cs" />
     <Compile Include="Models\lnfra\HashUtility.cs" />
     <Compile Include="Models\lnfra\Result.cs" />
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
+    <Compile Include="Models\ViewsModels\Member\MemberCriteria.cs" />
+    <Compile Include="Models\ViewsModels\Level\LevelIndexVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberCreateVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberDetailVM.cs" />
+    <Compile Include="Models\ViewsModels\PointHistories\IndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\EditPasswordVM.cs" />
+    <Compile Include="Models\ViewsModels\Staff\ResetPasswordVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\StaffCriteria.cs" />
     <Compile Include="Models\ViewsModels\Staff\EditStaffVM.cs" />
     <Compile Include="Models\ViewsModels\Staff\ForgetPasswordVM.cs" />
@@ -109,7 +117,9 @@
     <Compile Include="Models\ViewsModels\Staff\StaffsIndexVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Files\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

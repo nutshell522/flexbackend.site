@@ -67,8 +67,18 @@ namespace Members.dll.Models.lnfra.EFRepositories
 		}
 
 		public void EditMember(MembersEditDto dto)
-		{		
-			var member = dto.ToMembersEditEntity();
+		{
+			var member = _db.Members.Find(dto.MemberId);
+			member.Birthday = dto.Birthday;
+			member.Name = dto.Name;
+			member.Gender = dto.Gender;
+			member.Mobile = dto.Mobile;
+			member.Email = dto.Email;
+			member.Birthday = dto.Birthday;
+			member.fk_BlackListId = dto.fk_BlackListId;
+			member.fk_LevelId = dto.fk_LevelId;
+
+
 			_db.Entry(member).State = EntityState.Modified;
 			_db.SaveChanges();
 		}

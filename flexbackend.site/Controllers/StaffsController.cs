@@ -15,6 +15,11 @@ using System.Web.UI.WebControls;
 using EFModels.EFModels;
 using System.Web.Security;
 using Members.dll.Models.ViewsModels.Staff;
+using flexbackend.site.Filters;
+using static flexbackend.site.Filters.AuthorizeFilter;
+using System.Net;
+using System.Data.Entity;
+using System.Collections;
 
 namespace flexbackend.site.Controllers
 {
@@ -28,26 +33,239 @@ namespace flexbackend.site.Controllers
 			IStaffRepository repo = new StaffDapperRepository();
 			return new StaffService(repo);
 		}
+		private AppDbContext db = new AppDbContext();
 
-		//忘記密碼
+		/// <summary>
+		/// 中級的員工權限才可以編輯員工資料
+		/// </summary>
+		/// <param name="staffId"></param>
+		/// <returns></returns>
+		[AuthorizeFilter(UserRole.IntermediatePermission)]
+		public ActionResult EditStaff(int staffId)
+		{
+			if (staffId == 0) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			StaffService service = GetStaffRepository();
+			var staff = service.GetByStaffId(staffId).ToStaffEditVM();
+			
+			PrepareCategoryDataSource(0);
+
+			return View(staff);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[AuthorizeFilter(UserRole.IntermediatePermission)]
+		public ActionResult EditStaff(EditStaffVM vm)
+		{
+			PrepareCategoryDataSource(vm.fk_DepartmentId);
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ResetStaff(vm);
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+
+			return RedirectToAction("StaffList");
+		}
+
+		private void PrepareCategoryDataSource(int? id)
+		{
+			var departmentList = db.Departments.ToList();
+			departmentList.Insert(0, new Department { DepartmentId = 0, DepartmentName = "請選擇" });
+
+			ViewBag.PermissionsId = new SelectList(db.StaffPermissions, "PermissionsId", "levelName", id);
+			ViewBag.DepartmentId = new SelectList(departmentList, "DepartmentId", "DepartmentName", id);
+			ViewBag.TitleId = new SelectList(db.JobTitles, "TitleId", "TitleName", id);
+
+			List<SelectListItem> gender = new List<SelectListItem>
+			{
+			new SelectListItem { Value = "true" , Text = "男" },
+			new SelectListItem { Value = "false" , Text = "女" },
+			};
+			ViewBag.Gender = gender;
+		}
+
+		private Result ResetStaff(EditStaffVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			service.ResetStaff(vm.ToStaffEditDto());
+			return Result.Success();
+		}
+
+		//檢視某筆員工
+		public ActionResult GetStaffDetail(int staffId)
+		{
+			if (staffId == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			StaffService service = GetStaffRepository();
+			return View(service.GetStaffDetail(staffId).ToStaffDetailVM());
+		}
+
+		
+		[AuthorizeFilter(UserRole.AdvancedPermission)]
+		public ActionResult DeleteStaff(int staffId)
+		{
+			//如果staffId為空，返回404錯誤碼
+			if (staffId == 0)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			StaffService service = GetStaffRepository();
+			service.DeleteStaff(staffId);
+			return RedirectToAction("StaffList");
+		}
+
+
+		public ActionResult EditPassword()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditPassword(EditPasswordVM vm)
+		{
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = UpdatePassword(vm);
+
+			if (result.IsSuccess == false)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+			return RedirectToAction("Login");
+		}
+
+		
 		public ActionResult ForgetPassword()
 		{
 			return View();
 		}
+
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
-			Result result = ResetPassword();
+
+			// 生成email裡的連結
+			var urlTemplate = Request.Url.Scheme + "://" +  // 生成 http:.// 或 https://
+							 Request.Url.Authority + "/" + // 生成網域名稱或 ip
+							 "Staffs/ResetPassword?staffId={0}&confirmCode={1}"; // 生成網頁 url
+
+			Result result = ProcessResetPassword(vm.Account, vm.Email, urlTemplate);
+
+			if (!result.IsSuccess)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}			
+			return RedirectToAction("ConfirmResetPassword");
+		}
+
+		public ActionResult ResetPassword()
+		{
 			return View();
 		}
 
-		private Result ResetPassword()
+		[HttpPost]
+		public ActionResult ResetPassword(ResetPasswordVM vm, int staffId, string confirmCode)
 		{
-			throw new NotImplementedException();
+			if (ModelState.IsValid == false) return View(vm);
+			Result result = ProcessChangePassword(staffId, confirmCode, vm.Password);
+
+			if (!result.IsSuccess)
+			{
+				ModelState.AddModelError(string.Empty, result.ErrorMessage);
+				return View(vm);
+			}
+
+			return RedirectToAction("Login");
 		}
 
-		//Logout
+		private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
+		{
+			var db = new AppDbContext();
+
+			// 驗證 memberId, confirmCode是否正確
+			var staffInDb = db.Staffs.FirstOrDefault(s => s.StaffId == memberId && s.ConfirmCode == confirmCode);
+			if (staffInDb == null) return Result.Fail("找不到對應的會員記錄");
+
+			// 更新密碼,並將 confirmCode清空
+			var salt = HashUtility.GetSalt();
+			//var encryptedPassword = HashUtility.ToSHA256(newPassword, salt);
+
+			staffInDb.Password = newPassword;
+			staffInDb.ConfirmCode = null;
+
+			db.SaveChanges();
+
+			return Result.Success();
+		}
+
+
+		private Result ProcessResetPassword(string account, string email, string urlTemplate)
+		{
+			var db = new AppDbContext();
+			// 檢查account,email正確性
+			var staffInDb = db.Staffs.FirstOrDefault(s => s.Account == account);
+
+			if (staffInDb == null) return Result.Fail("帳號或 Email 錯誤"); // 故意不告知確切錯誤原因
+
+			if (string.Compare(email, staffInDb.Email, StringComparison.CurrentCultureIgnoreCase) != 0) return Result.Fail("帳號或 Email 錯誤");
+
+			// 檢查 IsConfirmed必需是true, 因為只有已啟用的帳號才能重設密碼
+			if (staffInDb.Account!= account) return Result.Fail("您還沒有啟用本帳號, 請先完成才能重設密碼");
+
+			// 更新記錄, 填入 confirmCode
+			var confirmCode = Guid.NewGuid().ToString("N");
+			staffInDb.ConfirmCode = confirmCode;
+			db.SaveChanges();
+
+			// 發email
+			var url = string.Format(urlTemplate, staffInDb.StaffId, confirmCode);
+			new EmailHelper().SendForgetPasswordEmail(url, staffInDb.Name, email);
+
+			return Result.Success();
+		}
+
+		[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult ForgetPassword(ForgetPasswordVM vm)
+		//{
+		//	if (ModelState.IsValid == false) return View(vm);
+		//	Result result = ResetPassword(vm);
+
+		//	if (result.IsSuccess == false)
+		//	{
+		//		ModelState.AddModelError(string.Empty, result.ErrorMessage);
+		//		return View(vm);
+		//	}
+		//	return RedirectToAction("Login");
+		//}
+
+		private Result ResetPassword(ForgetPasswordVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			return service.ResetPassword(vm.ToForgetPasswordDto());
+		}
+
+		private Result UpdatePassword(EditPasswordVM vm)
+		{
+			StaffService service = GetStaffRepository();
+			return service.UpdatePassword(vm.ToEditPasswordDto());
+		}
+
+		public ActionResult NoPermission()
+		{
+			return View();
+		}
+
 		public ActionResult Logout()
 		{
 			Session.Abandon();
@@ -55,7 +273,6 @@ namespace flexbackend.site.Controllers
 			return Redirect("/Staffs/Login");
 		}
 
-		//Login
 		public ActionResult Login()
 		{
 			return View();
@@ -85,6 +302,11 @@ namespace flexbackend.site.Controllers
 			Response.Cookies.Add(processResult.cookie);
 
 			return Redirect(processResult.returnUrl);
+		}
+
+		public ActionResult ConfirmResetPassword()
+		{
+			return View();
 		}
 
 		private (string returnUrl, HttpCookie cookie) ProcessLogin(string account, bool rememberMe)
@@ -128,6 +350,7 @@ namespace flexbackend.site.Controllers
 			//var hashPrassword = HashUtility.ToHA256(vm.Password, salt);
 
 			string password = vm.Password;
+			Session["UserRole"] = staff.fk_PermissionsId;
 
 			//檢查密碼
 			return string.CompareOrdinal(staff.Password, password) == 0
@@ -135,15 +358,16 @@ namespace flexbackend.site.Controllers
 				: Result.Fail("帳號或密碼有誤");
 		}
 
-
 		//Create
 		public ActionResult CreateStaff()
 		{
+			PrepareCategoryDataSource(null);
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken] //防止跨網站偽造請求的攻擊
+		[Authorize]
 		public ActionResult CreateStaff(StaffsCreateVM vm)
 		{
 			Session["Account"] = "Account";
@@ -152,6 +376,7 @@ namespace flexbackend.site.Controllers
 			//不通過驗證，再次返回 StaffsCreateVM 
 			if (ModelState.IsValid == false) return View(vm);
 
+			PrepareCategoryDataSource(vm.fk_DepartmentId);
 			Result result = Create(vm);
 			if (result.IsSuccess)
 			{
@@ -161,32 +386,45 @@ namespace flexbackend.site.Controllers
 			{
 				//通過驗證，將資料存到db
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-				return View(vm);
 			}
+				return RedirectToAction("StaffList");
 		}
 
 		private Result Create(StaffsCreateVM vm)
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			dto.Mobile = "0921111111";
 			//dto.Account = Session["Account"].ToString();
 			//dto.Password = Session["Password"].ToString();
-			dto.Account = "Tina";
-			dto.Password = "tina";
-			dto.fk_PermissionsId = 3;
-			dto.fk_TitleId = 2;
-			dto.fk_DepartmentId = 3;
+			//如果帳號未填就給他abc
+			
 			return service.CreateStaff(dto);
 		}
 
 		//Read
 		[Authorize]
-		public ActionResult StaffList()
+		public ActionResult StaffList(StaffCriteria criteria)
 		{
-			StaffService service = GetStaffRepository();
-			return View(service.GetStaffs());//return View (model)
-		}
+			PrepareCategoryDataSource(criteria.DepartmentId);
+			ViewBag.Criteria = criteria;
+			//查詢,第一次進入網頁 criteria 是沒有值
 
+			var query = db.Staffs.Include(d => d.Department);
+			query.Select(d => d.Department.DepartmentName);
+
+			if (string.IsNullOrEmpty(criteria.Name) == false)
+			{
+				query = query.Where(d => d.Name.Contains(criteria.Name));
+			}
+			if (criteria.DepartmentId != null && criteria.DepartmentId.Value > 0)
+			{
+				query = query.Where(d => d.fk_DepartmentId == criteria.DepartmentId.Value);
+			}
+
+			var result = query.ToList().Select(d => d.ToStaffsIndexDto().ToStaffsIndexVM());
+
+			StaffService service = GetStaffRepository();
+			return View(result);//return View (model)
+		}
 	}
 }

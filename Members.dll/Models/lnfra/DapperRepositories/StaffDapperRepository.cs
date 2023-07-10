@@ -41,8 +41,8 @@ namespace Members.dll.Models.lnfra.DapperRepositories
 			{
 				conn.Open();
 
-				string sql = @"INSERT INTO Staffs ([Name],Birthday,Gender,Age,Email,Mobile,Account,Password,fk_PermissionsId,fk_TitleId,fk_DepartmentId)
-VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Mobile,@Account,@Password,@fk_PermissionsId,@fk_TitleId,@fk_DepartmentId);";
+				string sql = @"INSERT INTO Staffs ([Name],Birthday,Gender,Age,Email,Account,Password,fk_PermissionsId,fk_TitleId,fk_DepartmentId)
+VALUES  (@Name,@Birthday,@Gender,@Age,@Email,@Account,@Password,@fk_PermissionsId,@fk_TitleId,@fk_DepartmentId);";
 				conn.Execute(sql, dto);
 			}
 
@@ -144,6 +144,17 @@ WHERE StaffId=@staffId;";
 				};
 
 				conn.Execute(sql, parameters);
+			}
+		}
+
+		public void UpdatePassword(string newpassword, string account)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				conn.Open();
+
+				string sql = @"update Staffs set [Password] = @Password where Account = @Account;";
+				conn.Execute(sql, new { Password = newpassword, Account = account });
 			}
 		}
 	}

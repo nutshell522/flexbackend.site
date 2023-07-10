@@ -14,6 +14,14 @@
     @Styles.Render("~/Content/IndexPageStyle.css")
     @Styles.Render("~/Content/table.css")
     @RenderSection("styles", required: false)
+    @{
+        var userName = User.Identity.Name;
+        var db = new EFModels.EFModels.AppDbContext();
+        var user = db.Staffs.FirstOrDefault(s => s.Account == userName);
+
+        string fullName = user.Name;
+
+    }
 
 </head>
 <body>
@@ -31,7 +39,7 @@
             <div class="d-block mt-title">
                 <div class="d-none d-md-flex logo-countainer align-items-end justify-content-center"><span id="logo-container1"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span><span class="fs-5">後台管理系統</span></div>
                 <h2 class="hello d-block d-md-none">
-                    <span class="name">Jason</span><span>, 您好</span>
+                    <span class="name">@fullName</span><span>, 您好</span>
                 </h2>
             </div>
         </div>
@@ -84,13 +92,13 @@
             </li>
             <li>
                 <a href="javascript:;" class="collapse-btn" id="members-btn" data-id="#members-item">
-                    <div><i class="bi bi-people-fill"></i><span>會員及顧客</span></div>
+                    <div><i class="bi bi-people-fill"></i><span>會員管理</span></div>
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="members-item">
-                    <li><a href="@Url.Action("MembersList", "Members", new { area = "" })">會員名單</a></li>
-                    <li><a href="javascript:;">會員等級</a></li>
-                    <li><a href="javascript:;">會員積分</a></li>
+                    <li><a href="@Url.Action("Index", "Member", new { area = "" })">會員名單</a></li>
+                    @*<li><a href="@Url.Action("Index", "MembershipLevels", new { area = "" })">會員等級</a></li>*@
+                    @*<li><a href="@Url.Action("Index", "PointHistories", new { area = "" })">會員積分</a></li>*@
                 </ul>
             </li>
             <li>
@@ -112,7 +120,7 @@
                 <ul class="collapse-item hide" id="activity-item">
                     <li><a href="@Url.Action("Index", "Activity", new { area = "" })">活動管理</a></li>
                     <li><a href="@Url.Action("Index", "Speaker", new { area = "" })">講師管理</a></li>
-                    <li><a href="@Url.Action("Index", "OneToOneReservation", new { area = "" })">一對一預約管理</a></li>
+                    <li><a href="javascript:;">一對一預約管理</a></li>
                 </ul>
             </li>
             <li>
@@ -136,13 +144,13 @@
             </li>
             <li>
                 <a href="javascript:;" class="collapse-btn" id="employee-btn" data-id="#employee-item">
-                    <div><i class="bi bi-shop"></i><span>員工管理</span></div>
+                    <div><i class="bi bi-shop"></i><span>內部管理</span></div>
                     <i class="bi bi-chevron-down"></i>
                 </a>
                 <ul class="collapse-item hide" id="employee-item">
                     <li><a href="@Url.Action("StaffList", "Staffs", new { area = "" })">員工名單總覽</a></li>
-                    <li><a href="javascript:;">員工管理</a></li>
-                    <li><a href="javascript:;">員工權限管理</a></li>
+                    @*<li><a href="javascript:;">員工管理</a></li>
+                    <li><a href="javascript:;">員工權限管理</a></li>*@
                 </ul>
             </li>
         </ul>
@@ -152,7 +160,7 @@
                 if (User.Identity.IsAuthenticated)
                 {
                     <li>
-                        <a href="javascript:;">
+                        <a href="@Url.Action("EditPassword", "Staffs", new { area = "" })">
                             <div><i class="bi bi-gear-fill"></i><span>變更密碼</span></div>
                         </a>
                     </li>
@@ -191,7 +199,7 @@
                     </label>
                 </div>
                 <div class="hello d-none d-md-block">
-                    <span class="name">Jason</span><span>, 您好</span>
+                    <span class="name">@fullName</span><span>,您好</span>
                 </div>
                 @*<a class="d-none d-md-inline" href="javascript:;">幫助<i class="bi bi-question-circle-fill"></i></a>*@
             </div>
@@ -224,7 +232,7 @@
                                 <li>
                                     <div class="sender-name-area">
                                         <div>
-                                            <span class="sender-name">Jason</span><span>:</span>
+                                            <span class="sender-name">@fullName</span><span>:</span>
                                         </div>
                                         <span class="message-update-time">21分鐘前</span>
                                     </div>
@@ -250,8 +258,8 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/jquery-ui.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/table.js"></script>
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/Scripts/flexBE_main.js")

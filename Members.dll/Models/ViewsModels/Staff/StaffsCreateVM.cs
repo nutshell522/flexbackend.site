@@ -31,7 +31,7 @@ namespace Members.dll.Models.ViewsModels
 		public string Name { get; set; }
 
 		[Display(Name = "年齡")]
-		public byte? Age { get; set; }
+		public byte Age { get; set; }
 
 		[Display(Name = "生日")]
 		[Required]

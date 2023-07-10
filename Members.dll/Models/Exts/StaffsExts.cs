@@ -20,6 +20,17 @@ namespace Members.dll.Models.Exts
 			return new ForgetPasswordDto
 			{
 				Account = vm.Account,
+				NewPassword = vm.Email,
+				//ConfirmPassword = vm.ConfirmPassword
+			};
+		}
+
+		public static EditPasswordDto ToEditPasswordDto(this EditPasswordVM vm)
+		{
+			return new EditPasswordDto
+			{
+				Account = vm.Account,
+				OldPassword = vm.OldPassword,
 				NewPassword = vm.NewPassword,
 				ConfirmPassword = vm.ConfirmPassword
 			};

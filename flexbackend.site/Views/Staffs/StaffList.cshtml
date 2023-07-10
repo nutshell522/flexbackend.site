@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Members.dll.Models.ViewsModels.StaffsIndexVM>
+﻿﻿@model IEnumerable<Members.dll.Models.ViewsModels.StaffsIndexVM>
 
 @{
     ViewBag.Title = "StaffList";
@@ -19,8 +19,8 @@
             border-collapse: collapse; /* 合併邊框 */
             background-color: aquamarine;
         }
-        .th-col-1 
-        {
+
+        .th-col-1 {
             background-color: aquamarine;
         }
     </style>
@@ -31,7 +31,7 @@
     <form method="get">
         <div class="d-flex">
             <div class="mb-3 col-md-3">
-                <label for="s_name">會員姓名</label>
+                <label for="s_name">姓名</label>
                 <input type="text" class="form-control search-bar" name="name" id="s_name" placeholder="搜尋..." value="@criteria.Name">
             </div>
             <div class="mb-3 col-md-3">
@@ -44,7 +44,7 @@
                 </select>
             </div>
             <div class="mb-3 col-md-2 align-self-end me-auto">
-                <button class="btn btn-primary">Search</button>
+                <button class="btn btn-primary">搜尋</button>
             </div>
             <div class="right">
                 <a href="@Url.Action("CreateStaff", "Staffs", new { area = "" })" class="btn btn-primary">
@@ -55,9 +55,7 @@
 
     </form>
 </section>
-<div class="search-bar-container mb-4 d-flex">
 
-</div>
 <div class="table-container">
     <table>
         <thead>
@@ -73,31 +71,31 @@
                         <input class="form-check-input check-all" type="checkbox">
                     </label>
                 </th>
-                <th class="th-col-1 ">
+                <th class="th-col-3 ">
                     @Html.DisplayNameFor(model => model.StaffId)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.Department)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.TitleIdName)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.GenderStr)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.Age)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.levelName)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.DueDate)
                 </th>
                 <th>管理</th>

@@ -45,6 +45,9 @@ namespace EFModels.EFModels
 
         public int fk_DepartmentId { get; set; }
 
+        [StringLength(255)]
+        public string ConfirmCode { get; set; }
+
         public virtual Department Department { get; set; }
 
         public virtual JobTitle JobTitle { get; set; }

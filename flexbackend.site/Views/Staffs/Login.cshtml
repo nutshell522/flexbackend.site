@@ -42,9 +42,9 @@
         #loginText {
             color: white;
             padding-bottom: 10px;
-            font-size:larger;
+            font-size: larger;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-weight:bold;
+            font-weight: bold;
         }
 
         .form-control {
@@ -59,6 +59,13 @@
             color: white;
             font-weight: 100;
         }
+
+        #loginImg {
+            background-repeat: no-repeat;
+            height: 50px;
+            object-fit: contain;
+            z-index: -1;
+        }
     </style>
 
 }
@@ -67,11 +74,13 @@
 @using (Html.BeginForm())
 {
     @*@Html.AntiForgeryToken()*@ //這個拿掉就可以更換成_LayoutLogin
-
+    <div id="loginImg">
+        <img alt="" src="~/Public/Img/FlexLogo.png" />
+    </div>
     <div id="login-container">
-
         <div class="row">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
             <div id="loginText">
                 <h3>LOGIN</h3>
             </div>
@@ -99,3 +108,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
