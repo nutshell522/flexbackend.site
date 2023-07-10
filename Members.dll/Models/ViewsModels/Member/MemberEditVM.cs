@@ -14,7 +14,6 @@ namespace Members.dll.Models.ViewsModels
 		public int MemberId { get; set; } 
 
 		[Display(Name="姓名")] 
-		[Required]
 		[StringLength(10)]
 		public string Name { get; set; }
 
@@ -30,12 +29,10 @@ namespace Members.dll.Models.ViewsModels
 		}
 
 		[Display(Name = "手機")]
-		[Required]
 		[StringLength(10)]
 		public string Mobile { get; set; }
 
 		[Display(Name = "信箱")]
-		[Required]
 		[StringLength(300)]
 		public string Email { get; set; }
 
@@ -48,6 +45,13 @@ namespace Members.dll.Models.ViewsModels
 
 		[Display(Name = "是否為黑名單")] 
 		public int? fk_BlackListId { get; set; }
+		public string fk_BlackListIdStr
+		{
+			get
+			{
+				return fk_BlackListId.HasValue && fk_BlackListId.Value > 0 ? "是" : "否";
+			}
+		}
 
 		//public int BlackListId { get; set; }
 

@@ -60,7 +60,6 @@ namespace flexbackend.site.Filters
 			if (httpContext.Session["UserRole"] != null)
 			{
 				// 從 Session 取得角色
-				//userRole = (UserRole)Enum.Parse(typeof(UserRole), httpContext.Session["UserRole"].ToString());
 				userRole = (UserRole)Convert.ToInt32(httpContext.Session["UserRole"].ToString());
 			}
 			else
@@ -93,29 +92,6 @@ namespace flexbackend.site.Filters
 		{
 			//權限檢查失敗，轉跳至指定頁面
 			filterContext.Result = new RedirectResult("~/Staffs/NoPermission");
-		}
-
-		private UserRole GetRole()
-		{
-			int permissionsId = db.StaffPermissions.Select(d => d.PermissionsId).FirstOrDefault();
-			UserRole role;
-
-			switch (permissionsId)
-			{
-				case 1:
-					role = UserRole.GeneralPermission;
-					break;
-				case 2:
-					role = UserRole.IntermediatePermission;
-					break;
-				case 3:
-					role = UserRole.AdvancedPermission;
-					break;
-				default:
-					role = UserRole.GeneralPermission;
-					break;
-			}
-			return role;
 		}
 	}
 }

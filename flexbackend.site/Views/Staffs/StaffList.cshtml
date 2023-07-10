@@ -71,28 +71,28 @@
                         <input class="form-check-input check-all" type="checkbox">
                     </label>
                 </th>
-                <th class="th-col-3 ">
+                <th class="th-col-1 ">
                     @Html.DisplayNameFor(model => model.StaffId)
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.Department)
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.TitleIdName)
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.GenderStr)
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.Age)
                 </th>
                 <th class="th-col-3">
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
-                <th class="th-col-3">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.levelName)
                 </th>
                 <th class="th-col-3">
@@ -155,6 +155,11 @@
                             <a href="@Url.Action("EditStaff", new {staffId=item.StaffId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
                             <a href="@Url.Action("GetStaffDetail", new {staffId=item.StaffId })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                             <a href="DeleteStaff?staffId=@item.StaffId" onclick="confirmDelete(event,'@item.StaffId')" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+
+                            @*@if (UserHasDeletePermission)
+                            {
+                                <a href="DeleteStaff?staffId=@item.StaffId" onclick="confirmDelete(event,'@item.StaffId')" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                            }*@
                         </div>
                     </td>
                 </tr>

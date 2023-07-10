@@ -70,6 +70,10 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("StaffList");
 		}
 
+		/// <summary>
+		/// 下拉式選單副程式
+		/// </summary>
+		/// <param name="id"></param>
 		private void PrepareCategoryDataSource(int? id)
 		{
 			var departmentList = db.Departments.ToList();
@@ -234,21 +238,6 @@ namespace flexbackend.site.Controllers
 			return Result.Success();
 		}
 
-		[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult ForgetPassword(ForgetPasswordVM vm)
-		//{
-		//	if (ModelState.IsValid == false) return View(vm);
-		//	Result result = ResetPassword(vm);
-
-		//	if (result.IsSuccess == false)
-		//	{
-		//		ModelState.AddModelError(string.Empty, result.ErrorMessage);
-		//		return View(vm);
-		//	}
-		//	return RedirectToAction("Login");
-		//}
-
 		private Result ResetPassword(ForgetPasswordVM vm)
 		{
 			StaffService service = GetStaffRepository();
@@ -261,6 +250,10 @@ namespace flexbackend.site.Controllers
 			return service.UpdatePassword(vm.ToEditPasswordDto());
 		}
 
+		/// <summary>
+		/// 沒有權限
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult NoPermission()
 		{
 			return View();
@@ -273,11 +266,20 @@ namespace flexbackend.site.Controllers
 			return Redirect("/Staffs/Login");
 		}
 
+		/// <summary>
+		/// 登入Get
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult Login()
 		{
 			return View();
 		}
 
+		/// <summary>
+		/// 登入POST
+		/// </summary>
+		/// <param name="vm"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Login(LoginVM vm)
@@ -304,6 +306,10 @@ namespace flexbackend.site.Controllers
 			return Redirect(processResult.returnUrl);
 		}
 
+		/// <summary>
+		/// 重設密碼通知頁面
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult ConfirmResetPassword()
 		{
 			return View();
@@ -358,13 +364,21 @@ namespace flexbackend.site.Controllers
 				: Result.Fail("帳號或密碼有誤");
 		}
 
-		//Create
+		/// <summary>
+		/// 新增員工Get
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult CreateStaff()
 		{
 			PrepareCategoryDataSource(null);
 			return View();
 		}
 
+		/// <summary>
+		/// 新增員工POST
+		/// </summary>
+		/// <param name="vm"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken] //防止跨網站偽造請求的攻擊
 		[Authorize]
@@ -380,28 +394,34 @@ namespace flexbackend.site.Controllers
 			Result result = Create(vm);
 			if (result.IsSuccess)
 			{
-				return View();//回到員工總覽
+				return RedirectToAction("StaffList");
 			}
 			else
 			{
 				//通過驗證，將資料存到db
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-			}
-				return RedirectToAction("StaffList");
+			}	
+			return View();
 		}
 
+		/// <summary>
+		/// 新增員工Result
+		/// </summary>
+		/// <param name="vm"></param>
+		/// <returns></returns>
 		private Result Create(StaffsCreateVM vm)
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			//dto.Account = Session["Account"].ToString();
-			//dto.Password = Session["Password"].ToString();
-			//如果帳號未填就給他abc
 			
 			return service.CreateStaff(dto);
 		}
 
-		//Read
+		/// <summary>
+		/// 員工總覽
+		/// </summary>
+		/// <param name="criteria"></param>
+		/// <returns></returns>
 		[Authorize]
 		public ActionResult StaffList(StaffCriteria criteria)
 		{
