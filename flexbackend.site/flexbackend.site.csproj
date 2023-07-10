@@ -2426,6 +2426,8 @@
     <Content Include="Views\Staffs\NoPermission.cshtml" />
     <Content Include="Views\Staffs\StaffList.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\asd.cshtml" />
+    <Content Include="Views\CustomizedShoesPoes\EditImg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,12 +8,6 @@ namespace EFModels.EFModels
 
     public partial class CustomizedOrder
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CustomizedOrder()
-        {
-            ShoesPictures = new HashSet<ShoesPicture>();
-        }
-
         [Key]
         public int Customized_Id { get; set; }
 
@@ -53,9 +47,6 @@ namespace EFModels.EFModels
         public virtual Customized_materials Customized_materials4 { get; set; }
 
         public virtual CustomizedShoesPo CustomizedShoesPo { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShoesPicture> ShoesPictures { get; set; }
 
         public virtual Member Member { get; set; }
     }

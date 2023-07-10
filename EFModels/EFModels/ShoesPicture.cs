@@ -11,14 +11,11 @@ namespace EFModels.EFModels
         [Key]
         public int ShoesPicture_Id { get; set; }
 
+        [Required]
         [StringLength(4000)]
         public string ShoesPictureUrl { get; set; }
 
-        public int? fk_ShoesPictureProduct_Id { get; set; }
-
-        public int? fk_ShoesProductOrder_Id { get; set; }
-
-        public virtual CustomizedOrder CustomizedOrder { get; set; }
+        public int fk_ShoesPictureProduct_Id { get; set; }
 
         public virtual CustomizedShoesPo CustomizedShoesPo { get; set; }
     }

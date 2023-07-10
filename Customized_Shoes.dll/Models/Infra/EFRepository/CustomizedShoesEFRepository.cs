@@ -93,6 +93,35 @@ namespace Customized_Shoes.dll.Models.Infra.EFRepository
 			return shoesproducts.ToEditDto();
 		}
 
-		
+		public void SaveEditShoesImg(List<ShoesImgDto> dto)
+		{
+			if (dto == null || dto.Count == 0) return;
+			var productId = dto[0].fk_ShoesProductId;
+			var dbImgs = _db.ShoesPictures.Where(i => i.fk_ShoesPictureProduct_Id == productId).ToList();
+
+			foreach (var img in dbImgs)
+			{
+				if (!dto.Any(i => i.ShoesImgId == img.ShoesPicture_Id))
+				{
+					_db.ShoesPictures.Remove(img);
+				}
+			}
+
+			foreach (var editImg in dto)
+			{
+				//var dbImg = _db.ProductImgs.FirstOrDefault(i => i.ProductImgId == editImg.ProductImgId);
+				if (editImg.ShoesImgId == 0)
+				{
+					_db.ShoesPictures.Add(editImg.DtoToEditImgEntity());
+				}
+			}
+			_db.SaveChanges();
+		}
+
+		public List<ShoesImgDto> GetImgById(int ShoesId)
+		{
+			var product = _db.ShoesPictures.Where(p => p.fk_ShoesPictureProduct_Id == ShoesId).OrderBy(p => p.ShoesPicture_Id).ToList();
+			return product.ToEditImgDto();
+		}
 	}
 }

@@ -53,6 +53,12 @@ namespace Customized_Shoes.dll.Models.Service
 			return _repo.GetById(id);		
 		}
 
+		public List<ShoesImgDto> GetImgById(int ShoesId)
+		{
+			return _repo.GetImgById(ShoesId);
+		}
+
+
 		public Result EditShoes(CustomizedShoesDto dto) 
 		{ 	
 			
@@ -66,6 +72,11 @@ namespace Customized_Shoes.dll.Models.Service
 			return _db.CustomizedShoesPoes.Any(p => p.ShoesName == ShoesName);
 		}
 
+		public Result SaveEditImg(List<ShoesImgDto> dto)
+		{
+			_repo.SaveEditShoesImg(dto);
+			return Result.Success();
+		}
 
 	}
 }

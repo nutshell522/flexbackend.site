@@ -65,17 +65,6 @@ namespace EFModels.EFModels
 		public virtual DbSet<Staff> Staffs { get; set; }
 		public virtual DbSet<Supplier> Suppliers { get; set; }
 		public virtual DbSet<Type> Types { get; set; }
-		public virtual DbSet<AggregatedCounter> AggregatedCounters { get; set; }
-		public virtual DbSet<Counter> Counters { get; set; }
-		public virtual DbSet<Hash> Hashes { get; set; }
-		public virtual DbSet<Job> Jobs { get; set; }
-		public virtual DbSet<JobParameter> JobParameters { get; set; }
-		public virtual DbSet<JobQueue> JobQueues { get; set; }
-		public virtual DbSet<List> Lists { get; set; }
-		public virtual DbSet<Schema> Schemata { get; set; }
-		public virtual DbSet<Server> Servers { get; set; }
-		public virtual DbSet<Set> Sets { get; set; }
-		public virtual DbSet<State> States { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -159,11 +148,6 @@ namespace EFModels.EFModels
 				.Property(e => e.Customized_number)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<CustomizedOrder>()
-				.HasMany(e => e.ShoesPictures)
-				.WithOptional(e => e.CustomizedOrder)
-				.HasForeignKey(e => e.fk_ShoesProductOrder_Id);
-
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.CustomizedOrders)
 				.WithOptional(e => e.CustomizedShoesPo)
@@ -171,8 +155,9 @@ namespace EFModels.EFModels
 
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesPictures)
-				.WithOptional(e => e.CustomizedShoesPo)
-				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
+				.WithRequired(e => e.CustomizedShoesPo)
+				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesGroups)

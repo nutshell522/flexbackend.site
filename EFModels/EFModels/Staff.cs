@@ -18,7 +18,6 @@ namespace EFModels.EFModels
 
         public bool? Gender { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string Mobile { get; set; }
 

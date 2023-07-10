@@ -12,7 +12,7 @@ namespace Customized_Shoes.dll.Models.ViewModels
 		public int ShoesCategoryId { get; set; }
 
 		[Display(Name ="分類名稱")]
-		[Required]
+		[Required(ErrorMessage = "{0}必填")]
 		[StringLength(254)]
 		public string ShoesCategoryName { get; set; }
 	}

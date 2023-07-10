@@ -33,7 +33,7 @@ namespace EFModels.EFModels
 
         public DateTime StartDate { get; set; }
 
-        public bool EndType { get; set; }
+        public bool? EndType { get; set; }
 
         public int? EndDays { get; set; }
 

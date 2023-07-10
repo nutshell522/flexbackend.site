@@ -14,6 +14,7 @@ namespace Customized_Shoes.dll.Models.ViewModels
 
 		[Display(Name = "公司名稱")]
 		[StringLength(50)]
+		[Required(ErrorMessage = "{0}必填")]
 		public string SupplierCompanyName { get; set; }
 
 		[Display(Name = "是否有合格證明")]
@@ -21,17 +22,21 @@ namespace Customized_Shoes.dll.Models.ViewModels
 
 		[Display(Name = "公司提供產品")]
 		[StringLength(50)]
+		[Required(ErrorMessage = "{0}必填")]
 		public string Supply_Material { get; set; }
 
 		[Display(Name = "公司電話")]
+		[Required(ErrorMessage = "{0}必填")]
 		public int? SupplierCompanyPhone { get; set; }
 
 		[Display(Name = "電子郵件")]
 		[StringLength(250)]
+		[Required(ErrorMessage = "{0}必填")]
 		public string SupplierCompanyEmail { get; set; }
 
 		[Display(Name = "公司地址")]
 		[StringLength(250)]
+		[Required(ErrorMessage = "{0}必填")]
 		public string SupplierCompanyAddress { get; set; }
 
 

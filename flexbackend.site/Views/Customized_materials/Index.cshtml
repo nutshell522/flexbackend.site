@@ -33,9 +33,6 @@
                 <div class="right">
                     <button id="searchBtn" class="btn btn-primary">搜尋</button>
                     @Html.ActionLink("新增材質", "Create", null, new { @class = "btn btn-primary" })
-                    <div class="btn btn-dark">
-                        <a href="@Url.Action("Index", "ShoesChoos", new { area = "" })">退回客製化選項頁面</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -89,7 +86,6 @@
                 <td>
                     <div class="manage-btn-container">
                         <a href="@Url.Action("Edit", new { id = item.Shoesmaterial_Id  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                        <a href="@Url.Action("Details", new { id = item.Shoesmaterial_Id  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                         <a href="@Url.Action("Delete", new { id = item.Shoesmaterial_Id  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </td>

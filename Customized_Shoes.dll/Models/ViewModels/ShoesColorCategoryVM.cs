@@ -12,11 +12,12 @@ namespace Customized_Shoes.dll.Models.ViewModels
 		public int ShoesColorId { get; set; }
 		
 		[Display(Name = "顏色名稱")]
-		[Required]
+		[Required(ErrorMessage = "{0}必填")]
 		[StringLength(50)]
 		public string ColorName { get; set; }
 
 		[Display(Name = "顏色色碼")]
+		[Required(ErrorMessage = "{0}必填")]
 		[StringLength(100)]
 		public string ColorCode { get; set; }
 	}

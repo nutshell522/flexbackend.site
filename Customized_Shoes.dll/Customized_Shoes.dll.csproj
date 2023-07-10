@@ -60,6 +60,7 @@
     <Compile Include="Models\Dtos\CustomizedShoesDto.cs" />
     <Compile Include="Models\Dtos\ShoesCategoryDto.cs" />
     <Compile Include="Models\Dtos\ShoesColorCategoryDto.cs" />
+    <Compile Include="Models\Dtos\ShoesImgDto.cs" />
     <Compile Include="Models\Exts\CategoryExts.cs" />
     <Compile Include="Models\Exts\CustomizedMaterialsCriteria.cs" />
     <Compile Include="Models\Exts\CustomizedShoesExts.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Models\ViewModels\ShoesCategoryVM.cs" />
     <Compile Include="Models\ViewModels\ShoesChoosesVM.cs" />
     <Compile Include="Models\ViewModels\ShoesColorCategoryVM.cs" />
+    <Compile Include="Models\ViewModels\ShoesEditImgVM.cs" />
     <Compile Include="Models\ViewModels\SupplierCreateVM.cs" />
     <Compile Include="Models\ViewModels\SupplierCriteria.cs" />
     <Compile Include="Models\ViewModels\SupplierEditVM.cs" />

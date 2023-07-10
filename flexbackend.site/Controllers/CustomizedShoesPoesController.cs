@@ -16,6 +16,8 @@ using Customized_Shoes.dll.Models.ViewModels;
 using EFModels.EFModels;
 using Flex.Products.dll.Infra.EFRepository;
 using Flex.Products.dll.Models.Dtos;
+using Flex.Products.dll.Models.ViewModel;
+using Flex.Products.dll.Service;
 
 namespace flexbackend.site.Controllers
 {
@@ -186,8 +188,55 @@ namespace flexbackend.site.Controllers
             }
         }
 
-        // GET: CustomizedShoesPoes/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult EditImg(int? id)
+        {
+			if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var service = new CustomizedShoesService(_repo);
+			var product = service.GetImgById((int)id);
+
+			return View(product.ToEditImgVM((int)id));
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult EditImg(ShoesEditImgVM vm, List<string> createImgName, List<HttpPostedFileBase> createfile)
+		{
+			if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var service = new CustomizedShoesService(_repo);
+
+			var path = Server.MapPath("~/Public/Img");
+			List<ShoesImgDto> editImg = EditShoesImg(path, createImgName, createfile, vm.ShoesProductId);
+
+			if (vm.ShoesPictureUrl == null && createImgName == null)
+			{
+				var errorVm = service.GetImgById(vm.ShoesProductId);
+
+				ModelState.AddModelError(string.Empty, "至少要有一張照片");
+
+				return View(errorVm.ToEditImgVM(vm.ShoesProductId));
+			}
+
+			if (editImg != null && editImg.Count > 0)
+			{
+				foreach (var img in editImg)
+				{
+					vm.ShoesPictureUrl.Add(img);
+				}
+			}
+
+			var product = service.SaveEditImg(vm.VMToEditImgDto());
+
+			if (product.IsSucces)
+			{
+				return RedirectToAction("Index");
+			}
+			return View(vm);
+		}
+
+		// GET: CustomizedShoesPoes/Delete/5
+		public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -276,5 +325,48 @@ namespace flexbackend.site.Controllers
 			return result;
 		}
 
+		/// <summary>
+		/// 相片編輯
+		/// </summary>
+		/// <param name="path">存放路徑</param>
+		/// <param name="createImgName">預覽回傳照片名稱</param>
+		/// <param name="createfile">file回傳檔案</param>
+		/// <param name="productId">產品Id</param>
+		/// <returns></returns>
+		private List<ShoesImgDto> EditShoesImg(string path, List<string> createImgName, List<HttpPostedFileBase> createfile, int ShoesId)
+		{
+			if (createImgName == null || createImgName.Count <= 0) return new List<ShoesImgDto>();
+
+			var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
+			var result = new List<ShoesImgDto>();
+
+			for (var i = 0; i < createfile.Count; i++)
+			{
+				var file = createfile[i];
+				var fileName = file.FileName;
+				if (file == null || file.ContentLength == 0 || file.ContentLength > 2 * 1024 * 1024) continue;
+				if (createImgName.Any(imgName => imgName == fileName))
+				{
+					var ext = System.IO.Path.GetExtension(fileName);
+
+					if (!allowExts.Contains(ext.ToLower())) continue;
+
+					var newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
+
+					file.SaveAs(System.IO.Path.Combine(path, newFileName));
+					result.Add(new ShoesImgDto
+					{
+						fk_ShoesProductId = ShoesId,
+						ShoesPictureUrl = newFileName,
+					});
+				}
+				else
+				{
+					continue;
+				}
+			}
+
+			return result;
+		}
 	}
 }

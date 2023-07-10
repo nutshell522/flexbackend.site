@@ -39,10 +39,7 @@
                 </div>
                 <div class="right">
                     <button id="searchBtn" class="btn btn-primary">搜尋</button>
-                    @Html.ActionLink("新增主顏色分類", "Create", null, new { @class = "btn btn-primary" })
-                    <div class="btn btn-dark">
-                        <a href="@Url.Action("Index", "ShoesCategories", new { area = "" })">退回功能分類頁面</a>
-                    </div>
+                    @Html.ActionLink("新增主顏色分類", "Create", null, new { @class = "btn btn-primary" })            
                 </div>
             </div>
         </div>
@@ -103,7 +100,6 @@
                     <td>
                         <div class="manage-btn-container">
                             <a href="@Url.Action("Edit", new { id = item.ShoesColorId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new { id = item.ShoesColorId  })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
                             <a href="@Url.Action("Delete", new { id = item.ShoesColorId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>
