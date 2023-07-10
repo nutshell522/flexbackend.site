@@ -22,7 +22,7 @@
 }
 
 <h2>商品管理</h2>
-
+@Html.AntiForgeryToken()
 <div class="search-bar-container mb-4 d-flex">
     <form method="post" class="me-auto">
         <div class="row">
@@ -124,7 +124,7 @@
                     <div class="d-flex justify-content-center">
                         <a href="@Url.Action("Edit", new {ProductId=item.ProductId })" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>
                         <a href="@Url.Action("EditImg", new {ProductId=item.ProductId })" class="btn-edit me-1"><i class="bi bi-image"></i></a>
-                        <a href="@Url.Action("Delete", new {ProductId=item.ProductId})" class="btn-del me-1"><i class="bi bi-trash-fill"></i></a>
+                        <a href="#" class="btn-del me-1" onclick="deleteProduct(event,@item.ProductId,@item.ProductName)"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </td>
             </tr>
@@ -142,17 +142,14 @@
         $(document).ready(function () {
             // 在頁面載入完成時觸發請求
             //loadProducts();
-
-            var dataTable =$('#indexProduct').DataTable(
+            //var dataTable =
+            $('#indexProduct').DataTable(
                 {
                     "searching": false,
                     "paging": true, // 如果要顯示分頁器，設為 true
                     "pageLength": 5, // 設定預設每頁顯示筆數
                     "stateSave": true,
-                    "lengthMenu": [5, 10, 15, 20, "All"],
-                    //"language": {
-                    //    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/zh-HANT.json'
-                    //},
+                    "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
                     oLanguage: {    // 中文化
                         "sLengthMenu": "每頁顯示 _MENU_筆",
                         "sZeroRecords": "沒有找到符合條件的資料",
@@ -178,10 +175,10 @@
                 }
             );
 
-            dataTable.ajax.url('@Url.Action("ReLoadIndex", "Products")').load(criteria);
+            //dataTable.ajax.url('@Url.Action("Index", "Products")').load();
 
             // 監聽搜尋按鈕的點擊事件
-            $('#searchBtn').click(function (e) {
+            @*$('#searchBtn').click(function (e) {
                 e.preventDefault();
                 //var criteria = loadProducts();
                 //loadProducts();
@@ -192,10 +189,38 @@
                     Status: $('#criteria_Status').val()
                 };
                 dataTable.clear().draw(); // 清空 DataTable 的資料
-                dataTable.ajax.url('@Url.Action("ReLoadIndex", "Products")').load(criteria); // 使用 AJAX 載入資料
+                dataTable.ajax.url('@Url.Action("Index", "Products")').load(criteria); // 使用 AJAX 載入資料
 
-            });
+            });*@
         });
+
+         function deleteProduct(event, productId, productName){
+                event.preventDefault();
+
+             if (confirm("確認是否要刪除 : " + productName)) {
+                 var data = {
+                     productId: productId,
+                     __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                 };
+                $.ajax({
+                    url: '@Url.Action("Delete", "Products")',
+                    type: 'POST',
+                    data: data,
+                    success: function (result) {
+                        if (result.success) {
+                            alert(productName + "已被刪除");
+                            location.reload()
+                        }
+                        else {
+                            alert("刪除失敗 : " + result.message);
+                        }
+                    },
+                    error: function () {
+                        alert("刪除失敗");
+                    }
+                });
+                }
+          }
 
         //重新載入畫面
         function loadProducts() {
@@ -319,8 +344,7 @@
                 data: JSON.stringify(productIdAndStatus),
                 contentType: "application/json",
                 success: function (response) {
-                    loadProducts();
-                    //window.location.reload();
+                    window.location.reload();
                 },
                 error: function (error) {
                     console.log(error);

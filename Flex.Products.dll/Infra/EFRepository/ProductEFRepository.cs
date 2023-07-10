@@ -35,7 +35,7 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 		{
 			criteria=criteria ?? new IndexSearchCriteria();
 
-			var query = _db.Products.Include(p => p.ProductSubCategory).Include(p => p.ProductGroups);
+			var query = _db.Products.Include(p => p.ProductSubCategory.ProductCategory.SalesCategory).Include(p => p.ProductGroups);
 
 			#region 搜尋條件
 			if (criteria.Name != null)
@@ -142,6 +142,20 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 				}
 			}
 			_db.SaveChanges();
+		}
+
+		public void DeleteProduct(string productId)
+		{
+			var product = _db.Products.FirstOrDefault(p => p.ProductId == productId);
+			if(product==null)return;
+
+			product.LogOut = true;
+			_db.SaveChanges();
+		}
+
+		public List<ProductExcelReportDto> ReportToExcel()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

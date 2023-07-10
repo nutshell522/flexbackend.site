@@ -35,7 +35,9 @@ namespace Flex.Products.dll.Models.Dtos
 		public string Tag { get; set; }
 
 		public int fk_ProductSubCategoryId { get; set; }
-		public ProductSubCategory ProductSubCategory { get; set; }
+		//public ProductSubCategory ProductSubCategory { get; set; }
+		//public ProductSubCategoryDto ProductSubCategory { get; set; }
+		public string ProductSubCategory { get; set; }
 
 		public DateTime CreateTime { get; set; }
 

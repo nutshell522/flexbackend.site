@@ -19,7 +19,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 			{
 				ProductId = dto.ProductId,
 				ProductName = dto.ProductName,
-				SubCategoryPath = dto.ProductSubCategory.SubCategoryPath,
+				SubCategoryPath = dto.ProductSubCategory,//dto.ProductSubCategory.SubCategoryPath,
 				SalesPrice = dto.SalesPrice,
 				//StartTime = dto.StartTime,
 				//EndTime = dto.EndTime,
@@ -46,7 +46,7 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				LogOut = entity.LogOut,
 				Tag = entity.Tag,
 				//fk_ProductSubCategoryId = entity.fk_ProductSubCategoryId,
-				ProductSubCategory = entity.ProductSubCategory,
+				ProductSubCategory = $"{entity.ProductSubCategory.ProductCategory.SalesCategory.SalesCategoryName}/{entity.ProductSubCategory.ProductCategory.ProductCategoryName}/{entity.ProductSubCategory.ProductSubCategoryName}",
 				ProductGroups = entity.ProductGroups.Select(x => new ProductGroupsDto
 				{
 					ColorId = x.ColorCategory.ColorId,
@@ -258,6 +258,30 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				ProductImgId = dto.ProductImgId,
 				fk_ProductId = dto.fk_ProductId,
 				ImgPath = dto.ImgPath
+			};
+		}
+
+		public static ProductExcelReportVM ToExcelVM(this ProductExcelReportDto dto)
+		{
+			return new ProductExcelReportVM
+			{
+				ProductId = dto.ProductId,
+				ProductName = dto.ProductName,
+				ProductDescription = dto.ProductDescription,
+				ProductMaterial = dto.ProductMaterial,
+				ProductOrigin = dto.ProductOrigin,
+				SalesCategoryName = dto.SalesCategoryName,
+				ProductCategoryName = dto.ProductCategoryName,
+				ProductSubCategoryName = dto.ProductSubCategoryName,
+				UnitPrice = dto.UnitPrice,
+				SalesPrice = dto.SalesPrice,
+				ColorName = dto.ColorName,
+				SizeName = dto.SizeName,
+				Qty = dto.Qty,
+				StatusText = dto.StatusText,
+				Tag = dto.Tag,
+				CreateTime = dto.CreateTime,
+				EditTime = dto.EditTime,
 			};
 		}
 	}

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Flex.Products.dll.Infra.DapperRepository
 {
-	public class SalesCategotyDPRepository : ICategoryRepository
+	public class SalesCategotyDPRepository : ISalesCategoryRepository
 	{
 		private readonly string  _connStr;
         public SalesCategotyDPRepository()
@@ -29,7 +29,7 @@ order by SalesCategoryId";
 			return salesCategory;
 		}
 
-		public void CreateSalesCategory(SalesCategoryDto dto)
+		public void CreateCategory(SalesCategoryDto dto)
 		{
 			using (var conn=new SqlConnection(_connStr))
 			{
@@ -40,7 +40,7 @@ values (@SalesCategoryName);";
 			}
 		}
 
-		public SalesCategoryDto GetSalesCategoryById(int salesCategoryId)
+		public SalesCategoryDto GetCategoryById(int salesCategoryId)
 		{
 			using (var conn=new SqlConnection(_connStr))
 			{
@@ -51,6 +51,37 @@ where SalesCategoryId=@SalesCategoryId;"
 
 				return conn.QueryFirstOrDefault<SalesCategoryDto>(sql, new { SalesCategoryId = salesCategoryId });
 			}
+		}
+
+		public void EditCategory(SalesCategoryDto dto)
+		{
+			using (var conn=new SqlConnection(_connStr))
+			{
+				string sql = @"update SalesCategories
+set SalesCategoryName=@SalesCategoryName
+where SalesCategoryId=@SalesCategoryId";
+
+				conn.Execute(sql, new { SalesCategoryId =dto.SalesCategoryId, SalesCategoryName =dto.SalesCategoryName});
+			}
+		}
+
+		public void DeleteCategory(int salesCategoryId)
+		{
+			using (var conn=new SqlConnection(_connStr))
+			{
+				string sql = @"delete SalesCategories
+where SalesCategoryId=@SalesCategoryId";
+
+				conn.Execute(sql, new { SalesCategoryId = salesCategoryId });
+			}
+		}
+
+		public List<SalesCategoryDto> GetSalesCategoty()
+		{
+			string sql = @"select SalesCategoryId,SalesCategoryName from SalesCategories";
+
+			var result = new SqlConnection(_connStr).Query<SalesCategoryDto>(sql).ToList();
+			return result;
 		}
 	}
 }

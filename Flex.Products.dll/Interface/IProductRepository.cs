@@ -12,6 +12,8 @@ namespace Flex.Products.dll.Interface
 {
 	public interface IProductRepository
 	{
+		List<ProductExcelReportDto> ReportToExcel();
+
 		void CreateProduct(ProductDto dto);
 
 		List<ProductDto> Search(IndexSearchCriteria criteria);
@@ -25,5 +27,7 @@ namespace Flex.Products.dll.Interface
 		List<ProductImgDto> GetImgById(string productId);
 
 		void SaveEditImg(List<ProductImgDto> dto);
+
+		void DeleteProduct(string productId);
 	}
 }

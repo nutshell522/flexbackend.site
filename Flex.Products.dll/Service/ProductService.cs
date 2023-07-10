@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Flex.Products.dll.Exts;
+using Flex.Products.dll.Infra.DapperRepository;
 using Flex.Products.dll.Interface;
 using Flex.Products.dll.Models.Dtos;
 using Flex.Products.dll.Models.Infra.Exts;
@@ -86,8 +87,32 @@ namespace Flex.Products.dll.Service
 			return Result.Success();
 		}
 
+		public Result DeleteProduct(string ProductId)
+		{
+
+			try
+			{
+				_repo.DeleteProduct(ProductId);
+				return Result.Success();
+			}
+			catch (Exception ex)
+			{
+
+				string errorMessage = "删除失败："+ ex.Message;
+				return Result.Fail(errorMessage);
+			}
+		}
+
+		public IEnumerable<ProductExcelReportDto> ReportToExcel()
+		{
+			var repoDP=new ProductDPRepository();
+			var products = repoDP.ReportToExcel();
+			return products;
+
+		}
+
 		//判斷產品識別碼是否已存在
-		public bool ExisProductID(string ProductId)
+		private bool ExisProductID(string ProductId)
 		{
 			return _db.Products.Any(p => p.ProductId == ProductId);
 		}
