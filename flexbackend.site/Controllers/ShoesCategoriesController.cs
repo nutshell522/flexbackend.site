@@ -131,6 +131,9 @@ namespace flexbackend.site.Controllers
 				ShoesCategoryName = shoesCategory.ShoesCategoryName,
 			};
 
+			bool isCategoryInUse = IsCategoryInUse(id.Value);
+			ViewBag.IsCategoryInUse = isCategoryInUse;
+
 			return View(vm);
         }
 
@@ -153,5 +156,12 @@ namespace flexbackend.site.Controllers
             }
             base.Dispose(disposing);
         }
-    }
+
+		private bool IsCategoryInUse(int categoryId)
+		{
+			// Check if the category is being used in any related entities
+			bool isCategoryInUse = db.CustomizedShoesPoes.Any(x => x.fk_ShoesCategoryId == categoryId);
+			return isCategoryInUse;
+		}
+	}
 }
