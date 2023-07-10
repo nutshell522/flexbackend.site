@@ -139,6 +139,8 @@ namespace flexbackend.site.Controllers
 			//如果沒有上傳檔案或檔案是空的, 就不處理, 傳回string.empty
 			if (file1 == null || file1.ContentLength == 0) return string.Empty;
 
+
+
 			//取得上傳檔案的副檔名 (副檔名 = ext)
 			string ext = System.IO.Path.GetExtension(file1.FileName); //".jpg"而不是"jpg"
 

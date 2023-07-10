@@ -78,5 +78,45 @@ WHERE fk_ReservationSpeakerId = @speakerId AND MemberId = @MemberId";
 				return conn.Query<OneToOneReservationDetailDapperDto>(sql, new {speakerId = speakerId, MemberId = MemberId });
 			}
 		}
+
+		public void Update(ReservationEditDapperDto dto)
+		{
+			string sql = @"UPDATE OneToOneReservations
+SET ReservationStartTime = CONVERT(datetime, @ReservationStartTime),
+    ReservationEndTime = DATEADD(HOUR, 2, @ReservationStartTime)
+WHERE ReservationStartTime IN (
+    SELECT ReservationStartTime
+    FROM OneToOneReservations
+    JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
+    JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId
+    JOIN ReservationStatuses ON OneToOneReservations.fk_ReservationStatusId = ReservationStatuses.ReservationId
+    WHERE fk_ReservationSpeakerId = @fk_ReservationSpeakerId AND Members.MemberId = @MemberId
+);";
+
+			using(var conn = new SqlConnection(_connStr))
+			{
+				conn.Execute(sql, new
+				{
+					ReservationStartTime = dto.ReservationStartTime,
+					fk_ReservationSpeakerId = dto.fk_ReservationSpeakerId,
+					MemberId = dto.MemberId
+				});
+			}
+		}
+
+		public IEnumerable<ReservationEditDapperDto> GetOneEditInfo(int speakerId, int MemberId)
+		{
+			string sql = @" SELECT ReservationStartTime, fk_ReservationSpeakerId, MemberId
+    FROM OneToOneReservations
+    JOIN Members ON OneToOneReservations.fk_BookerId = Members.MemberId
+    JOIN Branches ON OneToOneReservations.fk_BranchId = Branches.BranchId
+    JOIN ReservationStatuses ON OneToOneReservations.fk_ReservationStatusId = ReservationStatuses.ReservationId
+    WHERE fk_ReservationSpeakerId = @speakerId AND Members.MemberId = @MemberId";
+
+			using (var conn = new SqlConnection(_connStr))
+			{
+				return conn.Query<ReservationEditDapperDto>(sql, new { speakerId = speakerId, MemberId = MemberId });
+			}
+		}
 	}
 }

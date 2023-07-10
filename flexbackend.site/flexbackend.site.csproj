@@ -2378,6 +2378,8 @@
 		<Content Include="Views\Products\Index.cshtml" />
 		<Content Include="Views\Orders\OrdersIndex.cshtml" />
 		<Content Include="Views\ProjectTag\CreateOrEdit.cshtml" />
+		<Content Include="Scripts\ActivityBackSource\speakerIndes.js" />
+		<Content Include="Scripts\table.js" />
 		<Content Include="Views\ProjectTag\Index.cshtml" />
 		<Content Include="Views\Suppliers\Create.cshtml" />
 		<Content Include="Views\Suppliers\Delete.cshtml" />
