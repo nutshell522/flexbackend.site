@@ -16,6 +16,11 @@
         .hide-field {
             display: none;
         }
+
+
+        .no-resize {
+            resize: none;
+        }
     </style>
 }
 <h2>活動資訊編輯</h2>
@@ -116,7 +121,7 @@
         <div class="mb-3">
             @Html.LabelFor(model => model.ActivityDescription, htmlAttributes: new { @class = "form-label" })
 
-            @Html.EditorFor(model => model.ActivityDescription, new { htmlAttributes = new { @class = "form-control", id = "ActivityDescription" } })
+            @Html.TextAreaFor(model => model.ActivityDescription, new { @class = "form-control no-resize", style = "height: 200px; width: 700px;", id = "ActivityDescription" })
             @Html.ValidationMessageFor(model => model.ActivityDescription, "", new { @class = "text-danger" })
         </div>
 
@@ -174,8 +179,9 @@
 
             function setOthersReadonly(statusId) {
                 if (statusId == "2") {
+                    //已上架
                     $("#ActivityOriginalPrice, #ActivityName, #ActivityDate, #ActivityPlace, #ActivityBookStartTime, #ActivityBookEndTime, #ActivityImage, #ActivityAge, #ActivitySalePrice, #ActivityOriginalPrice").prop("readonly", true);
-                    $("#fk_ActivityCategoryId, #fk_SpeakerId").addClass("disabled-select");
+                    $("#fk_ActivityCategoryId, #fk_SpeakerId, #ActivityOriginalPrice, #ActivityName, #ActivityDate, #ActivityPlace, #ActivityBookStartTime, #ActivityBookEndTime, #ActivityImage, #ActivityAge, #ActivitySalePrice, #ActivityOriginalPrice").addClass("disabled-select");
 
                 }
                 else if (statusId == "3") {
@@ -203,6 +209,5 @@
 
     </script>
 }
-
 
 

@@ -510,3 +510,11 @@ C:\Users\jjboy\Desktop\flex_site_project\flexbackend.site\obj\Debug\flexbackend.
 C:\Users\jjboy\Desktop\flex_site_project\flexbackend.site\obj\Debug\flexbackend.site.csproj.CopyComplete
 C:\Users\jjboy\Desktop\flex_site_project\flexbackend.site\obj\Debug\flexbackend.site.dll
 C:\Users\jjboy\Desktop\flex_site_project\flexbackend.site\obj\Debug\flexbackend.site.pdb
+C:\FlexEShop\flexbackend.site\bin\ClosedXML.dll
+C:\FlexEShop\flexbackend.site\bin\DocumentFormat.OpenXml.dll
+C:\FlexEShop\flexbackend.site\bin\ExcelNumberFormat.dll
+C:\FlexEShop\flexbackend.site\bin\System.IO.Packaging.dll
+C:\FlexEShop\flexbackend.site\bin\ClosedXML.pdb
+C:\FlexEShop\flexbackend.site\bin\ClosedXML.xml
+C:\FlexEShop\flexbackend.site\bin\DocumentFormat.OpenXml.xml
+C:\FlexEShop\flexbackend.site\bin\ExcelNumberFormat.xml
