@@ -22,7 +22,7 @@ namespace Discount.dll.Models.ViewModels
             get
             {
                 if (String.IsNullOrEmpty(ProductItems))return string.Empty;
-                return ProductItems.Length > 15 ? ProductItems.Substring(0, 15) + "..." : ProductItems;
+                return ProductItems.Length > 15 ? ProductItems.Substring(0, 10) + "..." : ProductItems;
             }
         }
         [Display(Name = "建立時間")]
