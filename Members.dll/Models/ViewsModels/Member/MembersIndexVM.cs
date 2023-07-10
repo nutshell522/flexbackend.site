@@ -50,7 +50,7 @@ namespace Members.dll.Models.ViewsModels
 		{
 			get
 			{
-				return fk_BlackListId.HasValue && fk_BlackListId.Value < 0 ? "是" : "否";
+				return fk_BlackListId.HasValue && fk_BlackListId.Value > 0 ? "是" : "否";
 			}
 		}
 

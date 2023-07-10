@@ -18,11 +18,19 @@ namespace Members.dll.Models.ViewsModels.Member
 		[StringLength(30)]
 		public string Name { get; set; }
 
-		[Display(Name = "年紀")]
+		[Display(Name = "年齡")]
 		public byte? Age { get; set; }
 
 		[Display(Name = "性別")]
 		public bool? Gender { get; set; }
+
+		public string GenderStr
+		{
+			get
+			{
+				return Gender.HasValue ? (this.Gender.Value ? "男" : "女") : "";
+			}
+		}
 
 		[Display(Name = "手機")]
 		public string Mobile { get; set; }
@@ -36,10 +44,20 @@ namespace Members.dll.Models.ViewsModels.Member
 		[Display(Name = "註冊時間")]
 		public DateTime? Registration { get; set; }
 
+		public string LevelName { get; set; }
+
 		[Display(Name = "會員等級")]
 		public int fk_LevelId { get; set; }
 
+
 		[Display(Name = "是否為黑名單")]
 		public int? fk_BlackListId { get; set; }
+		public string fk_BlackListIdStr
+		{
+			get
+			{
+				return fk_BlackListId.HasValue && fk_BlackListId.Value > 0 ? "是" : "否";
+			}
+		}
 	}
 }
