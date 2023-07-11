@@ -148,10 +148,10 @@ namespace flexbackend.site.Controllers
             if (ModelState.IsValid) //若通過欄位驗證
             {
                 //將file存檔，並取得最後存檔的檔案名稱
-                string path = Server.MapPath("~/Public/Img");
+                string path = Server.MapPath("~/Public/Img/講師大頭貼”);
 
-                //檔案要存放的資料夾位置
-                string fileName = SaveUploadedFile(path, fileTeacher);
+				//檔案要存放的資料夾位置
+				string fileName = SaveUploadedFile(path, fileTeacher);
 
                 //將【檔名+路徑】存入VM
                 vm.SpeakerImg = fileName;

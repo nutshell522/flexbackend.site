@@ -12,7 +12,7 @@
 }
 @section Styles{
 
-   
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
 }
@@ -103,31 +103,31 @@
 
 <div class="table-container">
     @*<table id="myTable" class="display">
-    <thead>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Row 1 Data 1</td>
-            <td>Row 1 Data 2</td>
-        </tr>
-        <tr>
-            <td>Row 2 Data 1</td>
-            <td>Row 2 Data 2</td>
-        </tr>
-    </tbody>
-    </table>*@
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Row 1 Data 1</td>
+                <td>Row 1 Data 2</td>
+            </tr>
+            <tr>
+                <td>Row 2 Data 1</td>
+                <td>Row 2 Data 2</td>
+            </tr>
+        </tbody>
+        </table>*@
     <table id="myTable" class="display">
         <thead>
             <tr>
                 @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
                 @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                th-col-0 至 th-col-20
-                超過100%資料不會溢出 也不會換行
-                如有細緻設定需求，可自己寫css設定寬度
+                    th-col-0 至 th-col-20
+                    超過100%資料不會溢出 也不會換行
+                    如有細緻設定需求，可自己寫css設定寬度
                 *@
                 <th class="th-col-0 sticky">
                     <label class="form-check-label">
@@ -211,15 +211,17 @@
                         @Html.DisplayFor(modelItem => item.ActivityBookEndTime)
                     </td>
                     <td>
-                        <span class="@(item.ActivityStatusDescription=="已上架"?"status-success":(item.ActivityStatusDescription=="已下架"?"status-dark":"status-primary"))">
+                        <span id="status" class="@(item.ActivityStatusDescription=="已上架"?"status-success":(item.ActivityStatusDescription=="已下架"?"status-dark":"status-primary"))">
                             @Html.DisplayFor(modelItem => item.ActivityStatusDescription)
                         </span>
                     </td>
                     <td>
                         <div class="manage-btn-container d-flex justify-content-center">
-                            <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>
+                            <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit me-1 @(item.ActivityStatusDescription=="已下架" ? "hidden disabled-btn" : "")" style="opacity: @(item.ActivityStatusDescription=="已下架" ? 0 : 1)"><i class="bi bi-pencil-square"></i></a>
+
+
                             <a href="@Url.Action("Details", new {id=item.ActivityId})" class="btn-view me-1"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del @(item.ActivityStatusDescription=="已下架" ? "disabled-btn" : "")"><i class="bi bi-trash-fill"></i></a>
+                            <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del  @(item.ActivityStatusDescription=="已下架" ? "hidden disabled-btn" : "")" style="opacity: @(item.ActivityStatusDescription=="已下架" ? 0 : 1)"><i class="bi bi-trash-fill"></i></a>
 
                         </div>
                     </td>
@@ -287,6 +289,9 @@
             lengthMenu: [5, 10, 15, 30]
 
         })
+
+            //let status = $("#status").val();
+            //if (status =="已下架") { }
 
     </script>
 }
