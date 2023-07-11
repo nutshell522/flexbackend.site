@@ -26,7 +26,6 @@
             outline: none;
             box-shadow: none;
         }
-
     </style>
 }
 
@@ -56,24 +55,23 @@
     <div class="search-bar-container mb-4 d-flex">
         <div class="left w-50 me-auto">
 
-            <div class="input-group">
-                <input class="form-control search-bar" type="text" placeholder="搜尋..." name="SpeakerName" value="@criteria.SpeakerName" id="search">
-            </div>
+            @*<div class="input-group">
+                    <input class="form-control search-bar" type="text" placeholder="搜尋..." name="SpeakerName" value="@criteria.SpeakerName" id="search">
+                </div>*@
 
             @*專業領域的下拉式選單*@
-            <div class="input-group">
+            <!--<div class="input-group">
                 <select class="search-bar form-select" name="FieldId" id="id_fieldId">
                     @foreach (var item in fields)
                     {
                         <option value="@item.Value" @(id_fieldId == item.Value ? "selected" : "" )>@item.Text</option>
                     }
                 </select>
-            </div>
-
+            </div>-->
             @*搜尋按鈕*@
-            <div class="input-group">
-                <button class="btn btn-primary">搜尋</button>
-            </div>
+            <!--<div class="input-group">
+                <button class="btn btn-primary" ">搜尋</button>
+            </div>-->
         </div>
     </div>
     <div class="right">
@@ -397,43 +395,43 @@
 
                     <div class="mb-3">
                         <label for="DetailSpeakerName" class="form-label">姓名</label>
-                        <input type="text" id="DetailSpeakerName" name="SpeakerName" class="form-control no-border" readonly>
+                        <input type="text" id="DetailSpeakerName" name="SpeakerName" class="form-control disabled-select no-border" readonly>
                     </div>
                     <hr />
                     <div class="mb-3">
                         <label for="DetailSpeakerImg" class="form-label">照片</label>
-                        <img id="DetailSpeakerImg" name="SpeakerImg" class="form-control no-border" readonly>
+                        <img id="DetailSpeakerImg" name="SpeakerImg" class="form-control disabled-select no-border" readonly>
                     </div>
                     <hr />
 
 
                     <div class="mb-3">
                         <label for="DetailSpeakerPhone" class="form-label">講師電話</label>
-                        <input type="text" id="DetailSpeakerPhone" name="SpeakerPhone" class="form-control no-border" readonly>
+                        <input type="text" id="DetailSpeakerPhone" name="SpeakerPhone" class="form-control disabled-select no-border" readonly>
 
                     </div>
                     <hr />
 
                     <div class="mb-3">
                         <label for="DetailSpeakerField" class="form-label">專攻領域</label>
-                        <input type="text" id="DetailSpeakerField" name="FieldName" class="form-control no-border" readonly>
+                        <input type="text" id="DetailSpeakerField" name="FieldName" class="form-control disabled-select no-border" readonly>
                     </div>
                     @*<div class="mb-3">
-            <label for="DetailSpeakerField" class="form-label">專攻領域</label>
-            <select id="DetailSpeakerField" name="fk_SpeakerFieldId" class="form-select no-border" readonly>
-                @foreach (var item in fields as SelectList)
-                {
-                    <option value="@item.Value">@item.Text</option>
-                }
-            </select>
+                            <label for="DetailSpeakerField" class="form-label">專攻領域</label>
+                            <select id="DetailSpeakerField" name="fk_SpeakerFieldId" class="form-select no-border" readonly>
+                                @foreach (var item in fields as SelectList)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
 
-        </div>*@
+                        </div>*@
                     <hr />
 
 
                     <div class="mb-3">
                         <label for="Detailfk_SpeakerBranchId" class="form-label">駐點分店</label>
-                        <input type="text" id="Detailfk_SpeakerBranchId" name="BranchName" class="form-control no-border" readonly>
+                        <input type="text" id="Detailfk_SpeakerBranchId" name="BranchName" class="form-control disabled-select no-border" readonly>
                     </div>
 
 
@@ -442,16 +440,16 @@
 
                     <div class="mb-3">
                         <label for="DetailSpeakerDescription" class="form-label">講師簡介</label>
-                        <textarea id="DetailSpeakerDescription" name="SpeakerDescription" class="form-control no-border" readonly style="height: 200px; resize: none;"></textarea>
+                        <textarea id="DetailSpeakerDescription" name="SpeakerDescription" class="form-control disabled-select no-border" readonly style="height: 200px; resize: none;"></textarea>
                     </div>
 
 
 
 
                     @*<div class="mb-3">
-            <label for="DetailSpeakerDescription" class="form-label">講師簡介</label>
-            <input type="text" id="DetailSpeakerDescription" name="SpeakerDescription" class="form-control">
-        </div>*@
+                            <label for="DetailSpeakerDescription" class="form-label">講師簡介</label>
+                            <input type="text" id="DetailSpeakerDescription" name="SpeakerDescription" class="form-control">
+                        </div>*@
                     <hr />
 
 
@@ -459,8 +457,8 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" onclick="Edit()">完成</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelEdit">取消</button>
+                @*<button type="button" class="btn btn-primary" onclick="Edit()">完成</button>*@
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="cancelEdit">完成</button>
 
             </div>
         </div>
@@ -480,7 +478,8 @@
 
     <script>
         let table = new DataTable('#speakerTable', {
-            searching: false
+            searching: false,
+            paging: false
         });
         window.onload = function () {
             // 替排序按鈕寫入排序箭頭出現事件

@@ -1,4 +1,4 @@
-﻿﻿@model IEnumerable<Members.dll.Models.ViewsModels.StaffsIndexVM>
+﻿@model IEnumerable<Members.dll.Models.ViewsModels.StaffsIndexVM>
 
 @{
     ViewBag.Title = "StaffList";
@@ -8,7 +8,8 @@
 }
 
 @section Styles{
-    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+
     <style>
 
         table {
@@ -68,7 +69,7 @@
     </form>
 </section>
 
-<table class="w-100">
+<table id="myTable" class="display w-100">
     <thead>
         <tr>
             @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
@@ -178,7 +179,13 @@
     </tbody>
 </table>
 @section Scripts{
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
     <script>
+        let table = new DataTable('#myTable', {
+            searching: false
+        })
+
         function confirmDelete(event, staffId) {
             event.preventDefault(); // 阻止連結的默認行為
 
