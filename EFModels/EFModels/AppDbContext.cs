@@ -402,10 +402,6 @@ namespace EFModels.EFModels
 				.WithOptional(e => e.ProjectTag)
 				.HasForeignKey(e => e.fk_ProjectTagId);
 
-			modelBuilder.Entity<ProjectTag>()
-				.HasOptional(e => e.ProjectTags1)
-				.WithRequired(e => e.ProjectTag1);
-
 			modelBuilder.Entity<ReservationStatus>()
 				.HasMany(e => e.OneToOneReservations)
 				.WithRequired(e => e.ReservationStatus)
