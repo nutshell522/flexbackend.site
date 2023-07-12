@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Discount.dll.Models.Dtos;
+using Discount.dll.Models.Infra.DapperRepositories;
 using Discount.dll.Models.Infra.EFRepositories;
 using Discount.dll.Models.Interfaces;
 using Discount.dll.Models.Services;
@@ -19,12 +20,16 @@ namespace flexbackend.site.Controllers
     public class CouponsController : Controller
     {
         private AppDbContext db = new AppDbContext();
-        private ICouponRepository _repo;
-        private CouponService _service;
+        private ICouponRepository _couponRepo;
+        private CouponService _couponService;
+        private IProjectTagRepository _ProjectTagRepo;
+        private ProjectTagService _projectTagService;
         public CouponsController()
         {
-            _repo = new CouponEFRepository();
-            _service = new CouponService(_repo);
+            _couponRepo = new CouponDapperRepository();
+            _couponService = new CouponService(_couponRepo);
+            _ProjectTagRepo = new ProjectTagDapperRepository();
+            _projectTagService = new ProjectTagService(_ProjectTagRepo);
         }
 
         // GET: Coupons
@@ -35,14 +40,14 @@ namespace flexbackend.site.Controllers
         [HttpPost]
         public ActionResult GetDatas(bool searchExpired = false, string searchDiscountName = null)
         {
-            IEnumerable<CouponIndexVM> vm = _service.GetCoupons(searchExpired, searchDiscountName).Select(x=>x.ToViewModel());
+            IEnumerable<CouponIndexVM> vm = _couponService.GetCoupons(searchExpired, searchDiscountName).Select(x=>x.ToViewModel());
 
             return Json(vm);
         }
         [HttpPost]
         public ActionResult GetDataById(int couponId)
         {
-            var coupon = _service.GetCouponById(couponId).ToViewModel();
+            var coupon = _couponService.GetCouponById(couponId).ToViewModel();
 
             return Json(coupon);
         }
@@ -50,8 +55,9 @@ namespace flexbackend.site.Controllers
         // GET: Coupons/Create
         public ActionResult Create()
         {
+            var projectTagVMs = _projectTagService.Search().Select(x=>x.ToViewModel());
             ViewBag.CouponCategoryId = new SelectList(db.CouponCategories.Where(c => c.CouponCategoryId != 5), "CouponCategoryId", "CouponCategoryName");
-            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName");
+            ViewBag.RequiredProjectTagID = new SelectList(projectTagVMs, "ProjectTagId", "ProjectTagName");
             List<SelectListItem> discountType = new List<SelectListItem>
             {
                 new SelectListItem { Value = "0" , Text = "金額" },
@@ -79,14 +85,15 @@ namespace flexbackend.site.Controllers
             if (ModelState.IsValid)
             {
                 // 模型驗證通過，執行相應的操作
-                var result = _service.Create(coupon.ToDto());
+                var result = _couponService.Create(coupon.ToDto());
                 return Json(result.result);
             }
 
+            var projectTagVMs = _projectTagService.Search().Select(x => x.ToViewModel());
             // 模型驗證失敗，繼續顯示 Create 視圖並傳遞驗證錯誤訊息
             ViewBag.ValidationErrors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
             ViewBag.CouponCategoryId = new SelectList(db.CouponCategories, "CouponCategoryId", "CouponCategoryName", coupon.CouponCategoryId);
-            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
+            ViewBag.RequiredProjectTagID = new SelectList(projectTagVMs, "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
 
             // 重新設置 ViewBag.DiscountType
             List<SelectListItem> discountType = new List<SelectListItem>
@@ -122,14 +129,15 @@ namespace flexbackend.site.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CouponEditVM coupon = _service.GetCouponById(id.Value).ToViewModel();
+            CouponEditVM coupon = _couponService.GetCouponById(id.Value).ToViewModel();
             if (coupon == null)
             {
                 return HttpNotFound();
             }
 
+            var projectTagVMs = _projectTagService.Search().Select(x => x.ToViewModel());
             ViewBag.CouponCategoryId = new SelectList(db.CouponCategories.Where(c => c.CouponCategoryId != 5), "CouponCategoryId", "CouponCategoryName", coupon.CouponCategoryId);
-            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags.Where(p => p.Status), "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
+            ViewBag.RequiredProjectTagID = new SelectList(projectTagVMs, "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
             List<SelectListItem> discountType = new List<SelectListItem>
             {
                 new SelectListItem { Value = "0" , Text = "金額" },
@@ -156,10 +164,11 @@ namespace flexbackend.site.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Json(_service.Update(coupon.ToDto()));
+                return Json(_couponService.Update(coupon.ToDto()));
             }
+            var projectTagVMs = _projectTagService.Search().Select(x => x.ToViewModel());
             ViewBag.CouponCategoryId = new SelectList(db.CouponCategories, "CouponCategoryId", "CouponCategoryName", coupon.CouponCategoryId);
-            ViewBag.RequiredProjectTagID = new SelectList(db.ProjectTags, "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
+            ViewBag.RequiredProjectTagID = new SelectList(projectTagVMs, "ProjectTagId", "ProjectTagName", coupon.RequiredProjectTagID);
             List<SelectListItem> discountType = new List<SelectListItem>
             {
                 new SelectListItem { Value = "0" , Text = "金額" },
@@ -182,26 +191,11 @@ namespace flexbackend.site.Controllers
             return Json(errors);
         }
 
-        // GET: Coupons/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Coupon coupon = db.Coupons.Find(id);
-        //    if (coupon == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(coupon);
-        //}
-
         // POST: Coupons/Delete/5
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            _service.Delete(id);
+            _couponService.Delete(id);
             return Content("Resource deleted successfully.");
         }
 

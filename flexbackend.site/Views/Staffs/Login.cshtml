@@ -88,14 +88,18 @@
             margin-left:400px;
             width:1900px;
         }
-        .v{
-            height:16px;
-            font-weight:bold;
-            margin-left:145px;
+        .verifyText {
+            height: 16px;
+            font-weight: bold;
+            margin-left: 145px;
+            
         }
-        .btn{
-            font-size:20px;
-        }
+            .verifyText > span {
+                color: #ED4656;
+            }
+            .btn {
+                font-size: 20px;
+            }
     </style>
 
 }
@@ -119,7 +123,7 @@
                 @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
                
             </div>
-            <div class="mb-3 text-start v">
+            <div class="mb-3 text-start verifyText">
                 @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
             </div>
 
@@ -128,7 +132,7 @@
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                 
             </div class="mb-3">
-            <div class="mb-3 text-start v">@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })</div>
+            <div class="mb-3 text-start verifyText">@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })</div>
 
             <div class="mt-3">
                 <input type="submit" value="登 入" class="btn btn-outline-light" />

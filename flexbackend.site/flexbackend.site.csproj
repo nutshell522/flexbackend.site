@@ -200,7 +200,6 @@
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Filters\AuthorizeFilter.cs" />
     <Compile Include="Controllers\MembershipLevelsController.cs" />
-    <Compile Include="Controllers\OneToOneReservationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2199,6 +2198,13 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\table.css" />
     <Content Include="Content\variables.css" />
+    <Content Include="Files\emily.liu_example.com 20230711_093628.txt" />
+    <Content Include="Files\emily.liu_example.com 20230711_093741.txt" />
+    <Content Include="Files\lisa.wang_example.com 20230711_141416.txt" />
+    <Content Include="Files\michael.chen_example.com 20230710_181025.txt" />
+    <Content Include="Files\nana_example.com 20230711_092148.txt" />
+    <Content Include="Files\nana_example.com 20230711_093950.txt" />
+    <Content Include="Files\olivia.lin_example.com 20230711_094106.txt" />
     <Content Include="Image\flexlogo.ico" />
     <Content Include="lib\datatables\css\dataTables.bootstrap.css" />
     <Content Include="lib\datatables\css\dataTables.bootstrap.min.css" />

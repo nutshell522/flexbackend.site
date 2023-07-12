@@ -64,6 +64,7 @@
     <Compile Include="Models\Dtos\ProjectTagDto.cs" />
     <Compile Include="Models\Dtos\ProjectTagIndexDto.cs" />
     <Compile Include="Models\Dtos\ProjectTagItemDto.cs" />
+    <Compile Include="Models\Infra\DapperRepositories\CouponDapperRepository.cs" />
     <Compile Include="Models\Infra\DapperRepositories\ProjectTagDapperRepository.cs" />
     <Compile Include="Models\Infra\EFRepositories\CouponEFRepository.cs" />
     <Compile Include="Models\Infra\EFRepositories\DiscountEFRepository.cs" />
