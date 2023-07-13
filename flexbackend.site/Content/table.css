@@ -88,7 +88,6 @@ table {
     white-space: nowrap;
     overflow-x: auto;
     width:100%;
-    background:black;
 }
     table>thead{
         width:100%;
@@ -245,10 +244,11 @@ table {
         padding-right: 10px;
     }
 
-    table thead > tr > th {
-        background-color: var(--table-thead-bg-color);
-        color: var(--table-thead-color);
-    }
+table > thead > tr > th,
+table > thead > tr {
+    background-color: var(--table-thead-bg-color);
+    color: var(--table-thead-color);
+}
 
     table thead th.sort-btn {
         cursor: pointer;
@@ -258,17 +258,19 @@ table {
             background-color: var(--table-sortbtn-hover-bg-color);
         }
 
-    table tr > * {
-        border-bottom: #F6F8FB 2px solid;
-    }
+table tr > * {
+    border-bottom: #F6F8FB 2px solid;
+    
+}
+table tbody tr > td {
+    vertical-align: middle;
+    background-color: var(--table-bg-color);
+}
 
-    table tr > * {
-        background-color: var(--table-bg-color);
-    }
 
-    table tbody tr:hover > td {
-        background-color: var(--table-hover-bg-color);
-    }
+table tbody tr:hover > td {
+    background-color: var(--table-hover-bg-color);
+}
 
 
     table tr > .sticky.shadow {
