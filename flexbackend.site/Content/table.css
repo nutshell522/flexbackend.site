@@ -89,8 +89,19 @@ table {
     overflow-x: auto;
     width:100%;
 }
-    table>thead{
-        width:100%;
+    table .check-all,
+    table .check-item,
+    table .form-check-input.check-all,
+    table .form-check-input.check-item {
+        border-radius: 2px; /* 取消圓角 */
+        width: 18px;
+        height: 18px;
+    }
+    table tr.row-detail{
+        cursor:pointer;
+    }
+    table > thead {
+        width: 100%;
     }
 
     table thead th.sticky,

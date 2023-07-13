@@ -20,7 +20,6 @@
         var user = db.Staffs.FirstOrDefault(s => s.Account == userName);
 
         string fullName = user.Name;
-
     }
 
 </head>
@@ -37,7 +36,7 @@
             <!-- 標題 -->
 
             <div class="d-block mt-title">
-                <div class="d-none d-md-flex logo-countainer align-items-end justify-content-center"><span id="logo-container1"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span><span class="fs-5">後台管理系統</span></div>
+                <div class="d-none d-md-flex logo-countainer align-items-end justify-content-start"><span id="logo-container1"><img class="w-100" src="~/Public/Img/FlexLogo.png" /></span><span class="fs-5">後台管理系統</span></div>
                 <h2 class="hello d-block d-md-none">
                     <span class="name">@fullName</span><span>, 您好</span>
                 </h2>

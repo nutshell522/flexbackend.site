@@ -124,15 +124,16 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("StaffList");
 		}
 
-
-		public ActionResult EditPassword()
+        [AllowAnonymous]
+        public ActionResult EditPassword()
 		{
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditPassword(EditPasswordVM vm)
+        [AllowAnonymous]
+        public ActionResult EditPassword(EditPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = UpdatePassword(vm);
@@ -153,7 +154,8 @@ namespace flexbackend.site.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult ForgetPassword(ForgetPasswordVM vm)
+        [AllowAnonymous]
+        public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 
@@ -171,14 +173,15 @@ namespace flexbackend.site.Controllers
 			}			
 			return RedirectToAction("ConfirmResetPassword");
 		}
-
-		public ActionResult ResetPassword()
+        [AllowAnonymous]
+        public ActionResult ResetPassword()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult ResetPassword(ResetPasswordVM vm, int staffId, string confirmCode)
+        [AllowAnonymous]
+        public ActionResult ResetPassword(ResetPasswordVM vm, int staffId, string confirmCode)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = ProcessChangePassword(staffId, confirmCode, vm.Password);
@@ -191,8 +194,8 @@ namespace flexbackend.site.Controllers
 
 			return RedirectToAction("Login");
 		}
-
-		private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
+        [AllowAnonymous]
+        private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
 		{
 			var db = new AppDbContext();
 
@@ -212,8 +215,8 @@ namespace flexbackend.site.Controllers
 			return Result.Success();
 		}
 
-
-		private Result ProcessResetPassword(string account, string email, string urlTemplate)
+        [AllowAnonymous]
+        private Result ProcessResetPassword(string account, string email, string urlTemplate)
 		{
 			var db = new AppDbContext();
 			// 檢查account,email正確性
@@ -266,11 +269,12 @@ namespace flexbackend.site.Controllers
 			return Redirect("/Staffs/Login");
 		}
 
-		/// <summary>
-		/// 登入Get
-		/// </summary>
-		/// <returns></returns>
-		public ActionResult Login()
+        /// <summary>
+        /// 登入Get
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Login()
 		{
 			return View();
 		}
@@ -282,6 +286,7 @@ namespace flexbackend.site.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[AllowAnonymous]
 		public ActionResult Login(LoginVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
@@ -306,11 +311,12 @@ namespace flexbackend.site.Controllers
 			return Redirect(processResult.returnUrl);
 		}
 
-		/// <summary>
-		/// 重設密碼通知頁面
-		/// </summary>
-		/// <returns></returns>
-		public ActionResult ConfirmResetPassword()
+        /// <summary>
+        /// 重設密碼通知頁面
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ConfirmResetPassword()
 		{
 			return View();
 		}
@@ -342,8 +348,8 @@ namespace flexbackend.site.Controllers
 
 			return (url, cookie);
 		}
-
-		private Result ValidLogin(LoginVM vm)
+        [AllowAnonymous]
+        private Result ValidLogin(LoginVM vm)
 		{
 			var db = new AppDbContext();
 

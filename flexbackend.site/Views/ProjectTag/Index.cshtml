@@ -189,8 +189,8 @@
                             data: null,
                             render: function (data) {
                                 return `<span class="text-center ${data.Status ? "status-success" : "status-dark"}" >
-                                                ${data.StatusStr}
-                                                    </span >`;
+                                            ${data.StatusStr}
+                                        </span >`;
                             }
                         },
                         {
@@ -198,8 +198,8 @@
                             render: function (data) {
                                 return `${data.Status ?
                                     `<div class="manage-btn-container d-flex justify-content-center">
-                                                        <a href="/ProjectTag/CreateOrEdit?ProjectTagId=${data.ProjectTagId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                                      </div>` : ""}`;
+                                        <a href="/ProjectTag/CreateOrEdit?ProjectTagId=${data.ProjectTagId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                    </div>` : ""}`;
                             },
                             orderable: false
                         },
@@ -207,12 +207,11 @@
                             data: null,
                             render: function (data) {
                                 return `<div class="d-flex justify-content-center h-100">
-
-                                                        <label class="status-switch" data-id="${data.ProjectTagId}">
-                                                            <input type="checkbox" ${data.Status ? "" : "checked"}>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </div>`;
+                                            <label class="status-switch" data-id="${data.ProjectTagId}">
+                                                <input type="checkbox" ${data.Status ? "" : "checked"}>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>`;
                             },
                             orderable: false
                         }
