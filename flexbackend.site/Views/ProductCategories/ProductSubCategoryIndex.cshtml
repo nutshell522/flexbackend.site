@@ -82,8 +82,8 @@
                 <td class="text-center align-items-center justify-content-center">
                     @Html.DisplayFor(modelItem => item.SubCategoryPath)
                 </td>
-                <td class="d-flex text-center align-items-center justify-content-center">
-                    <div class="manage-btn-container">
+                <td >
+                    <div class="manage-btn-container d-flex align-items-center justify-content-center">
                         <a href="@Url.Action("EditProductSubCategory", new {productSubCategoryId=item.ProductSubCategoryId })" class="btn-edit ms-2"><i class="bi bi-pencil-square"></i></a>
                         <a href="#" class="btn-del ms-2" onclick="deleteProductCategory(event,@item.ProductSubCategoryId)"><i class="bi bi-trash-fill"></i></a>
                     </div>
@@ -148,7 +148,7 @@
                             location.reload();
                         }
                         else {
-                            alert("刪除失敗" + result.message);
+                            alert(result.message);
                         }
                     },
                     error: function () {

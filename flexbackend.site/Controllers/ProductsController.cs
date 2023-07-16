@@ -230,20 +230,17 @@ namespace flexbackend.site.Controllers
         public ActionResult EditImg(ProductEditImgVM vm, List<string> createImgName, List<HttpPostedFileBase> createfile)
         {
             if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
+            
 			var service = new ProductService(_repo);
 
 			var path = Server.MapPath("~/Public/Img");
             List<ProductImgDto> editImg = SaveFileName(path, createImgName, createfile, vm.ProductId);
 
-			if (vm.ProductImgs==null && createImgName == null)
+			if (vm.ProductImgs.Count == 0 && createImgName == null)
             {
-                var errorVm= service.GetImgById(vm.ProductId);
-
 				ModelState.AddModelError(string.Empty, "至少要有一張照片");
-
-                return View(errorVm.ToEditImgVM(vm.ProductId));
-            }
+                return View(vm);
+			}
 
 			if (editImg != null && editImg.Count > 0)
             {
@@ -261,21 +258,6 @@ namespace flexbackend.site.Controllers
             }
             return View(vm);
         }
-
-        // GET: Products/Delete/5
-        //public ActionResult Delete(string ProductId)
-        //{
-        //    if (ProductId == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Product product = db.Products.Find(ProductId);
-        //    if (product == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(product);
-        //}
 
         // POST: Products/Delete/5
         [HttpPost]
@@ -314,7 +296,7 @@ namespace flexbackend.site.Controllers
 			return File(filepath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", DateTime.Now.ToString("yyyyMMdd")+"Report.xlsx");
 		}
 
-		public ActionResult CreateforExcel()
+		public ActionResult CreateForExcel()
         {
             return View();
         }
@@ -352,44 +334,6 @@ namespace flexbackend.site.Controllers
                 .Prepend(new SizeDto { SizeId = 0, SizeName = "尺寸" }), "SizeId", "SizeName", SizeId);
         }
 
-		/// <summary>
-		/// 上傳多張照片
-		/// </summary>
-		/// <param name="path">照片存放路徑</param>
-		/// <param name="files">照片</param>
-		/// <returns></returns>
-		//private List<string> SaveFileName(string path, HttpFileCollectionBase files)
-  //      {
-  //          //沒上傳或是空值，就不處理;
-  //          if (files == null || files.Count == 0) return new List<string>();
-
-  //          List<string> result = new List<string>();
-
-  //          //允許的副檔名
-  //          var allowExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".tif" };
-  //          for (int i = 0; i < files.Count; i++)
-  //          {
-  //              var file = files[i];
-
-  //              if (file == null || file.ContentLength == 0 || file.ContentLength>2 * 1024 * 1024) continue;
-
-  //              //取得副檔名
-  //              string ext = System.IO.Path.GetExtension(file.FileName);
-
-  //              //檢查副檔名是否在允許範圍，不允許就不處理
-  //              if (!allowExts.Contains(ext.ToLower())) continue;
-
-  //              //生成一個新的檔名
-  //              string newFileName = $"{Guid.NewGuid().ToString("N")}{ext}";
-
-  //              //儲存檔案
-  //              file.SaveAs(System.IO.Path.Combine(path, newFileName));
-
-  //              //將檔案名稱加入結果清單
-  //              result.Add(newFileName);
-  //          }
-  //          return result;
-  //      }
 
 		/// <summary>
 		/// 相片編輯

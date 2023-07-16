@@ -291,7 +291,6 @@ namespace flexbackend.site.Controllers
 				.GetProductCategory()
 				.Prepend(new ProductCategoryDto { ProductCategoryId = 0, SalesCategoryName = "請選擇分類" }),
 				"ProductCategoryId", "CategoryPath", productSubCategoryId);
-
 		}
 	}
 
