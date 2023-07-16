@@ -75,5 +75,47 @@ namespace Flex_Activity.dll.Models.Exts
 			};
 
 		}
+
+		public static ReservationEditDapperVM ToEditVM (this ReservationEditDapperDto dto)
+		{
+			return new ReservationEditDapperVM
+			{
+				//ReservationEndTime = dto.ReservationEndTime,
+				ReservationStartTime = dto.ReservationStartTime
+			};
+		}
+
+		public static ReservationEditDapperDto ToEditDto (this OneToOneReservation entity)
+		{
+			return new ReservationEditDapperDto
+			{
+				ReservationStartTime = entity.ReservationStartTime,
+				//ReservationEndTime = entity.ReservationEndTime
+			};
+		}
+
+		public static ReservationEditDapperDto ToEditDto(this ReservationEditDapperVM vm)
+		{
+			return new ReservationEditDapperDto
+			{
+				ReservationStartTime = vm.ReservationStartTime,
+				//ReservationEndTime = vm.ReservationEndTime
+				fk_ReservationSpeakerId = vm.fk_ReservationSpeakerId,
+
+				 MemberId = vm.MemberId
+	};
+		}
+
+		//public static OneToOneReservation ToEditEntity (this ReservationEditDapperDto dto)
+		//{
+		//	return new OneToOneReservation
+		//	{
+		//		ReservationStartTime = dto.ReservationStartTime,
+		//		//ReservationEndTime = dto.ReservationEndTime
+		//		fk_ReservationSpeakerId = dto.fk_ReservationSpeakerId,
+
+			
+		//	};
+		//}
 	}
 }

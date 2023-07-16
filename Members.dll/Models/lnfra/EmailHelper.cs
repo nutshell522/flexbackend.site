@@ -48,30 +48,30 @@ namespace Members.dll.Models.lnfra
 			CreateTextFile(path, from, to, subject, body);
 			return;
 
-			// 以下是實作程式, 可以視需要真的寄出信, 或者只是單純建立text file,供開發時使用
-			// ref https://dotblogs.com.tw/chichiblog/2018/04/20/122816
-			var smtpAccount = from;
+			//// 以下是實作程式, 可以視需要真的寄出信, 或者只是單純建立text file,供開發時使用
+			//// ref https://dotblogs.com.tw/chichiblog/2018/04/20/122816
+			//var smtpAccount = from;
 
-			// TODO 請在這裡填入密碼,或從web.config裡讀取
-			var smtpPassword = "";
+			//// TODO 請在這裡填入密碼,或從web.config裡讀取
+			//var smtpPassword = "";
 
-			var smtpServer = "smtp.gmail.com";
-			var SmtpPort = 587;
+			//var smtpServer = "smtp.gmail.com";
+			//var SmtpPort = 587;
 
-			var mms = new MailMessage();
-			mms.From = new MailAddress(smtpAccount);
-			mms.Subject = subject;
-			mms.Body = body;
-			mms.IsBodyHtml = true;
-			mms.SubjectEncoding = Encoding.UTF8;
-			mms.To.Add(new MailAddress(to));
+			//var mms = new MailMessage();
+			//mms.From = new MailAddress(smtpAccount);
+			//mms.Subject = subject;
+			//mms.Body = body;
+			//mms.IsBodyHtml = true;
+			//mms.SubjectEncoding = Encoding.UTF8;
+			//mms.To.Add(new MailAddress(to));
 
-			using (var client = new SmtpClient(smtpServer, SmtpPort))
-			{
-				client.EnableSsl = true;
-				client.Credentials = new NetworkCredential(smtpAccount, smtpPassword);//寄信帳密 
-				client.Send(mms); //寄出信件
-			}
+			//using (var client = new SmtpClient(smtpServer, SmtpPort))
+			//{
+			//	client.EnableSsl = true;
+			//	client.Credentials = new NetworkCredential(smtpAccount, smtpPassword);//寄信帳密 
+			//	client.Send(mms); //寄出信件
+			//}
 		}
 
 		private void CreateTextFile(string path, string from, string to, string subject, string body)

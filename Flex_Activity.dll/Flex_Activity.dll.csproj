@@ -62,6 +62,7 @@
     <Compile Include="Interface\ISpeakerRepository.cs" />
     <Compile Include="Models\Dto\OneToOneReservationDetailDapperDto.cs" />
     <Compile Include="Models\Dto\OneToOneReservationIndexDto.cs" />
+    <Compile Include="Models\Dto\ReservationEditDapperDto.cs" />
     <Compile Include="Models\Dto\ReservationListDto.cs" />
     <Compile Include="Models\Dto\SpeakerCreateDto.cs" />
     <Compile Include="Models\Dto\SpeakerDetailDto.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Models\ViewModels\ActivitySearchCriteria.cs" />
     <Compile Include="Models\ViewModels\DapperVM\OneToOneReservationDapperVM.cs" />
     <Compile Include="Models\ViewModels\DapperVM\OneToOneReservationDetailDapperVM.cs" />
+    <Compile Include="Models\ViewModels\DapperVM\ReservationEditDapperVM.cs" />
     <Compile Include="Models\ViewModels\DapperVM\ReservationListVM.cs" />
     <Compile Include="Models\ViewModels\SpeakerCreateVM.cs" />
     <Compile Include="Models\ViewModels\SpeakerDetailVM.cs" />

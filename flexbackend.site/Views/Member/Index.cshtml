@@ -7,151 +7,141 @@
     string m_levelId = criteria.LevelId.HasValue ? criteria.LevelId.Value.ToString() : "";
 }
 @section Styles{
-    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
-    <style>
-        .table-container {
-            width: 100%; /* 設定容器寬度 */
-        }
-
-        table {
-            width: 100%; /* 設定表格寬度 */
-            border-collapse: collapse; /* 合併邊框 */
-            background-color: aquamarine;
-        }
-
-        .th-col-1 {
-            background-color: aquamarine;
-        }
-    </style>
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 }
 <h2>會員名單總覽</h2>
-<section class="container">  
-
-        <form method="get">
-            <div class="d-flex">
-                <div class="mb-3 col-md-3">
-                    <label for="s_name">姓名</label>
-                    <input type="text" class="form-control search-bar" name="name" id="s_name" placeholder="搜尋..." value="@criteria.Name">
-                </div>
-
-                <div class="mb-3 col-md-3">
-                    <label for="m_levelId">等級</label>
-                    <select name="LevelId" id="m_levelId" class="form-select" value="@(criteria.LevelId.HasValue?criteria.LevelId.Value:0)">
-                        @foreach (var item in levels)
-                        {
-                            <option value="@item.Value" @(m_levelId == item.Value ? "selected" : "")>@item.Text</option>
-                        }
-                    </select>
-                </div>
-                <div class="mb-3 col-md-2 align-self-end me-auto">
-                    <button class="btn btn-primary">搜尋</button>
-                </div>
+<section class="container">
+    <form method="get">
+        <div class="d-flex">
+            <div class="mb-3 col-md-3">
+                <label for="s_name">姓名</label>
+                <input type="text" class="form-control search-bar" name="name" id="s_name" placeholder="搜尋..." value="@criteria.Name">
             </div>
-        </form>
+
+            <div class="mb-3 col-md-3">
+                <label for="m_levelId">等級</label>
+                <select name="LevelId" id="m_levelId" class="form-select" value="@(criteria.LevelId.HasValue?criteria.LevelId.Value:0)">
+                    @foreach (var item in levels)
+                    {
+                        <option value="@item.Value" @(m_levelId == item.Value ? "selected" : "")>@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3 col-md-2 align-self-end me-auto">
+                <button class="btn btn-primary">搜尋</button>
+            </div>
+        </div>
+    </form>
 </section>
-<div class="table-container">
-    <table>
-        <thead>
+
+
+<table id="myTable" class="display w-100">
+    <thead>
+        <tr>
+            @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
+            @* 同時也有提供 th-col- 作為粗略每列寬度設定
+                th-col-0 至 th-col-20
+                超過100%資料不會溢出 也不會換行
+                如有細緻設定需求，可自己寫css設定寬度
+            *@
+            <th class="th-col-0 sticky">
+                <label class="form-check-label">
+                    <input class="form-check-input check-all" type="checkbox">
+                </label>
+            </th>
+            <th class="th-col-1">
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th class="th-col-3">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="th-col-1">
+                @Html.DisplayNameFor(model => model.GenderStr)
+            </th>
+            <th class="th-col-5">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th class="th-col-2">
+                @Html.DisplayNameFor(model => model.LevelName)
+            </th>
+            <th class="th-col-2">
+                @Html.DisplayNameFor(model => model.PointSubtotal)
+            </th>
+            <th class="th-col-3">
+                @Html.DisplayNameFor(model => model.Registration)
+            </th>
+            <th class="th-col-2">
+                @Html.DisplayNameFor(model => model.fk_BlackListId)
+            </th>
+            <th class="text-center">管理</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* 如有照片要放
+            格式:
+            <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
+        *@
+        @*  顯示資料內有定義了狀態框，
+            如有需展示狀態顏色，請在td內增加一個span，且定義class
+            有提供四種顏色:
+                綠色 : status-success
+                灰色 : status-dark
+                紅色 : status-danger
+                藍色 : status-primary
+            可依自己需求使用
+
+            格式: <td class="text-center"><span class="status-success}">進行中</span></td>
+        *@
+
+        @foreach (var item in Model)
+        {
             <tr>
-                @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
-                @* 同時也有提供 th-col- 作為粗略每列寬度設定
-                    th-col-0 至 th-col-20
-                    超過100%資料不會溢出 也不會換行
-                    如有細緻設定需求，可自己寫css設定寬度
-                *@
-                <th class="th-col-0 sticky">
-                    <label class="form-check-label">
-                        <input class="form-check-input check-all" type="checkbox">
-                    </label>
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.MemberId)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.GenderStr)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.LevelName)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.PointSubtotal)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.Registration)
-                </th>
-                <th class="th-col-1">
-                    @Html.DisplayNameFor(model => model.fk_BlackListId)
-                </th>
-                <th>管理</th>
+                @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
+                <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenderStr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LevelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PointSubtotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Registration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fk_BlackListIdStr)
+                </td>
+                <td>
+                    <div class="manage-btn-container d-flex justify-content-center">
+                        <a href="@Url.Action("Edit", new {memberId=item.MemberId})" class="btn-edit me-2"><i class="bi bi-pencil-square"></i></a>
+                        <a href="@Url.Action("Details", new {memberId=item.MemberId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                        @*<a href="@Url.Action("Delete", new {memberId=item.MemberId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>*@
+
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @* 如有照片要放
-                格式:
-                <td><div class="table-img-container"><img src="XXX.png" alt=""></div></td>
-            *@
-            @*  顯示資料內有定義了狀態框，
-                如有需展示狀態顏色，請在td內增加一個span，且定義class
-                有提供四種顏色:
-                    綠色 : status-success
-                    灰色 : status-dark
-                    紅色 : status-danger
-                    藍色 : status-primary
-                可依自己需求使用
-
-                格式: <td class="text-center"><span class="status-success}">進行中</span></td>
-            *@
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @* 下方data-id後方欄位抓id，可方便勾選框抓資料 *@
-                    <td class="sticky"><input class="form-check-input check-item" type="checkbox" data-id="${}"></td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MemberId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GenderStr)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LevelName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PointSubtotal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Registration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fk_BlackListIdStr)
-                    </td>
-                    <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new {memberId=item.MemberId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {memberId=item.MemberId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {/* id=item.PrimaryKey */ })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
-
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 </div>
 @section Scripts{
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script>
+        let table = new DataTable('#myTable', {
+            searching: false
+        })
+
         window.onload = function () {
             // 替排序按鈕寫入排序箭頭出現事件
             document.querySelectorAll(".sort-btn").forEach(item => {
@@ -201,6 +191,8 @@
                     }
                 });
             }
+
+
         };
     </script>
 }

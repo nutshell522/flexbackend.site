@@ -1,7 +1,16 @@
 ﻿@model Customized_Shoes.dll.Models.ViewModels.ShoesCategoryVM
 
+
 @{
     ViewBag.Title = "刪除分類";
+}
+
+@if (ViewBag.IsCategoryInUse)
+{
+    <div class="alert alert-danger">
+        <p>此分類目前正在使用，無法刪除。</p>
+        <p>請在刪除前移除該分類的使用。</p>
+    </div>
 }
 
 <h2>刪除分類</h2>
@@ -19,14 +28,19 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+    @if (!ViewBag.IsCategoryInUse)
+    {
 
-<div class="form-actions no-color">
-    <input type="submit" value="刪除" class="btn btn-danger" /> |
-    <div class="btn btn-dark">
-    @Html.ActionLink("回到分類列表", "Index")
-      </div>
-        </div>
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="刪除" class="btn btn-danger" />
+            </div>
+        }
     }
+    <div class="btn btn-dark mt-2">
+        @Html.ActionLink("回到分類列表", "Index")
+    </div>
 </div>

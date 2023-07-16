@@ -85,9 +85,9 @@ function htmlMaker(data) {
                         ${data[i].FieldName}
                     </td>
                     <td>
-                     <div class="manage-btn-container">
-                            <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#speakerEdit" onclick="EditGetInfo(${data[i].SpeakerId})"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn-view" data-bs-toggle="modal" data-bs-target="#speakerDetail" onclick="GetDetail(${data[i].SpeakerId})"><i class="bi bi-clipboard-check"></i></button>
+                     <div class="manage-btn-container d-flex justify-content-center">
+                            <button class="btn-edit me-1" data-bs-toggle="modal" data-bs-target="#speakerEdit" onclick="EditGetInfo(${data[i].SpeakerId})"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn-view me-1" data-bs-toggle="modal" data-bs-target="#speakerDetail" onclick="GetDetail(${data[i].SpeakerId})"><i class="bi bi-clipboard-check"></i></button>
                             <button class="btn-del" onclick="Delete(${data[i].SpeakerId})"><i class="bi bi-trash-fill"></i></button>
 
                         </div>

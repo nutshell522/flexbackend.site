@@ -3,21 +3,6 @@
 }
 @section Styles{
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
-    <style>
-        thead {
-            background-color: #0B284A;
-            color: white;
-        }
-
-        #couponTable tr {
-            border: #ddf;
-        }
-
-        .align-right {
-            text-align: right;
-        }
-        
-    </style>
     <link href="~/Content/CouponDetail.css" rel="stylesheet" />
 }
 <h2>優惠券管理</h2>
@@ -133,15 +118,14 @@
                         {
                             data: null,
                             render: function (data) {
-                                console.log(data);
                                 if (data.StatusStr == "未開始") {
-                                    return `<div class="text-center status-primary">${data.StatusStr}</div >`;
+                                    return `<span class="text-center status-primary">${data.StatusStr}</span>`;
                                 }
                                 else if (data.StatusStr == "進行中") {
-                                    return `<div class="text-center status-success">${data.StatusStr}</div >`;
+                                    return `<span class="text-center status-success">${data.StatusStr}</span>`;
                                 }
                                 else if (data.StatusStr == "已結束") {
-                                    return `<div class="text-center status-dark">${data.StatusStr}</div >`;
+                                    return `<span class="text-center status-dark">${data.StatusStr}</span>`;
                                 }
                                 return "";
                             }
@@ -150,16 +134,14 @@
                             data: null,
                             render: function (data) {
                                 if (data.StatusStr == "已結束") {
-                                    return `<div class="manage-btn-container d-flex justify-content-around">
-                                                        <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
+                                    return `<div class="manage-btn-container d-flex justify-content-center">
                                                         <a href="#" class="btn-del" data-id="${data.CouponId}" data-name="${data.DiscountName}"><i class="bi bi-trash-fill"></i></a>
                                                     </div>`;
                                 }
-                                return `<div class="manage-btn-container d-flex justify-content-around">
-                                                    <a href="javascript:;" class="btn-edit" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
-                                                    <a href="javascript:;" class="btn-view" data-id="${data.CouponId}"><i class="bi bi-clipboard-check"></i></a>
-                                                    <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
-                                                </div>`;
+                                return `<div class="manage-btn-container d-flex justify-content-center">
+                                            <a href="javascript:;" class="btn-edit me-1" data-id="${data.CouponId}"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="javascript:;" class="btn-del" data-id="${data.CouponId}" data-name="${data.CouponName}"><i class="bi bi-trash-fill"></i></a>
+                                        </div>`;
                             },
                             orderable: false
                         }
@@ -178,8 +160,18 @@
                     dom: '1Brtip',
                     columnDefs: [
                         { targets: [4, 5, 6], className: 'text-right align-right' },
-                        { targets: [7], className: 'd-flex justify-content-center' }
-                    ]
+                        { targets: [7], className: 'text-center' }
+                    ],
+                    drawCallback: function () {
+                        let table = this.api();
+                        let rows = table.rows({ page: "current" }).nodes();
+
+                        $(rows).each(function () {
+                            let data = table.row(this).data();
+                            $(this).attr("data-id", data.CouponId);
+                            $(this).addClass("row-detail");
+                        });
+                    }
                 });
             }
 
@@ -193,14 +185,18 @@
             const Requirement = $("#GetBy");
             const detailBg = $("#detail-bg");
 
-            $(document).on("click", ".btn-view", function () {
+            $(document).on("click", ".row-detail", function () {
                 getDataById($(this).data("id"));
             })
             detailBg.on("click", function () {
                 detailBg.addClass("hide");
             })
+            $("#detail").on("click", function (event) {
+                event.stopPropagation();
+            })
 
-            $(document).on("click", ".btn-edit", function () {
+            $(document).on("click", ".btn-edit", function (event) {
+                event.stopPropagation();
                 editDiscount($(this).data("id"));
             });
             function editDiscount(discountId) {
@@ -215,8 +211,8 @@
                 });
             }
 
-            $(document).on("click", ".btn-del", function () {
-
+            $(document).on("click", ".btn-del", function (event) {
+                event.stopPropagation();
                 showDeleteConfirmation($(this).data("id"), $(this).data("name"));
             });
 

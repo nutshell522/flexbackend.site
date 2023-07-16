@@ -13,20 +13,8 @@ namespace Members.dll.Models.ViewsModels.Staff
 		[Required]
 		public string Account { get; set; }
 
-		//[Display(Name = "新設密碼")]
-		//[Required]
-		//[DataType(DataType.Password)]
-		//[StringLength(10)]
-		//public string NewPassword { get; set; }
-
-		//[Display(Name = "確認密碼")]
-		//[Required]
-		//[DataType(DataType.Password)]
-		//[Compare("NewPassword", ErrorMessage = "必須與新設密碼相同")]		
-		//[StringLength(10)]
-		//public string ConfirmPassword { get; set; }
-
 		[Display(Name = "信箱")]
+		[Required]
 		public string Email { get; set; }
 	}
 }

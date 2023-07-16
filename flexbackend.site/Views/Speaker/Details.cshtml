@@ -4,6 +4,17 @@
     ViewBag.Title = "Details";
 }
 
+@section Styles{
+    <style>
+        .dl-horizontal dt {
+            margin-bottom: 13px;
+        }
+
+        .dl-horizontal dd {
+            margin-bottom: 30px;
+        }
+    </style>
+}
 <h2>講師資訊</h2>
 
 <div>
@@ -70,5 +81,5 @@
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("回到講師列表", "Index")
 </p>

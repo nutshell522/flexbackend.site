@@ -5,16 +5,6 @@
 }
 @section Styles{
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
-    <style>
-        thead {
-            background-color: #0B284A;
-            color: white;
-        }
-
-        .pt-table tr {
-            border: #ddf;
-        }
-    </style>
 }
 
 <h2 class="mb-4">專案標籤管理</h2>
@@ -61,7 +51,7 @@
             </th>
             <th class="th-col-3">
                 @Html.DisplayNameFor(model => model.ModifiedAt)
-            <th class="th-col-1 text-center">
+            <th class="th-col-1">
                 @Html.DisplayNameFor(model => model.StatusStr)
             </th>
             <th class="th-col-2 text-center">管理</th>
@@ -181,7 +171,7 @@
                         {
                             data: "ProductItemsStr",
                             orderable: false,
-                            "width": "20%"
+                            "width": "22%"
                         },
                         {
                             data: null,
@@ -199,8 +189,8 @@
                             data: null,
                             render: function (data) {
                                 return `<span class="text-center ${data.Status ? "status-success" : "status-dark"}" >
-                                                ${data.StatusStr}
-                                                    </span >`;
+                                            ${data.StatusStr}
+                                        </span >`;
                             }
                         },
                         {
@@ -208,8 +198,8 @@
                             render: function (data) {
                                 return `${data.Status ?
                                     `<div class="manage-btn-container d-flex justify-content-center">
-                                                        <a href="/ProjectTag/CreateOrEdit?ProjectTagId=${data.ProjectTagId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                                                      </div>` : ""}`;
+                                        <a href="/ProjectTag/CreateOrEdit?ProjectTagId=${data.ProjectTagId}" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                                    </div>` : ""}`;
                             },
                             orderable: false
                         },
@@ -217,12 +207,11 @@
                             data: null,
                             render: function (data) {
                                 return `<div class="d-flex justify-content-center h-100">
-
-                                                        <label class="status-switch" data-id="${data.ProjectTagId}">
-                                                            <input type="checkbox" ${data.Status ? "" : "checked"}>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </div>`;
+                                            <label class="status-switch" data-id="${data.ProjectTagId}">
+                                                <input type="checkbox" ${data.Status ? "" : "checked"}>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>`;
                             },
                             orderable: false
                         }

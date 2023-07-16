@@ -2,9 +2,12 @@
 
 @{
     ViewBag.Title = "Details";
+    var levels = ViewBag.LevelId;
+    //var behavior = ViewBag.Behavior;
+
 }
 
-<h2>Details</h2>
+<h2>會員詳細資訊</h2>
 
 <div>
     <hr />
@@ -38,7 +41,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Gender)
+            @Html.DisplayFor(model => model.GenderStr)
         </dd>
 
         <dt>
@@ -78,15 +81,16 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fk_LevelId)
+            @Html.DisplayFor(model => levels)
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.fk_BlackListId)
+
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fk_BlackListId)
+            @Html.DisplayFor(model => model.fk_BlackListIdStr)
         </dd>
 
     </dl>

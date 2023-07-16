@@ -13,20 +13,20 @@
 @section Styles {
 
     <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
-    <style>
-        thead {
-            background-color: #0B284A;
-            color: white;
-        }
-    </style>
 }
 
 <h2>商品管理</h2>
 @Html.AntiForgeryToken()
 <div class="search-bar-container mb-4 d-flex">
+<<<<<<< HEAD
     <form method="post" class="col-12">
         <div class="row">
             <div class="left col-8 d-flex me-auto">
+=======
+    <form method="post" class="me-auto col-12">
+        <div class="row">
+            <div class="left d-flex col-8 me-auto">
+>>>>>>> b1c0ffc00f7ffbe82f67c3a66d2dd7e6fc1a203c
                 @* 輸入框區域 寬度可移除下方class w-50 自行調整 *@
                 <div class="col col-3 ">
                     @*@Html.TextBoxFor(model => criteria.Name, new { @class = "form-control", placeholder = "搜尋..." })*@

@@ -79,7 +79,14 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            checkImg();           
+            checkImg();
+        });
+
+        $(document).on('click', '.deleteImgBtn', function () {
+            $(this).parent(".img-group").remove();
+            updateProductImg();
+            updateFileCount();
+            clearFileInput();
         });
 
         function checkImg() {
@@ -87,7 +94,7 @@
             $('input[type="file"]').change(function (e) {
                 var files = e.target.files;
                 if (files && files.length > 0) {
-                    $('#previewImages').empty(); // 清空預覽區域
+                    $('#previewImages').empty(); // 清空预览区域
                     for (var i = 0; i < files.length; i++) {
                         if (files[i].size < maxSize) {
                             var reader = new FileReader();
@@ -97,19 +104,42 @@
                                 image.attr('alt', 'Preview');
                                 image.css('width', '150px');
                                 image.css('height', '150px');
-                                $('#previewImages').append(image);
+
+                                var deleteBtn = $('<button>');
+                                deleteBtn.attr('type', 'button');
+                                deleteBtn.addClass('deleteImgBtn btn btn-danger');
+                                deleteBtn.text('删除');
+
+                                var imgGroup = $('<div>');
+                                imgGroup.addClass('img-group');
+                                imgGroup.append(image);
+                                imgGroup.append(deleteBtn);
+
+                                $('#previewImages').append(imgGroup);
                             };
                             reader.readAsDataURL(files[i]);
-                        }
-                        else {
-                            alert("照片檔案超過2MB");
+                        } else {
+                            alert("照片超過2MB");
                         }
                     }
+                } else {
+                    $('#previewImages').empty(); // 清空预览区域
                 }
-                else {
-                    $('#previewImages').empty(); // 清空預覽區域
-                }
+                updateFileCount(); // 更新文件数量
             });
+        }
+
+        function updateFileCount() {
+            var fileInput = $('#createFile');
+            var fileCount = fileInput[0].files.length;
+            fileInput.data('count', fileCount); // 使用 data() 方法更新属性值
+        }
+
+        function clearFileInput() {
+            var fileInput = $('#createFile');
+            fileInput.val(''); // 清空文件输入字段的值
+            fileInput.wrap('<form>').closest('form').get(0).reset();
+            fileInput.unwrap();
         }
     </script>
 

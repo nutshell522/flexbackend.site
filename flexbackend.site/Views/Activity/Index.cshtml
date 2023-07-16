@@ -10,6 +10,24 @@
     string id_categoryId = criteria.CategoryId.HasValue ? criteria.CategoryId.Value.ToString() : "";
 
 }
+@section Styles{
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+}
+<style>
+    .disabled-btn {
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
 
 <h2>活動管理</h2>
 
@@ -20,7 +38,7 @@
     <form method="get" class="me-auto">
         <div class="row">
             <div class="left d-flex">
- 輸入框區域 寬度可移除下方class w-50 自行調整 
+ 輸入框區域 寬度可移除下方class w-50 自行調整
 <div class="col col-3">
 <div class="input-group me-2">
 <input class="form-control search-bar" type="text" placeholder="搜尋..." name="ActivityName" value="@criteria.ActivityName" id="search">
@@ -84,7 +102,25 @@
 </form>
 
 <div class="table-container">
-    <table>
+    @*<table id="myTable" class="display">
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Row 1 Data 1</td>
+                <td>Row 1 Data 2</td>
+            </tr>
+            <tr>
+                <td>Row 2 Data 1</td>
+                <td>Row 2 Data 2</td>
+            </tr>
+        </tbody>
+        </table>*@
+    <table id="myTable" class="display">
         <thead>
             <tr>
                 @* 有class sort-btn 能當排序按鈕，點擊切換上下箭頭，不過資料排序function須自己處理 *@
@@ -104,16 +140,16 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.ActivityName)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.ActivityCategoryName)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.ActivityDate)
                 </th>
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.SpeakerName)
                 </th>
-                <th class="th-col-1">
+                <th class="th-col-2">
                     @Html.DisplayNameFor(model => model.ActivityPlace)
                 </th>
                 <th class="th-col-1">
@@ -125,7 +161,7 @@
                 <th class="th-col-1">
                     @Html.DisplayNameFor(model => model.ActivityStatusDescription)
                 </th>
-                <th>管理</th>
+                <th class="text-center">管理</th>
             </tr>
         </thead>
         <tbody>
@@ -175,15 +211,17 @@
                         @Html.DisplayFor(modelItem => item.ActivityBookEndTime)
                     </td>
                     <td>
-                        <span class="@(item.ActivityStatusDescription=="已上架"?"status-success":(item.ActivityStatusDescription=="已下架"?"status-dark":"status-primary"))">
+                        <span id="status" class="@(item.ActivityStatusDescription=="已上架"?"status-success":(item.ActivityStatusDescription=="已下架"?"status-dark":"status-primary"))">
                             @Html.DisplayFor(modelItem => item.ActivityStatusDescription)
                         </span>
                     </td>
                     <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                            <a href="@Url.Action("Details", new {id=item.ActivityId})" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
-                            <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del"><i class="bi bi-trash-fill"></i></a>
+                        <div class="manage-btn-container d-flex justify-content-center">
+                            <a href="@Url.Action("Edit", new { id=item.ActivityId})" class="btn-edit me-1 @(item.ActivityStatusDescription=="已下架" ? "hidden disabled-btn" : "")" style="opacity: @(item.ActivityStatusDescription=="已下架" ? 0 : 1)"><i class="bi bi-pencil-square"></i></a>
+
+
+                            <a href="@Url.Action("Details", new {id=item.ActivityId})" class="btn-view me-1"><i class="bi bi-clipboard-check"></i></a>
+                            <a href="@Url.Action("Delete", new {id=item.ActivityId})" class="btn-del  @(item.ActivityStatusDescription=="已下架" ? "hidden disabled-btn" : "")" style="opacity: @(item.ActivityStatusDescription=="已下架" ? 0 : 1)"><i class="bi bi-trash-fill"></i></a>
 
                         </div>
                     </td>
@@ -193,6 +231,7 @@
     </table>
 </div>
 @section Scripts{
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script>
         window.onload = function () {
             // 替排序按鈕寫入排序箭頭出現事件
@@ -244,5 +283,15 @@
                 });
             }
         };
+
+        let table = new DataTable('#myTable', {
+            searching: false,
+            lengthMenu: [5, 10, 15, 30]
+
+        })
+
+            //let status = $("#status").val();
+            //if (status =="已下架") { }
+
     </script>
 }

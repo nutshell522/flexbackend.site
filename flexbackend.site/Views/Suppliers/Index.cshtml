@@ -9,12 +9,6 @@
 @section Styles {
 
     <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
-    <style>
-        thead {
-            background-color: #0B284A;
-            color: white;
-        }
-    </style>
 }
 
 <h2>材料供應商管理</h2>
@@ -71,7 +65,7 @@
             <th class="th-col-1">
                 @Html.DisplayNameFor(model => model.SupplierCompanyNumber)
             </th>
-            <th>管理</th>
+            <th class="text-center">管理</th>
         </tr>
     </thead>
     <tbody>
@@ -119,9 +113,9 @@
                     @Html.DisplayFor(modelItem => item.SupplierCompanyNumber)
                 </td>
                 <td>
-                    <div class="manage-btn-container">
-                        <a href="@Url.Action("Edit", new {id=item.SupplierId })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
-                        <a href="@Url.Action("Details", new {id=item.SupplierId })" class="btn-view"><i class="bi bi-clipboard-check"></i></a>
+                    <div class="manage-btn-container d-flex justify-content-center">
+                        <a href="@Url.Action("Edit", new {id=item.SupplierId })" class="btn-edit me-1"><i class="bi bi-pencil-square"></i></a>
+                        <a href="@Url.Action("Details", new {id=item.SupplierId })" class="btn-view me-1"><i class="bi bi-clipboard-check"></i></a>
                         <a href="@Url.Action("Delete", new {id=item.SupplierId })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </td>

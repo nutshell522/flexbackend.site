@@ -70,6 +70,10 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("StaffList");
 		}
 
+		/// <summary>
+		/// 下拉式選單副程式
+		/// </summary>
+		/// <param name="id"></param>
 		private void PrepareCategoryDataSource(int? id)
 		{
 			var departmentList = db.Departments.ToList();
@@ -120,15 +124,16 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("StaffList");
 		}
 
-
-		public ActionResult EditPassword()
+        [AllowAnonymous]
+        public ActionResult EditPassword()
 		{
 			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditPassword(EditPasswordVM vm)
+        [AllowAnonymous]
+        public ActionResult EditPassword(EditPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = UpdatePassword(vm);
@@ -149,7 +154,8 @@ namespace flexbackend.site.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult ForgetPassword(ForgetPasswordVM vm)
+        [AllowAnonymous]
+        public ActionResult ForgetPassword(ForgetPasswordVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 
@@ -167,14 +173,15 @@ namespace flexbackend.site.Controllers
 			}			
 			return RedirectToAction("ConfirmResetPassword");
 		}
-
-		public ActionResult ResetPassword()
+        [AllowAnonymous]
+        public ActionResult ResetPassword()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult ResetPassword(ResetPasswordVM vm, int staffId, string confirmCode)
+        [AllowAnonymous]
+        public ActionResult ResetPassword(ResetPasswordVM vm, int staffId, string confirmCode)
 		{
 			if (ModelState.IsValid == false) return View(vm);
 			Result result = ProcessChangePassword(staffId, confirmCode, vm.Password);
@@ -187,8 +194,8 @@ namespace flexbackend.site.Controllers
 
 			return RedirectToAction("Login");
 		}
-
-		private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
+        [AllowAnonymous]
+        private Result ProcessChangePassword(int memberId, string confirmCode, string newPassword)
 		{
 			var db = new AppDbContext();
 
@@ -208,8 +215,8 @@ namespace flexbackend.site.Controllers
 			return Result.Success();
 		}
 
-
-		private Result ProcessResetPassword(string account, string email, string urlTemplate)
+        [AllowAnonymous]
+        private Result ProcessResetPassword(string account, string email, string urlTemplate)
 		{
 			var db = new AppDbContext();
 			// 檢查account,email正確性
@@ -234,21 +241,6 @@ namespace flexbackend.site.Controllers
 			return Result.Success();
 		}
 
-		[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult ForgetPassword(ForgetPasswordVM vm)
-		//{
-		//	if (ModelState.IsValid == false) return View(vm);
-		//	Result result = ResetPassword(vm);
-
-		//	if (result.IsSuccess == false)
-		//	{
-		//		ModelState.AddModelError(string.Empty, result.ErrorMessage);
-		//		return View(vm);
-		//	}
-		//	return RedirectToAction("Login");
-		//}
-
 		private Result ResetPassword(ForgetPasswordVM vm)
 		{
 			StaffService service = GetStaffRepository();
@@ -261,6 +253,10 @@ namespace flexbackend.site.Controllers
 			return service.UpdatePassword(vm.ToEditPasswordDto());
 		}
 
+		/// <summary>
+		/// 沒有權限
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult NoPermission()
 		{
 			return View();
@@ -273,13 +269,24 @@ namespace flexbackend.site.Controllers
 			return Redirect("/Staffs/Login");
 		}
 
-		public ActionResult Login()
+        /// <summary>
+        /// 登入Get
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Login()
 		{
 			return View();
 		}
 
+		/// <summary>
+		/// 登入POST
+		/// </summary>
+		/// <param name="vm"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[AllowAnonymous]
 		public ActionResult Login(LoginVM vm)
 		{
 			if (ModelState.IsValid == false) return View(vm);
@@ -304,7 +311,12 @@ namespace flexbackend.site.Controllers
 			return Redirect(processResult.returnUrl);
 		}
 
-		public ActionResult ConfirmResetPassword()
+        /// <summary>
+        /// 重設密碼通知頁面
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult ConfirmResetPassword()
 		{
 			return View();
 		}
@@ -336,8 +348,8 @@ namespace flexbackend.site.Controllers
 
 			return (url, cookie);
 		}
-
-		private Result ValidLogin(LoginVM vm)
+        [AllowAnonymous]
+        private Result ValidLogin(LoginVM vm)
 		{
 			var db = new AppDbContext();
 
@@ -358,13 +370,21 @@ namespace flexbackend.site.Controllers
 				: Result.Fail("帳號或密碼有誤");
 		}
 
-		//Create
+		/// <summary>
+		/// 新增員工Get
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult CreateStaff()
 		{
 			PrepareCategoryDataSource(null);
 			return View();
 		}
 
+		/// <summary>
+		/// 新增員工POST
+		/// </summary>
+		/// <param name="vm"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[ValidateAntiForgeryToken] //防止跨網站偽造請求的攻擊
 		[Authorize]
@@ -380,28 +400,34 @@ namespace flexbackend.site.Controllers
 			Result result = Create(vm);
 			if (result.IsSuccess)
 			{
-				return View();//回到員工總覽
+				return RedirectToAction("StaffList");
 			}
 			else
 			{
 				//通過驗證，將資料存到db
 				ModelState.AddModelError(string.Empty, result.ErrorMessage);
-			}
-				return RedirectToAction("StaffList");
+			}	
+			return View();
 		}
 
+		/// <summary>
+		/// 新增員工Result
+		/// </summary>
+		/// <param name="vm"></param>
+		/// <returns></returns>
 		private Result Create(StaffsCreateVM vm)
 		{
 			StaffService service = GetStaffRepository();
 			StaffsCreateDto dto = vm.ToStaffsCreateDto();
-			//dto.Account = Session["Account"].ToString();
-			//dto.Password = Session["Password"].ToString();
-			//如果帳號未填就給他abc
 			
 			return service.CreateStaff(dto);
 		}
 
-		//Read
+		/// <summary>
+		/// 員工總覽
+		/// </summary>
+		/// <param name="criteria"></param>
+		/// <returns></returns>
 		[Authorize]
 		public ActionResult StaffList(StaffCriteria criteria)
 		{

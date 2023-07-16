@@ -90,6 +90,10 @@ namespace flexbackend.site.Controllers
 				fk_LevelId = member.fk_LevelId,
 				fk_BlackListId = member.fk_BlackListId
 			};
+			//var behavior = db.Members.Include(m => m.BlackList.Behavior).ToList();
+
+
+			//ViewBag.Behavior= behavior;
 			return View(vms);
 		}
 
@@ -171,7 +175,6 @@ namespace flexbackend.site.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(MemberEditVM vm)
-		
 		{
 			ViewBag.fk_BlackListId = new SelectList(db.BlackLists, "BlackListId", "Behavior", vm.fk_BlackListId);
 			ViewBag.fk_LevelId = new SelectList(db.MembershipLevels, "LevelId", "LevelName", vm.fk_LevelId);

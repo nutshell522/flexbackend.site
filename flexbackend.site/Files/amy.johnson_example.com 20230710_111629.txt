@@ -1,7 +1,0 @@
-﻿from:g01.webapp@gmail.com
-to:amy.johnson@example.com
-subject:[重設密碼通知]
-
-Hi 吳依頒,
-<br />
-請點擊此連結 [<a href='https://localhost:44349/Members/ResetPassword?memberid=1&confirmCode=0d9c91dba98643218036eac335610cb1' target='_blank'>我要重設密碼</a>], 以進行重設密碼, 如果您沒有提出申請, 請忽略本信, 謝謝

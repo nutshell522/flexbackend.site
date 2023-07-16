@@ -60,13 +60,13 @@
     /* table文字色 */
     --table-color: #333;
     /* table標題背景色 */
-    --table-thead-bg-color: #fff;
+    --table-thead-bg-color: #0B284A;
     /* table標題文字色 */
-    --table-thead-color: #818181;
+    --table-thead-color: #fff;
     /* table 排序按鈕hover背景色 */
     --table-sortbtn-hover-bg-color: #f1f1f1;
     /* table 內容hover背景色*/
-    --table-hover-bg-color: #f1f1f1;
+    --table-hover-bg-color: #f5f1f1;
     /* 狀態群顏色 */
     /* status-succes 背景 文字 hover 色 */
     --status-success-bg-color: #D1E7DD;

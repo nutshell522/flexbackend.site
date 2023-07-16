@@ -172,27 +172,59 @@
 [   ]待修正 Activity Create、 Edit 照片的驗證，錯誤訊息不會出現
 [ v ]待修正 Activity 已上架的活動只能編輯敘述
 [ v ]待修正 Activity 未上架的活動 編輯時間的時候 用萬年曆dateTimePicker和datePicker會出 大 事!!!
+
+
 7/7 【OneToOneReservation Detail】【Dapper】
-[ V ]OneToOneReservationDetailDapper Dto
-[ V ]OneToOneReservationDetailDapper VM
-[ V ]OneToOneReservationDetail擴充方法
-[ V ]OneToOneReservationDetail SQL語法
-[ V ] IReservationRepository
-[ V ] DapperReservationRepository
-[ V ]去上一頁的html把要傳入的參數打開
-[ V ] Services
-[ V ] Controller
-[ V ]改html
+	[ V ]OneToOneReservationDetailDapper Dto
+	[ V ]OneToOneReservationDetailDapper VM
+	[ V ]OneToOneReservationDetail擴充方法
+	[ V ]OneToOneReservationDetail SQL語法
+	[ V ] IReservationRepository
+	[ V ] DapperReservationRepository
+	[ V ]去上一頁的html把要傳入的參數打開
+	[ V ] Services
+	[ V ] Controller
+	[ V ]改html
 
-7/7-2 【OneToOneReservation Edit】 【Dapper】
-[  ]OneToOneReservationEditlDapper Dto
-[  ]OneToOneReservationEditlDapper VM
-[  ]OneToOneReservationEdit擴充方法
-[  ]OneToOneReservationEdit SQL語法
-[  ] IReservationRepository
-[  ] DapperReservationRepository
-[  ]去上一頁的html把要傳入的參數打開
-[  ] Services
-[  ] Controller
-[  ]改html
+7/7-2 ~ 7/8 【OneToOneReservation Edit】 【Dapper】
+	[ v ]OneToOneReservationEditlDapper Dto
+	[ v ]OneToOneReservationEditlDapper VM
+	[ v ]OneToOneReservationEdit擴充方法
+	[ v ]OneToOneReservationEdit SQL語法
+	[ v ] IReservationRepository
+	[ v ] DapperReservationRepository
+	[ v ]去上一頁的html把要傳入的參數打開
+	[ *** ] Services
+	[ v ] Controller
+	[ v ]改html
 
+[ ***  ]待修正 OneToOneReservation Edit 【Service層的邏輯驗證】
+
+
+[ ]OneToOneReservation Delete 【Dapper】
+	[ ]OneToOneReservation Delete VM
+	[ ]OneToOneReservation Delete Dto
+	[ ]OneToOneReservatoin Delete 擴充方法
+	[ ]OneToOneReservation Delete SQL語法
+	[ ] IReservationRepository
+	[ ] DapperReservationRepository
+	[ ]去上一頁的html把要傳入的參數打開
+	[ ]Services
+	[ ]Controller
+	[ ]改html
+
+
+[ ]Speaker 的 刪除待完善
+
+【把講師改成dataTable和Ajax和CRUD同一頁】
+[ v ]Speaker Index修改
+[ v ]Speaker Create修改
+[ v ]Speaker Edit資訊修改
+[ v ]Speaker Index讓它顯示圖片
+
+資料庫的照片路徑要改：/Public/Img/講師大頭貼/Allen.jpg
+
+[ v ]Speaker Edit照片修改
+[ V ]Speaker Delete修改
+[ ]Database修改
+[ ]Speaker Detail修改

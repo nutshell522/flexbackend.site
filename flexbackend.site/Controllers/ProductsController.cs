@@ -236,11 +236,20 @@ namespace flexbackend.site.Controllers
 			var path = Server.MapPath("~/Public/Img");
             List<ProductImgDto> editImg = SaveFileName(path, createImgName, createfile, vm.ProductId);
 
+<<<<<<< HEAD
 			if (vm.ProductImgs.Count == 0 && createImgName == null)
             {
 				ModelState.AddModelError(string.Empty, "至少要有一張照片");
                 return View(vm);
 			}
+=======
+			if (vm.ProductImgs.Count==0 && createImgName == null)
+            {
+				ModelState.AddModelError(string.Empty, "至少要有一張照片");
+
+                return View(vm);
+            }
+>>>>>>> b1c0ffc00f7ffbe82f67c3a66d2dd7e6fc1a203c
 
 			if (editImg != null && editImg.Count > 0)
             {

@@ -9,14 +9,10 @@
 
     <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
     <style>
-        thead {
-            background-color: #0B284A;
-            color: white;
-        }
 
         .color-block {
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             margin-right: 5px;
             display: inline-block;
         }
@@ -24,10 +20,6 @@
 }
 
 <h2>主顏色分類管理</h2>
-
-<p>
-
-</p>
 <div class="search-bar-container mb-4 d-flex">
     <form method="get" class="me-auto w-100">
         <div class="d-flex">
@@ -63,7 +55,7 @@
                 <th class="th-col-1">
                     <label for="">顯示顏色</label>
                 </th>
-                <th>管理</th>
+                <th class="text-center">管理</th>
             </tr>
         </thead>
         <tbody>
@@ -98,8 +90,8 @@
                         <div class="color-block" style="background-color: @item.ColorCode;"></div>                      
                     </td>
                     <td>
-                        <div class="manage-btn-container">
-                            <a href="@Url.Action("Edit", new { id = item.ShoesColorId  })" class="btn-edit"><i class="bi bi-pencil-square"></i></a>
+                        <div class="manage-btn-container d-flex justify-content-center">
+                            <a href="@Url.Action("Edit", new { id = item.ShoesColorId  })" class="btn-edit me-2"><i class="bi bi-pencil-square"></i></a>
                             <a href="@Url.Action("Delete", new { id = item.ShoesColorId  })" class="btn-del"><i class="bi bi-trash-fill"></i></a>
                         </div>
                     </td>

@@ -18,5 +18,9 @@ namespace Flex_Activity.dll.Interface
 
 		IEnumerable<OneToOneReservationDetailDapperDto> GetOneDetail(int speakerId, int MemberId);
 
+		void Update(ReservationEditDapperDto dto/*int fk_ReservationSpeakerId, int MemberId, DateTime ReservationStartTime*/);
+
+		IEnumerable<ReservationEditDapperDto> GetOneEditInfo(int speakerId, int MemberId);
+
 	}
 }

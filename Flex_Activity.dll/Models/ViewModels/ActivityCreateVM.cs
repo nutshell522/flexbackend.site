@@ -52,8 +52,8 @@ namespace Flex_Activity.dll.Models.ViewModels
 
 
 		[Display(Name = "活動照片")]
-		
-		//[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
+
+		[FileExtensions(Extensions = ".jpg,.jpeg,.png,.tif", ErrorMessage = "只接受圖片檔案")]
 		[StringLength(300)]
 		public string ActivityImage { get; set; }
 
