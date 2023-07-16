@@ -284,5 +284,53 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				EditTime = dto.EditTime,
 			};
 		}
+
+		public static ProductExcelImportDto ToExcelDto(this ProductExcelImportVM vm)
+		{
+			return new ProductExcelImportDto
+			{
+				ProductId = vm.ProductId,
+				ProductName = vm.ProductName,
+				ProductDescription = vm.ProductDescription,
+				ProductMaterial = vm.ProductMaterial,
+				ProductOrigin = vm.ProductOrigin,
+				fk_ProductSubCategoryId = vm.fk_ProductSubCategoryId,
+				UnitPrice = vm.UnitPrice == 0 ? null : vm.UnitPrice,
+				SalesPrice = vm.SalesPrice,
+				Status = vm.Status,
+				ProductGroups = vm.ProductGroups
+			};
+		}
+
+		public static Product ToCreateEntity(this ProductExcelImportDto dto)
+		{
+			return new Product
+			{
+				ProductId = dto.ProductId,
+				ProductName = dto.ProductName,
+				ProductDescription = dto.ProductDescription,
+				ProductMaterial = dto.ProductMaterial,
+				ProductOrigin = dto.ProductOrigin,
+				UnitPrice = dto.UnitPrice,
+				SalesPrice = dto.SalesPrice,
+				Status = dto.Status,
+				LogOut = dto.LogOut,
+				fk_ProductSubCategoryId = dto.fk_ProductSubCategoryId,
+				CreateTime = dto.CreateTime,
+				EditTime = dto.EditTime,
+				//ProductImgs = dto.ImgPaths.Select(p => new ProductImg
+				//{
+				//	fk_ProductId = dto.ProductId,
+				//	ImgPath = p
+				//}).ToList(),
+				ProductGroups = dto.ProductGroups.Select(p => new ProductGroup
+				{
+					fk_ProductId = dto.ProductId,
+					fk_ColorId = p.ColorId,
+					fk_SizeId = p.SizeId,
+					Qty = p.Qty
+				}).ToList()
+			};
+		}
 	}
 }

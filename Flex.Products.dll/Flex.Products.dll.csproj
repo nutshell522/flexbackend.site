@@ -93,6 +93,7 @@
     <Compile Include="Exts\ProductExts.cs" />
     <Compile Include="Exts\Result.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
+    <Compile Include="Models\Dtos\ProductExcelImportDto.cs" />
     <Compile Include="Models\Dtos\ProductExcelReportDto.cs" />
     <Compile Include="Models\Dtos\ProductGroupsDto.cs" />
     <Compile Include="Models\Dtos\ProductImgDto.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Models\ViewModel\ProductCategoryCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductCategoryEditVM.cs" />
     <Compile Include="Models\ViewModel\ProductCategoryIndexVM.cs" />
+    <Compile Include="Models\ViewModel\ProductExcelImportVM.cs" />
     <Compile Include="Models\ViewModel\ProductExcelReportVM.cs" />
     <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />
     <Compile Include="Models\ViewModel\ProductSubCategoryCreateVM.cs" />

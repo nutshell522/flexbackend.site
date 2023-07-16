@@ -76,5 +76,10 @@ where LogOut=0;";
 		{
 			throw new NotImplementedException();
 		}
+
+		public void CreateProductForExcel(ProductExcelImportDto dto)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

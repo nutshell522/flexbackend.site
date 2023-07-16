@@ -157,5 +157,13 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 		{
 			throw new NotImplementedException();
 		}
+
+		public void CreateProductForExcel(ProductExcelImportDto dto)
+		{
+			var product = dto.ToCreateEntity();
+			_db.Products.Add(product);
+
+			_db.SaveChanges();
+		}
 	}
 }

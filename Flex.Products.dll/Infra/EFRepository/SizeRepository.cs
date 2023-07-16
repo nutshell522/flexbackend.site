@@ -20,5 +20,14 @@ namespace Flex.Products.dll.Infra.EFRepository
 				.Select(s=>s.ToDto())
 				.ToList();
 		}
+		public int GetSizeId(string sizeName)
+		{
+			var result = new AppDbContext().SizeCategories.FirstOrDefault(s => s.SizeName == sizeName);
+			if (result != null)
+			{
+				return result.SizeId;
+			}
+			return 0;
+		}
 	}
 }

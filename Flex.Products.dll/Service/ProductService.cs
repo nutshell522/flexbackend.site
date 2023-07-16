@@ -111,6 +111,33 @@ namespace Flex.Products.dll.Service
 
 		}
 
+		public Result CreateProductForExcel(List<ProductExcelImportDto> dto)
+		{
+			//檢查ProductId是否存在
+			foreach(var product in dto)
+			{
+				if (ExisProductID(product.ProductId))
+				{
+					return Result.Fail($"商品編碼 {product.ProductId} 已存在，請更換其他編碼");
+				}
+
+				if (IsGroupsValid(product.ProductGroups))
+				{
+					return Result.Fail("規格錯誤，請確認是否重複或留空");
+				}
+				product.LogOut = false;
+				product.CreateTime = DateTime.Now;
+				product.EditTime = DateTime.Now;
+			}
+
+			foreach (var product in dto)
+			{
+				_repo.CreateProductForExcel(product);
+			}
+
+			return Result.Success();
+		}
+
 		//判斷產品識別碼是否已存在
 		private bool ExisProductID(string ProductId)
 		{

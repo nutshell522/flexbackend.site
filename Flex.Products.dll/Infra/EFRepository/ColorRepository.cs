@@ -20,5 +20,15 @@ namespace Flex.Products.dll.Infra.EFRepository
 				.Select(c=>c.ToDto())
 				.ToList();
 		}
+
+		public int GetColorId(string colorName)
+		{
+			var rersult= new AppDbContext().ColorCategories.FirstOrDefault(p => p.ColorName == colorName);
+			if (rersult != null)
+			{
+				return rersult.ColorId; 
+			}
+			return 0;
+		}
 	}
 }

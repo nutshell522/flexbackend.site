@@ -11,6 +11,7 @@ using System.Web.ModelBinding;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using Antlr.Runtime.Tree;
+using DocumentFormat.OpenXml.Wordprocessing;
 using EFModels.EFModels;
 using Flex.Products.dll.Exts;
 using Flex.Products.dll.Infra.DapperRepository;
@@ -49,21 +50,6 @@ namespace flexbackend.site.Controllers
             return View(products);
 		}
 
-  //      [HttpPost]
-		//public ActionResult ReLoadIndex(IndexSearchCriteria criteria)
-		//{
-		//	criteria = criteria ?? new IndexSearchCriteria();
-		//	PrepareProductSubCategoryDataSource(criteria.ProductSubCategoryId);
-
-		//	ViewBag.Criteria = criteria;
-		//	ViewBag.StatusOption = new SelectList(criteria.StatusOption);
-
-		//	var service = new ProductService(_repo);
-		//	var products = service.IndexProduct(criteria).Select(p => p.ToIndexVM());
-
-		//	return Json(new { data= products });
-		//}
-
 
 		[HttpPost]
 		public ActionResult SaveChangeStatus(List<ProductIdAndStatusVM> vm)
@@ -87,22 +73,6 @@ namespace flexbackend.site.Controllers
 			}
 			return Json(new { success = false });
 		}
-
-
-		//// GET: Products/Details/5
-		//public ActionResult Details(string id)
-  //      {
-  //          if (id == null)
-  //          {
-  //              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-  //          }
-  //          Product product = db.Products.Find(id);
-  //          if (product == null)
-  //          {
-  //              return HttpNotFound();
-  //          }
-  //          return View(product);
-  //      }
 
         // GET: Products/Create
         public ActionResult Create()
@@ -236,20 +206,11 @@ namespace flexbackend.site.Controllers
 			var path = Server.MapPath("~/Public/Img");
             List<ProductImgDto> editImg = SaveFileName(path, createImgName, createfile, vm.ProductId);
 
-<<<<<<< HEAD
 			if (vm.ProductImgs.Count == 0 && createImgName == null)
             {
 				ModelState.AddModelError(string.Empty, "至少要有一張照片");
                 return View(vm);
 			}
-=======
-			if (vm.ProductImgs.Count==0 && createImgName == null)
-            {
-				ModelState.AddModelError(string.Empty, "至少要有一張照片");
-
-                return View(vm);
-            }
->>>>>>> b1c0ffc00f7ffbe82f67c3a66d2dd7e6fc1a203c
 
 			if (editImg != null && editImg.Count > 0)
             {
@@ -305,10 +266,78 @@ namespace flexbackend.site.Controllers
 			return File(filepath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", DateTime.Now.ToString("yyyyMMdd")+"Report.xlsx");
 		}
 
-		public ActionResult CreateForExcel()
+		public ActionResult CreateForExcel(HttpPostedFileBase createfile)
         {
-            return View();
-        }
+
+			if (createfile == null || createfile.ContentLength == 0)
+			{
+				ModelState.AddModelError(string.Empty, "請選擇檔案");
+				return View();
+			}
+
+			var fileName=Path.GetFileName(createfile.FileName);
+			var fileExtension=Path.GetExtension(fileName);
+			
+			if(fileExtension.ToLower()!=".xlsx" && fileExtension.ToLower() != ".xls")
+			{
+				ModelState.AddModelError(string.Empty, "請選擇.xlsx或.xls");
+				return View();
+			}
+
+			// 將檔案儲存到伺服器上的臨時位置
+			var filePath = Path.Combine(Server.MapPath("~/Public/CreateExcel"), fileName);
+			createfile.SaveAs(filePath);
+
+			var excelHelper = new ExcelHelper();
+			var data = new List<ProductExcelImportVM>();
+			try
+			{
+				data = excelHelper.Import<ProductExcelImportVM>(filePath);
+			}
+			catch(Exception ex)
+			{
+				data.Clear();
+				ModelState.AddModelError(string.Empty, ex.Message);
+				return View();
+			}
+
+			//將excel轉換的VM調整規格後再轉換成Dto
+			var conversionData = data.GroupBy(item => item.ProductId)
+				.Select(group => new ProductExcelImportVM
+				{
+					ProductId = group.Key,
+					ProductName = group.First().ProductName,
+					ProductDescription = group.First().ProductDescription,
+					ProductMaterial = group.First().ProductMaterial,
+					ProductOrigin = group.First().ProductOrigin,
+					fk_ProductSubCategoryId =new ProductSubCategoryRepository().GetProductSubCategoryId(group.First().CategoryName),
+					UnitPrice = group.First().UnitPrice,
+					SalesPrice = group.First().SalesPrice,
+					Status = group.First().StatusText.Contains("下架")?true : false,
+					ProductGroups = group.Select(item => new ProductGroupsDto
+					{
+						ProductId = group.Key,
+						SizeId = new SizeRepository().GetSizeId(item.SizeName),
+						ColorId = new ColorRepository().GetColorId(item.ColorName),
+						Qty = item.Qty,
+					}).ToList(),
+						  
+				}).Select(p => p.ToExcelDto()).ToList();
+
+			// 刪除臨時檔案
+			System.IO.File.Delete(filePath);
+
+			var service = new ProductService(_repo);
+			var result = service.CreateProductForExcel(conversionData);
+
+			if (result.IsFailed)
+			{
+				ModelState.AddModelError(string.Empty, result.ErroeMessage);
+				return View();
+			}
+
+			return RedirectToAction("Index");
+		}
 
 		protected override void Dispose(bool disposing)
         {

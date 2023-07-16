@@ -29,5 +29,7 @@ namespace Flex.Products.dll.Interface
 		void SaveEditImg(List<ProductImgDto> dto);
 
 		void DeleteProduct(string productId);
+
+		void CreateProductForExcel(ProductExcelImportDto dto);
 	}
 }

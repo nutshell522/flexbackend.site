@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace Flex.Products.dll.Models.Infra.EFRepository
 {
@@ -24,6 +25,13 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 				.ToList()
 				.Select(c => c.ToDto())
 				.ToList();
+		}
+
+		public int GetProductSubCategoryId(string productSubName)
+		{
+			var result = new AppDbContext().ProductSubCategories.FirstOrDefault(p =>p.SubCategoryPath== productSubName);
+			if (result != null) return result.ProductSubCategoryId;
+			else return 0;
 		}
 	}
 }
