@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EFModels.EFModels;
+using Newtonsoft.Json;
 
 namespace flexbackend.site.Controllers
 {
@@ -20,8 +21,16 @@ namespace flexbackend.site.Controllers
             return View(db.MembershipLevels.ToList());
         }
 
-        // GET: MembershipLevels/Details/5
-        public ActionResult Details(int? id)
+		//public ActionResult GetLevels()
+		//{
+		//	List<MembershipLevel> mbrShiplevels = new List<MembershipLevel>();
+		//	mbrShiplevels.Add(new MembershipLevel { LevelName = "text", Description = "text" });
+		//	return Json(mbrShiplevels, JsonRequestBehavior.AllowGet);
+		//}
+
+
+		// GET: MembershipLevels/Details/5
+		public ActionResult Details(int? id)
         {
             if (id == null)
             {

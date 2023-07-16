@@ -51,10 +51,10 @@
                 </a>
             </li>
             @*<li>
-                <a href="@Url.Action("About", "Home", new { area = "" })">
-                    <div><i class="bi bi-chat-dots-fill"></i><span>訊息中心</span></div>
-                </a>
-            </li>*@
+                    <a href="@Url.Action("About", "Home", new { area = "" })">
+                        <div><i class="bi bi-chat-dots-fill"></i><span>訊息中心</span></div>
+                    </a>
+                </li>*@
 
             <li>
                 <a href="javascript:;" class="collapse-btn" id="product-btn" data-id="#product-item">
@@ -96,7 +96,7 @@
                 </a>
                 <ul class="collapse-item hide" id="members-item">
                     <li><a href="@Url.Action("Index", "Member", new { area = "" })">會員名單</a></li>
-                    @*<li><a href="@Url.Action("Index", "MembershipLevels", new { area = "" })">會員等級</a></li>*@
+                    <li><a href="@Url.Action("Index", "MembershipLevels", new { area = "" })">會員等級</a></li>
                     @*<li><a href="@Url.Action("Index", "PointHistories", new { area = "" })">會員積分</a></li>*@
                 </ul>
             </li>
@@ -137,7 +137,7 @@
                             <li><a href="@Url.Action("Index","ShoesColorCategories", new { area = "" })">顏色分類</a></li>
                             <li><a href="@Url.Action("Index","Customized_materials", new { area = "" })">材質分類</a></li>
                         </ul>
-                    </li>       
+                    </li>
                     <li><a href="@Url.Action("Index", "Suppliers", new { area = "" })">材料供應商管理</a></li>
                 </ul>
             </li>
@@ -149,7 +149,7 @@
                 <ul class="collapse-item hide" id="employee-item">
                     <li><a href="@Url.Action("StaffList", "Staffs", new { area = "" })">員工名單總覽</a></li>
                     @*<li><a href="javascript:;">員工管理</a></li>
-                    <li><a href="javascript:;">員工權限管理</a></li>*@
+                        <li><a href="javascript:;">員工權限管理</a></li>*@
                 </ul>
             </li>
         </ul>
@@ -260,6 +260,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/table.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/Scripts/flexBE_main.js")
 </body>

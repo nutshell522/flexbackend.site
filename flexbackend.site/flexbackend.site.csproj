@@ -2486,6 +2486,8 @@
     <Content Include="Views\MembershipLevels\Edit.cshtml" />
     <Content Include="Views\MembershipLevels\Index.cshtml" />
     <Content Include="Views\OneToOneReservation\Edit.cshtml" />
+    <Content Include="Views\MembershipLevels\GetLevels.cshtml" />
+    <Content Include="Views\Member\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

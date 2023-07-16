@@ -17,12 +17,34 @@ using Members.dll.Models.lnfra.EFRepositories;
 using Members.dll.Models.Exts;
 using static Discount.dll.Models.Services.ProjectTagService;
 using Members.dll.Models.ViewsModels.Staff;
+using System.Web.Services.Description;
 
 namespace flexbackend.site.Controllers
 {
 	public class MemberController : Controller
 	{
+		private MemberService GetMenberRepository()
+		{
+			IMemberRepository repo = new MemberEFRepository();
+			return new MemberService(repo);
+		}
 		private AppDbContext db = new AppDbContext();
+
+		public ActionResult Register()
+		{
+			return View();
+		}
+
+		//public ActionResult DoRegister(DoRegisterIn inModel)
+		//{
+		//	DoRegisterOut outModel = new DoRegisterOut();
+		//	if (string.IsNullOrEmpty(inModel.UserAcc) || string.IsNullOrEmpty(inModel.UserPwd)) { outModel.ErrMsg = "請輸入資料"; } else
+		//	{
+		//		MemberService service = GetMenberRepository();
+		//		service.DoRegister(inModel.UserAcc, inModel.UserPwd);
+		//	}
+
+		//}
 
 		// GET: Member
 		public ActionResult Index(MemberCriteria criteria)

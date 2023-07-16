@@ -81,5 +81,13 @@ namespace Members.dll.Models.Services
 			//	};
 			return _repo.GetMemberId(memberId);
 		}
+
+		public void DoRegister(object userAcc, object userPwd)
+		{
+			//檢查帳號是否存在
+			//存在提醒已存在
+			//不存在將密碼雜湊
+			//呼叫資料庫
+		}
 	}
 }

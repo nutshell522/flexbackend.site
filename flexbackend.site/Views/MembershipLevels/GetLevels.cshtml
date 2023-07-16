@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "GetLevels";
+}
+<div>
+    <button class="btn btn-danger" id="get">呼叫遠端</button>
+</div>
+@section Scripts{
+    <script>
+        $("#get").click(function () {
+            $.get(apiUrl, function (response) { showAjaxResult(response) })
+
+        })
+        function showAjaxResult(response) {
+            var result = JSON.parse(response);
+            // 处理解析后的JSON数据，例如将其显示在网页上
+            console.log(result); // 在控制台中输出JSON数据
+        }
+
+    </script>
+}
+<h2>GetLevels</h2>
+

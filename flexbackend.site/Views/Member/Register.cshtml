@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>會員註冊頁</h2>
+<div class="mb-3">
+    <label for="username" class="form-label">帳號</label>
+    <input type="text" class="form-control" v-model="form.UserAcc" />
+</div>
+
+<div class="mb-3">
+    <label for="password" class="form-label">密碼</label>
+    <input type="password" class="form-control" v-model="form.Pwd" />
+</div>
+
+<button type="button" class="btn btn-primary">註冊</button>
+
+@section scripts{
+    <script>
+        var VuePage = new Vue({
+            el: '#VuePage',
+            data: function () {
+                var data = {
+                    form: {}
+                };
+                return data;
+            }
+            , method: {
+
+                //執行註冊按鈕
+                DoRegister: function () {
+                    var self = this;
+
+                    //組合表單資料
+                    var postData = {};
+                    postData['UserAcc'] = self.form.UserAcc;
+                    postDara['UserPwd'] = self.form.UserPwd;
+
+                    //使用jQuery Ajax 傳送至後端
+                    $ajax({
+                        url:'@Url.Content("~/Member/DoRegister")',
+                        method:,
+                        dataType: 'json',
+                        data: { inModel: p },
+                        success: function (datas) {
+                            if (datas.ErrMsg) {
+                                alert(datas.ErrMsg);
+                                return;
+                            }
+                            alert(datas.ResultMsg);
+                        },
+                        Error: function (err) {
+                            $('#ErrorMsg').html(err.responseText);
+                            $('#ErrorAlert').modal('toggle');
+                        },
+
+                    });
+                }
+            }
+        })
+    </script>
+
+}
