@@ -2487,6 +2487,8 @@
     <Content Include="Views\MembershipLevels\Edit.cshtml" />
     <Content Include="Views\MembershipLevels\Index.cshtml" />
     <Content Include="Views\OneToOneReservation\Edit.cshtml" />
+    <Content Include="Views\Products\IndexForExcel.cshtml" />
+    <Content Include="Views\Products\CreateImg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

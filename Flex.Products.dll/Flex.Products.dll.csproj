@@ -106,6 +106,7 @@
     <Compile Include="Models\ViewModel\ProductExcelImportVM.cs" />
     <Compile Include="Models\ViewModel\ProductExcelReportVM.cs" />
     <Compile Include="Models\ViewModel\ProductIdAndStatusVM.cs" />
+    <Compile Include="Models\ViewModel\ProductIndexForExcelVM.cs" />
     <Compile Include="Models\ViewModel\ProductSubCategoryCreateVM.cs" />
     <Compile Include="Models\ViewModel\ProductSubCategoryEditVM.cs" />
     <Compile Include="Models\ViewModel\ProductSubCategoryIndexVM.cs" />

@@ -81,5 +81,16 @@ where LogOut=0;";
 		{
 			throw new NotImplementedException();
 		}
+
+		public List<ProductDto> SearchIndexForExcel(List<string> productIds)
+		{
+			using (var conn=new SqlConnection(_connStr))
+			{
+				string sql = @"select ProductId,ProductName from Products 
+where ProductId in @ProductId";
+
+				return conn.Query<ProductDto>(sql, new { ProductId = productIds.ToArray() }).ToList();
+			}
+		}
 	}
 }

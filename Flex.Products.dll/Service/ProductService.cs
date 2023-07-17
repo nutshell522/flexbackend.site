@@ -138,6 +138,12 @@ namespace Flex.Products.dll.Service
 			return Result.Success();
 		}
 
+		public IEnumerable<ProductDto> IndexForExcel(List<string> productIds)
+		{
+			var products = _repo.SearchIndexForExcel(productIds);
+			return products;
+		}
+
 		//判斷產品識別碼是否已存在
 		private bool ExisProductID(string ProductId)
 		{

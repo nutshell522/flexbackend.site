@@ -31,5 +31,7 @@ namespace Flex.Products.dll.Interface
 		void DeleteProduct(string productId);
 
 		void CreateProductForExcel(ProductExcelImportDto dto);
+
+		List<ProductDto> SearchIndexForExcel(List<string> productIds);
 	}
 }

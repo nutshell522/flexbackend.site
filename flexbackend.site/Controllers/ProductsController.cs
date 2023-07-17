@@ -335,8 +335,69 @@ namespace flexbackend.site.Controllers
 				ModelState.AddModelError(string.Empty, result.ErroeMessage);
 				return View();
 			}
+			return RedirectToAction("IndexForExcel", new { productId = string.Join(",", conversionData.Select(p => p.ProductId)) });
 
-			return RedirectToAction("Index");
+		}
+
+		public ActionResult IndexForExcel(string productId)
+		{
+			List<string> productIds = productId.Split(',').ToList();
+			var productDPRepository = new ProductDPRepository();
+			var service = new ProductService(productDPRepository);
+			var products = service.IndexForExcel(productIds).Select(p => p.ToIndexForExcelVM()).ToList();
+			foreach(var product in products)
+			{
+				product.ProductIds = productId;
+			}
+			if (Request.IsAjaxRequest())
+			{
+				return Json(products);
+			}
+			return View(products);
+		}
+
+		public ActionResult CreateImg(string ProductId, string ProductIds)
+		{
+			if (ProductId == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var service = new ProductService(_repo);
+			var products = service.GetImgById(ProductId).ToEditImgVM(ProductId);
+			products.ProductIds = ProductIds;
+			return View(products);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CreateImg(ProductEditImgVM vm, List<string> createImgName, List<HttpPostedFileBase> createfile, string ProductIds)
+		{
+			if (vm == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+			var service = new ProductService(_repo);
+
+			var path = Server.MapPath("~/Public/Img");
+			List<ProductImgDto> editImg = SaveFileName(path, createImgName, createfile, vm.ProductId);
+
+			if (vm.ProductImgs.Count == 0 && createImgName == null)
+			{
+				ModelState.AddModelError(string.Empty, "至少要有一張照片");
+				return View(vm);
+			}
+
+			if (editImg != null && editImg.Count > 0)
+			{
+				foreach (var img in editImg)
+				{
+					vm.ProductImgs.Add(img);
+				}
+			}
+
+			var product = service.SaveEditImg(vm.VMToEditImgDto());
+
+			if (product.IsSuccess)
+			{
+				return RedirectToAction("IndexForExcel", new { productId = ProductIds });
+			}
+			return View(vm);
 		}
 
 		protected override void Dispose(bool disposing)

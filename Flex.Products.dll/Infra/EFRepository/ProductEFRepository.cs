@@ -165,5 +165,10 @@ namespace Flex.Products.dll.Models.Infra.EFRepository
 
 			_db.SaveChanges();
 		}
+
+		public List<ProductDto> SearchIndexForExcel(List<string> productIds)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

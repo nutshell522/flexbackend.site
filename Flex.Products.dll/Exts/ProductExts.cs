@@ -332,5 +332,14 @@ namespace Flex.Products.dll.Models.Infra.Exts
 				}).ToList()
 			};
 		}
+
+		public static ProductIndexForExcelVM ToIndexForExcelVM(this ProductDto dto)
+		{
+			return new ProductIndexForExcelVM
+			{
+				ProductId = dto.ProductId,
+				ProductName = dto.ProductName
+			};
+		}
 	}
 }
