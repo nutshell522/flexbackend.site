@@ -7,18 +7,41 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EFModels.EFModels;
+using Members.dll.Models.Exts;
+using Members.dll.Models.Interfaces;
+using Members.dll.Models.lnfra.EFRepositories;
+using Members.dll.Models.Services;
 using Newtonsoft.Json;
 
 namespace flexbackend.site.Controllers
 {
     public class MembershipLevelsController : Controller
     {
+        private MemberService GetMbRepository()
+        {
+            IMemberRepository repo = new MemberEFRepository();
+            return new MemberService(repo);
+        }
         private AppDbContext db = new AppDbContext();
 
-        // GET: MembershipLevels
-        public ActionResult Index()
+		
+		/// <summary>
+		/// MembershipLevels
+		/// </summary>
+		/// <param name="levelId"></param>
+		/// <returns></returns>
+		public ActionResult Index()
         {
-            return View(db.MembershipLevels.ToList());
+            if (ModelState.IsValid == false)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+            var members = db.Members.Include(m => m.MembershipLevel);
+            MemberService service = GetMbRepository();
+
+            var vms = service.GetMbLevels();
+
+            return View(vms);
         }
 
 		//public ActionResult GetLevels()

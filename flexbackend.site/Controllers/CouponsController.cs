@@ -17,7 +17,8 @@ using Flex.Products.dll.Interface;
 
 namespace flexbackend.site.Controllers
 {
-    public class CouponsController : Controller
+
+	public class CouponsController : Controller
     {
         private AppDbContext db = new AppDbContext();
         private ICouponRepository _couponRepo;

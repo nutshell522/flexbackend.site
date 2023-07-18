@@ -38,13 +38,15 @@ namespace flexbackend.site.Controllers
 		//public ActionResult DoRegister(DoRegisterIn inModel)
 		//{
 		//	DoRegisterOut outModel = new DoRegisterOut();
-		//	if (string.IsNullOrEmpty(inModel.UserAcc) || string.IsNullOrEmpty(inModel.UserPwd)) { outModel.ErrMsg = "請輸入資料"; } else
+		//	if (string.IsNullOrEmpty(inModel.UserAcc) || string.IsNullOrEmpty(inModel.UserPwd)) { outModel.ErrMsg = "請輸入資料"; }
+		//	else
 		//	{
 		//		MemberService service = GetMenberRepository();
 		//		service.DoRegister(inModel.UserAcc, inModel.UserPwd);
 		//	}
 
 		//}
+
 
 		// GET: Member
 		public ActionResult Index(MemberCriteria criteria)

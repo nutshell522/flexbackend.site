@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Members.dll.Models.Dtos;
+using Members.dll.Models.Dtos.Member;
 using Members.dll.Models.Exts;
 using Members.dll.Models.Interfaces;
 using Members.dll.Models.lnfra;
@@ -20,6 +21,12 @@ namespace Members.dll.Models.Services
 		public MemberService(IMemberRepository repo)
 		{
 			_repo = repo;
+		}
+
+		public Result GetMbLevels()
+		{
+			_repo.GetMbLevels();
+			return Result.Success();
 		}
 
 		//會員資料管理
@@ -82,12 +89,31 @@ namespace Members.dll.Models.Services
 			return _repo.GetMemberId(memberId);
 		}
 
-		public void DoRegister(object userAcc, object userPwd)
-		{
-			//檢查帳號是否存在
-			//存在提醒已存在
-			//不存在將密碼雜湊
-			//呼叫資料庫
-		}
+		//public Result DoRegister(string userAcc, string userPwd)
+		//{
+		//	//檢查帳號是否存在
+		//	//存在提醒已存在
+		//	if (_repo.ExistAccount(userAcc))
+		//	{
+		//		return Result.Fail($"帳號{userAcc}已經存在囉,請更換再嘗試!");
+		//	}
+		//	else
+		//	{
+		//		//不存在將密碼雜湊
+		//		var salt = HashUtility.
+
+		//		//填入isConfirmed,ConfirmCode
+		//		dto.IsConfirmed = false;
+		//		dto.ConfirmCode = Guid.NewGuid().ToString("N");
+
+		//		//新增一筆紀錄
+		//		_repo.Register(dto);//呼叫介面的Register方法，傳入RegisterDto添加到db
+
+		//		//todo 寄發 email
+
+		//		return Result.Success();
+		//	}
+		//	//呼叫資料庫
+		//}
 	}
 }

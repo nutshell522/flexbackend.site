@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using static Dapper.SqlMapper;
+using Members.dll.Models.Dtos.Member;
 
 namespace Members.dll.Models.lnfra.EFRepositories
 {
@@ -82,5 +83,13 @@ namespace Members.dll.Models.lnfra.EFRepositories
 			_db.Entry(member).State = EntityState.Modified;
 			_db.SaveChanges();
 		}
+
+		public IEnumerable<LevelsIndexDto> GetMbLevels()
+		{
+			var levels = _db.Members.Include(m => m.MembershipLevel).ToList();
+			var vms = levels.Select(m => m.TolevelsIndexDto());			
+			return vms;
+		}
+
 	}
 }

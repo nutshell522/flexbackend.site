@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Dtos\Member\LevelsIndexDto.cs" />
     <Compile Include="Models\Dtos\Member\MembersEditDto.cs" />
     <Compile Include="Models\Dtos\Member\MembersIndexDto.cs" />
     <Compile Include="Models\Dtos\RegisterDto.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Models\Dtos\Staff\StaffDetailDto.cs" />
     <Compile Include="Models\Dtos\Staff\StaffsCreateDto.cs" />
     <Compile Include="Models\Dtos\Staff\StaffsIndexDto.cs" />
+    <Compile Include="Models\Exts\MbLevelsExs.cs" />
     <Compile Include="Models\Exts\MembersExts.cs" />
     <Compile Include="Models\Exts\RegisterExts.cs" />
     <Compile Include="Models\Exts\StaffsExts.cs" />
@@ -99,7 +101,7 @@
     <Compile Include="Models\Services\MemberService.cs" />
     <Compile Include="Models\Services\StaffService.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberCriteria.cs" />
-    <Compile Include="Models\ViewsModels\Level\LevelIndexVM.cs" />
+    <Compile Include="Models\ViewsModels\Level\levelIndexVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberCreateVM.cs" />
     <Compile Include="Models\ViewsModels\Member\MemberDetailVM.cs" />
     <Compile Include="Models\ViewsModels\PointHistories\IndexVM.cs" />

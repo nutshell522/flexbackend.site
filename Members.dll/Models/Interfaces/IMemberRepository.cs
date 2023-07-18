@@ -1,5 +1,6 @@
 ﻿using EFModels.EFModels;
 using Members.dll.Models.Dtos;
+using Members.dll.Models.Dtos.Member;
 using Members.dll.Models.ViewsModels;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,6 @@ namespace Members.dll.Models.Interfaces
 		void Register(RegisterDto dto); //將會員寫到資料庫裡
 		bool ExistAccount(string account); //判斷帳號是否存在
 		MembersEditDto GetMemberId(int? memberId);
+		IEnumerable<LevelsIndexDto> GetMbLevels();
 	}
 }
