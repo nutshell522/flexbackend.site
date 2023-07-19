@@ -36,7 +36,7 @@ namespace flexbackend.site.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-            var members = db.Members.Include(m => m.MembershipLevel);
+            var members = db.MembershipLevels.Include(m => m.Members);
             MemberService service = GetMbRepository();
 
             var vms = service.GetMbLevels();

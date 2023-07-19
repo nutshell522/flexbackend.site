@@ -21,8 +21,9 @@ namespace Flex.Products.dll.Infra.DapperRepository
 		}
         public List<SalesCategoryDto> Search()
 		{
-			string sql = @"select SalesCategoryId,SalesCategoryName from SalesCategories 
-order by SalesCategoryId";
+			string sql = @"
+							select SalesCategoryId,SalesCategoryName from SalesCategories 
+							order by SalesCategoryId";
 			
 			var salesCategory=new SqlConnection(_connStr).Query<SalesCategoryDto>(sql).ToList();
 

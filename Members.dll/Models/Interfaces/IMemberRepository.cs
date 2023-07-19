@@ -14,10 +14,15 @@ namespace Members.dll.Models.Interfaces
 	public interface IMemberRepository
 	{
 		void EditMember(MembersEditDto dto); //將會員編輯資料寫到資料庫
+
 		List<MembersIndexDto> GetMemberList();//取得員工資料
+
 		void Register(RegisterDto dto); //將會員寫到資料庫裡
+
 		bool ExistAccount(string account); //判斷帳號是否存在
+
 		MembersEditDto GetMemberId(int? memberId);
+
 		IEnumerable<LevelsIndexDto> GetMbLevels();
 	}
 }

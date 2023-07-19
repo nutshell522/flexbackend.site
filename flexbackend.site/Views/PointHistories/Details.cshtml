@@ -1,0 +1,66 @@
+﻿@model EFModels.EFModels.PointHistory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PointHistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.order.coupon_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.order.coupon_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type.TypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GetOrDeduct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GetOrDeduct)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsageAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsageAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EffectiveDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PointHistoryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

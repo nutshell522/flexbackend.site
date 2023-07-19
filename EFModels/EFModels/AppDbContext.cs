@@ -65,17 +65,6 @@ namespace EFModels.EFModels
 		public virtual DbSet<Staff> Staffs { get; set; }
 		public virtual DbSet<Supplier> Suppliers { get; set; }
 		public virtual DbSet<Type> Types { get; set; }
-		public virtual DbSet<AggregatedCounter> AggregatedCounters { get; set; }
-		public virtual DbSet<Counter> Counters { get; set; }
-		public virtual DbSet<Hash> Hashes { get; set; }
-		public virtual DbSet<Job> Jobs { get; set; }
-		public virtual DbSet<JobParameter> JobParameters { get; set; }
-		public virtual DbSet<JobQueue> JobQueues { get; set; }
-		public virtual DbSet<List> Lists { get; set; }
-		public virtual DbSet<Schema> Schemata { get; set; }
-		public virtual DbSet<Server> Servers { get; set; }
-		public virtual DbSet<Set> Sets { get; set; }
-		public virtual DbSet<State> States { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -85,9 +74,21 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_ActivityCategoryId)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<ActivityCategory>()
+				.HasMany(e => e.Activities1)
+				.WithRequired(e => e.ActivityCategory1)
+				.HasForeignKey(e => e.fk_ActivityCategoryId)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<ActivityStatus>()
 				.HasMany(e => e.Activities)
 				.WithRequired(e => e.ActivityStatus)
+				.HasForeignKey(e => e.fk_ActivityStatusId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<ActivityStatus>()
+				.HasMany(e => e.Activities1)
+				.WithRequired(e => e.ActivityStatus1)
 				.HasForeignKey(e => e.fk_ActivityStatusId)
 				.WillCascadeOnDelete(false);
 
@@ -103,8 +104,19 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Branch>()
+				.HasMany(e => e.OneToOneReservations1)
+				.WithRequired(e => e.Branch1)
+				.HasForeignKey(e => e.fk_BranchId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Branch>()
 				.HasMany(e => e.Speakers)
 				.WithOptional(e => e.Branch)
+				.HasForeignKey(e => e.fk_SpeakerBranchId);
+
+			modelBuilder.Entity<Branch>()
+				.HasMany(e => e.Speakers1)
+				.WithOptional(e => e.Branch1)
 				.HasForeignKey(e => e.fk_SpeakerBranchId);
 
 			modelBuilder.Entity<ColorCategory>()
@@ -150,6 +162,31 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.Customized_Toe);
 
 			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders5)
+				.WithOptional(e => e.Customized_materials5)
+				.HasForeignKey(e => e.Customized_Eyelet);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders6)
+				.WithOptional(e => e.Customized_materials6)
+				.HasForeignKey(e => e.Customized_EdgeProtection);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders7)
+				.WithOptional(e => e.Customized_materials7)
+				.HasForeignKey(e => e.Customized_Rear);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders8)
+				.WithOptional(e => e.Customized_materials8)
+				.HasForeignKey(e => e.Customized_Tongue);
+
+			modelBuilder.Entity<Customized_materials>()
+				.HasMany(e => e.CustomizedOrders9)
+				.WithOptional(e => e.Customized_materials9)
+				.HasForeignKey(e => e.Customized_Toe);
+
+			modelBuilder.Entity<Customized_materials>()
 				.HasMany(e => e.ShoesGroups)
 				.WithRequired(e => e.Customized_materials)
 				.HasForeignKey(e => e.fk_MaterialId)
@@ -167,8 +204,7 @@ namespace EFModels.EFModels
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesPictures)
 				.WithRequired(e => e.CustomizedShoesPo)
-				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id)
-				.WillCascadeOnDelete(false);
+				.HasForeignKey(e => e.fk_ShoesPictureProduct_Id);
 
 			modelBuilder.Entity<CustomizedShoesPo>()
 				.HasMany(e => e.ShoesGroups)
@@ -197,6 +233,11 @@ namespace EFModels.EFModels
 				.WithRequired(e => e.logistics_companies)
 				.HasForeignKey(e => e.logistics_company_Id)
 				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<MemberPoint>()
+				.HasMany(e => e.PointHistories)
+				.WithOptional(e => e.MemberPoint)
+				.HasForeignKey(e => e.fk_MemberPointsId);
 
 			modelBuilder.Entity<Member>()
 				.Property(e => e.Mobile)
@@ -326,12 +367,6 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.pay_status_Id)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<PointHistory>()
-				.HasMany(e => e.MemberPoints)
-				.WithRequired(e => e.PointHistory)
-				.HasForeignKey(e => e.fk_PointHistoryId)
-				.WillCascadeOnDelete(false);
-
 			modelBuilder.Entity<PointManage>()
 				.HasOptional(e => e.PointManage1)
 				.WithRequired(e => e.PointManage2);
@@ -402,9 +437,19 @@ namespace EFModels.EFModels
 				.WithOptional(e => e.ProjectTag)
 				.HasForeignKey(e => e.fk_ProjectTagId);
 
+			modelBuilder.Entity<ProjectTag>()
+				.HasOptional(e => e.ProjectTags1)
+				.WithRequired(e => e.ProjectTag1);
+
 			modelBuilder.Entity<ReservationStatus>()
 				.HasMany(e => e.OneToOneReservations)
 				.WithRequired(e => e.ReservationStatus)
+				.HasForeignKey(e => e.fk_ReservationStatusId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<ReservationStatus>()
+				.HasMany(e => e.OneToOneReservations1)
+				.WithRequired(e => e.ReservationStatus1)
 				.HasForeignKey(e => e.fk_ReservationStatusId)
 				.WillCascadeOnDelete(false);
 
@@ -452,6 +497,12 @@ namespace EFModels.EFModels
 				.HasForeignKey(e => e.fk_SpeakerFieldId)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<SpeakerField>()
+				.HasMany(e => e.Speakers1)
+				.WithRequired(e => e.SpeakerField1)
+				.HasForeignKey(e => e.fk_SpeakerFieldId)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<Speaker>()
 				.Property(e => e.SpeakerPhone)
 				.IsUnicode(false);
@@ -467,8 +518,20 @@ namespace EFModels.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Speaker>()
+				.HasMany(e => e.Activities1)
+				.WithRequired(e => e.Speaker1)
+				.HasForeignKey(e => e.fk_SpeakerId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Speaker>()
 				.HasMany(e => e.OneToOneReservations)
 				.WithRequired(e => e.Speaker)
+				.HasForeignKey(e => e.fk_ReservationSpeakerId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Speaker>()
+				.HasMany(e => e.OneToOneReservations1)
+				.WithRequired(e => e.Speaker1)
 				.HasForeignKey(e => e.fk_ReservationSpeakerId)
 				.WillCascadeOnDelete(false);
 

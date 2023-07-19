@@ -14,7 +14,7 @@ namespace EFModels.EFModels
         [StringLength(20)]
         public string DiscountName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string DiscountDescription { get; set; }
 
         public int? fk_ProjectTagId { get; set; }
@@ -32,6 +32,8 @@ namespace EFModels.EFModels
         public DateTime? EndDate { get; set; }
 
         public int? OrderBy { get; set; }
+
+        public bool? Status { get; set; }
 
         public virtual ProjectTag ProjectTag { get; set; }
     }

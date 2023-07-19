@@ -1,6 +1,7 @@
 ﻿using Members.dll.Models.Dtos.Member;
 using Members.dll.Models.ViewsModels.MembershipLevels;
-using EFModels.EFModels;
+//using EFModels.EFModels;
+
 
 namespace Members.dll.Models.Exts
 {

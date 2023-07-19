@@ -86,9 +86,10 @@ namespace Members.dll.Models.lnfra.EFRepositories
 
 		public IEnumerable<LevelsIndexDto> GetMbLevels()
 		{
-			var levels = _db.Members.Include(m => m.MembershipLevel).ToList();
-			var vms = levels.Select(m => m.TolevelsIndexDto());			
-			return vms;
+			//var levels = _db.MembershipLevels.Include(m => m.Members).ToList();
+			//var vms = levels.Select(m => m.TolevelsIndexDto());
+			//return;
+			throw new NotImplementedException();
 		}
 
 	}

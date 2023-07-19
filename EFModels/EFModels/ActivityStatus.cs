@@ -13,6 +13,7 @@ namespace EFModels.EFModels
         public ActivityStatus()
         {
             Activities = new HashSet<Activity>();
+            Activities1 = new HashSet<Activity>();
         }
 
         public int ActivityStatusId { get; set; }
@@ -22,5 +23,8 @@ namespace EFModels.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Activity> Activities { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Activity> Activities1 { get; set; }
     }
 }

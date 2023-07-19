@@ -189,6 +189,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\OneToOneReservationController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PointHistoriesController.cs" />
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProjectTagController.cs" />
@@ -2488,6 +2489,11 @@
     <Content Include="Views\OneToOneReservation\Edit.cshtml" />
     <Content Include="Views\MembershipLevels\GetLevels.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
+    <Content Include="Views\PointHistories\Create.cshtml" />
+    <Content Include="Views\PointHistories\Delete.cshtml" />
+    <Content Include="Views\PointHistories\Details.cshtml" />
+    <Content Include="Views\PointHistories\Edit.cshtml" />
+    <Content Include="Views\PointHistories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

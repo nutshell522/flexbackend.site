@@ -8,12 +8,6 @@ namespace EFModels.EFModels
 
     public partial class PointHistory
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PointHistory()
-        {
-            MemberPoints = new HashSet<MemberPoint>();
-        }
-
         public int PointHistoryId { get; set; }
 
         public bool GetOrDeduct { get; set; }
@@ -28,8 +22,9 @@ namespace EFModels.EFModels
 
         public int? fk_TypeId { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberPoint> MemberPoints { get; set; }
+        public int? fk_MemberPointsId { get; set; }
+
+        public virtual MemberPoint MemberPoint { get; set; }
 
         public virtual Member Member { get; set; }
 

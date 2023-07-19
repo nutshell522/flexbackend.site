@@ -12,6 +12,7 @@ namespace EFModels.EFModels
         public SpeakerField()
         {
             Speakers = new HashSet<Speaker>();
+            Speakers1 = new HashSet<Speaker>();
         }
 
         [Key]
@@ -23,5 +24,8 @@ namespace EFModels.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Speaker> Speakers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Speaker> Speakers1 { get; set; }
     }
 }

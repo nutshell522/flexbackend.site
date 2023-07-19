@@ -22,6 +22,9 @@ namespace EFModels.EFModels
         [StringLength(50)]
         public string CouponName { get; set; }
 
+        [StringLength(100)]
+        public string CouponDescription { get; set; }
+
         [StringLength(50)]
         public string CouponCode { get; set; }
 
@@ -46,6 +49,8 @@ namespace EFModels.EFModels
         public int? Requirement { get; set; }
 
         public int? fk_RequiredProjectTagID { get; set; }
+
+        public bool? Status { get; set; }
 
         public virtual CouponCategory CouponCategory { get; set; }
 

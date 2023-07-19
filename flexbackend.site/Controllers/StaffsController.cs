@@ -146,9 +146,11 @@ namespace flexbackend.site.Controllers
 			return RedirectToAction("Login");
 		}
 
-		
 		public ActionResult ForgetPassword()
 		{
+
+
+
 			return View();
 		}
 

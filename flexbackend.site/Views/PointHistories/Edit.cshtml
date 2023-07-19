@@ -1,0 +1,71 @@
+﻿@model EFModels.EFModels.PointHistory
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>PointHistory</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PointHistoryId)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.GetOrDeduct, htmlAttributes: new { @class = "form-label" })
+
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.GetOrDeduct)
+                    @Html.ValidationMessageFor(model => model.GetOrDeduct, "", new { @class = "text-danger" })
+                </div>
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.UsageAmount, htmlAttributes: new { @class = "form-label" })
+
+                @Html.EditorFor(model => model.UsageAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UsageAmount, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "form-label" })
+
+                @Html.EditorFor(model => model.EffectiveDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.fk_MemberId, "fk_MemberId", htmlAttributes: new { @class = "form-label" })
+
+                @Html.DropDownList("fk_MemberId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.fk_MemberId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.fk_OrderId, "fk_OrderId", htmlAttributes: new { @class = "form-label" })
+
+                @Html.DropDownList("fk_OrderId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.fk_OrderId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.fk_TypeId, "fk_TypeId", htmlAttributes: new { @class = "form-label" })
+
+                @Html.DropDownList("fk_TypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.fk_TypeId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

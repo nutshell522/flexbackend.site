@@ -46,6 +46,16 @@ namespace EFModels.EFModels
 
         public virtual Customized_materials Customized_materials4 { get; set; }
 
+        public virtual Customized_materials Customized_materials5 { get; set; }
+
+        public virtual Customized_materials Customized_materials6 { get; set; }
+
+        public virtual Customized_materials Customized_materials7 { get; set; }
+
+        public virtual Customized_materials Customized_materials8 { get; set; }
+
+        public virtual Customized_materials Customized_materials9 { get; set; }
+
         public virtual CustomizedShoesPo CustomizedShoesPo { get; set; }
 
         public virtual Member Member { get; set; }
