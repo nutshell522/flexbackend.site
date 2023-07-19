@@ -81,9 +81,48 @@ namespace flexbackend.site.Controllers
                                 .Select(s => s.ToDetailDto())
                                 .Select(dto => dto.ToDetailVM());
 
+            //return Json(speakers, JsonRequestBehavior.AllowGet);
             return View(speakers);
             //return Json(speakers);
         }
+
+
+
+        public ActionResult IndexSearch(SpeakerSearchCriteria criteria)
+        {
+            //criteria=篩選條件的意思
+            //檢查 criteria 是否為 null，如果是，則將其初始化為一個新的 SpeakerSearchCriteria 物件
+            if (criteria == null)
+            {
+                criteria = new SpeakerSearchCriteria();
+            }     
+ 
+            var query = db.Speakers.Include(s => s.SpeakerField);
+
+
+            #region Where
+            if (string.IsNullOrEmpty(criteria.SpeakerName) == false)
+            {
+                query = query.Where(s => s.SpeakerName.Contains(criteria.SpeakerName));
+            }
+            if (criteria.FieldId != null && criteria.FieldId.Value > 0)
+            {
+                query = query.Where(s => s.fk_SpeakerFieldId == criteria.FieldId.Value);
+            }
+            #endregion
+
+            var speakers = query.Where(s => s.SpeakerVisible == true)
+                                .ToList()
+                                .Select(s => s.ToDetailDto())
+                                .Select(dto => dto.ToDetailVM());
+
+            return Json(speakers, JsonRequestBehavior.AllowGet);
+            //return View(speakers);
+            //return Json(speakers);
+        }
+
+
+
 
         //查詢全部講師
         //[Route("api/ReportingCenter/GetReportList")]

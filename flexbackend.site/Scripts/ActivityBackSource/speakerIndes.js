@@ -1,4 +1,9 @@
 ﻿
+document.querySelector('#searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+})
+
+
 $(document).ready(function () {
     Index();
 })
@@ -19,6 +24,23 @@ function Index() {
         htmlMaker(res.data);
     })
 };
+
+
+//查詢一個、下拉式選單搜尋
+function Search() {
+    let url = '/Speaker/Index'
+    axios({
+        url: url,
+        method: 'get',
+
+       
+    }).then(res => {
+        console.log(666);
+        //let data = JSON.stringify(res.data)
+        //console.log(data);
+        ////htmlMaker(res.data);
+    })
+}
 
 ////新增
 function create() {
