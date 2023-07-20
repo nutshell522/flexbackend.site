@@ -13,6 +13,7 @@ namespace Members.dll.Models.Dtos
 		public int PointHistoryId { get; set; }
 		public string Name { get; set; }
 		public int Id { get; set; }
+		public int? fk_OrderId { get; set; }//
 		public string TypeName { get; set; }
 		public bool GetOrDeduct { get; set; }
 		public int UsageAmount { get; set; }

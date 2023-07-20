@@ -162,17 +162,15 @@ VALUES
   (1,0,5,1);
 
 SELECT * FROM PointHistories;
-
-
 --------------------------------------------------
 --8.會員積分
-INSERT INTO MemberPoints (PointSubtotal, fk_PointHistoryId, fk_MemberId)
+INSERT INTO MemberPoints (PointSubtotal, fk_MemberId)
 VALUES 
-	(110, 1, 1),(60, 2, 2),(420, 3, 3),(21, 4, 4),(70, 5, 5),	
-	(110, 6, 6),(21, 9, 9),(70, 10, 10),(110, 11, 11),(60, 12, 12),    
-	(420, 13, 13),(21, 14, 14),(70, 15, 15),(110, 16, 16),(0, 17, 17),
-	(0, 18, 18),(0, 19, 19),(420, 20, 20),(21, 21, 21),(70, 22, 22),	
-	(0, 23, 23),(0, 24, 24),(0, 25, 25),(420, 7, 7),(21, 8, 8);
+	(110,1),(60,2),(420,3),(21,4),(70,5),	
+	(110,6),(21,9),(70,10),(110,11),(60,12),    
+	(420,13),(21,14),(70,15),(110,16),(0,17),
+	(0,18),(0,19),(420,20),(21,21),(70,22),	
+	(0,23),(0,24),(0,25),(420,7),(21,8);
 
 SELECT * FROM MemberPoints;
 --------------------------------------------------
@@ -217,6 +215,21 @@ VALUES
 (180, 2, 900, '2025-05-30', '2026-05-30', 1);
 
 SELECT * FROM PointTradeIn
+
+--[歷史積分]
+SELECT * 
+  FROM [PointHistories]
+left join [Type] on [Type].TypeId=[PointHistories].fk_TypeId
+left join Members on Members.MemberId=PointHistories.fk_MemberId
+left join orders on orders.fk_member_Id=Members.MemberId
+left join MemberPoints on MemberPoints.fk_MemberId=Members.MemberId
+
+SELECT  [Name],Id,[TypeName],[GetOrDeduct],[UsageAmount],[ordertime],[PointSubtotal]
+  FROM [PointHistories]
+left join [Type] on [Type].TypeId=[PointHistories].fk_TypeId
+left join Members on Members.MemberId=PointHistories.fk_MemberId
+left join orders on orders.fk_member_Id=Members.MemberId
+left join MemberPoints on MemberPoints.fk_MemberId=Members.MemberId
 --------------------------------------------------
 --------------------------------------------------
 --員工權限

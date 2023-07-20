@@ -46,7 +46,8 @@ namespace flexbackend.site.Controllers
 					{
 						PointHistoryId = p.PointHistoryId,
 						Name = p.Member.Name,
-						Id = p.order.Id,//join的是null
+						//Id = p.order.Id,//join的是null
+						fk_OrderId=p.order.Id,
 						//TypeName = p.Type.TypeName,
 						//GetOrDeduct = p.GetOrDeduct,
 						//UsageAmount = p.UsageAmount,
