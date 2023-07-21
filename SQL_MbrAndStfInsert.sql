@@ -219,17 +219,34 @@ SELECT * FROM PointTradeIn
 --[歷史積分]
 SELECT * 
   FROM [PointHistories]
-left join [Type] on [Type].TypeId=[PointHistories].fk_TypeId
 left join Members on Members.MemberId=PointHistories.fk_MemberId
-left join orders on orders.fk_member_Id=Members.MemberId
+left join orders　on orders.fk_member_Id=Members.MemberId
+left join [Type] on [Type].TypeId=orders.fk_typeId
 left join MemberPoints on MemberPoints.fk_MemberId=Members.MemberId
 
-SELECT  [Name],Id,[TypeName],[GetOrDeduct],[UsageAmount],[ordertime],[PointSubtotal]
+SELECT  [Name],TypeName,Id as OrderId ,[GetOrDeduct],[UsageAmount],[ordertime],[PointSubtotal]
   FROM [PointHistories]
-left join [Type] on [Type].TypeId=[PointHistories].fk_TypeId
 left join Members on Members.MemberId=PointHistories.fk_MemberId
-left join orders on orders.fk_member_Id=Members.MemberId
+left join orders　on orders.fk_member_Id=Members.MemberId
+left join [Type] on [Type].TypeId=orders.fk_typeId
 left join MemberPoints on MemberPoints.fk_MemberId=Members.MemberId
+
+SELECT * FROM orders
+SELECT * FROM MemberPoints
+
+SELECT * FROM orders
+left join [Type] on [Type].TypeId=orders.fk_typeId
+left join Members on MemberId=orders.fk_member_Id
+left join MemberPoints on MemberPoints.fk_MemberId=Members.MemberId
+left join PointHistories on fk_member_Id=Members.MemberId
+
+SELECT MemberId,[Name],TypeName,Id as OrderId ,[GetOrDeduct],[UsageAmount],[ordertime],[PointSubtotal]
+FROM orders
+left join [Type] on [Type].TypeId=orders.fk_typeId
+left join Members on MemberId=orders.fk_member_Id
+left join MemberPoints on MemberPoints.fk_MemberId=Members.MemberId
+right join PointHistories on fk_member_Id=Members.MemberId
+
 --------------------------------------------------
 --------------------------------------------------
 --員工權限
