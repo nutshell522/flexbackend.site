@@ -28,17 +28,22 @@ function Index() {
 
 //查詢一個、下拉式選單搜尋
 function Search() {
-    let url = '/Speaker/Index'
+    let url = '/Speaker/IndexSearch'
     axios({
         url: url,
         method: 'get',
-
-       
+        params: {
+           
+            SpeakerName: SpeakerName,
+            FieldId: id_fieldId
+            
+        }   
     }).then(res => {
-        console.log(666);
+        //console.log(666);
+        console.log(res);
         //let data = JSON.stringify(res.data)
         //console.log(data);
-        ////htmlMaker(res.data);
+        //htmlMaker(res.data);
     })
 }
 

@@ -95,9 +95,10 @@ namespace flexbackend.site.Controllers
             if (criteria == null)
             {
                 criteria = new SpeakerSearchCriteria();
-            }     
- 
-            var query = db.Speakers.Include(s => s.SpeakerField);
+            }
+
+			//為了在後續的查詢中，如果需要使用演講領域（SpeakerField）的資料，就可以直接在 query 變數中獲取，而不需要再發起額外的資料庫查詢。
+			var query = db.Speakers.Include(s => s.SpeakerField);
 
 
             #region Where
